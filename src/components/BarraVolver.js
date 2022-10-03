@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
 import '../Pagina.css'
-
+import '../stylesheets/BarraVolver.css'
 
 export function BarraVolver() {
     const [clicked, setClicked] = useState(false)
@@ -9,7 +9,7 @@ export function BarraVolver() {
         setClicked(!clicked)
     }
     return (
-        <div className="barra2">
+        <div className="barra2 " >
             <div className="tituloSistema">
                 <img className="imagen__barra2" src={require('../imagenes/casa.png')} alt="casa"></img>
                     <h4>Volver a mis cursos </h4>
