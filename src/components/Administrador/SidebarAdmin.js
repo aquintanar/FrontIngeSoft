@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import * as AiIcons from 'react-icons/ai';
-import * as FaIcons from 'react-icons/fa';
 import { SidebarData } from './SidebarDataAdmin';
 import SubMenu from './SubMenuAdmin';
 import { IconContext } from 'react-icons/lib';
 import '../../Pagina.css';
-import '../../stylesheets/SideBar.css'
+
 
 const NavIcon = styled(Link)`
   margin-left: 2rem;
@@ -45,7 +44,7 @@ const Sidebar = () => {
       <IconContext.Provider value={{ color: '#fff' }}>
         <header className="header">
 
-          <div className="">
+          <div className="contenedor">
               <div className="barra">
                   <img className="imagen__barra" src={require('../../imagenes/menu.png')} onClick={showSidebar}  alt="menu"></img>
                  
