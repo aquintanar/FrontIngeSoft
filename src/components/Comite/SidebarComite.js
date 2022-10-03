@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import * as AiIcons from 'react-icons/ai';
 import * as FaIcons from 'react-icons/fa';
-import { SidebarData } from './SidebarData';
-import SubMenu from './SubMenu';
+import { SidebarData } from './SidebarDataComite';
+import SubMenu from './SubMenuComite';
 import { IconContext } from 'react-icons/lib';
-import '../Pagina.css';
+import '../../Pagina.css';
 
 
 const NavIcon = styled(Link)`
@@ -35,7 +35,7 @@ const SidebarWrap = styled.div`
   width: 100%;
 `;
 
-const Sidebar = () => {
+const SidebarComite = () => {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
@@ -47,11 +47,11 @@ const Sidebar = () => {
 
           <div className="contenedor">
               <div className="barra">
-                  <img className="imagen__barra" src={require('../imagenes/menu.png')} onClick={showSidebar}  alt="menu"></img>
+                  <img className="imagen__barra" src={require('../../imagenes/menu.png')} onClick={showSidebar}  alt="menu"></img>
                  
 
                   <div className="tituloSistema">
-                      <img className="imagen__pagina" src={require('../imagenes/kto.png')} alt="logo"></img>
+                      <img className="imagen__pagina" src={require('../../imagenes/kto.png')} alt="logo"></img>
                       <h2 className="header__texto no-margin">PUCP-<span className="texto-bold">TESIS</span></h2>
                       </div>
               </div>
@@ -74,4 +74,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SidebarComite;

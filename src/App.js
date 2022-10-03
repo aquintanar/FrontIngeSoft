@@ -4,18 +4,28 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BarraVolver } from './components/BarraVolver';
 import React, { useState, useEffect } from 'react';
 import './Pagina.css'
-import Sidebar from './components/Sidebar';
 import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom';
 import { TemaSeleccionado } from './components/Comite/TemaSeleccionado';
+import NavBar from "./NavBar";
+import Home  from "./Home";
+import Comite  from "./Comite";
+import Administrador from './Administrador';
+import Alumno from './Alumno';
+import Profesor from './Profesor';
+import Asesor from './Asesor';
 function App() {
   return (
     <Router>
-            <Sidebar />
+            <NavBar/>
             <Routes>
-                <Route path='/temaseleccionado' exact element= {<TemaSeleccionado/>} />
-
+                <Route path='/' exact element= {<Home/>} />
+                <Route path='/comite/*' exact element= {<Comite/>} />
+                <Route path='/administrador/*' exact element= {<Administrador/>} />
+                <Route path='/alumno/*' exact element= {<Alumno/>} />
+                <Route path='/profesor/*' exact element= {<Profesor/>} />
+                <Route path='/asesor/*' exact element= {<Asesor/>} />
             </Routes>
-            <BarraVolver />
+           
     </Router>
   )
 }
