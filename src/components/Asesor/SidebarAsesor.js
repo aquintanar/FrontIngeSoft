@@ -7,7 +7,7 @@ import { SidebarData } from './SidebarDataAsesor';
 import SubMenu from './SubMenuAsesor';
 import { IconContext } from 'react-icons/lib';
 import '../../Pagina.css';
-
+import '../../stylesheets/SideBar.css'
 
 const NavIcon = styled(Link)`
   margin-left: 2rem;
@@ -45,7 +45,7 @@ const Sidebar = () => {
       <IconContext.Provider value={{ color: '#fff' }}>
         <header className="header">
 
-          <div className="contenedor">
+          <div className="">
               <div className="barra">
                   <img className="imagen__barra" src={require('../../imagenes/menu.png')} onClick={showSidebar}  alt="menu"></img>
                  
@@ -53,7 +53,7 @@ const Sidebar = () => {
                   <div className="tituloSistema">
                       <img className="imagen__pagina" src={require('../../imagenes/kto.png')} alt="logo"></img>
                       <h2 className="header__texto no-margin">PUCP-<span className="texto-bold">TESIS</span></h2>
-                      </div>
+                  </div>
               </div>
           </div>
 
