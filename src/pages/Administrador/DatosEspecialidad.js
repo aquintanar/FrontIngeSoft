@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useNavigate,useParams } from 'react-router-dom';
 //import './DatosEspecilidad.css';
 import axios from 'axios';
+import '../../stylesheets/Administrador.css'
 
 const url= "https://localhost:7012/api/Especialidad/";
 const urlFacu= "https://localhost:7012/api/Facultad/";
@@ -104,7 +105,7 @@ function DatosEspecialidad() {
 
 
   return (
-    <div class="container">
+    <div class=" busquedaEspecialidad">
         <div class="row">
             <p class="text-start  fs-1 mt-5 fw-bold">Gestión General</p>
             <p class="text-start fs-3 mb-4 fw-bold">Registro de Especialidad - {subTitulo}</p>

@@ -1,0 +1,29 @@
+.busquedaEspecialidad{
+    margin-left: 100px;
+
+
+}
+/*
+ESTILOS DE LISTAR ESPECIALIDADES
+*/
+.LISTAR-ESPECIALIDADES-CONTAINER{
+    margin-left: 24em;
+    width: 800px;
+}
+.GESTION-GENERAL-TEXT {
+    font-size: 40px;
+}
+.BUSQUEDA-ESPECIALIDAD-TEXT{
+    font-size: 32px;
+}
+.FILTRO-LISTAR-ESPECIALIDADES p{
+    font-size: 16px;
+}
+.FILTRO-LISTAR-ESPECIALIDADES {
+    width: 40em;
+    margin-bottom: 20px;
+}
+.LISTAR-ESPECIALIDADES-BOTON{
+    display: flex;
+    justify-content: flex-end;
+}

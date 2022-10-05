@@ -7,7 +7,7 @@ import {makeStyles, createTheme} from '@material-ui/core/styles';
 import {  Modal, Button} from '@material-ui/core';
 import {  useNavigate } from 'react-router-dom';
 //import './DatosEspecilidad.css';
-
+import '../../stylesheets/Administrador.css'
 const url= "https://localhost:7012/api/Especialidad/";
 const urlFacu= "https://localhost:7012/api/Facultad/";
 
@@ -149,21 +149,21 @@ function ListaEspecialidad()  {
   )
     
   return (      
-    <div class="container">   
+    <div class=" container LISTAR-ESPECIALIDADES-CONTAINER">   
 
-      <p class=" text-start  fs-2 my-1 fw-bold">Gestión General</p>
-      <p class="text-start    fs-4 mb-2 fw-bold">Búsqueda de Especialidad</p>
+      <p class="GESTION-GENERAL-TEXT">Gestión General</p>
+      <p class=" BUSQUEDA-ESPECIALIDAD-TEXT">Búsqueda de Especialidad</p>
 
       <div class="row">
-          <div class="col-lg-7" >
-              <div class="text-start fs-6  mb-1 fw-normal ">Ingresar nombre de la especialidad</div>
+          <div class="col-lg-7 FILTRO-LISTAR-ESPECIALIDADES" >
+              <div class="text-start fs-6  mb-1 fw-normal "><p>Ingresar nombre de la especialidad</p></div>
               <div class="input-group mb-2 ">
-                  <input type="text" value={search} class="form-control" name="search" placeholder="Especialidad" aria-label="serach" onChange={buscador}/>
+                  <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Especialidad" aria-label="serach" onChange={buscador}/>
               </div>
           </div>
 
-          <div class="col-lg-5" >
-              <div class=" fs-6 fw-normal  mb-1 ">Facultad</div>
+          <div class="col-lg-5 FILTRO-LISTAR-ESPECIALIDADES" >
+              <div class=" fs-6 fw-normal  mb-1 "><p>Facultad</p></div>
               <select select class="form-select Cursor" aria-label="Default select example"  onChange= {cambioSelect} >  
                    <option selected value = "0">Todos</option>
                   {facus.map(elemento=>(
@@ -212,7 +212,7 @@ function ListaEspecialidad()  {
           {bodyEliminar}
       </Modal>
       
-      <div className='d-grid gap-2 d-md-flex justify-content-md-end '>
+      <div className='LISTAR-ESPECIALIDADES-BOTON'>
           <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosEspecialidad/0")}}>Insertar</button>
       </div>             
     </div>              
