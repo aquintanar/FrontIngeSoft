@@ -34,6 +34,41 @@ ESTILOS DE LISTAR ESPECIALIDADES
     display: flex;
     justify-content: flex-end;
 }
+.LISTAR-ESPECIALIDADES-BOTON button{
+    border-radius: 4px;
+    background-color: #042354;
+    border:none;
+    transition:all 0.5s;
+    cursor:pointer;
+    width: 120px;
+}
+.LISTAR-ESPECIALIDADES-BOTON button:hover{
+    background-color: #2179D4;
+}
+.LISTAR-ESPECIALIDADES-BOTON button span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+.LISTAR-ESPECIALIDADES-BOTON button span:after{
+    content:'\2295';
+    position:absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.LISTAR-ESPECIALIDADES-BOTON button:hover span{
+    
+    padding-right:25px;
+}
+.LISTAR-ESPECIALIDADES-BOTON button:hover span:after{
+    
+    opacity: 1;
+    right: 0;
+}
+
 /*
 ESTILOS DE INSERTAR ESPECIALIDAD
 
@@ -55,6 +90,53 @@ ESTILOS DE INSERTAR ESPECIALIDAD
 .DATOS-ESPECIALIDAD select{
     height:35px;
 }
+.INSERTAR-ESPECIALIDAD-BOTONES button{
+    border-radius: 4px;
+    border:none;
+    transition:all 0.5s;
+    cursor:pointer;
+    width: 120px;
+}
+.LISTAR-ESPECIALIDADES-BOTON .GUARDAR:hover{
+    background-color: #2179D4;
+}
+.LISTAR-ESPECIALIDADES-BOTON .CANCELAR:hover{
+    background-color: #C80909;
+}
+.INSERTAR-ESPECIALIDAD-BOTONES .GUARDAR{
+    background-color: #042354;
+}
+.INSERTAR-ESPECIALIDAD-BOTONES .CANCELAR{
+    background-color: #B80000;
+}
+.INSERTAR-ESPECIALIDAD-BOTONES button span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+.INSERTAR-ESPECIALIDAD-BOTONES .GUARDAR span:after{
+    content:'\1F4C1';
+}
+.INSERTAR-ESPECIALIDAD-BOTONES .CANCELAR span:after{
+    content:'\1F5D9';
+}
+.INSERTAR-ESPECIALIDAD-BOTONES button span:after{
+    position:absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.INSERTAR-ESPECIALIDAD-BOTONES button:hover span{
+    
+    padding-right:25px;
+}
+.INSERTAR-ESPECIALIDAD-BOTONES button:hover span:after{
+    
+    opacity: 1;
+    right: 0;
+}
 /*
 ESTILOS DE LISTAR SEMESTRE
 
@@ -74,3 +156,12 @@ ESTILOS DE LISTAR SEMESTRE
     margin-bottom: 20px;
 }
 
+/*
+ESTILOS DE REGISTRAR SEMESTRE ACADEMICO
+
+*/
+
+.GESTIONAR-SEMESTRE-CONTAINER{
+    margin-left: 24em;
+    width: 800px;
+}

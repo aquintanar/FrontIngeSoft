@@ -79,9 +79,9 @@ function DatosSemestre() {
      },[])
 
   return (
-    <div class="container">
+    <div class="GESTIONAR-SEMESTRE-CONTAINER">
         <div class="row">
-            <p class="text-start textAzul fs-1 mt-5 fw-bold">Gestión General</p>
+            <p class="GESTION-GENERAL-TEXT">Gestión General</p>
             <p class="text-start text-azul-principal fs-3 mb-4 fw-bold">Gestión de Semestre Académico - Modificar Semestre</p>
         </div> 
             <div class="row">

@@ -140,10 +140,10 @@ function DatosEspecialidad() {
             </div>
         
 
-            <div class="row">                            
+            <div class="row INSERTAR-ESPECIALIDAD-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold me-3 " type="button" onClick={()=>{navigate("../gestion/gesEspecialidad")}}>Cancelar</button>
-                    <button class="btn btn-primary fs-4 fw-bold " type="button" onClick={()=>peticionSelecter()}>Guardar</button>
+                    <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button" onClick={()=>{navigate("../gestion/gesEspecialidad")}}><span>Cancelar</span></button>
+                    <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
                 </div>
             </div>
     </div>

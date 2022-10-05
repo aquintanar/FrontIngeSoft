@@ -44,7 +44,7 @@ const Sidebar = () => {
       <IconContext.Provider value={{ color: '#fff' }}>
         <header className="header">
 
-          <div className="contenedor">
+          <div className="">
               <div className="barra">
                   <img className="imagen__barra" src={require('../../imagenes/menu.png')} onClick={showSidebar}  alt="menu"></img>
                  

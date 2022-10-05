@@ -213,7 +213,7 @@ function ListaEspecialidad()  {
       </Modal>
       
       <div className='LISTAR-ESPECIALIDADES-BOTON'>
-          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosEspecialidad/0")}}>Insertar</button>
+          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosEspecialidad/0")}}><span>Registrar</span></button>
       </div>             
     </div>              
   )
