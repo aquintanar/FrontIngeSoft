@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import {makeStyles, createTheme} from '@material-ui/core/styles';
-import {  Modal, Button, TextField} from '@material-ui/core';
+import {  Modal, Button} from '@material-ui/core';
 import {  useNavigate } from 'react-router-dom';
 //import './DatosEspecilidad.css';
 
@@ -50,9 +50,12 @@ function ListaSemestre()  {
   const [data, setData]=useState([]);
   const [facus, setFacus] = useState([]);
   const [esp, setEsp] = useState([]);
-  const [modalInsertar, setModalInsertar]=useState(false);
-  const [modalEditar, setModalEditar]=useState(false);
+  const [anhos,setAnhos] = useState([]);
   const [modalEliminar, setModalEliminar]=useState(false);
+  const [fil, setFil] = useState(0);
+  const [fol, setFol] = useState(0);
+  const [es, setEs] = useState(0);
+  const [fac, setFac] = useState(0);
   let navigate = useNavigate();
 
   const [semestreSeleccionada, setSemestreSeleccionada]=useState({
@@ -62,22 +65,67 @@ function ListaSemestre()  {
     numSemestre: 0,
     enCurso: '',
     idEspecialidad: 0,
-    estado: 1
+    estado: true
   })
 
-  const handleChange=e=>{
-    const {name, value}=e.target;
-    setSemestreSeleccionada(prevState=>({
-      ...prevState,
-      [name]: value
-    }))
-    console.log(semestreSeleccionada);
+  //Filtro de tabla--
+  let filtrado =[];
+  let especialidades = !fac? esp:esp.filter((dato)=>dato.facultad.idFacultad===fac);
+
+  if(!fil && !fol && !es){//sin filtro
+    filtrado=data;
+  }
+  else{
+    if(fil && fol && es){//ambos filtros
+      filtrado=data.filter((dato)=>dato.numSemestre===fil) ;
+      filtrado=filtrado.filter((dato)=>dato.anho===fol) ;
+      filtrado=filtrado.filter((dato)=>dato.idEspecialidad===es) ;
+    }
+    else{
+      if(fil && fol){
+        filtrado=data.filter((dato)=>dato.numSemestre===fil) ;
+        filtrado=filtrado.filter((dato)=>dato.anho===fol) ;
+      }
+      else if(fil && es){
+        filtrado=data.filter((dato)=>dato.numSemestre===fil) ;
+        filtrado=filtrado.filter((dato)=>dato.idEspecialidad===es) ;}
+      else if(es && fol){
+        filtrado=data.filter((dato)=>dato.idEspecialidad===es);
+        filtrado=filtrado.filter((dato)=>dato.anho===fol);}
+      else{
+        if(fil)//filtro por facultad
+          filtrado=data.filter((dato)=>dato.numSemestre===fil) ;
+        if(fol)//filtro por facultad
+          filtrado=data.filter((dato)=>dato.anho===fol) ;
+         if(es)
+          filtrado=data.filter((dato)=>dato.idEspecialidad===es) ;
+      }
+    }
   }
 
+
+      //Controla cambio en combo box--
+  const cambioSelect =e=>{
+    setFil(parseInt(e.target.value));
+  }
+
+  //Controla cambio en combo box--
+  const cambioAnho =e=>{
+    setFol( parseInt(e.target.value));
+  }
+
+  //Controla cambio en combo box--
+  const cambioEsp =e=>{
+    setEs( parseInt(e.target.value));
+  }
+  //Controla cambio en combo box--
+  const cambioFacu =e=>{
+    setFac( parseInt(e.target.value));
+  }
+  
   const petitionFacu=async()=>{
     await axios.get(urlFacu+"GetFacultades/")
     .then(response=>{
-      console.log(response);
       setFacus(response.data);
     }).catch(error =>{
       console.log(error.message);
@@ -87,7 +135,6 @@ function ListaSemestre()  {
   const petitionEsp=async()=>{
     await axios.get(urlEsp+"GetEspecialidades/")
     .then(response=>{
-      console.log(response);
       setEsp(response.data);
     }).catch(error =>{
       console.log(error.message);
@@ -98,6 +145,7 @@ function ListaSemestre()  {
     await axios.get(url+"GetSemestres/")
     .then(response=>{
       setData(response.data);
+      cargaAnhos(response.data);
     }).catch(error =>{
       console.log(error.message);
     })
@@ -109,47 +157,30 @@ function ListaSemestre()  {
     })
     .then(response=>{
       setData(data.concat(response.data))
-      abrirCerrarModalInsertar()
     }).catch(error =>{
       console.log(error.message);
     })
   }
+  
+  const cargaAnhos=(a)=>{
+    const auxi=[];
+    a.forEach(element => {
+      if(!auxi.includes(element.anho)){
+        auxi.push(element.anho);
+      }
+    });
+    console.log(auxi);
+    setAnhos(auxi);
 
-  const peticionPut=async()=>{
-    await axios.post(url+"ModifySemestre", semestreSeleccionada,{
-      _method: 'PUT'})
-      .then(response=>{
-        var dataNueva=data;
-        dataNueva.forEach(sem=>{
-          if(semestreSeleccionada.idSemestre === sem.idSemestre){
-            sem.nombre=semestreSeleccionada.nombre;
-            sem.anho=semestreSeleccionada.anho;
-            sem.numSemestre=semestreSeleccionada.numSemestre;
-            sem.enCurso=semestreSeleccionada.enCurso;
-            sem.idEspecialidad=semestreSeleccionada.idEspecialidad;
-          }
-        })
-        setData(dataNueva);
-        abrirCerrarModalEditar();
-      })
   }
 
-
   const peticionDelete=async()=>{
-    await axios.delete(url+ "DeleteSemestre?idSemestre="+ this.state.form.idSemestre,{
+    await axios.post(url+ "DeleteSemestre?idSemestre="+ semestreSeleccionada.idSemestre,{
       _method: 'DELETE'
     }).then(response=>{
       setData(data.filter(semestre=>semestre.idSemestre!==semestreSeleccionada.idSemestre));
       abrirCerrarModalEliminar();
     })
-  }
-
-  const abrirCerrarModalInsertar=()=>{
-    setModalInsertar(!modalInsertar);
-  }
-
-  const abrirCerrarModalEditar=()=>{
-    setModalEditar(!modalEditar);
   }
 
   const abrirCerrarModalEliminar=()=>{
@@ -158,7 +189,7 @@ function ListaSemestre()  {
 
   const seleccionarSemestre=(semestre, caso)=>{
     setSemestreSeleccionada(semestre);
-    (caso==='Editar')?abrirCerrarModalEditar():abrirCerrarModalEliminar()
+    abrirCerrarModalEliminar();
   }
 
   useEffect(()=>{
@@ -167,39 +198,6 @@ function ListaSemestre()  {
      petitionEsp();
   },[])
 
-
-  const bodyInsertar=(
-    <div className={styles.modal}>
-      <h3>Gestión General</h3>
-      <h3>Gestión de Semestre Académicoccc</h3> 
-      <TextField name="nombre" className={styles.inputMaterial} label="Nombre" onChange={handleChange}/>
-      <br />
-      <TextField name="descripcion" className={styles.inputMaterial} label="Descripción" onChange={handleChange}/>
-      <br />
-      <TextField name="idFacultad" className={styles.inputMaterial} label="Facultad" onChange={handleChange}/>
-      <br /><br />
-      <div align="right">
-        <Button color="primary" onClick={()=>peticionPost()}>Insertar</Button>
-        <Button onClick={()=>abrirCerrarModalInsertar()}>Cancelar</Button>
-      </div>
-    </div>
-  )
-
-  const bodyEditar=(
-    <div className={styles.modal}>
-      <h3>Editar Especialidad</h3>
-      <TextField name="nombre" className={styles.inputMaterial} label="Nombre" onChange={handleChange} value={semestreSeleccionada && semestreSeleccionada.nombre}/>
-      <br />
-      <TextField name="descripcion" className={styles.inputMaterial} label="Descripción" onChange={handleChange} value={semestreSeleccionada && semestreSeleccionada.descripcion}/>
-      <br />
-      <TextField name="idFacultad" className={styles.inputMaterial} label="Facultad" onChange={handleChange} value={semestreSeleccionada && semestreSeleccionada.idFacultad}/>
-      <br /><br />
-      <div align="right">
-        <Button color="primary" onClick={()=>peticionPut()}>Editar</Button>
-        <Button onClick={()=>abrirCerrarModalEditar()}>Cancelar</Button>
-      </div>
-    </div>
-  )
 
   const bodyEliminar=(
     <div className={styles.modal} >
@@ -221,45 +219,41 @@ function ListaSemestre()  {
 
       <div class="row">
           <div class="col-lg-6" >
-              <div class="text-start fs-5  mb-1 fw-normal ">Ingresar nombre de la especialidad</div>
-              <div class="input-group mb-3 ">
-                  <input type="text" class="form-control" placeholder="Especialidad" aria-label="Especialidad" aria-describedby="button-addon2"/>
-                  <button class="btn btn-outline-secondary" type="button" id="button-addon2"   >Buscar</button>
-              </div>
+              <div class="text-start fs-5  mb-1 fw-normal ">Especialidad</div>
+              <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioEsp}>
+                <option selected value = "0">Todos</option>
+                    {especialidades.map(elemento=>
+                      <option key={elemento.idEspecialidad} value={elemento.idEspecialidad}>{elemento.nombre}</option>  
+                    )} 
+               </select>
           </div>
 
           <div class="col-lg-3" >
-              <div class=" fs-5 fw-normal  mb-1 ">Año</div>
-              <select select class="form-select Cursor" aria-label="Default select example">
-                  {data.map(semestre=>(
-                    <option key={semestre.idSemestre} value={semestre.idSemestre}>{semestre.anho}</option>  
-                  ))}
-              </select>
+            <div class=" fs-5 fw-normal  mb-1 ">Año</div>
+            <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioAnho}>
+              <option selected value = "0">Todos</option>
+                  {anhos.map(elemento=>
+                    <option key={elemento} value={elemento}>{elemento}</option>  
+                  )} 
+            </select>
           </div>
 
           <div class="col-lg-3" >
               <div class=" fs-5 fw-normal  mb-1 ">Semestre</div>
-              <select select class="form-select Cursor" aria-label="Default select example">
-                  {data.map(semestre=>(
-                    <option key={semestre.idSemestre} value={semestre.idSemestre}>{semestre.numSemestre}</option>  
-                  ))}
+              <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelect}>
+                <option key="0" selected value = "0">Todos</option>
+                <option key="1" value="1">1</option>
+                <option key="2" value="2">2</option>
               </select>
           </div>
       </div>
 
       <div class="row">
-        <div class = "col-lg-3">
-          <div class="col text-start fs-5  mb-1 fw-normal">Ordenar por</div>
-            <select class="col form-select " aria-label="Default select example">
-              <option selected value = "1">Todos</option>
-              <option value="2">Nombre</option>
-              <option value="3">Registrados recientemente</option>
-            </select>
-          </div>
         
           <div class = "col-lg-3 ">
           <div class="col text-start fs-5  mb-1 fw-normal">Facultad</div>
-            <select select class="form-select Cursor" aria-label="Default select example">
+            <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioFacu}>
+                <option selected value = "0">Todos</option>
                 {facus.map(elemento=>(
                 <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.nombre}</option>  
               ))}
@@ -269,7 +263,6 @@ function ListaSemestre()  {
           <div class = "col-lg-6 " align = 'right' >
             <div class="col text-start fs-5  mb-1 fw-normal text-white"> " "</div>
             <div className='d-grid gap-2 d-md-flex justify-content-md-end '>
-              <button className='btn btn-primary fs-4 fw-bold mb-3 tableAzul ' onClick={()=>{navigate("/gestion/datosEspecialidad")}}>Buscar</button>
             </div> 
           </div> 
 
@@ -287,28 +280,27 @@ function ListaSemestre()  {
                   <th>Nombre</th>
                   <th>Año</th>
                   <th>Semestre</th>
-                  <th>Semestre</th>
+                  <th>Especialidad</th>
                   <th>En curso</th>
                   <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {data.map(semestre => (
+              {filtrado.map(semestre => (
                 <tr key={semestre.idSemestre}>
                     <td>{semestre.idSemestre}</td>
                     <td>{semestre.nombre}</td>                    
                     <td>{semestre.anho}</td>
                     <td>{semestre.numSemestre}</td>
-                    <td>{semestre.enCurso}</td>
                     {esp.map(element => {      
                       if (element.idEspecialidad === semestre.idEspecialidad) {
                         return <td>{element.nombre}</td>;
                       }
                     })}
-
+                    <td>{semestre.enCurso}</td>
                     <td>
-                    <button className="btn" onClick={()=>{navigate("/gestion/datosEspecialidad")}}> <FaIcons.FaEdit/></button>
-                    <button  className=" btn" onClick={()=>seleccionarSemestre(semestre, 'Eliminar')}> <BootIcons.BsTrash/></button>
+                      <button className="btn" onClick={()=>{navigate("datosSemestre")}}> <FaIcons.FaEdit/></button>
+                      <button  className=" btn" onClick={()=>seleccionarSemestre(semestre, 'Eliminar')}> <BootIcons.BsTrash/></button>
                     </td>
                 </tr>
               ))}
@@ -317,25 +309,13 @@ function ListaSemestre()  {
         </div>
       </div>
       <Modal
-      open={modalInsertar}
-      onClose={abrirCerrarModalInsertar}>
-          {bodyInsertar}
-      </Modal>
-
-      <Modal
-      open={modalEditar}
-      onClose={abrirCerrarModalEditar}>
-          {bodyEditar}
-      </Modal>
-
-      <Modal
       open={modalEliminar}
       onClose={abrirCerrarModalEliminar}>
           {bodyEliminar}
       </Modal>
       
       <div className='d-grid gap-2 d-md-flex justify-content-md-end '>
-          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("/gestion/datoSemestre/")}}>Insertar</button>
+          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosSemestre")}}>Insertar</button>
       </div>             
     </div>              
   )

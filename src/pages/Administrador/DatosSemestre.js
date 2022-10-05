@@ -130,7 +130,7 @@ function DatosSemestre() {
 
             <div class="row">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold me-3 tableAzul" type="button" onClick={()=>{navigate("/gestion/gesEspecialidad")}}>Cancelar</button>
+                    <button class="btn btn-primary fs-4 fw-bold me-3 tableAzul" type="button" onClick={()=>{navigate("../gestion/gesSemestre")}}>Cancelar</button>
                     <button class="btn btn-primary fs-4 fw-bold tableAzul" type="button" onClick={()=>peticionPost()}>Guardar</button>
                 </div>
             </div>

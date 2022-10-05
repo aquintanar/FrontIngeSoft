@@ -167,7 +167,7 @@ function ListaEspecialidad()  {
               <select select class="form-select Cursor" aria-label="Default select example"  onChange= {cambioSelect} >  
                    <option selected value = "0">Todos</option>
                   {facus.map(elemento=>(
-                    <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.nombre}</option>  
+                    <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.descripcion}</option>  
                   ))}
               </select>
           </div>
