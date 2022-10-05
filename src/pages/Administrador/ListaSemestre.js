@@ -212,14 +212,14 @@ function ListaSemestre()  {
   )
     
   return (      
-    <div class="container">   
+    <div class="LISTAR-SEMESTRE-CONTAINER">   
 
-      <p class=" text-start  fs-2 my-1 fw-bold">Gestión General</p>
-      <p class="text-start    fs-4 mb-2 fw-bold">Gestión de Semestre Académico</p>
+      <p class=" GESTION-GENERAL-TEXT">Gestión General</p>
+      <p class="GESTION-SEMESTRE-TEXT">Gestión de Semestre Académico</p>
 
-      <div class="row">
-          <div class="col-lg-6" >
-              <div class="text-start fs-5  mb-1 fw-normal ">Especialidad</div>
+      <div class="row FILTRO-LISTAR-SEMESTRE">
+          <div class="col-lg-6 " >
+              <div class="text-start fs-5  mb-1 fw-normal "><p>Especialidad</p></div>
               <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioEsp}>
                 <option selected value = "0">Todos</option>
                     {especialidades.map(elemento=>
@@ -229,7 +229,7 @@ function ListaSemestre()  {
           </div>
 
           <div class="col-lg-3" >
-            <div class=" fs-5 fw-normal  mb-1 ">Año</div>
+            <div class=" fs-5 fw-normal  mb-1 "><p>Año</p></div>
             <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioAnho}>
               <option selected value = "0">Todos</option>
                   {anhos.map(elemento=>
@@ -239,7 +239,7 @@ function ListaSemestre()  {
           </div>
 
           <div class="col-lg-3" >
-              <div class=" fs-5 fw-normal  mb-1 ">Semestre</div>
+              <div class=" fs-5 fw-normal  mb-1 "><p>Semestre</p></div>
               <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelect}>
                 <option key="0" selected value = "0">Todos</option>
                 <option key="1" value="1">1</option>
@@ -248,10 +248,10 @@ function ListaSemestre()  {
           </div>
       </div>
 
-      <div class="row">
+      <div class="row FILTRO-LISTAR-SEMESTRE">
         
           <div class = "col-lg-3 ">
-          <div class="col text-start fs-5  mb-1 fw-normal">Facultad</div>
+          <div class="col text-start fs-5  mb-1 fw-normal"><p>Facultad</p></div>
             <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioFacu}>
                 <option selected value = "0">Todos</option>
                 {facus.map(elemento=>(

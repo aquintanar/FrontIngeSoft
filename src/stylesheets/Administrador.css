@@ -1,7 +1,8 @@
 .busquedaEspecialidad{
     margin-left: 100px;
-
-
+}
+.GESTION-GENERAL-TEXT {
+    font-size: 40px;
 }
 /*
 ESTILOS DE LISTAR ESPECIALIDADES
@@ -10,9 +11,7 @@ ESTILOS DE LISTAR ESPECIALIDADES
     margin-left: 24em;
     width: 800px;
 }
-.GESTION-GENERAL-TEXT {
-    font-size: 40px;
-}
+
 .BUSQUEDA-ESPECIALIDAD-TEXT{
     font-size: 32px;
 }
@@ -23,7 +22,55 @@ ESTILOS DE LISTAR ESPECIALIDADES
     width: 40em;
     margin-bottom: 20px;
 }
+.FILTRO-LISTAR-ESPECIALIDADES input{
+    height:40px;
+    font-size: 13px;
+}
+.FILTRO-LISTAR-ESPECIALIDADES select{
+    height:40px;
+    font-size: 13px;
+}
 .LISTAR-ESPECIALIDADES-BOTON{
     display: flex;
     justify-content: flex-end;
 }
+/*
+ESTILOS DE INSERTAR ESPECIALIDAD
+
+*/
+.REGISTRAR-ESPECIALIDAD-CONTAINER{
+    margin-left: 24em;
+    width: 800px;
+}
+.REGISTRO-ESPECIALIDAD-TEXT{
+    font-size: 32px;
+}
+.DATOS-ESPECIALIDAD p{
+    font-size: 16px;
+}
+.DATOS-ESPECIALIDAD input{
+    height:40px;
+    font-size: 13px;
+}
+.DATOS-ESPECIALIDAD select{
+    height:35px;
+}
+/*
+ESTILOS DE LISTAR SEMESTRE
+
+*/
+.LISTAR-SEMESTRE-CONTAINER{
+    margin-left: 24em;
+    width: 800px;
+}
+.GESTION-SEMESTRE-TEXT{
+    font-size: 32px;
+}
+.FILTRO-LISTAR-SEMESTRE p{
+    font-size: 16px;    
+}
+.FILTRO-LISTAR-SEMESTRE{
+    width: 40em;
+    margin-bottom: 20px;
+}
+
