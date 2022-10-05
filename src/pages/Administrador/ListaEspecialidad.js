@@ -3,56 +3,25 @@ import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
-import {makeStyles, createTheme} from '@material-ui/core/styles';
-import {  Modal, Button} from '@material-ui/core';
+import {  Button} from '@material-ui/core';
 import {  useNavigate } from 'react-router-dom';
-//import './DatosEspecilidad.css';
 import '../../stylesheets/Administrador.css'
+import useModal from '../../hooks/useModals';
+import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
+
+
 const url= "https://localhost:7012/api/Especialidad/";
 const urlFacu= "https://localhost:7012/api/Facultad/";
 
-const themeX = createTheme({
-  palette: {
-    type: "dark",
-    grey: {
-      800: "#000000", // overrides failed
-      900: "#121212" // overrides success
-    },
-    background: {
-      paper: "#1294F2"
-    }
-  }
-});
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: themeX.palette.background.paper,
-    border: '1px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(4, 6, 5),
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-  },
-  iconos:{
-    cursor: 'pointer'
-  }, 
-  inputMaterial:{
-    width: '100%'
-  }
-}));
-
 
 function ListaEspecialidad()  {
-  const styles= useStyles();
   const [data, setData]=useState([]);
   const [facus, setFacus] = useState([]);
   const [search, setSearch] = useState("");
   const [fil, setFil] = useState(0);
-  const [modalEliminar, setModalEliminar]=useState(false);
   let navigate = useNavigate();
+  const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
+  const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
 
   //objeto Especialidad--
   const [especialidadSeleccionada, setEspecialidadSeleccionada]=useState({
@@ -115,19 +84,16 @@ function ListaEspecialidad()  {
   const peticionDelete=async()=>{
     await axios.delete(url+ "DeleteEspecialidad?idEspecialidad="+ especialidadSeleccionada.idEspecialidad).then(response=>{
       setData(data.filter(especialidad=>especialidad.idEspecialidad!==especialidadSeleccionada.idEspecialidad));
-      abrirCerrarModalEliminar();
+      closeDeleteModal();
+      openConfirmModal();
     })
   }
 
-  //Control mensaje de eliminar--
-  const abrirCerrarModalEliminar=()=>{
-    setModalEliminar(!modalEliminar);
-  }
 
   //Selecciona especialidad a eliminar--
   const seleccionarEspecialidad=(especialidad)=>{
     setEspecialidadSeleccionada(especialidad);
-    abrirCerrarModalEliminar();
+    openDeleteModal();
   }
 
   useEffect(()=>{
@@ -135,18 +101,6 @@ function ListaEspecialidad()  {
      petitionFacu();
   },[])
 
-  //Mensaje de confirmación para eliminar --
-  const bodyEliminar=(
-    <div className={styles.modal} >
-      <div align = "center">
-        <p class= "text-white">¿Estás seguro que deseas eliminar la especialidad <b>{especialidadSeleccionada && especialidadSeleccionada.nombre}</b> ? </p>
-      </div>
-      <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-        <Button class="btn  btn-success"  onClick={()=>peticionDelete()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Button class="btn btn-danger" onClick={()=>abrirCerrarModalEliminar()}>Cancelar</Button>
-      </div>
-    </div>
-  )
     
   return (      
     <div class=" container LISTAR-ESPECIALIDADES-CONTAINER">   
@@ -206,11 +160,28 @@ function ListaEspecialidad()  {
         </div>
       </div>
 
-      <Modal
-      open={modalEliminar}
-      onClose={abrirCerrarModalEliminar}>
-          {bodyEliminar}
-      </Modal>
+      <ModalPregunta
+        isOpen={isOpenDeleteModal} 
+        closeModal={closeDeleteModal}
+        procedimiento = "eliminar"
+        objeto="la especialidad"
+        elemento={especialidadSeleccionada && especialidadSeleccionada.nombre}
+      >
+        <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+          <Button class="btn  btn-success btn-lg" onClick={()=>peticionDelete()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <Button class="btn btn-danger btn-lg"  onClick={closeDeleteModal}>Cancelar</Button>
+        </div>
+      </ModalPregunta>
+
+      <ModalConfirmación
+        isOpen={isOpenConfirmModal} 
+        closeModal={closeConfirmModal}
+        procedimiento= "eliminado"
+      >
+        <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+          <Button class="btn btn-success btn-lg" onClick={closeConfirmModal}>Entendido</Button>
+        </div>
+      </ModalConfirmación>
       
       <div className='LISTAR-ESPECIALIDADES-BOTON'>
           <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosEspecialidad/0")}}><span>Registrar</span></button>

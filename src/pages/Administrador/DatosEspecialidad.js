@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate,useParams } from 'react-router-dom';
-//import './DatosEspecilidad.css';
 import axios from 'axios';
 import '../../stylesheets/Administrador.css'
+import {  Button} from '@material-ui/core';
+import useModal from '../../hooks/useModals';
+import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 
 const url= "https://localhost:7012/api/Especialidad/";
 const urlFacu= "https://localhost:7012/api/Facultad/";
@@ -12,6 +14,10 @@ function DatosEspecialidad() {
   let {id} = useParams();
   const [facus, setFacus] = useState([]);
   const [subTitulo,setSubtitulo] = useState("Nueva Especialidad");
+  const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
+  const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
+  const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
+  const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
 
   //OBjeto especialidad--
   const [especialidadSeleccionada, setEspecialidadSeleccionada]=useState({
@@ -57,30 +63,42 @@ function DatosEspecialidad() {
         _method: 'POST'
       })
     .then(response=>{
-      navigate("../gestion/gesEspecialidad");
+      closePostModal();
+      openGuardadoModal();
     }).catch(error =>{
       console.log(error.message);
     })
   }
+
+  const cerrarPost=()=>{
+    closeGuardadoModal();
+    navigate("../gestion/gesEspecialidad");
+  }
+
 
   //Modificar especialidad--
   const peticionPut=async()=>{
     await axios.put(url+"ModifyEspecialidad",especialidadSeleccionada)
     .then(response=>{
-      console.log("modificadoooo");
-      navigate("../gestion/gesEspecialidad");
+      closeEditModal();
+      openEditadoModal();
     }).catch(error =>{
       console.log(error.message);
     })
   }
 
+  const cerrarPut=()=>{
+    closeEditadoModal();
+    navigate("../gestion/gesEspecialidad");
+  }
+
   //Selección entre modificar o insertar
   const peticionSelecter =()=>{
     if(id==='0'){
-      peticionPost();
+      openPostModal();
     }
     else{
-      peticionPut();  
+      openEditModal();  
     }
   }
 
@@ -123,7 +141,7 @@ function DatosEspecialidad() {
                     <div class="  fs-5 fw-normal  mb-1 "><p>Facultad</p></div>
                     <select select class="form-select Cursor"  onChange= {cambioSelect}  selected value = {especialidadSeleccionada.facultad.idFacultad} >
                       {facus.map(elemento=>
-                          <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.nombre}</option>  
+                          <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.descripcion}</option>  
                       )}
                     </select>
                 </div>
@@ -138,7 +156,52 @@ function DatosEspecialidad() {
                     </div>
                 </div>
             </div>
-        
+                        
+            <ModalPregunta
+              isOpen={isOpenEditModal} 
+              closeModal={closeEditModal}
+              procedimiento = "modificar"
+              objeto="la especialidad"
+              elemento={especialidadSeleccionada && especialidadSeleccionada.nombre}
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn  btn-success btn-lg" onClick={()=>peticionPut()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Button class="btn btn-danger btn-lg"  onClick={closeEditModal}>Cancelar</Button>
+              </div>
+            </ModalPregunta>
+                        
+            <ModalPregunta
+              isOpen={isOpenPostModal} 
+              closeModal={closePostModal}
+              procedimiento = "guardar"
+              objeto="la especialidad"
+              elemento={especialidadSeleccionada && especialidadSeleccionada.nombre}
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn  btn-success btn-lg" onClick={()=>peticionPost()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Button class="btn btn-danger btn-lg"  onClick={closePostModal}>Cancelar</Button>
+              </div>
+            </ModalPregunta>
+
+            <ModalConfirmación
+              isOpen={isOpenEditadoModal} 
+              closeModal={closeEditadoModal}
+              procedimiento= "modificado"
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn btn-success btn-lg" onClick={()=>cerrarPut()}>Entendido</Button>
+              </div>
+            </ModalConfirmación>
+
+            <ModalConfirmación
+              isOpen={isOpenGuardadoModal} 
+              closeModal={closeGuardadoModal}
+              procedimiento= "guardado"
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn btn-success btn-lg" onClick={()=>cerrarPost()}>Entendido</Button>
+              </div>
+            </ModalConfirmación>
 
             <div class="row INSERTAR-ESPECIALIDAD-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
