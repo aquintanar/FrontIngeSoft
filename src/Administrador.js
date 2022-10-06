@@ -8,6 +8,8 @@ import DatosEspecialidad from './pages/Administrador/DatosEspecialidad';
 import ListaSemestre from './pages/Administrador/ListaSemestre';
 import DatosSemestre from './pages/Administrador/DatosSemestre';
 import Gestion from './pages/Administrador/Gestion';
+import ListaFacultad  from './pages/Administrador/ListaFacultad';
+import DatosFacultad from './pages/Administrador/DatosFacultad';
 
 function Administrador() {
     return (
@@ -15,6 +17,8 @@ function Administrador() {
               <SidebarAdmin/>
               <Routes>
                   <Route path='gestion' exact element ={<Gestion/>} />
+                  <Route path='gestion/gesFacultad' exact element= {<ListaFacultad/>}/>
+                  <Route path='gestion/gesFacultad/datosFacultad/:id' exact  element= {<DatosFacultad/>}/>
                   <Route path='gestion/gesEspecialidad' exact element= {<ListaEspecialidad/>}/>
                   <Route path='gestion/gesEspecialidad/datosEspecialidad/:id' exact  element= {<DatosEspecialidad/>}/>
                   <Route path='gestion/gesSemestre' exact element= {<ListaSemestre/>}/>
