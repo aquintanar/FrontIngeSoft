@@ -269,10 +269,12 @@ function ListaSemestre()  {
 
       </div>
 
-      <p class="text-start  fs-4 my-3 fw-bold" >Listado de Semestres</p>
-
-      <div class = "row ">
-        <div class=" col-9 Table-style">
+      <p class="text-start     LISTAR-SEMESTRE-TEXT" >Listado de Semestres</p>
+      <div className='d-grid gap-2 d-md-flex justify-content-md-end '>
+          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosSemestre")}}>Insertar</button>
+      </div>   
+      <div class = "row LISTAR-SEMESTRE-TABLA">
+        <div class=" col-12 Table-style">
           <table className='table fs-5  '>
             <thead class>
               <tr class>
@@ -314,9 +316,7 @@ function ListaSemestre()  {
           {bodyEliminar}
       </Modal>
       
-      <div className='d-grid gap-2 d-md-flex justify-content-md-end '>
-          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosSemestre")}}>Insertar</button>
-      </div>             
+               
     </div>              
   )
 }

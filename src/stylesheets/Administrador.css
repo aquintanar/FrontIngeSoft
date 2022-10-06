@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap');
+
 .busquedaEspecialidad{
     margin-left: 100px;
 }
 .GESTION-GENERAL-TEXT {
     font-size: 40px;
+    font-family: Monserrat;
 }
 /*
 ESTILOS DE LISTAR ESPECIALIDADES
@@ -14,9 +17,15 @@ ESTILOS DE LISTAR ESPECIALIDADES
 
 .BUSQUEDA-ESPECIALIDAD-TEXT{
     font-size: 32px;
+    font-family: Monserrat;
+}
+.LISTAR-ESPECIALIDADES-TEXT{
+    font-family: Monserrat;
+    font-size: 32px;
 }
 .FILTRO-LISTAR-ESPECIALIDADES p{
     font-size: 16px;
+    font-family: roboto;
 }
 .FILTRO-LISTAR-ESPECIALIDADES {
     width: 40em;
@@ -25,10 +34,12 @@ ESTILOS DE LISTAR ESPECIALIDADES
 .FILTRO-LISTAR-ESPECIALIDADES input{
     height:40px;
     font-size: 13px;
+    font-family: roboto;
 }
 .FILTRO-LISTAR-ESPECIALIDADES select{
     height:40px;
     font-size: 13px;
+    font-family: roboto;
 }
 .LISTAR-ESPECIALIDADES-BOTON{
     display: flex;
@@ -38,6 +49,7 @@ ESTILOS DE LISTAR ESPECIALIDADES
     border-radius: 4px;
     background-color: #042354;
     border:none;
+    font-family: roboto;
     transition:all 0.5s;
     cursor:pointer;
     width: 120px;
@@ -68,6 +80,10 @@ ESTILOS DE LISTAR ESPECIALIDADES
     opacity: 1;
     right: 0;
 }
+.LISTAR-ESPECIALIDADES-TABLA th{
+    font-size: 17px;
+    font-family: roboto;
+}
 
 /*
 ESTILOS DE INSERTAR ESPECIALIDAD
@@ -79,19 +95,24 @@ ESTILOS DE INSERTAR ESPECIALIDAD
 }
 .REGISTRO-ESPECIALIDAD-TEXT{
     font-size: 32px;
+    font-family: monserrat;
 }
 .DATOS-ESPECIALIDAD p{
     font-size: 16px;
+    
+    font-family: roboto;
 }
 .DATOS-ESPECIALIDAD input{
     height:40px;
     font-size: 13px;
+    font-family: roboto;
 }
 .DATOS-ESPECIALIDAD select{
     height:35px;
 }
 .INSERTAR-ESPECIALIDAD-BOTONES button{
     border-radius: 4px;
+    font-family: roboto;
     border:none;
     transition:all 0.5s;
     cursor:pointer;
@@ -147,15 +168,32 @@ ESTILOS DE LISTAR SEMESTRE
 }
 .GESTION-SEMESTRE-TEXT{
     font-size: 32px;
+    font-family: monserrat;
 }
 .FILTRO-LISTAR-SEMESTRE p{
-    font-size: 16px;    
+    font-size: 16px;  
+    font-family: roboto;  
 }
 .FILTRO-LISTAR-SEMESTRE{
     width: 40em;
     margin-bottom: 20px;
 }
-
+.FILTRO-LISTAR-SEMESTRE input{
+    height:40px;
+    font-size: 13px;
+    font-family: roboto;
+}
+.FILTRO-LISTAR-SEMESTRE select{
+    height:35px;
+}
+.LISTAR-SEMESTRE-TEXT{
+    font-family: Monserrat;
+    font-size: 32px;
+}
+.LISTAR-SEMESTRE-TABLA th{
+    font-size: 17px;
+    font-family: roboto;
+}
 /*
 ESTILOS DE REGISTRAR SEMESTRE ACADEMICO
 

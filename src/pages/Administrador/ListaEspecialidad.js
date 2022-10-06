@@ -128,10 +128,10 @@ function ListaEspecialidad()  {
       </div>
 
 
-      <p class="text-start  fs-4 mt-3 fw-bold" >Lista de Especialidades</p>
+      <p class="text-start  LISTAR-ESPECIALIDADES-TEXT" >Lista de Especialidades</p>
 
-      <div class = "row   ">
-        <div class=" col-8  ">
+      <div class = "row LISTAR-ESPECIALIDADES-TABLA">
+        <div class=" col-10  ">
           <table className='table fs-6 '>
             <thead class >
               <tr class>
