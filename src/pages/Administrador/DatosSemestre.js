@@ -15,12 +15,15 @@ const urlFacu= "https://localhost:7012/api/Facultad/";
 const urlEsp= "https://localhost:7012/api/Especialidad/";
 const urlUser= "https://localhost:7012/api/Asesor/";
 const urlComi= "https://localhost:7012/api/ComiteTesis/";
+const urlSemComi= "https://localhost:7012/api/SemestreXComiteTesis/";
 
 /*
 const url= "http://44.210.195.91/api/Semestre/";
 const urlFacu= "http://44.210.195.91/api/Facultad/";
 const urlEsp= "http://44.210.195.91/api/Especialidad/";
 const urlUser= "http://44.210.195.91/api/Asesor/";
+const urlComi= "https://44.210.195.91/api/ComiteTesis/";
+const urlSemComi= "https://44.210.195.91/api/SemestreXComiteTesis/";
 */
 
 var currentTime= new Date();
@@ -206,10 +209,11 @@ function DatosSemestre() {
 
     //elimina coordinador en ese semestre
     const peticionDelete=async()=>{
-        await axios.delete(urlComi+ "/DeleteSemestreXComiteTesis?idSemestre="+ parseInt(id) + "&idComiteTesis=" + coordinadorSeleccionada.idComiteTesis).then(response=>{
+        await axios.delete(urlSemComi+ "/DeleteSemestreXComiteTesis?idSemestre="+ parseInt(id) + "&idComiteTesis=" + coordinadorSeleccionada.idComiteTesis).then(response=>{
           setCoord(data.filter(coordinador=>coordinador.idComiteTesis!==coordinadorSeleccionada.idComiteTesis));
           closeDeleteModal();
           openConfirmModal();
+          petitionCoord();
         })
     }
 
