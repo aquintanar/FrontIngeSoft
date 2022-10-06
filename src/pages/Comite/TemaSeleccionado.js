@@ -7,8 +7,7 @@ import axios from 'axios';
 
 
 const TemaSeleccionado = () => {
-  const url="https://localhost:7012/api/TemaTesis/GetTemaTesis";
-  const urlFacu= "https://localhost:7012/api/Facultad/";
+  const url="http://44.210.195.91/api/TemaTesis/GetTemaTesis";
   let navigate = useNavigate();
   let {id} = useParams();
   const [facus, setFacus] = useState([]);
@@ -19,7 +18,7 @@ const TemaSeleccionado = () => {
   
     //Modificar 
     const modificarTema=async()=>{
-      await axios.put("https://localhost:7012/api/TemaTesis/AprobarTemaTesis?idTemaTesis="+location.state.id)
+      await axios.put("http://44.210.195.91/api/TemaTesis/AprobarTemaTesis?idTemaTesis="+location.state.id)
       .then(response=>{
         console.log("Aprobado");
         navigate("../temaTesis");
@@ -31,7 +30,7 @@ const TemaSeleccionado = () => {
     return (
       <div class="container">
       <div class="row">
-          <p class="text-start fs-3 mb-4 fw-bold">Tema >> Ver Tema</p>
+          <p class="text-start fs-3 mb-4 fw-bold">Tema to Ver Tema</p>
       </div> 
           <div class="row">
               <div class="col-100%" >
