@@ -1,0 +1,25 @@
+.fonnnts{
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: large;
+}
+
+.fonnnts2{
+    font-family: 'Roboto', sans-serif;
+    font-weight: lighter;
+    font-size: large;
+}
+
+.botonForm{
+    background-color: #042354;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: medium;
+}
+
+.normal{
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: medium;
+}

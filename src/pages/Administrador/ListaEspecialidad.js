@@ -172,7 +172,7 @@ function ListaEspecialidad()  {
                     <td>{especialidad.facultad.nombre}</td>
                     <td>
                     <button className="btn" onClick={()=>{navigate("datosEspecialidad/"+especialidad.idEspecialidad)}}> <FaIcons.FaEdit /></button>
-                    <button  className=" btn" onClick={()=>seleccionarEspecialidad(especialidad)}> <BootIcons.BsTrash /></button>
+                    <button className=" btn" onClick={()=>seleccionarEspecialidad(especialidad)}> <BootIcons.BsTrash /></button>
                     </td>
                 </tr>
               ))}
