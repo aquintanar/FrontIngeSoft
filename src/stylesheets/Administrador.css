@@ -84,6 +84,10 @@ ESTILOS DE LISTAR ESPECIALIDADES
     font-size: 17px;
     font-family: roboto;
 }
+.LISTAR-ESPECIALIDADES-TABLA td{
+    font-size: 14px;
+    font-family: roboto;
+}
 .PAGINACION-SIGUIENTE{
     width:40px;
     height: 34px;
@@ -231,7 +235,7 @@ ESTILOS DE LISTAR FACULTAD
     font-size: 32px;
     font-family: Monserrat;
 }
-.LISTAR-ESPECIALIDADES-TEXT{
+.LISTAR-FACULTADES-TEXT{
     font-family: Monserrat;
     font-size: 32px;
 }
@@ -288,8 +292,12 @@ ESTILOS DE LISTAR FACULTAD
     opacity: 1;
     right: 0;
 }
-.LISTAR-ESPECIALIDADES-TABLA th{
+.LISTAR-FACULTADES-TABLA th{
     font-size: 17px;
+    font-family: roboto;
+}
+.LISTAR-FACULTADES-TABLA td{
+    font-size: 14px;
     font-family: roboto;
 }
 .PAGINACION-SIGUIENTE{

@@ -7,8 +7,16 @@ import {makeStyles, createTheme} from '@material-ui/core/styles';
 import {  Modal, Button} from '@material-ui/core';
 import {  useNavigate } from 'react-router-dom';
 //import './DatosFacultad.css';
+import * as BsIcons from 'react-icons/bs';
 import '../../stylesheets/Administrador.css'
+/*
 const url= "https://localhost:7012/api/Facultad/";
+*/ 
+
+const url= "http://44.210.195.91/api/Facultad/";
+//-------
+
+//------
 
 
 const themeX = createTheme({
@@ -50,6 +58,7 @@ function ListaFacultad()  {
   const [data, setData]=useState([]);
   const [search, setSearch] = useState("");
   const [modalEliminar, setModalEliminar]=useState(false);
+  const [currentPage,SetCurrentPage] = useState(0);
   let navigate = useNavigate();
 
   //objeto Facultad--
@@ -80,8 +89,17 @@ function ListaFacultad()  {
       filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
   }
 
-
-
+  //----------------
+  filtrado=filtrado.slice(currentPage,currentPage+6);
+  const nextPage = () =>{
+    if(filtrado.length>=currentPage) //VER CODIGO
+      SetCurrentPage(currentPage+6);
+  }
+  const previousPage =() =>{
+    if(currentPage>0)
+      SetCurrentPage(currentPage-6);
+  }
+  //----------------
   //Listar facultades tabla--
   const peticionGet=async()=>{
     await axios.get(url+"GetFacultades/")
@@ -148,17 +166,18 @@ function ListaFacultad()  {
       </div>
 
 
-      <p class="text-start  fs-4 mt-3 fw-bold" >Lista de Facultades</p>
-
-      <div class = "row   ">
-        <div class=" col-8  ">
+      <p class="LISTAR-FACULTADES-TEXT" >Lista de Facultades</p>
+      <button onClick={previousPage} className="PAGINACION-SIGUIENTE"><BsIcons.BsCaretLeftFill/></button>
+      <button onClick={nextPage} className="PAGINACION-ANTERIOR"><BsIcons.BsCaretRightFill/></button>
+      <div class = "row   LISTAR-FACULTADES-TABLA">
+        <div class=" col-10  ">
           <table className='table fs-6 '>
-            <thead class ="bg-primary text-white">
+            <thead >
               <tr class>
-                  <th>ID</th>
-                  <th>Nombre</th>
-                  <th>Descripción</th>
-                  <th>Acciones</th>
+                  <th style={{width: 100}}>ID</th>
+                  <th style={{width:100}}>Descripción</th>
+                  <th style={{width:150}}>Nombre</th>
+                  <th style={{width:100}}>Acciones</th>
               </tr>
             </thead>
             <tbody >

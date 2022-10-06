@@ -60,15 +60,15 @@ function ListaEspecialidad()  {
       filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
   }
   //---------
-  filtrado = filtrado.slice(currentPage,currentPage+6);
+  filtrado = filtrado.slice(currentPage,currentPage+5);
 
   const nextPage = () =>{
     if(filtrado.length>=currentPage) //VER CODIGO
-      SetCurrentPage(currentPage+6);
+      SetCurrentPage(currentPage+5);
   }
   const previousPage =() =>{
     if(currentPage>0)
-      SetCurrentPage(currentPage-6);
+      SetCurrentPage(currentPage-5);
   }
 
   //------
