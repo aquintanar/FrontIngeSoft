@@ -1,0 +1,102 @@
+.GESTION-GENERAL-TEXT {
+    font-size: 40px;
+    font-family: Monserrat;
+}
+/*
+Estilos de listar temas
+*/
+
+.LISTAR-TEMAS-CONTAINER{
+    margin-left: 24em;
+    width: 800px;
+}
+.BUSQUEDA-TEMAS-TEXT{
+    font-size: 32px;
+    font-family: Monserrat;
+}
+
+.LISTAR-TEMAS-TEXT{
+    font-family: Monserrat;
+    font-size: 32px;
+}
+.FILTRO-LISTAR-TEMAS label{
+    font-size: 16px;
+    font-family: roboto;
+}
+.FILTRO-LISTAR-TEMAS {
+    width: 40em;
+    margin-bottom: 0px;
+}
+.FILTRO-LISTAR-TEMAS input{
+    height:35px;
+    font-size: 13px;
+    font-family: roboto;
+}
+.FILTRO-LISTAR-ESPECIALIDADES select{
+    height:35px;
+    font-size: 13px;
+    font-family: roboto;
+}
+.LISTAR-ESPECIALIDADES-BOTON{
+    display: flex;
+    justify-content: flex-end;
+}
+.LISTAR-ESPECIALIDADES-BOTON button{
+    border-radius: 4px;
+    background-color: #042354;
+    border:none;
+    font-family: roboto;
+    transition:all 0.5s;
+    cursor:pointer;
+    width: 120px;
+}
+.LISTAR-ESPECIALIDADES-BOTON button:hover{
+    background-color: #2179D4;
+}
+.LISTAR-ESPECIALIDADES-BOTON button span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+.LISTAR-ESPECIALIDADES-BOTON button span:after{
+    content:'\2295';
+    position:absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.LISTAR-ESPECIALIDADES-BOTON button:hover span{
+    
+    padding-right:25px;
+}
+.LISTAR-ESPECIALIDADES-BOTON button:hover span:after{
+    
+    opacity: 1;
+    right: 0;
+}
+.LISTAR-ESPECIALIDADES-TABLA th{
+    font-size: 17px;
+    font-family: roboto;
+}
+.LISTAR-ESPECIALIDADES-TABLA td{
+    font-size: 14px;
+    font-family: roboto;
+}
+.PAGINACION-SIGUIENTE{
+    width:40px;
+    height: 34px;
+    background-color: #042354;
+    color:white;
+    align-items: center;
+    align-content: center;
+}
+
+.PAGINACION-ANTERIOR{
+    width:40px;
+    height: 34px;
+    background-color: #042354;
+    color:white;
+    align-content: center;
+}
