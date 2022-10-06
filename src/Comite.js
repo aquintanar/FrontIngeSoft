@@ -12,10 +12,11 @@ function Comite() {
         <div>    
 
               <SidebarComite/>
+              <BarraVolver/>
               <Routes>
                   <Route path='temaseleccionado' exact element= {<TemaSeleccionado/>}/>
               </Routes>
-              <BarraVolver/>
+              
         </div>
     )
   }
