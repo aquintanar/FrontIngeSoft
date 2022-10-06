@@ -8,17 +8,23 @@ import {  useNavigate } from 'react-router-dom';
 import '../../stylesheets/Administrador.css'
 import useModal from '../../hooks/useModals';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
-
-
+import * as BsIcons from 'react-icons/bs';
+/*
 const url= "https://localhost:7012/api/Especialidad/";
 const urlFacu= "https://localhost:7012/api/Facultad/";
-
+*/
+const url= "http://44.210.195.91/api/Especialidad/";
+const urlFacu= "http://44.210.195.91/api/Facultad/";
 
 function ListaEspecialidad()  {
   const [data, setData]=useState([]);
   const [facus, setFacus] = useState([]);
   const [search, setSearch] = useState("");
   const [fil, setFil] = useState(0);
+
+  //------
+  const [currentPage,SetCurrentPage] = useState(0);
+  //-----------
   let navigate = useNavigate();
   const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
   const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
@@ -53,7 +59,19 @@ function ListaEspecialidad()  {
     if(search)//filtro por nombre
       filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
   }
+  //---------
+  filtrado = filtrado.slice(currentPage,currentPage+6);
 
+  const nextPage = () =>{
+    if(filtrado.length>=currentPage) //VER CODIGO
+      SetCurrentPage(currentPage+6);
+  }
+  const previousPage =() =>{
+    if(currentPage>0)
+      SetCurrentPage(currentPage-6);
+  }
+
+  //------
   //Controla cambio en combo box--
   const cambioSelect =e=>{
     const valor = parseInt(e.target.value)
@@ -100,8 +118,10 @@ function ListaEspecialidad()  {
      peticionGet();
      petitionFacu();
   },[])
+  
+  
+ 
 
-    
   return (      
     <div class=" container LISTAR-ESPECIALIDADES-CONTAINER">   
 
@@ -129,7 +149,8 @@ function ListaEspecialidad()  {
 
 
       <p class="text-start  LISTAR-ESPECIALIDADES-TEXT" >Lista de Especialidades</p>
-
+      <button onClick={previousPage} className="PAGINACION-SIGUIENTE"><BsIcons.BsCaretLeftFill/></button>
+      <button onClick={nextPage} className="PAGINACION-ANTERIOR"><BsIcons.BsCaretRightFill/></button>
       <div class = "row LISTAR-ESPECIALIDADES-TABLA">
         <div class=" col-10  ">
           <table className='table fs-6 '>
