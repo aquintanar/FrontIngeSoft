@@ -10,7 +10,11 @@
     "axios": "^0.27.2",
     "bootstrap": "^5.2.1",
     "react": "^18.2.0",
+<<<<<<< HEAD
     "react-bootstrap": "^2.5.0",
+=======
+    "react-bootstrap-table": "^4.3.1",
+>>>>>>> 39204e9 (cambios)
     "react-bootstrap-table-next": "^4.0.3",
     "react-bootstrap-table2-filter": "^1.3.3",
     "react-bootstrap-table2-toolkit": "^2.1.3",
