@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate,useParams } from 'react-router-dom';
-import { render } from "react-dom";
-import TextareaAutosize from "react-textarea-autosize";
+
+
+import useModal from '../../hooks/useModals';
 //import './DatosFacultad.css';
 import axios from 'axios';
+import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
+import {  Button} from '@material-ui/core';
 import '../../stylesheets/Administrador.css'
 /*
 const url= "https://localhost:7012/api/Facultad/";
@@ -18,7 +21,10 @@ function DatosFacultad() {
   const [subTitulo,setSubtitulo] = useState("Nueva Facultad");
   const [imagen, setImagen] = useState(null);
   const [espes, setEspes] = useState([]);
-
+  const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
+  const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
+  const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
+  const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
 
   const [facultadSeleccionada, setFacultadSeleccionada]=useState({
     idFacultad: 0,
@@ -27,42 +33,40 @@ function DatosFacultad() {
     foto: null
 })
 
-var nombreAux;
-var descripcionAux;
-const handleChange=  (e)=>{
-    const {name, value}=e.target;
-   // convertirBase64(e.target.files);
-    setFacultadSeleccionada(prevState=>({
-      ...prevState,
-      [name]: value,
-      foto: imagen
-    }))
-    console.log(facultadSeleccionada);
-  }
- // facultadSeleccionada.foto = arrayAuxiliar[1];
-const convertirBase64=(archivos)=>{
-Array.from(archivos).forEach(archivo=>{
-  var reader = new FileReader();
-  reader.readAsDataURL(archivo);
-  reader.onload=function(){
-    var arrayAuxiliar=[];
-    var base64 = reader.result;
-    arrayAuxiliar=base64.split(',');
-  /*  setFacultadSeleccionada({ 
-        foto: arrayAuxiliar[1],
-        nombre: nombreAux,
-        descripcion: descripcionAux
-    
-    });*/
-    facultadSeleccionada.foto = arrayAuxiliar[1];
-   setImagen(arrayAuxiliar[1]);
-    console.log(arrayAuxiliar[1]);
-    console.log(facultadSeleccionada);
-  }
-  
-})
 
+const handleChange=  (e)=>{
+  const {name, value}=e.target;
+ // convertirBase64(e.target.files);
+  setFacultadSeleccionada(prevState=>({
+    ...prevState,
+    [name]: value,
+    ///foto: imagen
+  }))
+  console.log(facultadSeleccionada);
 }
+ // facultadSeleccionada.foto = arrayAuxiliar[1];
+ const convertirBase64=(archivos)=>{
+  Array.from(archivos).forEach(archivo=>{
+    var reader = new FileReader();
+    reader.readAsDataURL(archivo);
+    reader.onload=function(){
+      var arrayAuxiliar=[];
+      var base64 = reader.result;
+      arrayAuxiliar=base64.split(',');
+      facultadSeleccionada.foto = arrayAuxiliar[1];
+     setImagen(arrayAuxiliar[1]);
+      console.log(arrayAuxiliar[1]);
+    //  console.log(facultadSeleccionada);
+    }
+    
+  })
+  //setFacultadSeleccionada(prevState=>({
+    //  ...prevState,
+   //foto: imagen}))
+    console.log(facultadSeleccionada);
+  
+  
+  }
 
 // <img src={`data:image/jpeg;base64,${facultadSeleccionada.foto}`}
 
@@ -75,7 +79,8 @@ Array.from(archivos).forEach(archivo=>{
         _method: 'POST'
       })
     .then(response=>{
-      navigate("../gestion/gesFacultad");
+      closePostModal();
+      openGuardadoModal();
     }).catch(error =>{
       console.log(error.message);
     })
@@ -86,8 +91,8 @@ Array.from(archivos).forEach(archivo=>{
   const peticionPut=async()=>{
     await axios.put(url+"PutFacultad",facultadSeleccionada)
     .then(response=>{
-      console.log("modificadoooo");
-      navigate("../gestion/gesFacultad");
+      closeEditModal();
+      openEditadoModal();
     }).catch(error =>{
       console.log(error.message);
     })
@@ -97,10 +102,10 @@ Array.from(archivos).forEach(archivo=>{
   //Selección entre modificar o insertar
   const peticionSelecter =()=>{
     if(id==='0'){
-      peticionPost();
+        openPostModal();
     }
     else{
-      peticionPut();  
+        openEditModal();  
     }
   }
 
@@ -131,22 +136,21 @@ Array.from(archivos).forEach(archivo=>{
   }
 
 
-  const cargarFoto=async()=>{
-    if(id!=='0'){
-      await axios.get(url)
-      .then(response=>{
-        setEspes(response.data);
-      }).catch(error =>{
-        console.log(error.message);
-      })
-    }
+  const cerrarPut=()=>{
+    closeEditadoModal();
+    navigate("../gestion/gesFacultad");
+  }
+
+  const cerrarPost=()=>{
+    closeGuardadoModal();
+    navigate("../gestion/gesFacultad");
   }
 
 
   useEffect(()=>{
     cargarFacultad();
     cargarEspecialidades();
-    cargarFoto();
+
     },[],[])
 
 
@@ -218,6 +222,51 @@ Array.from(archivos).forEach(archivo=>{
           </table>
         </div>
       </div>
+      <ModalPregunta
+              isOpen={isOpenEditModal} 
+              closeModal={closeEditModal}
+              procedimiento = "modificar"
+              objeto="la facultad"
+              elemento={facultadSeleccionada && facultadSeleccionada.nombre}
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn  btn-success btn-lg" onClick={()=>peticionPut()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Button class="btn btn-danger btn-lg"  onClick={closeEditModal}>Cancelar</Button>
+              </div>
+            </ModalPregunta>
+                        
+            <ModalPregunta
+              isOpen={isOpenPostModal} 
+              closeModal={closePostModal}
+              procedimiento = "guardar"
+              objeto="la facultad"
+              elemento={facultadSeleccionada && facultadSeleccionada.nombre}
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn  btn-success btn-lg" onClick={()=>peticionPost()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Button class="btn btn-danger btn-lg"  onClick={closePostModal}>Cancelar</Button>
+              </div>
+            </ModalPregunta>
+
+            <ModalConfirmación
+              isOpen={isOpenEditadoModal} 
+              closeModal={closeEditadoModal}
+              procedimiento= "modificado"
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn btn-success btn-lg" onClick={()=>cerrarPut()}>Entendido</Button>
+              </div>
+            </ModalConfirmación>
+
+            <ModalConfirmación
+              isOpen={isOpenGuardadoModal} 
+              closeModal={closeGuardadoModal}
+              procedimiento= "guardado"
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn btn-success btn-lg" onClick={()=>cerrarPost()}>Entendido</Button>
+              </div>
+            </ModalConfirmación>
 
             <div class="row INSERTAR-FACULTAD-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">

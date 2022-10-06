@@ -9,6 +9,8 @@ import {  useNavigate } from 'react-router-dom';
 //import './DatosFacultad.css';
 import * as BsIcons from 'react-icons/bs';
 import '../../stylesheets/Administrador.css'
+import useModal from '../../hooks/useModals';
+import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 /*
 const url= "https://localhost:7012/api/Facultad/";
 */ 
@@ -60,7 +62,8 @@ function ListaFacultad()  {
   const [modalEliminar, setModalEliminar]=useState(false);
   const [currentPage,SetCurrentPage] = useState(0);
   let navigate = useNavigate();
-
+  const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
+  const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
   //objeto Facultad--
   const [facultadSeleccionada, setFacultadSeleccionada]=useState({
     idFacultad: '',
@@ -83,10 +86,10 @@ function ListaFacultad()  {
   }
   else{
     if(search){//ambos filtros
-      filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+      filtrado=data.filter((dato)=>dato.descripcion.toLowerCase().includes(search.toLocaleLowerCase())) ;
     }
     if(search)//filtro por nombre
-      filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+      filtrado=data.filter((dato)=>dato.descripcion.toLowerCase().includes(search.toLocaleLowerCase())) ;
   }
 
   //----------------
@@ -116,7 +119,8 @@ function ListaFacultad()  {
         data: facultadSeleccionada,
       }).then(response=>{
       setData(data.filter(facultad=>facultad.idFacultad!==facultadSeleccionada.idFacultad));
-      abrirCerrarModalEliminar();
+      closeDeleteModal();
+      openConfirmModal();
     })
   }
 
@@ -128,7 +132,7 @@ function ListaFacultad()  {
   //Selecciona facultad a eliminar--
   const seleccionarFacultad=(facultad)=>{
     setFacultadSeleccionada(facultad);
-    abrirCerrarModalEliminar();
+    openDeleteModal();
   }
 
   useEffect(()=>{
@@ -197,12 +201,28 @@ function ListaFacultad()  {
         </div>
       </div>
 
-      <Modal
-      open={modalEliminar}
-      onClose={abrirCerrarModalEliminar}>
-          {bodyEliminar}
-      </Modal>
-      
+      <ModalPregunta
+        isOpen={isOpenDeleteModal} 
+        closeModal={closeDeleteModal}
+        procedimiento = "eliminar"
+        objeto="la especialidad"
+        elemento={facultadSeleccionada && facultadSeleccionada.nombre}
+      >
+        <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+          <Button class="btn  btn-success btn-lg" onClick={()=>peticionDelete()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <Button class="btn btn-danger btn-lg"  onClick={closeDeleteModal}>Cancelar</Button>
+        </div>
+      </ModalPregunta>
+
+      <ModalConfirmación
+        isOpen={isOpenConfirmModal} 
+        closeModal={closeConfirmModal}
+        procedimiento= "eliminado"
+      >
+        <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+          <Button class="btn btn-success btn-lg" onClick={closeConfirmModal}>Entendido</Button>
+        </div>
+      </ModalConfirmación>
       <div className='d-grid gap-2 d-md-flex justify-content-md-end '>
           <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosFacultad/0")}}>Insertar</button>
       </div>             
