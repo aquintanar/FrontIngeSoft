@@ -7,10 +7,16 @@ import {makeStyles, createTheme} from '@material-ui/core/styles';
 import {  Modal, Button} from '@material-ui/core';
 import {  useNavigate } from 'react-router-dom';
 //import './DatosEspecilidad.css';
-
+/*
 const url= "https://localhost:7012/api/Semestre/";
 const urlFacu= "https://localhost:7012/api/Facultad/";
 const urlEsp= "https://localhost:7012/api/Especialidad/";
+
+
+*/
+const url= "http://44.210.195.91/api/Especialidad/";
+const urlFacu= "http://44.210.195.91/api/Facultad/";
+const urlEsp= "http://44.210.195.91/api/Semestre/";
 
 const themeX = createTheme({
   palette: {

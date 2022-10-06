@@ -156,18 +156,18 @@ function ListaEspecialidad()  {
           <table className='table fs-6 '>
             <thead class >
               <tr class>
-                  <th>ID</th>
-                  <th>Nombre</th>
-                  <th>Descripción</th>
-                  <th>Facultad</th>
-                  <th>Acciones</th>
+                  <th style={{width: 100}}>ID</th>
+                  <th style ={{width: 150}}>Nombre</th>
+                  <th style = {{width:100}}>Descripción</th>
+                  <th style = {{width:100}}>Facultad</th>
+                  <th style = {{width:200}}>Acciones</th>
               </tr>
             </thead>
             <tbody >
               {filtrado.map(especialidad => (
                 <tr key={especialidad.idEspecialidad}>
-                    <td>{especialidad.idEspecialidad}</td>
-                    <td>{especialidad.nombre}</td>                    
+                    <td >{especialidad.idEspecialidad}</td>
+                    <td >{especialidad.nombre}</td>                    
                     <td>{especialidad.descripcion}</td>
                     <td>{especialidad.facultad.nombre}</td>
                     <td>
