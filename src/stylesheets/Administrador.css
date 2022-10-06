@@ -252,7 +252,7 @@ ESTILOS DE LISTAR FACULTAD
     font-size: 13px;
     font-family: roboto;
 }
-/*FALTA DESDE ACA*/
+
 .LISTAR-ESPECIALIDADES-BOTON{
     display: flex;
     justify-content: flex-end;
@@ -315,4 +315,77 @@ ESTILOS DE LISTAR FACULTAD
     background-color: #042354;
     color:white;
     align-content: center;
+}
+/*
+
+ESTILOS DE INSERTAR FACULTAD
+*/
+.REGISTRAR-FACULTAD-CONTAINER{
+    margin-left: 24em;
+    width: 800px;
+}
+.REGISTRAR-FACULTAD-TEXT{
+    font-size: 32px;
+    font-family: monserrat;
+}
+.DATOS-FACULTAD p{
+    font-size: 16px;
+    
+    font-family: roboto;
+}
+.DATOS-FACULTAD input{
+    height:40px;
+    font-size: 13px;
+    font-family: roboto;
+}
+.DATOS-FACULTAD select{
+    height:35px;
+}
+.INSERTAR-FACULTAD-BOTONES button{
+    border-radius: 4px;
+    font-family: roboto;
+    border:none;
+    transition:all 0.5s;
+    cursor:pointer;
+    width: 120px;
+}
+.LISTAR-FACULTAD-BOTON .GUARDAR:hover{
+    background-color: #2179D4;
+}
+.LISTAR-FACULTAD-BOTON .CANCELAR:hover{
+    background-color: #C80909;
+}
+.INSERTAR-FACULTAD-BOTONES .GUARDAR{
+    background-color: #042354;
+}
+.INSERTAR-FACULTAD-BOTONES .CANCELAR{
+    background-color: #B80000;
+}
+.INSERTAR-FACULTAD-BOTONES button span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+.INSERTAR-FACULTAD-BOTONES .GUARDAR span:after{
+    content:'\1F4C1';
+}
+.INSERTAR-FACULTAD-BOTONES .CANCELAR span:after{
+    content:'\1F5D9';
+}
+.INSERTAR-FACULTAD-BOTONES button span:after{
+    position:absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.INSERTAR-FACULTAD-BOTONES button:hover span{
+    
+    padding-right:25px;
+}
+.INSERTAR-FACULTAD-BOTONES button:hover span:after{
+    
+    opacity: 1;
+    right: 0;
 }

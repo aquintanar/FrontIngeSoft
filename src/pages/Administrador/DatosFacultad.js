@@ -148,14 +148,14 @@ Array.from(archivos).forEach(archivo=>{
 
 
   return (
-    <div class="container">
+    <div class="REGISTRAR-FACULTAD-CONTAINER">
         <div class="row">
-            <p class="text-start  fs-1 mt-5 fw-bold">Gestión General</p>
-            <p class="text-start fs-3 mb-4 fw-bold">Registro de Facultad - {subTitulo}</p>
+            <p class="GESTION-GENERAL-TEXT">Gestión General</p>
+            <p class="REGISTRAR-FACULTAD-TEXT">Registro de Facultad - {subTitulo}</p>
         </div> 
-            <div class="row">
+            <div class="row DATOS-FACULTAD">
                 <div class="col-7" >
-                    <div class="text-start fs-5 fw-normal  mb-1">Nombre de la facultad</div>
+                    <div class="text-start fs-5 fw-normal  mb-1"><p>Nombre de la facultad</p></div>
                     <div class="input-group mb-3 ">
                         <input type="text"  class="form-control" name="nombre" placeholder="Facultad" 
                           onChange={handleChange} value={facultadSeleccionada && facultadSeleccionada.nombre } />
@@ -166,9 +166,9 @@ Array.from(archivos).forEach(archivo=>{
 
             </div>
 
-            <div class = "row">
+            <div class = "row DATOS-FACULTAD">
                 <div class = "col-12">
-                    <div class="text-start fs-5 fw-normal ">Descripción</div>
+                    <div class="text-start fs-5 fw-normal "><p>Descripción</p></div>
                     <div class="input-group input-group-lg mb-3">
                         <input type="text"  class="form-control" name="descripcion" placeholder="Descripcion" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
                           onChange={handleChange} value={facultadSeleccionada && facultadSeleccionada.descripcion}  />
@@ -180,9 +180,9 @@ Array.from(archivos).forEach(archivo=>{
 
 
     
-            <div class = "row">
+            <div class = "row DATOS-FACULTAD">
                 <div class = "col-12">
-    <div class="text-start fs-5 fw-normal ">Foto</div>
+    <div class="text-start fs-5 fw-normal "><p>Foto</p></div>
                    
                     <img src={`data:image/jpeg;base64,${facultadSeleccionada.foto}`} alt="..." height="200px"/> 
                     <div class="input-group input-group-lg mb-3">
@@ -216,10 +216,10 @@ Array.from(archivos).forEach(archivo=>{
         </div>
       </div>
 
-            <div class="row">                            
+            <div class="row INSERTAR-FACULTAD-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold me-3 " type="button" onClick={()=>{navigate("../gestion/gesFacultad")}}>Cancelar</button>
-                    <button class="btn btn-primary fs-4 fw-bold " type="button" onClick={()=>peticionSelecter()}>Guardar</button>
+                    <button class="btn btn-primary fs-4 fw-bold  CANCELAR " type="button" onClick={()=>{navigate("../gestion/gesFacultad")}}><span>Cancelar</span></button>
+                    <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
                 </div>
             </div>
     </div>
