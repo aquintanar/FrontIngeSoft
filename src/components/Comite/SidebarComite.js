@@ -7,7 +7,7 @@ import { SidebarData } from './SidebarDataComite';
 import SubMenu from './SubMenuComite';
 import { IconContext } from 'react-icons/lib';
 import '../../Pagina.css';
-import '../../stylesheets/SideBar.css'
+
 
 const NavIcon = styled(Link)`
   margin-left: 2rem;
@@ -25,7 +25,7 @@ const SidebarNav = styled.nav`
   display: flex;
   justify-content: center;
   position: fixed;
-  top: 20;
+  top: 0;
   left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
   transition: 350ms;
   z-index: 10;
@@ -45,7 +45,7 @@ const SidebarComite = () => {
       <IconContext.Provider value={{ color: '#fff' }}>
         <header className="header">
 
-          <div className="">
+          <div className="contenedor">
               <div className="barra">
                   <img className="imagen__barra" src={require('../../imagenes/menu.png')} onClick={showSidebar}  alt="menu"></img>
                  

@@ -44,7 +44,7 @@ export const SidebarData = [
             },
             {
                 title: 'Temas de  tesis',
-                path: 'temaseleccionado',
+                path: 'temaTesis',
                 icon: <FaIcons.FaUserGraduate />
             }
         ]

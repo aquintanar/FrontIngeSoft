@@ -1,11 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BarraVolver } from './components/BarraVolver';
 import React, { useState, useEffect } from 'react';
 import './Pagina.css'
 import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom';
-import { TemaSeleccionado } from './components/Comite/TemaSeleccionado';
 import NavBar from "./NavBar";
 import Home  from "./Home";
 import Comite  from "./Comite";
