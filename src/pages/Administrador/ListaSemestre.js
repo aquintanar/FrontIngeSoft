@@ -7,17 +7,17 @@ import {makeStyles, createTheme} from '@material-ui/core/styles';
 import {  Modal, Button} from '@material-ui/core';
 import {  useNavigate } from 'react-router-dom';
 //import './DatosEspecilidad.css';
-/*
+
 const url= "https://localhost:7012/api/Semestre/";
 const urlFacu= "https://localhost:7012/api/Facultad/";
 const urlEsp= "https://localhost:7012/api/Especialidad/";
 
+/*
 
-*/
 const url= "http://44.210.195.91/api/Especialidad/";
 const urlFacu= "http://44.210.195.91/api/Facultad/";
 const urlEsp= "http://44.210.195.91/api/Semestre/";
-
+*/
 const themeX = createTheme({
   palette: {
     type: "dark",
@@ -277,7 +277,7 @@ function ListaSemestre()  {
 
       <p class="text-start     LISTAR-SEMESTRE-TEXT" >Listado de Semestres</p>
       <div className='d-grid gap-2 d-md-flex justify-content-md-end '>
-          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosSemestre")}}>Insertar</button>
+          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosSemestre/0")}}>Insertar</button>
       </div>   
       <div class = "row LISTAR-SEMESTRE-TABLA">
         <div class=" col-12 Table-style">
@@ -305,9 +305,9 @@ function ListaSemestre()  {
                         return <td>{element.nombre}</td>;
                       }
                     })}
-                    <td>{semestre.enCurso}</td>
+                    <td>{semestre.enCurso ? "Si" : "No"}</td>
                     <td>
-                      <button className="btn" onClick={()=>{navigate("datosSemestre")}}> <FaIcons.FaEdit/></button>
+                      <button className="btn" onClick={()=>{navigate("datosSemestre/" + semestre.idSemestre)}}> <FaIcons.FaEdit/></button>
                       <button  className=" btn" onClick={()=>seleccionarSemestre(semestre, 'Eliminar')}> <BootIcons.BsTrash/></button>
                     </td>
                 </tr>

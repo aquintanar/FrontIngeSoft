@@ -22,7 +22,7 @@ function Administrador() {
                   <Route path='gestion/gesEspecialidad' exact element= {<ListaEspecialidad/>}/>
                   <Route path='gestion/gesEspecialidad/datosEspecialidad/:id' exact  element= {<DatosEspecialidad/>}/>
                   <Route path='gestion/gesSemestre' exact element= {<ListaSemestre/>}/>
-                  <Route path='gestion/gesSemestre/datosSemestre'  exact element= {<DatosSemestre/>}/>
+                  <Route path='gestion/gesSemestre/datosSemestre/:id'  exact element= {<DatosSemestre/>}/>
               </Routes>
         </div>
     )
