@@ -4,6 +4,7 @@ import { render } from "react-dom";
 import TextareaAutosize from "react-textarea-autosize";
 //import './DatosFacultad.css';
 import axios from 'axios';
+import '../../stylesheets/Administrador.css'
 
 const url= "https://localhost:7012/api/Facultad/";
 const urlEspe= "https://localhost:7012/api/Especialidad/";

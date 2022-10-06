@@ -221,7 +221,7 @@ function ListaSemestre()  {
     <div class="LISTAR-SEMESTRE-CONTAINER">   
 
       <p class=" GESTION-GENERAL-TEXT">Gestión General</p>
-      <p class="GESTION-SEMESTRE-TEXT">Gestión de Semestre Académico</p>
+      <p class="GESTION-SEMESTRE-TEXT">Búsqueda de Semestre Académico</p>
 
       <div class="row FILTRO-LISTAR-SEMESTRE">
           <div class="col-lg-6 " >

@@ -7,7 +7,7 @@ import {makeStyles, createTheme} from '@material-ui/core/styles';
 import {  Modal, Button} from '@material-ui/core';
 import {  useNavigate } from 'react-router-dom';
 //import './DatosFacultad.css';
-
+import '../../stylesheets/Administrador.css'
 const url= "https://localhost:7012/api/Facultad/";
 
 
@@ -131,14 +131,14 @@ function ListaFacultad()  {
   )
     
   return (      
-    <div class="container">   
+    <div class="LISTAR-FACULTAD-CONTAINER">   
 
-      <p class=" text-start  fs-2 my-1 fw-bold">Gestión General</p>
-      <p class="text-start    fs-4 mb-2 fw-bold">Búsqueda de Facultad</p>
+      <p class=" GESTION-GENERAL-TEXT">Gestión General</p>
+      <p class="BUSQUEDA-FACULTAD-TEXT">Búsqueda de Facultad</p>
 
-      <div class="row">
+      <div class="row FILTRO-LISTAR-FACULTADES">
           <div class="col-lg-7" >
-              <div class="text-start fs-6  mb-1 fw-normal ">Ingresar nombre de la facultad</div>
+              <div class="text-start fs-6  mb-1 fw-normal "><p>Ingresar nombre de la facultad</p></div>
               <div class="input-group mb-2 ">
                   <input type="text" value={search} class="form-control" name="search" placeholder="Facultad" aria-label="serach" onChange={buscador}/>
               </div>
