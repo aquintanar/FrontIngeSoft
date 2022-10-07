@@ -107,3 +107,13 @@ Estilos de listar temas
     padding:0px;
     padding-top: 20px;
 }
+.TEMAS-TEXT{
+    font-size: 40px;
+    font-family: Monserrat;
+    margin-top: 20px;
+}
+.LISTADO-TEMAS-TEXT{
+    font-size: 32px;
+    font-family: Monserrat;
+    margin-top: 20px;
+}

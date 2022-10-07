@@ -189,9 +189,9 @@ function ListaTemaTesis()  {
     return (
         <div>    
               <div className=" LISTAR-TEMAS-CONTAINER">
-                    <h2 className="textoPrincipal">Temas</h2>
+                    <h2 className="TEMAS-TEXT">Temas</h2>
                     <div className="contenedorTabla">
-                        <h4 className="textoTabla"> Listado de Propuestas  </h4>
+                        <h4 className=" LISTADO-TEMAS-TEXT"> Listado de Propuestas  </h4>
                         <ToolkitProvider
                           keyField="idTemaTesis"
                           data={ data.slice(0,4) }
