@@ -223,8 +223,8 @@ function ListaFacultad()  {
           <Button class="btn btn-success btn-lg" onClick={closeConfirmModal}>Entendido</Button>
         </div>
       </ModalConfirmación>
-      <div className='d-grid gap-2 d-md-flex justify-content-md-end '>
-          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosFacultad/0")}}>Insertar</button>
+      <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
+          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosFacultad/0")}}>Registrar</button>
       </div>             
     </div>              
   )

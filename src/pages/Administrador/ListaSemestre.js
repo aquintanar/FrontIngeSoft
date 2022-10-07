@@ -6,6 +6,7 @@ import * as BootIcons  from "react-icons/bs";
 import {makeStyles, createTheme} from '@material-ui/core/styles';
 import {  Modal, Button} from '@material-ui/core';
 import {  useNavigate } from 'react-router-dom';
+import * as BsIcons from 'react-icons/bs';
 //import './DatosEspecilidad.css';
 /*
 const url= "https://localhost:7012/api/Semestre/";
@@ -62,6 +63,7 @@ function ListaSemestre()  {
   const [fol, setFol] = useState(0);
   const [es, setEs] = useState(0);
   const [fac, setFac] = useState(0);
+  const [currentPage,SetCurrentPage]=useState(0);
   let navigate = useNavigate();
 
   const [semestreSeleccionada, setSemestreSeleccionada]=useState({
@@ -105,10 +107,24 @@ function ListaSemestre()  {
           filtrado=data.filter((dato)=>dato.anho===fol) ;
          if(es)
           filtrado=data.filter((dato)=>dato.idEspecialidad===es) ;
+      
       }
+      
     }
   }
+  //---------
+  filtrado = filtrado.slice(currentPage,currentPage+5);
 
+  const nextPage = () =>{
+    if(filtrado.length>=currentPage) //VER CODIGO
+      SetCurrentPage(currentPage+5);
+  }
+  const previousPage =() =>{
+    if(currentPage>0)
+      SetCurrentPage(currentPage-5);
+  }
+
+  //------
 
       //Controla cambio en combo box--
   const cambioSelect =e=>{
@@ -276,8 +292,10 @@ function ListaSemestre()  {
       </div>
 
       <p class="text-start     LISTAR-SEMESTRE-TEXT" >Listado de Semestres</p>
-      <div className='d-grid gap-2 d-md-flex justify-content-md-end '>
-          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosSemestre/0")}}>Insertar</button>
+      <button onClick={previousPage} className="PAGINACION-SIGUIENTE"><BsIcons.BsCaretLeftFill/></button>
+      <button onClick={nextPage} className="PAGINACION-ANTERIOR"><BsIcons.BsCaretRightFill/></button>
+      <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
+          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosSemestre/0")}}>Registrar</button>
       </div>   
       <div class = "row LISTAR-SEMESTRE-TABLA">
         <div class=" col-12 Table-style">
