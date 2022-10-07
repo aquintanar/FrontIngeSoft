@@ -186,7 +186,9 @@ function DatosSemestre() {
 
     //Modificar semestre--
     const peticionPut=async()=>{
-        await axios.put(url+"ModifySemestre", semestreSeleccionada)
+        await axios.post(url+"ModifySemestre", semestreSeleccionada),{
+          method: 'PUT', 
+        }
         .then(response=>{
         closeEditModal();
         openEditadoModal();
