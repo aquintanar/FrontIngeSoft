@@ -9,18 +9,14 @@ import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 import DataTable from "./DataTable";
 import * as Ionicons5 from 'react-icons/io5';
 import * as BootIcons  from "react-icons/bs";
-
 /*
 const url= "https://localhost:7012/api/Semestre/";
 const urlFacu= "https://localhost:7012/api/Facultad/";
 const urlEsp= "https://localhost:7012/api/Especialidad/";
 const urlUser= "https://localhost:7012/api/Asesor/";
 const urlComi= "https://localhost:7012/api/ComiteTesis/";
-
 const urlSemComi= "https://localhost:7012/api/SemestreXComiteTesis/";
-=======
 */
-
 
 const url= "http://44.210.195.91/api/Semestre/";
 const urlFacu= "http://44.210.195.91/api/Facultad/";
@@ -186,14 +182,14 @@ function DatosSemestre() {
 
     //Modificar semestre--
     const peticionPut=async()=>{
-        await axios.post(url+"ModifySemestre", semestreSeleccionada),{
+        await axios.post(url+"ModifySemestre/", semestreSeleccionada,{
           method: 'PUT', 
-        }
-        .then(response=>{
-        closeEditModal();
-        openEditadoModal();
+        })
+          .then(response=>{
+          closeEditModal();
+          openEditadoModal();
         }).catch(error =>{
-        console.log(error.message);
+            console.log(error.message);
         })
     }
 
@@ -215,7 +211,7 @@ function DatosSemestre() {
 
     //elimina coordinador en ese semestre
     const peticionDelete=async()=>{
-        await axios.delete(urlSemComi+ "/DeleteSemestreXComiteTesis?idSemestre="+ parseInt(id) + "&idComiteTesis=" + coordinadorSeleccionada.idComiteTesis).then(response=>{
+        await axios.delete(urlSemComi+ "DeleteSemestreXComiteTesis?idSemestre="+ parseInt(id) + "&idComiteTesis=" + coordinadorSeleccionada.idComiteTesis).then(response=>{
           setCoord(data.filter(coordinador=>coordinador.idComiteTesis!==coordinadorSeleccionada.idComiteTesis));
           closeDeleteModal();
           openConfirmModal();
