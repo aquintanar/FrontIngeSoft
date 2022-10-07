@@ -100,3 +100,10 @@ Estilos de listar temas
     color:white;
     align-content: center;
 }
+.contenedorTabla{
+    padding:0px;
+}
+.textoPrincipal{
+    padding:0px;
+    padding-top: 20px;
+}

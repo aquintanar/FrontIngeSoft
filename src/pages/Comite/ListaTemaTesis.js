@@ -8,7 +8,7 @@ import {  Modal, Button, TextField} from '@material-ui/core';
 import {makeStyles, createTheme} from '@material-ui/core/styles';
 import axios from 'axios';
 import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
-
+import '../../stylesheets/Comite.css'
 const themeX = createTheme({
     palette: {
       type: "dark",
@@ -188,13 +188,13 @@ function ListaTemaTesis()  {
 
     return (
         <div>    
-              <div className="contenedor2">
+              <div className=" LISTAR-TEMAS-CONTAINER">
                     <h2 className="textoPrincipal">Temas</h2>
                     <div className="contenedorTabla">
                         <h4 className="textoTabla"> Listado de Propuestas  </h4>
                         <ToolkitProvider
                           keyField="idTemaTesis"
-                          data={ data }
+                          data={ data.slice(0,4) }
                           columns={ columns }
                           search
                           >
