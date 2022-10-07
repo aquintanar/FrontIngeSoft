@@ -3,21 +3,22 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SidebarLink = styled(Link)`
-  display: flex;
-  color: #e1e9fc;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  list-style: none;
-  height: 60px;
-  text-decoration: none;
-  font-size: 18px;
+display: flex;
+color: #ffffff;
+justify-content: space-between;
+align-items: center;
+padding: 20px;
+list-style: none;
+height: 60px;
+text-decoration: none;
+font-size: 18px;
 
-  &:hover {
-    background: #2179D4;
-    border-left: 4px solid #632ce4;
-    cursor: pointer;
-  }
+&:hover {
+  background: #2179D4;
+  border-left: 4px solid #ffffff;
+  color:#ffffff;
+  cursor: pointer;
+}
 `;
 
 const SidebarLabel = styled.span`
@@ -25,19 +26,19 @@ const SidebarLabel = styled.span`
 `;
 
 const DropdownLink = styled(Link)`
-  background: #414757;
-  height: 60px;
-  padding-left: 3rem;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #f5f5f5;
-  font-size: 18px;
+background: #D9D9D9;
+height: 60px;
+padding-left: 3rem;
+display: flex;
+align-items: center;
+text-decoration: none;
+color: #000000;
+font-size: 18px;
 
-  &:hover {
-    background: #632ce4;
-    cursor: pointer;
-  }
+&:hover {
+  background: #9E9E9E;
+  cursor: pointer;
+}
 `;
 
 const SubMenu = ({ item }) => {

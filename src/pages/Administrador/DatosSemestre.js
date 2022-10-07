@@ -182,15 +182,15 @@ function DatosSemestre() {
 
     //Modificar semestre--
     const peticionPut=async()=>{
-        await axios.post(url+"ModifySemestre/", semestreSeleccionada,{
+        /*await axios.post(url+"ModifySemestre", semestreSeleccionada),{
           method: 'PUT', 
         })
           .then(response=>{
           closeEditModal();
           openEditadoModal();
         }).catch(error =>{
-            console.log(error.message);
-        })
+        console.log(error.message);
+        })*/
     }
 
     const cerrarPut=()=>{

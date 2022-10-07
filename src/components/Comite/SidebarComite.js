@@ -6,29 +6,30 @@ import * as FaIcons from 'react-icons/fa';
 import { SidebarData } from './SidebarDataComite';
 import SubMenu from './SubMenuComite';
 import { IconContext } from 'react-icons/lib';
-import '../../Pagina.css';
+
+import '../../stylesheets/SideBar.css'
 
 
 const NavIcon = styled(Link)`
-  margin-left: 2rem;
-  font-size: 2rem;
-  height: 80px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+margin-left: 2rem;
+font-size: 2rem;
+height: 80px;
+display: flex;
+justify-content: flex-start;
+align-items: center;
 `;
 
 const SidebarNav = styled.nav`
-  background: #003C7A;
-  width: 250px;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
-  transition: 350ms;
-  z-index: 10;
+background: #003C7A;
+width: 250px;
+height: 100vh;
+display: flex;
+justify-content: center;
+position: fixed;
+top: 20;
+left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
+transition: 350ms;
+z-index: 10;
 `;
 
 const SidebarWrap = styled.div`
@@ -45,7 +46,7 @@ const SidebarComite = () => {
       <IconContext.Provider value={{ color: '#fff' }}>
         <header className="header">
 
-          <div className="contenedor">
+          <div className="">
               <div className="barra">
                   <img className="imagen__barra" src={require('../../imagenes/menu.png')} onClick={showSidebar}  alt="menu"></img>
                  
