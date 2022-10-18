@@ -9,13 +9,13 @@ import '../../stylesheets/Administrador.css'
 import useModal from '../../hooks/useModals';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 import * as BsIcons from 'react-icons/bs';
-/*
+
 const url= "https://localhost:7012/api/Especialidad/";
 const urlFacu= "https://localhost:7012/api/Facultad/";
-*/
+/*
 const url= "http://44.210.195.91/api/Especialidad/";
 const urlFacu= "http://44.210.195.91/api/Facultad/";
-
+*/
 function ListaEspecialidad()  {
   const [data, setData]=useState([]);
   const [facus, setFacus] = useState([]);
@@ -123,21 +123,21 @@ function ListaEspecialidad()  {
  
 
   return (      
-    <div class=" container LISTAR-ESPECIALIDADES-CONTAINER">   
+    <div class=" CONTAINERADMIN">   
 
-      <p class="GESTION-GENERAL-TEXT">Gestión General</p>
-      <p class=" BUSQUEDA-ESPECIALIDAD-TEXT">Búsqueda de Especialidad</p>
+      <p class="HEADER-TEXT1">Gestión General</p>
+      <p class="HEADER-TEXT2">Búsqueda de Especialidad</p>
 
       <div class="row">
-          <div class="col-lg-7 FILTRO-LISTAR-ESPECIALIDADES" >
-              <div class="text-start fs-6  mb-1 fw-normal "><p>Ingresar nombre de la especialidad</p></div>
+          <div class="col col-7 FILTRO-LISTAR-BUSCAR" >
+              <p>Ingresar nombre de la especialidad</p>
               <div class="input-group mb-2 ">
                   <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Especialidad" aria-label="serach" onChange={buscador}/>
               </div>
           </div>
 
-          <div class="col-lg-5 FILTRO-LISTAR-ESPECIALIDADES" >
-              <div class=" fs-6 fw-normal  mb-1 "><p>Facultad</p></div>
+          <div class="col col-5 FILTRO-LISTAR" >
+              <p>Facultad</p>
               <select select class="form-select Cursor" aria-label="Default select example"  onChange= {cambioSelect} >  
                    <option selected value = "0">Todos</option>
                   {facus.map(elemento=>(
@@ -148,19 +148,19 @@ function ListaEspecialidad()  {
       </div>
 
 
-      <p class="text-start  LISTAR-ESPECIALIDADES-TEXT" >Lista de Especialidades</p>
-      <button onClick={previousPage} className="PAGINACION-SIGUIENTE"><BsIcons.BsCaretLeftFill/></button>
-      <button onClick={nextPage} className="PAGINACION-ANTERIOR"><BsIcons.BsCaretRightFill/></button>
-      <div class = "row LISTAR-ESPECIALIDADES-TABLA">
+      <p class="HEADER-TEXT2" >Lista de Especialidades</p>
+      <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
+      <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
+      <div class = "row LISTAR-TABLA">
         <div class=" col-10  ">
           <table className='table fs-6 '>
             <thead class >
               <tr class>
-                  <th style={{width: 100}}>ID</th>
-                  <th style ={{width: 150}}>Nombre</th>
-                  <th style = {{width:100}}>Descripción</th>
+                  <th style={{width: 50}}>ID</th>
+                  <th style ={{width: 275}}>Nombre</th>
+                  <th style = {{width:100}}>Clave</th>
                   <th style = {{width:100}}>Facultad</th>
-                  <th style = {{width:200}}>Acciones</th>
+                  <th style = {{width:100}}>Acciones</th>
               </tr>
             </thead>
             <tbody >
@@ -171,8 +171,8 @@ function ListaEspecialidad()  {
                     <td>{especialidad.descripcion}</td>
                     <td>{especialidad.facultad.nombre}</td>
                     <td>
-                    <button className="btn" onClick={()=>{navigate("datosEspecialidad/"+especialidad.idEspecialidad)}}> <FaIcons.FaEdit /></button>
-                    <button  className=" btn" onClick={()=>seleccionarEspecialidad(especialidad)}> <BootIcons.BsTrash /></button>
+                    <button class="btn BTN-ACCIONES" onClick={()=>{navigate("datosEspecialidad/"+especialidad.idEspecialidad)}}> <FaIcons.FaEdit /></button>
+                    <button  class=" btn BTN-ACCIONES" onClick={()=>seleccionarEspecialidad(especialidad)}> <BootIcons.BsTrash /></button>
                     </td>
                 </tr>
               ))}

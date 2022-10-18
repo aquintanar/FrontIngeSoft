@@ -11,13 +11,13 @@ import * as BsIcons from 'react-icons/bs';
 import '../../stylesheets/Administrador.css'
 import useModal from '../../hooks/useModals';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
-/*
-const url= "https://localhost:7012/api/Facultad/";
-*/ 
 
+const url= "https://localhost:7012/api/Facultad/";
+
+/*
 const url= "http://44.210.195.91/api/Facultad/";
 //-------
-
+*/ 
 //------
 
 
@@ -153,13 +153,13 @@ function ListaFacultad()  {
   )
     
   return (      
-    <div class="LISTAR-FACULTAD-CONTAINER">   
+    <div class="CONTAINERADMIN">   
 
-      <p class=" GESTION-GENERAL-TEXT">Gestión General</p>
-      <p class="BUSQUEDA-FACULTAD-TEXT">Búsqueda de Facultad</p>
+      <p class="HEADER-TEXT1">Gestión General</p>
+      <p class="HEADER-TEXT2">Búsqueda de Facultad</p>
 
-      <div class="row FILTRO-LISTAR-FACULTADES">
-          <div class="col-lg-7" >
+      <div class="row ">
+          <div class="col-lg-7 FILTRO-LISTAR-BUSCAR" >
               <div class="text-start fs-6  mb-1 fw-normal "><p>Ingresar nombre de la facultad</p></div>
               <div class="input-group mb-2 ">
                   <input type="text" value={search} class="form-control" name="search" placeholder="Facultad" aria-label="serach" onChange={buscador}/>
@@ -170,17 +170,17 @@ function ListaFacultad()  {
       </div>
 
 
-      <p class="LISTAR-FACULTADES-TEXT" >Lista de Facultades</p>
-      <button onClick={previousPage} className="PAGINACION-SIGUIENTE"><BsIcons.BsCaretLeftFill/></button>
-      <button onClick={nextPage} className="PAGINACION-ANTERIOR"><BsIcons.BsCaretRightFill/></button>
-      <div class = "row   LISTAR-FACULTADES-TABLA">
+      <p class="HEADER-TEXT2" >Lista de Facultades</p>
+      <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
+      <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
+      <div class = "row   LISTAR-TABLA">
         <div class=" col-10  ">
           <table className='table fs-6 '>
             <thead >
               <tr class>
-                  <th style={{width: 100}}>ID</th>
-                  <th style={{width:100}}>Descripción</th>
-                  <th style={{width:150}}>Nombre</th>
+                  <th style={{width: 50}}>ID</th>
+                  <th style={{width:275}}>Nombre</th>
+                  <th style={{width:100}}>Clave</th>
                   <th style={{width:100}}>Acciones</th>
               </tr>
             </thead>
@@ -188,11 +188,12 @@ function ListaFacultad()  {
               {filtrado.map(facultad => (
                 <tr key={facultad.idFacultad}>
                     <td>{facultad.idFacultad}</td>
-                    <td>{facultad.nombre}</td>                    
                     <td>{facultad.descripcion}</td>
+                    <td>{facultad.nombre}</td>                    
+                    
                     <td>
-                    <button className="btn" onClick={()=>{navigate("datosFacultad/"+facultad.idFacultad)}}> <FaIcons.FaEdit /></button>
-                    <button  className=" btn" onClick={()=>seleccionarFacultad(facultad)}> <BootIcons.BsTrash /></button>
+                    <button className="btn BTN-ACCIONES" onClick={()=>{navigate("datosFacultad/"+facultad.idFacultad)}}> <FaIcons.FaEdit /></button>
+                    <button  className=" btn BTN-ACCIONES" onClick={()=>seleccionarFacultad(facultad)}> <BootIcons.BsTrash /></button>
                     </td>
                 </tr>
               ))}
@@ -223,8 +224,8 @@ function ListaFacultad()  {
           <Button class="btn btn-success btn-lg" onClick={closeConfirmModal}>Entendido</Button>
         </div>
       </ModalConfirmación>
-      <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
-          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosFacultad/0")}}>Registrar</button>
+      <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-BOTON '>
+          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosFacultad/0")}}><span>Registrar</span></button>
       </div>             
     </div>              
   )

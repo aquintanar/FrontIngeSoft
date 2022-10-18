@@ -8,17 +8,17 @@ import {  Modal, Button} from '@material-ui/core';
 import {  useNavigate } from 'react-router-dom';
 import * as BsIcons from 'react-icons/bs';
 //import './DatosEspecilidad.css';
-/*
+
 const url= "https://localhost:7012/api/Semestre/";
 const urlFacu= "https://localhost:7012/api/Facultad/";
 const urlEsp= "https://localhost:7012/api/Especialidad/";
-*/
 
+/*
 
 const url= "http://44.210.195.91/api/Semestre/";
 const urlFacu= "http://44.210.195.91/api/Facultad/";
 const urlEsp= "http://44.210.195.91/api/Especialidad/";
-
+*/
 const themeX = createTheme({
   palette: {
     type: "dark",
@@ -234,13 +234,13 @@ function ListaSemestre()  {
   )
     
   return (      
-    <div class="LISTAR-SEMESTRE-CONTAINER">   
+    <div class="CONTAINERADMIN">   
 
-      <p class=" GESTION-GENERAL-TEXT">Gestión General</p>
-      <p class="GESTION-SEMESTRE-TEXT">Búsqueda de Semestre Académico</p>
+      <p class="HEADER-TEXT1">Gestión General</p>
+      <p class="HEADER-TEXT2">Búsqueda de Semestre Académico</p>
 
-      <div class="row FILTRO-LISTAR-SEMESTRE">
-          <div class="col-lg-6 " >
+      <div class="row ">
+          <div class="col-lg-6 FILTRO-LISTAR" >
               <div class="text-start fs-5  mb-1 fw-normal "><p>Especialidad</p></div>
               <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioEsp}>
                 <option selected value = "0">Todos</option>
@@ -250,7 +250,7 @@ function ListaSemestre()  {
                </select>
           </div>
 
-          <div class="col-lg-3" >
+          <div class="col-lg-3 FILTRO-LISTAR" >
             <div class=" fs-5 fw-normal  mb-1 "><p>Año</p></div>
             <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioAnho}>
               <option selected value = "0">Todos</option>
@@ -260,7 +260,7 @@ function ListaSemestre()  {
             </select>
           </div>
 
-          <div class="col-lg-3" >
+          <div class="col-lg-3 FILTRO-LISTAR" >
               <div class=" fs-5 fw-normal  mb-1 "><p>Semestre</p></div>
               <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelect}>
                 <option key="0" selected value = "0">Todos</option>
@@ -270,9 +270,9 @@ function ListaSemestre()  {
           </div>
       </div>
 
-      <div class="row FILTRO-LISTAR-SEMESTRE">
+      <div class="row ">
         
-          <div class = "col-lg-3 ">
+          <div class = "col-lg-3 FILTRO-LISTAR">
           <div class="col text-start fs-5  mb-1 fw-normal"><p>Facultad</p></div>
             <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioFacu}>
                 <option selected value = "0">Todos</option>
@@ -291,13 +291,13 @@ function ListaSemestre()  {
 
       </div>
 
-      <p class="text-start     LISTAR-SEMESTRE-TEXT" >Listado de Semestres</p>
-      <button onClick={previousPage} className="PAGINACION-SIGUIENTE"><BsIcons.BsCaretLeftFill/></button>
-      <button onClick={nextPage} className="PAGINACION-ANTERIOR"><BsIcons.BsCaretRightFill/></button>
+      <p class="text-start  HEADER-TEXT2" >Listado de Semestres</p>
+      <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
+      <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
       <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
           <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosSemestre/0")}}>Registrar</button>
       </div>   
-      <div class = "row LISTAR-SEMESTRE-TABLA">
+      <div class = "row LISTAR-TABLA">
         <div class=" col-12 Table-style">
           <table className='table fs-5  '>
             <thead class>
@@ -325,8 +325,8 @@ function ListaSemestre()  {
                     })}
                     <td>{semestre.enCurso ? "Si" : "No"}</td>
                     <td>
-                      <button className="btn" onClick={()=>{navigate("datosSemestre/" + semestre.idSemestre)}}> <FaIcons.FaEdit/></button>
-                      <button  className=" btn" onClick={()=>seleccionarSemestre(semestre, 'Eliminar')}> <BootIcons.BsTrash/></button>
+                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("datosSemestre/" + semestre.idSemestre)}}> <FaIcons.FaEdit/></button>
+                      <button  class=" btn BTN-ACCIONES" onClick={()=>seleccionarSemestre(semestre, 'Eliminar')}> <BootIcons.BsTrash/></button>
                     </td>
                 </tr>
               ))}

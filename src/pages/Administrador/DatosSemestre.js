@@ -290,14 +290,14 @@ function DatosSemestre() {
 
 
   return (
-    <div class=" REGISTRAR-ESPECIALIDAD-CONTAINER">
+    <div class=" CONTAINERADMIN">
 
             <div class="row">
-                <p class="GESTION-GENERAL-TEXT">Gestión General</p>
-                <p class="REGISTRO-ESPECIALIDAD-TEXT">Gestión de Semestre Académico - {subTitulo}</p>
+                <p class="HEADER-TEXT1">Gestión General</p>
+                <p class="HEADER-TEXT2">Gestión de Semestre - {subTitulo}</p>
             </div> 
 
-            <div class="row">
+            <div class="row DATOS">
 
                 <div class="col-4" >
                     <div class="text-start fs-5 fw-normal  mb-1">Seleccione Facultad</div>
@@ -484,7 +484,7 @@ function DatosSemestre() {
               </div>
             </ModalConfirmación>
 
-            <div class="row INSERTAR-ESPECIALIDAD-BOTONES">                            
+            <div class="row INSERTAR-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button" onClick={()=>{navigate("../gestion/gesSemestre")}}><span>Cancelar</span></button>
                     <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>

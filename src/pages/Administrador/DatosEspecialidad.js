@@ -6,13 +6,13 @@ import {  Button} from '@material-ui/core';
 import useModal from '../../hooks/useModals';
 import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 
-/*
+
 const url= "https://localhost:7012/api/Especialidad/";
 const urlFacu= "https://localhost:7012/api/Facultad/";
-*/
+/*
 const url= "http://44.210.195.91/api/Especialidad/";
 const urlFacu= "http://44.210.195.91/api/Facultad/";
-
+*/
 function DatosEspecialidad() {
   let navigate = useNavigate();
   let {id} = useParams();
@@ -127,21 +127,21 @@ function DatosEspecialidad() {
 
 
   return (
-    <div class=" REGISTRAR-ESPECIALIDAD-CONTAINER">
+    <div class=" CONTAINERADMIN">
         <div class="row">
-            <p class="GESTION-GENERAL-TEXT">Gestión General</p>
-            <p class="REGISTRO-ESPECIALIDAD-TEXT">Registro de Especialidad - {subTitulo}</p>
+            <p class="HEADER-TEXT1">Gestión General</p>
+            <p class="HEADER-TEXT2">Registro de Especialidad - {subTitulo}</p>
         </div> 
             <div class="row">
-                <div class="DATOS-ESPECIALIDAD" >
-                    <div class="text-start fs-5 fw-normal  mb-1"><p>Nombre de la especialidad</p></div>
+                <div class="DATOS" >
+                    <p>Nombre de la especialidad</p>
                     <div class="input-group mb-3 ">
                         <input type="text"  class="form-control" name="nombre" placeholder="Especialidad" 
                           onChange={handleChange} value={especialidadSeleccionada && especialidadSeleccionada.nombre} />
                     </div>
                 </div>
 
-                <div class="DATOS-ESPECIALIDAD" >
+                <div class="DATOS" >
                     <div class="  fs-5 fw-normal  mb-1 "><p>Facultad</p></div>
                     <select select class="form-select Cursor"  onChange= {cambioSelect}  selected value = {especialidadSeleccionada.facultad.idFacultad} >
                       {facus.map(elemento=>
@@ -151,11 +151,11 @@ function DatosEspecialidad() {
                 </div>
             </div>
 
-            <div class = "DATOS-ESPECIALIDAD">
+            <div class = "DATOS">
                 <div class = "col-12">
                     <div class="text-start fs-5 fw-normal "><p>Descripción</p></div>
                     <div class="input-group input-group-lg mb-3">
-                        <input type="text"  class="form-control" name="descripcion" placeholder="Descripcion" aria-label="descripcion"  
+                        <textarea class="form-control" name="descripcion" placeholder="Descripción" aria-label="descripcion"  
                           onChange={handleChange} value={especialidadSeleccionada && especialidadSeleccionada.descripcion}/>
                     </div>
                 </div>
@@ -207,7 +207,7 @@ function DatosEspecialidad() {
               </div>
             </ModalConfirmación>
 
-            <div class="row INSERTAR-ESPECIALIDAD-BOTONES">                            
+            <div class="row INSERTAR-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button" onClick={()=>{navigate("../gestion/gesEspecialidad")}}><span>Cancelar</span></button>
                     <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>

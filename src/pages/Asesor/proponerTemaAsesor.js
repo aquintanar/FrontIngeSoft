@@ -73,26 +73,27 @@ const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
     }
 
     return(
+        <div className='CONTAINER-ASESOR'>
         <form>
-            <h1 >Proponer tema de tesis</h1>
-            <div className="form-group row mt-3">
-                <label for="tituloTesis" className="col-md-2 col-form-label mt-2 fonnnts"> Titulo de tesis: </label>
+            <h1 className='HEADER-TEXT2'>Proponer tema de tesis</h1>
+            <div className="form-group DATOS row mt-3">
+                <label for="tituloTesis" className="col-md-2 col-form-label mt-2 "> Título de tesis: </label>
                 <div className = "col-md-10">
                     <input onChange={handleChange} type='text' className="form-control" id="tituloTesis" name="tituloTesis"
-                    style={{display: 'flex', height:'2vw'}}/>
+                    style={{display: 'flex'}}/>
                 </div>
             </div>
-            <div className="form-group row mt-3">
-                <label for="asesor" className="col-md-2 col-form-label fonnnts"> Nombre asesor:</label>
+            <div className="form-group DATOS row mt-3">
+                <label for="asesor" className="col-md-2 col-form-label "> Nombre asesor:</label>
                 <div className = "col-md-10">
                     <p className='fonnnts2'> Ing. Covas </p>
                 </div>
             </div>
-            <div className="form-group row mt-3">
-                <label for="coasesor" className="col-md-2 col-form-label fonnnts"> Nombre co-asesor:</label>
+            <div className="form-group DATOS row mt-3">
+                <label for="coasesor" className="col-md-2 col-form-label "> Nombre co-asesor:</label>
                 <div className = "col-md-9">
                     <input onChange={handleChange} type='text' className="form-control" id="nombreCoAsesor" name="nombreCoAsesor"  disabled
-                    style={{display: 'flex', height:'2vw'}} value={asesorTesis && (asesorTesis.nombres + " " + asesorTesis.apeMat)}/>
+                    style={{display: 'flex'}} value={asesorTesis && (asesorTesis.nombres + " " + asesorTesis.apeMat)}/>
                 </div>
                 <div className = "col-md-1">
                     <button type="button" onClick={() => {setShow(true)}} className="btn botonForm" >
@@ -104,36 +105,36 @@ const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
                 </div>
             </div>
 
-            <div className="form-group row mt-3">
-                <label for="descripcionTema" className="col-md-6 col-form-label fonnnts"> Descripcion del tema:</label>
+            <div className="form-group DATOS row mt-3">
+                <label for="descripcionTema" className="col-md-6 col-form-label "> Descripción del tema:</label>
                 <div className = "col-md-12">
-                    <textarea onChange={handleChange} class="form-control" id="desciripcionTema" name="descripcion" rows="8"></textarea>
+                    <textarea onChange={handleChange} class="form-control" id="desciripcionTema" name="descripcion"></textarea>
                 </div>                
             </div>
 
-            <div className="form-group row mt-3">
-                <label for="palabraClave1" className="col-md-2 col-form-label fonnnts"> Palabra clave 1:</label>
+            <div className="form-group DATOS row mt-3">
+                <label for="palabraClave1" className="col-md-2 col-form-label "> Palabra clave 1:</label>
                 <div className = "col-md-4">
                     <input onChange={handleChange} type='text' className="form-control" id="palabraClave1" name="palabraClave1"
                     style={{display: 'flex', height:'2vw'}}/>
                 </div>
-                <label for="palabraClave2" className="col-md-2 col-form-label fonnnts"> Palabra clave 2:</label>
+                <label for="palabraClave2" className="col-md-2 col-form-label "> Palabra clave 2:</label>
                 <div className = "col-md-4">
                     <input onChange={handleChange} type='text' className="form-control" id="palabraClave2" name="palabraClave2"
-                    style={{display: 'flex', height:'2vw'}}/>
+                    style={{display: 'flex'}}/>
                 </div>
             </div>
 
-            <div className="form-group row mt-3">
-                <label for="Estado" className="col-md-2 col-form-label fonnnts"> Estado aprobacion:</label>
+            <div className="form-group DATOS row mt-3">
+                <label for="Estado" className="col-md-2 col-form-label "> Estado aprobación:</label>
                 <div className = "col-md-10">
                     <p className='fonnnts'> PENDIENTE </p>
                 </div>
                 <div className = "col-md-12">
-                    <textarea className="form-control" id="motivoRechazo" name="motivoRechazo" rows="4" disabled></textarea>
+                    <textarea className="form-control" id="motivoRechazo" name="motivoRechazo" disabled></textarea>
                 </div>
             </div>
-            <div className="form-group row mt-3">
+            <div className="form-group  row mt-3">
                 <div className=" offset-md-8 col-md-1">
                     <button type="button" className="btn botonForm">
                         Cancelar
@@ -169,6 +170,7 @@ const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
 
             </div>
         </form>
+        </div>
     );
 }
 

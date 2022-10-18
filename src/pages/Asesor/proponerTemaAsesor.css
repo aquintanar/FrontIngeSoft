@@ -23,3 +23,51 @@
     font-weight: bold;
     font-size: medium;
 }
+
+.CONTAINER-ASESOR{
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    left: 18%;
+    width: 86%;
+}
+
+.HEADER-TEXT1 {
+    font-size: 40px;
+    font-family: 'Montserrat', sans-serif;
+    color: #042354;
+    font-weight: bold;
+    display: flex;
+    height: 60px;
+}
+
+.HEADER-TEXT2{
+    font-size: 32px;
+    color: #042354;
+    font-weight: bold;
+    height: 55px;
+}
+
+.DATOS input{
+    height: 2vh;
+    width: 100%;
+}
+
+.DATOS {
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+.DATOS p{
+    font-family: 'Roboto', sans-serif;
+    font-weight: lighter;
+    font-size: 16px;
+}
+
+.DATOS textarea{
+    min-height: 34px;
+    font-size: 16px;
+    width: 100%;
+    font-family: roboto;
+    word-break: break-word;
+}

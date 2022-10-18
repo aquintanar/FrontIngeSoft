@@ -1,11 +1,334 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap');
 
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700');
 .busquedaEspecialidad{
     margin-left: 100px;
 }
+
+/*CONTENEDOR PARA ADMINISTRADOR*/  
+.CONTAINERADMIN{
+    width: 65%;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    left: 22%;
+}
+
+/*ESTILOS CABECERAS*/
+.HEADER-TEXT1 {
+    font-size: 40px;
+    font-family: 'Montserrat', sans-serif;
+    color: #042354;
+    font-weight: bold;
+    display: flex;
+    height: 60px;
+}
+
+.HEADER-TEXT2{
+    font-size: 32px;
+    color: #042354;
+    font-weight: bold;
+    height: 55px;
+}
+
+/*ESTILOS PARA TABLAS*/
+.LISTAR-TABLA {
+    align-items: center;
+}
+
+.LISTAR-TABLA th{
+    font-size: 14px;
+    font-family: roboto;
+    color: #fff;
+    background: #042354;
+    text-indent: 0.4em;
+}
+
+.LISTAR-TABLA td{
+    font-size: 12px;
+    font-family: roboto;
+    text-indent: 0.4em;
+}
+
+.BTN-ACCIONES svg{
+    color: #042354;
+    width: 1.5em;
+    height: 1.5em;
+    size: 2em;
+    
+}
+
+.BTN-ACCIONES:hover svg{
+    color: black;
+    width: 1.7em;
+    height: 1.7em;
+}
+
+.LISTAR-TABLA tr:hover{
+    font-size: 14px;
+    font-family: roboto;
+    text-indent: 0.4em;
+    background-color: rgba(33, 121, 212, 0.5);
+    color: black;
+    font-weight: bold;
+}
+
+/*ESTILOS PARA LA PAGINACION DE TABLAS*/
+.PAGINACION-BTN{
+    width: 35px;
+    height: 35px;
+    background-color: #042354;
+    color:white;
+    border-color: #fff;
+    border-radius: 2px;
+    align-items: center;
+    justify-content: center;
+    display: inline-block;
+}
+
+.PAGINACION-BTN svg{
+    width: 1em;
+    height: 1em;
+    background-color: #042354;
+    color:white;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.PAGINACION-BTN img{
+    width: 1em;
+    height: 1em;
+    background-color: #042354;
+    color:white;
+    align-items: top;
+    align-content: top;
+    
+}
+
+.PAGINACION-BTN:hover {
+    background-color: #2179D4;
+    transform: perspective(5);
+    transition: all .35s;
+}
+
+.PAGINACION-BTN:hover svg{
+    background-color: #2179D4;
+    width: 1.25em;
+    height: 1.5em;
+    stroke-dashoffset: -480;
+    transition: all .35s;
+}
+
+/*ESTILOS PARA FILTROS*/
+.FILTRO-LISTAR p{
+    font-size: 14px;
+    font-family: roboto;
+}
+
+.FILTRO-LISTAR {
+    width: 16.5em;
+    margin-bottom: 10px;
+}
+.FILTRO-LISTAR input{
+    height: 32px;
+    font-size: 12px;
+    font-family: roboto;
+}
+.FILTRO-LISTAR select{
+    height:32px;
+    font-size: 12px;
+    font-family: roboto;
+}
+
+.FILTRO-LISTAR-BUSCAR p{
+    font-size: 14px;
+    font-family: roboto;
+}
+
+.FILTRO-LISTAR-BUSCAR {
+    width: 34.3em;
+    margin-bottom: 20px;
+}
+.FILTRO-LISTAR-BUSCAR input{
+    height: 32px;
+    font-size: 12px;
+    font-family: roboto;
+}
+.FILTRO-LISTAR-BUSCAR select{
+    height:40px;
+    font-size: 12px;
+    font-family: roboto;
+}
+
+.UPLOAD{
+    width: 50%;
+}
+
+/*ESTILOS PARA FACULTAD REGISTRAR MODIFICAR*/
+.DATOS-FACULTAD p{
+    font-size: 14px;
+    font-family: roboto;
+}
+.DATOS-FACULTAD input{
+    height:32px;
+    font-size: 12px;
+    font-family: roboto;
+    width: 30%;
+}
+
+.DATOS-FACULTAD textarea{
+    min-height: 80px;
+    font-size: 12px;
+    font-family: roboto;
+    word-break: break-word;
+}
+
+.DATOS-FACULTAD select{
+    height:35px;
+}
+
+.DATOS-IMAGE {
+    align-self: center;
+    align-content: flex-end;
+    justify-content: center;
+}
+
+.DATOS-IMAGE img{
+    align-self: center;
+    align-content: flex-end;
+    text-align: center;
+    max-height: 350px;
+    flex: auto;
+}
+
+.DATOS-IMAGE input{
+    align-items: flex-end;
+    max-width: 285px;
+    flex: auto;
+}
+
+/*ESTILOS PARA ESPECIALIDAD/SEMESTRE REGISTRAR MODIFICAR*/
+.DATOS p{
+    font-size: 16px;
+    font-family: roboto;
+}
+.DATOS textarea{
+    min-height: 80px;
+    font-size: 14px;
+    font-family: roboto;
+    word-break: break-word;
+}
+.DATOS select{
+    height:35px;
+    font-size: 14px;
+    font-family: roboto;
+}
+.DATOS input{
+    min-height:40px;
+    font-size: 14px;
+    font-family: roboto;
+}
+
+/*ESTILOS PARA ESPECIALIDAD/SEMESTRE REGISTRAR MODIFICAR*/
+.INSERTAR-BOTONES button{
+    border-radius: 4px;
+    font-family: roboto;
+    border:none;
+    transition:all 0.5s;
+    cursor:pointer;
+    width: 120px;
+}
+.INSERTAR-BOTONES .GUARDAR{
+    background-color: #042354;
+}
+.INSERTAR-BOTONES .CANCELAR{
+    background-color: #B80000;
+}
+.INSERTAR-BOTONES button span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+.INSERTAR-BOTONES .GUARDAR span:after{
+    content:'\1F4C1';
+}
+.INSERTAR-BOTONES .CANCELAR span:after{
+    content:'\1F5D9';
+}
+.INSERTAR-BOTONES button span:after{
+    position:absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.INSERTAR-BOTONES button:hover span{
+    
+    padding-right:25px;
+}
+.INSERTAR-BOTONES button:hover span:after{
+    
+    opacity: 1;
+    right: 0;
+}
+.LISTAR-BOTON .GUARDAR:hover{
+    background-color: #2179D4;
+}
+.LISTAR-BOTON .CANCELAR:hover{
+    background-color: #C80909;
+}
+
+.LISTAR-BOTON{
+    display: flex;
+    justify-content: flex-end;
+}
+.LISTAR-BOTON button{
+    border-radius: 4px;
+    background-color: #042354;
+    border:none;
+    font-family: roboto;
+    transition:all 0.5s;
+    cursor:pointer;
+    width: 120px;
+}
+.LISTAR-BOTON button:hover{
+    background-color: #2179D4;
+}
+.LISTAR-BOTON button span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+.LISTAR-BOTON button span:after{
+    content:'\2295';
+    position:absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.LISTAR-BOTON button:hover span{
+    
+    padding-right:25px;
+}
+.LISTAR-BOTON button:hover span:after{
+    opacity: 1;
+    right: 0;
+}
+
+/*
+
+*/
+
 .GESTION-GENERAL-TEXT {
     font-size: 40px;
     font-family: Monserrat;
+    color: #042354;
+    font-weight: bold;
+
 }
 /*
 ESTILOS DE LISTAR ESPECIALIDADES
@@ -18,10 +341,12 @@ ESTILOS DE LISTAR ESPECIALIDADES
 .BUSQUEDA-ESPECIALIDAD-TEXT{
     font-size: 32px;
     font-family: Monserrat;
+    color: #042354;
 }
 .LISTAR-ESPECIALIDADES-TEXT{
     font-family: Monserrat;
     font-size: 32px;
+    color: #042354;
 }
 .FILTRO-LISTAR-ESPECIALIDADES p{
     font-size: 16px;
@@ -41,45 +366,9 @@ ESTILOS DE LISTAR ESPECIALIDADES
     font-size: 13px;
     font-family: roboto;
 }
-.LISTAR-ESPECIALIDADES-BOTON{
-    display: flex;
-    justify-content: flex-end;
-}
-.LISTAR-ESPECIALIDADES-BOTON button{
-    border-radius: 4px;
-    background-color: #042354;
-    border:none;
-    font-family: roboto;
-    transition:all 0.5s;
-    cursor:pointer;
-    width: 120px;
-}
-.LISTAR-ESPECIALIDADES-BOTON button:hover{
-    background-color: #2179D4;
-}
-.LISTAR-ESPECIALIDADES-BOTON button span{
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-}
-.LISTAR-ESPECIALIDADES-BOTON button span:after{
-    content:'\2295';
-    position:absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
-}
-.LISTAR-ESPECIALIDADES-BOTON button:hover span{
-    
-    padding-right:25px;
-}
-.LISTAR-ESPECIALIDADES-BOTON button:hover span:after{
-    
-    opacity: 1;
-    right: 0;
-}
+
+
+
 .LISTAR-ESPECIALIDADES-TABLA th{
     font-size: 17px;
     font-family: roboto;
@@ -88,22 +377,7 @@ ESTILOS DE LISTAR ESPECIALIDADES
     font-size: 14px;
     font-family: roboto;
 }
-.PAGINACION-SIGUIENTE{
-    width:40px;
-    height: 34px;
-    background-color: #042354;
-    color:white;
-    align-items: center;
-    align-content: center;
-}
 
-.PAGINACION-ANTERIOR{
-    width:40px;
-    height: 34px;
-    background-color: #042354;
-    color:white;
-    align-content: center;
-}
 /*
 ESTILOS DE INSERTAR ESPECIALIDAD
 
@@ -116,68 +390,9 @@ ESTILOS DE INSERTAR ESPECIALIDAD
     font-size: 32px;
     font-family: monserrat;
 }
-.DATOS-ESPECIALIDAD p{
-    font-size: 16px;
-    
-    font-family: roboto;
-}
-.DATOS-ESPECIALIDAD input{
-    height:40px;
-    font-size: 13px;
-    font-family: roboto;
-}
-.DATOS-ESPECIALIDAD select{
-    height:35px;
-    font-size: 11px;
-}
-.INSERTAR-ESPECIALIDAD-BOTONES button{
-    border-radius: 4px;
-    font-family: roboto;
-    border:none;
-    transition:all 0.5s;
-    cursor:pointer;
-    width: 120px;
-}
-.LISTAR-ESPECIALIDADES-BOTON .GUARDAR:hover{
-    background-color: #2179D4;
-}
-.LISTAR-ESPECIALIDADES-BOTON .CANCELAR:hover{
-    background-color: #C80909;
-}
-.INSERTAR-ESPECIALIDAD-BOTONES .GUARDAR{
-    background-color: #042354;
-}
-.INSERTAR-ESPECIALIDAD-BOTONES .CANCELAR{
-    background-color: #B80000;
-}
-.INSERTAR-ESPECIALIDAD-BOTONES button span{
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-}
-.INSERTAR-ESPECIALIDAD-BOTONES .GUARDAR span:after{
-    content:'\1F4C1';
-}
-.INSERTAR-ESPECIALIDAD-BOTONES .CANCELAR span:after{
-    content:'\1F5D9';
-}
-.INSERTAR-ESPECIALIDAD-BOTONES button span:after{
-    position:absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
-}
-.INSERTAR-ESPECIALIDAD-BOTONES button:hover span{
-    
-    padding-right:25px;
-}
-.INSERTAR-ESPECIALIDAD-BOTONES button:hover span:after{
-    
-    opacity: 1;
-    right: 0;
-}
+
+
+
 /*
 ESTILOS DE LISTAR SEMESTRE
 
@@ -235,10 +450,14 @@ ESTILOS DE LISTAR FACULTAD
 .BUSQUEDA-FACULTAD-TEXT{
     font-size: 32px;
     font-family: Monserrat;
+    color: #042354;
+    font-weight: bold;
 }
 .LISTAR-FACULTADES-TEXT{
     font-family: Monserrat;
     font-size: 32px;
+    color: #042354;
+    font-weight: bold;
 }
 .FILTRO-LISTAR-FACULTADES p{
     font-size: 16px;
@@ -254,69 +473,20 @@ ESTILOS DE LISTAR FACULTAD
     font-family: roboto;
 }
 
-.LISTAR-ESPECIALIDADES-BOTON{
-    display: flex;
-    justify-content: flex-end;
-}
-.LISTAR-ESPECIALIDADES-BOTON button{
-    border-radius: 4px;
-    background-color: #042354;
-    border:none;
-    font-family: roboto;
-    transition:all 0.5s;
-    cursor:pointer;
-    width: 120px;
-}
-.LISTAR-ESPECIALIDADES-BOTON button:hover{
-    background-color: #2179D4;
-}
-.LISTAR-ESPECIALIDADES-BOTON button span{
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-}
-.LISTAR-ESPECIALIDADES-BOTON button span:after{
-    content:'\2295';
-    position:absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
-}
-.LISTAR-ESPECIALIDADES-BOTON button:hover span{
-    
-    padding-right:25px;
-}
-.LISTAR-ESPECIALIDADES-BOTON button:hover span:after{
-    
-    opacity: 1;
-    right: 0;
-}
+
 .LISTAR-FACULTADES-TABLA th{
     font-size: 17px;
     font-family: roboto;
+    color: #fff;
+    background: #042354;
+    text-indent: 0.4em;
 }
 .LISTAR-FACULTADES-TABLA td{
     font-size: 14px;
     font-family: roboto;
-}
-.PAGINACION-SIGUIENTE{
-    width:40px;
-    height: 34px;
-    background-color: #042354;
-    color:white;
-    align-items: center;
-    align-content: center;
+    text-indent: 0.4em;
 }
 
-.PAGINACION-ANTERIOR{
-    width:40px;
-    height: 34px;
-    background-color: #042354;
-    color:white;
-    align-content: center;
-}
 /*
 
 ESTILOS DE INSERTAR FACULTAD
@@ -329,19 +499,7 @@ ESTILOS DE INSERTAR FACULTAD
     font-size: 32px;
     font-family: monserrat;
 }
-.DATOS-FACULTAD p{
-    font-size: 16px;
-    
-    font-family: roboto;
-}
-.DATOS-FACULTAD input{
-    height:40px;
-    font-size: 13px;
-    font-family: roboto;
-}
-.DATOS-FACULTAD select{
-    height:35px;
-}
+
 .INSERTAR-FACULTAD-BOTONES button{
     border-radius: 4px;
     font-family: roboto;
