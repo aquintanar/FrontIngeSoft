@@ -141,7 +141,7 @@ const Register = () => {
             <h1>Registro</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="username">
-                    Username:
+                    Usuario:
                     <span className={validName?"valid":"hide"}>
                         <FontAwesomeIcon icon={faCheck}/>
                     </span>
@@ -170,7 +170,7 @@ const Register = () => {
                     Letras, numeros,guiones permitidos.
                 </p>
                 <label htmlFor="password">
-                    Password:
+                    Contraseña:
                     <span className={validPwd?"valid":"hide"}>
                         <FontAwesomeIcon icon={faCheck}/>
                     </span>
@@ -201,7 +201,7 @@ const Register = () => {
                     <span aria-label="dolar sign"> $</span><span aria-label='percent'>%</span>
                 </p>
                 <label htmlFor="confirm_pwd">
-                    Confirm Password:
+                    Confirmar Contraseña:
                     <span className={validMatch && matchPwd?"valid":"hide"}>
                         <FontAwesomeIcon icon={faCheck}/>
                     </span>
@@ -239,7 +239,7 @@ const Register = () => {
                     Registrar
                 </button>
                 <p>
-                    Ya estas registrado?<br/>
+                    ¿Ya estas registrado?<br/>
                     <span className='line'>
                         {/*Put router link here*/ }
                         <a href="/">Iniciar Sesion</a>
