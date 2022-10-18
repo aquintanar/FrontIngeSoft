@@ -10,12 +10,15 @@ import Administrador from './Administrador';
 import Alumno from './Alumno';
 import Profesor from './Profesor';
 import Asesor from './Asesor';
+import Login from './components/lniciar_Sesion/Login'
+import Register from './components/lniciar_Sesion/Register';
 function App() {
   return (
     <Router>
             <NavBar/>
             <Routes>
-                <Route path='/' exact element= {<Home/>} />
+                <Route path='/' exact element= {<Login/>} />
+                <Route path='/Register' exact element= {<Register/>} />
                 <Route path='/comite/*' exact element= {<Comite/>} />
                 <Route path='/administrador/*' exact element= {<Administrador/>} />
                 <Route path='/alumno/*' exact element= {<Alumno/>} />

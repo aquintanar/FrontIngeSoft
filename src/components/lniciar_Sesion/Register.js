@@ -2,8 +2,8 @@ import {useRef,useState,useEffect} from 'react';
 import { faCheck,faTimes,faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React from 'react';
-import axios from '../../api/axios';
-import "../../stylesheets/Login.css";
+import axios from 'axios';
+import "../../stylesheets/Iniciar_Sesion.css";
 import Select from 'react-select';
 import useModal from '../../hooks/useModals';
 
