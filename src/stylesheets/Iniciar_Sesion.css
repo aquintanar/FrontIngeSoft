@@ -1,0 +1,89 @@
+/*
+
+ESTILOS DE REGISTRO
+*/
+.CONTAINER-REGISTRO{
+    width:100%;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    max-width: 420px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    padding:1rem;
+    background-color:#fff;
+    border-radius: 0.5rem;
+}
+.CONTAINER-REGISTRO form{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding-bottom: 1rem;
+}
+.CONTAINER-REGISTRO a, a:visited{
+    color: #000;
+    text-decoration: underline;
+}
+
+.CONTAINER-REGISTRO input[type="text"],
+.CONTAINER-REGISTRO input[type="password"],
+.CONTAINER-REGISTRO button,
+.CONTAINER-REGISTRO textarea{
+    font-family: 'Roboto',sans-serif;
+    font-size:22px;
+    padding:0.25rem;
+    border-radius: 0.5rem;
+}
+
+.CONTAINER-REGISTRO label,
+.CONTAINER-REGISTRO button{
+    margin-top: 1rem;
+}
+.CONTAINER-REGISTRO button{
+    padding:0.5rem;
+}
+.CONTAINER-REGISTRO .instructions{
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    background: #042354;
+    color:#fff;
+    padding:0.25rem;
+    position:relative;
+    bottom:-10px;
+}
+.CONTAINER-REGISTRO .instructions >svg{
+    margin-right: 0.25rem;
+}
+.CONTAINER-REGISTRO .offscreen{
+    position:absolute;
+    left:-9999px;
+}
+.CONTAINER-REGISTRO .hide{
+    display:none;
+}
+.CONTAINER-REGISTRO .valid{
+    color:limegreen;
+    margin-left: 0.25rem;
+}
+.CONTAINER-REGISTRO .invalid{
+    color:red;
+    margin-left: 0.25rem;
+}
+
+.CONTAINER-REGISTRO .errmsg{
+    background-color: lightpink;
+    color:firebrick;
+    font-weight: bold;
+    padding:0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.CONTAINER-REGISTRO .line{
+    display:inline-block;
+}
