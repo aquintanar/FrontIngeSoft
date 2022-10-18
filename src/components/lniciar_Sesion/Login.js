@@ -63,10 +63,11 @@ function Login() {
     }
     
     return (
+        <div className='CONTAINER-GENERAL-LOGIN'>
         <section className='CONTAINER-LOGIN'>
         <form>
             <label htmlFor='username'>
-                Username:
+                Usuario:
             </label>
             <input 
                     type="text" 
@@ -78,7 +79,7 @@ function Login() {
                     required
             />
             <label htmlFor='password'>
-                    Password:
+                    Contraseña:
                 </label>
                 <input 
                     type="password" 
@@ -90,7 +91,7 @@ function Login() {
             <button>Iniciar Sesion</button>
         </form>
         <p>
-            Necesita una cuenta?<br/>
+            ¿Necesita una cuenta?<br/>
             <span className='line'>
                     {/*Put router */}
                     <a href="/Register"> Crear Cuenta</a>
@@ -98,6 +99,7 @@ function Login() {
         </p>
 
         </section>
+        </div>
     )
 }
 
