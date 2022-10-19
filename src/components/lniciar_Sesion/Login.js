@@ -65,6 +65,7 @@ function Login() {
     return (
         <div className='CONTAINER-GENERAL-LOGIN'>
         <section className='CONTAINER-LOGIN'>
+        <h1>Inicio de Sesión</h1>
         <form>
             <label htmlFor='username'>
                 Usuario:

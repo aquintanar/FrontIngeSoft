@@ -311,10 +311,7 @@ const Register = () => {
                     8 a 24 caracteres.<br/>
                     Debe incluir letras mayusculas y minusculas,<br/>
                     un numero y un caracter especial.<br/>
-                    Letras, numeros,guiones permitidos.<br/>
-                    Estan permitidos caracteres especiales: <span aria-label="exclamation mark">!</span>
-                    <span aria-label ="at symbol">@</span><span aria-labe="hashtag">#</span>
-                    <span aria-label="dolar sign"> $</span><span aria-label='percent'>%</span>
+                    
                 </p>
                 <label htmlFor="confirm_pwd">
                     Confirmar Contraseña:
@@ -352,7 +349,7 @@ const Register = () => {
                 />
 
                 <button disabled={!validName || !validPwd || !validMatch ||value===null||!validNa||!validApellidoP||!validApellidoM ?true:false}>
-                    Registrar
+                    <b>Registrar</b>
                 </button>
                 <p>
                     ¿Ya estas registrado?<br/>
