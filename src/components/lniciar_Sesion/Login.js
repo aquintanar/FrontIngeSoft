@@ -1,13 +1,15 @@
 import React from 'react'
-import {useRef,useState,useEffect,useContext} from 'react';
-import AuthContext from '../../context/AuthProvider';
+import {useRef,useState,useEffect} from 'react';
 import useAuth from '../../hooks/useAuth';
 import {Link,useNavigate,useLocation} from 'react-router-dom';
 import axios from 'axios'
 import '../../stylesheets/Iniciar_Sesion.css'
+
 const LOGIN_URL = '......'
 function Login() {
-    const {setAuth} = useContext(AuthContext);
+   
+
+    const {setAuth} = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const from =location.state?.from?.pathname || "/";
@@ -18,7 +20,7 @@ function Login() {
     const [user,setUser] = useState('');
     const [pwd,setPwd] = useState('');
     const [errMsg,setErrMsg] = useState('');
-    const [success,setSuccess] = useState(false);
+    
 
     useEffect(()=>{
         setErrMsg('');
@@ -32,6 +34,7 @@ function Login() {
         e.preventDefault();
         
         try{
+            /*
             const response = await axios.post(LOGIN_URL,
                 JSON.stringify({user,pwd}),
                 {
@@ -41,13 +44,26 @@ function Login() {
                 console.log(JSON.stringify(response?.data));
 
                 const accessToken = response?.data.accessToken;
-                const roles =response?.data?.roles;
+                const roles =response?.data?.roles;*/
                 /*lOS ROLES SON UN ARREGLO DE NUMEROS */
-                setAuth({user,pwd,roles,accessToken});
+                /*setAuth({user,pwd,roles,accessToken});
 
             setUser('');
             setPwd('');
-            navigate(from,{replace:true});
+            navigate(from,{replace:true});*/
+            console.log(user)
+            if(user==="Administrador"){
+                navigate('/administrador');
+            }
+            else if(user==="Alumno"){
+                navigate('/alumno');
+            }
+            else if(user==="Comite"){
+                navigate('/comite');
+            }
+            else if(user==="Asesor"){
+                navigate('/asesor');
+            }
         }
         catch(err){
                 if(!err?.response){
@@ -67,16 +83,7 @@ function Login() {
     }
     
     return (
-        <>
-        {success?(
-            <section>
-                <h1>You are logged in</h1>
-                <br/>
-                <p>
-                    <a href="#">Go to Home</a>
-                </p>
-            </section>
-        ) : (
+        
         <div className='CONTAINER-GENERAL-LOGIN'>
         <section className='CONTAINER-LOGIN'>
             <p ref={errRef} className={errMsg?"errmsg" :
@@ -116,8 +123,8 @@ function Login() {
         </p>
 
         </section>
-        </div>)}
-        </>
+        </div>
+        
     )
 }
 
