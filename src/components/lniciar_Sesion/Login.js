@@ -1,11 +1,13 @@
 import React from 'react'
-import {useRef,useState,useEffect} from 'react';
+import {useRef,useState,useEffect,useContext} from 'react';
+import AuthContext from '../../context/AuthProvider';
 import useAuth from '../../hooks/useAuth';
 import {Link,useNavigate,useLocation} from 'react-router-dom';
 import axios from 'axios'
 import '../../stylesheets/Iniciar_Sesion.css'
+const LOGIN_URL = '......'
 function Login() {
-    const {setAuth} = useAuth();
+    const {setAuth} = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
     const from =location.state?.from?.pathname || "/";
@@ -16,6 +18,7 @@ function Login() {
     const [user,setUser] = useState('');
     const [pwd,setPwd] = useState('');
     const [errMsg,setErrMsg] = useState('');
+    const [success,setSuccess] = useState(false);
 
     useEffect(()=>{
         setErrMsg('');
@@ -29,7 +32,7 @@ function Login() {
         e.preventDefault();
         
         try{
-            const response = await axios.post("LOGIN_URL",
+            const response = await axios.post(LOGIN_URL,
                 JSON.stringify({user,pwd}),
                 {
                     headers:{'Contet-Type': 'application-json'},
@@ -39,6 +42,7 @@ function Login() {
 
                 const accessToken = response?.data.accessToken;
                 const roles =response?.data?.roles;
+                /*lOS ROLES SON UN ARREGLO DE NUMEROS */
                 setAuth({user,pwd,roles,accessToken});
 
             setUser('');
@@ -63,10 +67,22 @@ function Login() {
     }
     
     return (
+        <>
+        {success?(
+            <section>
+                <h1>You are logged in</h1>
+                <br/>
+                <p>
+                    <a href="#">Go to Home</a>
+                </p>
+            </section>
+        ) : (
         <div className='CONTAINER-GENERAL-LOGIN'>
         <section className='CONTAINER-LOGIN'>
+            <p ref={errRef} className={errMsg?"errmsg" :
+             "offscreen"} aria-live ="assertive">{errMsg}</p>
         <h1>Inicio de Sesión</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
             <label htmlFor='username'>
                 Usuario:
             </label>
@@ -100,7 +116,8 @@ function Login() {
         </p>
 
         </section>
-        </div>
+        </div>)}
+        </>
     )
 }
 
