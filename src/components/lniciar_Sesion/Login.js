@@ -4,10 +4,11 @@ import useAuth from '../../hooks/useAuth';
 import {Link,useNavigate,useLocation} from 'react-router-dom';
 import axios from 'axios'
 import '../../stylesheets/Iniciar_Sesion.css'
+import { useAuth0 } from '@auth0/auth0-react';
 
 const LOGIN_URL = '......'
 function Login() {
-   
+    const {loginWithRedirect,isAuthenticated} = useAuth0();
 
     const {setAuth} = useAuth();
     const navigate = useNavigate();
@@ -113,6 +114,17 @@ function Login() {
                     required
             />
             <button>Iniciar Sesion</button>
+            
+            <div onClick ={()=>loginWithRedirect() }className="google-btn">
+                   <div className="google-icon-wrapper">
+                        <img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+                   </div>
+                   <p className='btn-text'>
+                       Iniciar Sesion
+                   </p>
+            </div>
+            
+            
         </form>
         <p>
             ¿Necesita una cuenta?<br/>
