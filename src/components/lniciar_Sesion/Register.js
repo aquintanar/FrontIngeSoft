@@ -7,8 +7,10 @@ import "../../stylesheets/Iniciar_Sesion.css";
 import Select from 'react-select';
 import useModal from '../../hooks/useModals';
 
-const USER_REGEX= /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
+const USER_REGEX= /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const NAME_REGEX = /^[a-zA-Z]{1,50}$/;
+
 const REGISTER_URL = 'http://44.210.195.91/api/Alumno/PostAlumno';
 
 
@@ -29,6 +31,18 @@ const Register = () => {
     const [validMatch,setValidMatch]=useState(false);
     const [matchFocus,setMatchFocus] = useState(false);
 
+    const [name,setName] = useState('');
+    const [validNa,setValidNa] = useState(false);
+    const [nameFocus,setNameFocus] = useState(false);
+
+    const [apellidoP,setApellidoP] = useState('');
+    const [validApellidoP,setValidApellidoP] = useState(false);
+    const [apellidoPFocus,setApellidoPFocus]= useState(false);
+
+    const [apellidoM,setApellidoM] = useState('');
+    const [validApellidoM,setValidApellidoM] = useState(false);
+    const [apellidoMFocus,setApellidoMFocus]= useState(false);
+
     const [errMsg,setErrMsg] = useState('');
     const [success,setSuccess]=useState(false);
    
@@ -43,6 +57,7 @@ const Register = () => {
         Nombres: '',
         ApePat: '',
         ApeMat:'',
+        Password:'',
         Correo:'',
         CodigoPucp:'',
         Imagen: null,
@@ -61,6 +76,28 @@ const Register = () => {
     },[user])
 
     useEffect(()=>{
+        const result = NAME_REGEX.test(name);
+        console.log(result);
+        console.log(name);
+        setValidNa(result);
+    },[name])
+
+    useEffect(()=>{
+        const result = NAME_REGEX.test(apellidoP);
+        console.log(result);
+        console.log(apellidoP);
+        setValidApellidoP(result);
+    },[apellidoP])
+
+    useEffect(()=>{
+        const result = NAME_REGEX.test(apellidoM);
+        console.log(result);
+        console.log(apellidoM);
+        setValidApellidoM(result);
+    },[apellidoM])
+
+
+    useEffect(()=>{
         const result = PWD_REGEX.test(pwd);
         console.log(result);
         console.log(pwd);
@@ -71,20 +108,26 @@ const Register = () => {
 
     useEffect(()=>{
         setErrMsg('');
-    },[user,pwd,matchPwd])
+    },[user,pwd,matchPwd,name,apellidoP,apellidoM])
 
     const handleSubmit =async (e)=>{
         e.preventDefault();
 
         const v1 = USER_REGEX.test(user);
         const v2 = PWD_REGEX.test(pwd);
-        if(!v1 || !v2){
+        const v3 = NAME_REGEX.test(name);
+        const v4 = NAME_REGEX.test(apellidoP);
+        const v5 = NAME_REGEX.test(apellidoM);
+        if(!v1 || !v2 || !v3 || !v4 || !v5){
             setErrMsg("invalid Entry");
             return;
         }
         try{/*Poner como en el backend*/ 
-            UsuarioSeleccionado.ApePat=pwd;
+            UsuarioSeleccionado.Password=pwd;
             UsuarioSeleccionado.Correo=user;
+            UsuarioSeleccionado.Nombres=name;
+            UsuarioSeleccionado.ApePat=apellidoP;
+            UsuarioSeleccionado.ApeMat=apellidoM;
             console.log(UsuarioSeleccionado)
             const response = await axios.post(REGISTER_URL,JSON.stringify({UsuarioSeleccionado}),
             {
@@ -95,7 +138,7 @@ const Register = () => {
             console.log(response.accessToken);
             console.log(JSON.stringify(response))
             setSuccess(true);
-            //clear input fields*/            
+            //clear input fields         
         }
         catch(err){
             if(!err?.response){
@@ -140,6 +183,81 @@ const Register = () => {
             </p>
             <h1>Registro</h1>
             <form onSubmit={handleSubmit}>
+                <label htmlFor='name'>
+                    Nombre:
+                    <span className={validNa? "valid": "hide"}>
+                        <FontAwesomeIcon icon={faCheck}/>
+                    </span>
+                    <span className={validNa || !name? "hide":"invalid"}>
+                        <FontAwesomeIcon icon ={faTimes}/>
+                    </span>
+                </label>
+                <input
+                    type="text"
+                    id='name'
+                    autoComplete='off'
+                    onChange={(e)=> setName(e.target.value)}
+                    required
+                    aria-invalid={validNa?"false":"true"}
+                    aria-describedby='namenote'
+                    onFocus={()=>setNameFocus(true)}
+                    onBlur={()=> setNameFocus(false)}
+                />
+                <p id='namenote' className={nameFocus &&name &&
+                !validNa ? "instructions"  : "offscreen"}>
+                    <FontAwesomeIcon icon = {faInfoCircle}/>
+                    Solo se permiten letras.
+                </p>
+                <label htmlFor='apellidoP'>
+                    Apellido Paterno:
+                    <span className={validApellidoP? "valid": "hide"}>
+                        <FontAwesomeIcon icon={faCheck}/>
+                    </span>
+                    <span className={validApellidoP || !apellidoP? "hide":"invalid"}>
+                        <FontAwesomeIcon icon ={faTimes}/>
+                    </span>
+                </label>
+                <input
+                    type="text"
+                    id='apellidoP'
+                    autoComplete='off'
+                    onChange={(e)=> setApellidoP(e.target.value)}
+                    required
+                    aria-invalid={validApellidoP?"false":"true"}
+                    aria-describedby='apePnote'
+                    onFocus={()=>setApellidoPFocus(true)}
+                    onBlur={()=> setApellidoPFocus(false)}
+                />
+                <p id='apePnote' className={apellidoPFocus &&apellidoP &&
+                !validApellidoP ? "instructions"  : "offscreen"}>
+                    <FontAwesomeIcon icon = {faInfoCircle}/>
+                    Solo se permiten letras.
+                </p>
+                <label htmlFor='apellidoM'>
+                    Apellido Materno:
+                    <span className={validApellidoM? "valid": "hide"}>
+                        <FontAwesomeIcon icon={faCheck}/>
+                    </span>
+                    <span className={validApellidoM || !apellidoM? "hide":"invalid"}>
+                        <FontAwesomeIcon icon ={faTimes}/>
+                    </span>
+                </label>
+                <input
+                    type="text"
+                    id='apellidoM'
+                    autoComplete='off'
+                    onChange={(e)=> setApellidoM(e.target.value)}
+                    required
+                    aria-invalid={validApellidoM?"false":"true"}
+                    aria-describedby='apeMnote'
+                    onFocus={()=>setApellidoMFocus(true)}
+                    onBlur={()=> setApellidoMFocus(false)}
+                />
+                <p id='apeMnote' className={apellidoMFocus &&apellidoM &&
+                !validApellidoM ? "instructions"  : "offscreen"}>
+                    <FontAwesomeIcon icon = {faInfoCircle}/>
+                    Solo se permiten letras.
+                </p>
                 <label htmlFor="username">
                     Usuario:
                     <span className={validName?"valid":"hide"}>
@@ -165,9 +283,7 @@ const Register = () => {
                 <p id="uidnote" className={userFocus  && user &&
                 !validName ? "instructions" : "offscreen"}>
                     <FontAwesomeIcon icon={faInfoCircle}/>
-                    4 a 24 caracteres.<br/>
-                    Debe comenzar con una letra.<br/>
-                    Letras, numeros,guiones permitidos.
+                    Debe ser un correo electrónico
                 </p>
                 <label htmlFor="password">
                     Contraseña:
@@ -193,7 +309,7 @@ const Register = () => {
                 !validPwd ? "instructions" : "offscreen"}>
                     <FontAwesomeIcon icon={faInfoCircle}/>
                     8 a 24 caracteres.<br/>
-                    Debe incluir letras mayusculas y minusculas,
+                    Debe incluir letras mayusculas y minusculas,<br/>
                     un numero y un caracter especial.<br/>
                     Letras, numeros,guiones permitidos.<br/>
                     Estan permitidos caracteres especiales: <span aria-label="exclamation mark">!</span>
@@ -235,7 +351,7 @@ const Register = () => {
                     onChange={onDropDownChange}
                 />
 
-                <button disabled={!validName || !validPwd || !validMatch ||value===null ?true:false}>
+                <button disabled={!validName || !validPwd || !validMatch ||value===null||!validNa||!validApellidoP||!validApellidoM ?true:false}>
                     Registrar
                 </button>
                 <p>
