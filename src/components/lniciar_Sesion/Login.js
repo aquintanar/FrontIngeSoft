@@ -126,7 +126,7 @@ function Login() {
             
             
         </form>
-        <p>
+        <p className='TEXTO-ABAJO'>
             ¿Necesita una cuenta?<br/>
             <span className='line'>
                     {/*Put router */}
