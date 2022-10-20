@@ -279,7 +279,11 @@ ESTILO DE INICIAR SESION
     align-self: center;
     justify-self: center;
     margin-right: 27px;
-
   }
- 
+ .google-btn:Hover{
+    box-shadow: 0 0 6px #4285f4;
+ }
+ .google-btn:active{
+    background: #1669F2;
+ }
 

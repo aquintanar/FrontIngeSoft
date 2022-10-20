@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap');
 
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700');
+
+.BOTON-EXIT{
+    width:100%;
+    bottom: 0;
+    position: absolute;
+}
 .busquedaEspecialidad{
     margin-left: 100px;
 }

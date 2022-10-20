@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Navigate ,useNavigate} from 'react-router-dom';
 import * as AiIcons from 'react-icons/ai';
 import { SidebarData } from './SidebarDataAdmin';
 import SubMenu from './SubMenuAdmin';
 import { IconContext } from 'react-icons/lib';
 import '../../Pagina.css';
 import logo from '../../imagenes/logo.png';
+import '../../stylesheets/Administrador.css'
 
 const Nav = styled.div`
   background: #042354;
@@ -33,7 +34,7 @@ const NavIcon = styled(Link)`
 const SidebarNav = styled.nav`
   background: #003C7A;
   width: 20%;
-  height: 100vh;
+  height: 93.6vh;
   display: flex;
   justify-content: center;
   position: absolute;
@@ -45,13 +46,17 @@ const SidebarNav = styled.nav`
 
 const SidebarWrap = styled.div`
   width: 100%;
+  
 `;
 
 const Sidebar = () => {
   const [sidebar, setSidebar] = useState(true);
-
+  const navigate = useNavigate();
   const showSidebar = () => setSidebar(sidebar);
-
+  const cerrarSesion =async (e) =>{
+    e.preventDefault();
+    navigate('/')
+  }
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
@@ -64,11 +69,13 @@ const Sidebar = () => {
             </div>  
         </Nav>
         <SidebarNav sidebar={sidebar}>
-            <SidebarWrap>
+        <SidebarWrap>
               {SidebarData.map((item, index) => {
                 return <SubMenu item={item} key={index} />;
               })}
-            </SidebarWrap>
+              <button className='BOTON-EXIT' onClick={cerrarSesion}> Cerrar Sesion</button>
+        </SidebarWrap>
+            
         </SidebarNav>
       </IconContext.Provider>
     </>
