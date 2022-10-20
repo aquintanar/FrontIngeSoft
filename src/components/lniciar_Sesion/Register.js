@@ -12,9 +12,9 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const NAME_REGEX = /^[a-zA-Z]{1,50}$/;
 
 const REGISTERALUMNO_URL = 'https://localhost:7012/api/Alumno/PostAlumno';
-const REGISTERADMIN_URL = 'https://localhost:7012/api/Alumno/PostAdministrador';
-const REGISTERASESOR_URL = 'https://localhost:7012/api/Alumno/PostAsesor';
-const REGISTERDOCENTE_URL = 'https://localhost:7012/api/Alumno/PostDocente';
+const REGISTERADMIN_URL = 'https://localhost:7012/api/Administrador/PostAdministrador';
+const REGISTERASESOR_URL = 'https://localhost:7012/api/Asesor/PostAsesor';
+const REGISTERDOCENTE_URL = 'https://localhost:7012/api/Docente/PostDocente';
 
 
 const Register = () => {
@@ -60,11 +60,10 @@ const Register = () => {
         nombres: '',
         apePat: '',
         apeMat:'',
-        Password:'',
         correo:'',
         codigoPucp:'',
-        imagen: null,
-        linkCalendario:''
+        contrasena:'',
+        imagen: null
       })
 
     useEffect(()=>{
@@ -131,8 +130,9 @@ const Register = () => {
             UsuarioSeleccionado.nombres=name;
             UsuarioSeleccionado.apePat=apellidoP;
             UsuarioSeleccionado.apeMat=apellidoM;
+            UsuarioSeleccionado.contrasena=pwd;
             console.log(UsuarioSeleccionado)
-            if(value==='Administrador'){
+            if(value.value==='Administrador'){
                 await axios.post(REGISTERADMIN_URL,UsuarioSeleccionado,{
                     _method: 'POST'
                   })
@@ -142,7 +142,7 @@ const Register = () => {
                   console.log(error.message);
                 })
             }
-            else if(value==='Asesor'){
+            else if(value.value==='Asesor'){
                 await axios.post(REGISTERASESOR_URL,UsuarioSeleccionado,{
                     _method: 'POST'
                   })
@@ -152,7 +152,7 @@ const Register = () => {
                   console.log(error.message);
                 })
             }
-            else if(value==='Docente'){
+            else if(value.value==='Docente'){
                 await axios.post(REGISTERDOCENTE_URL,UsuarioSeleccionado,{
                     _method: 'POST'
                   })
@@ -162,7 +162,7 @@ const Register = () => {
                   console.log(error.message);
                 })
             }
-            else{
+            else if(value.value==='Alumno'){
                 await axios.post(REGISTERALUMNO_URL,UsuarioSeleccionado,{
                     _method: 'POST'
                   })
