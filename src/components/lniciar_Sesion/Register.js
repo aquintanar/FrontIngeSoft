@@ -11,7 +11,10 @@ const USER_REGEX= /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const NAME_REGEX = /^[a-zA-Z]{1,50}$/;
 
-const REGISTER_URL = 'http://44.210.195.91/api/Alumno/PostAlumno';
+const REGISTERALUMNO_URL = 'https://localhost:7012/api/Alumno/PostAlumno';
+const REGISTERADMIN_URL = 'https://localhost:7012/api/Alumno/PostAdministrador';
+const REGISTERASESOR_URL = 'https://localhost:7012/api/Alumno/PostAsesor';
+const REGISTERDOCENTE_URL = 'https://localhost:7012/api/Alumno/PostDocente';
 
 
 const Register = () => {
@@ -53,15 +56,15 @@ const Register = () => {
     const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
     
     const [UsuarioSeleccionado, setUsuarioSeleccionado]=useState({
-        IdUsuario: 0,
-        Nombres: '',
-        ApePat: '',
-        ApeMat:'',
+        idUsuario: 0,
+        nombres: '',
+        apePat: '',
+        apeMat:'',
         Password:'',
-        Correo:'',
-        CodigoPucp:'',
-        Imagen: null,
-        LinkCalendario:''
+        correo:'',
+        codigoPucp:'',
+        imagen: null,
+        linkCalendario:''
       })
 
     useEffect(()=>{
@@ -123,21 +126,64 @@ const Register = () => {
             return;
         }
         try{/*Poner como en el backend*/ 
-            UsuarioSeleccionado.Password=pwd;
-            UsuarioSeleccionado.Correo=user;
-            UsuarioSeleccionado.Nombres=name;
-            UsuarioSeleccionado.ApePat=apellidoP;
-            UsuarioSeleccionado.ApeMat=apellidoM;
+            //UsuarioSeleccionado.Password=pwd;
+            UsuarioSeleccionado.correo=user;
+            UsuarioSeleccionado.nombres=name;
+            UsuarioSeleccionado.apePat=apellidoP;
+            UsuarioSeleccionado.apeMat=apellidoM;
             console.log(UsuarioSeleccionado)
+            if(value==='Administrador'){
+                await axios.post(REGISTERADMIN_URL,UsuarioSeleccionado,{
+                    _method: 'POST'
+                  })
+                .then(response=>{
+                  
+                }).catch(error =>{
+                  console.log(error.message);
+                })
+            }
+            else if(value==='Asesor'){
+                await axios.post(REGISTERASESOR_URL,UsuarioSeleccionado,{
+                    _method: 'POST'
+                  })
+                .then(response=>{
+                  
+                }).catch(error =>{
+                  console.log(error.message);
+                })
+            }
+            else if(value==='Docente'){
+                await axios.post(REGISTERDOCENTE_URL,UsuarioSeleccionado,{
+                    _method: 'POST'
+                  })
+                .then(response=>{
+                  
+                }).catch(error =>{
+                  console.log(error.message);
+                })
+            }
+            else{
+                await axios.post(REGISTERALUMNO_URL,UsuarioSeleccionado,{
+                    _method: 'POST'
+                  })
+                .then(response=>{
+                  
+                }).catch(error =>{
+                  console.log(error.message);
+                })
+            }
+            
+
+            /*
             const response = await axios.post(REGISTER_URL,JSON.stringify({UsuarioSeleccionado}),
             {
                 headers:{'Content-Type':'application/json'},
-                withCredentials:true
+                
             });
             console.log(response.data);
             console.log(response.accessToken);
             console.log(JSON.stringify(response))
-            setSuccess(true);
+            setSuccess(true);*/
             //clear input fields         
         }
         catch(err){
@@ -156,7 +202,8 @@ const Register = () => {
     const options=[
         {value:'Administrador',label:'Administrador'},
         {value:'Docente',label:'Docente'},
-        {value:'Alumno',label:'Alumno'}
+        {value:'Alumno',label:'Alumno'},
+        {value:'Asesor',label:'Asesor'}
     ]
 
     const onDropDownChange = (value) =>{
@@ -360,6 +407,7 @@ const Register = () => {
                 </p>
             </form>
         </section>
+        
         </div>)}
         </>
     )
