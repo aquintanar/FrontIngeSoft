@@ -5,6 +5,8 @@ import {Link,useNavigate,useLocation} from 'react-router-dom';
 import axios from 'axios'
 import '../../stylesheets/Iniciar_Sesion.css'
 import { useAuth0 } from '@auth0/auth0-react';
+import { useContext } from 'react';
+import { UserContext } from '../../UserContext';
 
 const LOGIN_URL = 'https://localhost:7012/api/login/GetLogin'
 const LOGIN_URL2 = 'https://localhost:7012/api/Rol'
@@ -30,6 +32,7 @@ function Login() {
     const [errMsg,setErrMsg] = useState('');
     
 
+    const {value,setValue} = useContext(UserContext);
     useEffect(()=>{
         setErrMsg('');
     },[user,pwd]);
@@ -86,6 +89,7 @@ function Login() {
                 .then(response=>{
                         console.log(response);
                         const idUs=response.data.id
+                        setValue(idUs);
                         searchId(idUs);
                       
                 }).catch(error=>{

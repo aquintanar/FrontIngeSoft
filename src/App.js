@@ -14,10 +14,13 @@ import Login from './components/lniciar_Sesion/Login'
 import Register from './components/lniciar_Sesion/Register';
 import RequireAuth from './components/lniciar_Sesion/RequireAuth';
 import ErrorPage from './ErrorPage'
+import { UserContext } from './UserContext';
 function App() {
+  const [value,setValue] = useState('Hello from context');
   return (
+    <UserContext.Provider value={{value,setValue}}>
     <Router>
-            
+                    
             <Routes>
                 {/*Public Routes */ }
                 <Route path='/' exact element= {<Login/>} />
@@ -35,6 +38,7 @@ function App() {
             </Routes>
            
     </Router>
+    </UserContext.Provider>
   )
 }
 
