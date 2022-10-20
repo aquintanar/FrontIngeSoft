@@ -7,7 +7,7 @@ import "../../stylesheets/Iniciar_Sesion.css";
 import Select from 'react-select';
 import useModal from '../../hooks/useModals';
 
-const USER_REGEX= /^[a-z0-9]+@[a-z]+\.[a-z]{2,10}$/;
+const USER_REGEX= /^[a-z0-9]+@[a-z]+\.[a-z]/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const NAME_REGEX = /^[a-zA-Z]{1,50}$/;
 
