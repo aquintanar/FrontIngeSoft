@@ -1,3 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap');
+
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700');
+
+
+/*CONTENEDOR*/  
+.CONTAINERCOMITE{
+    width: 65%;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    left: 22%;
+}
+
+/*ESTILOS CABECERAS*/
+.HEADER-TEXT1 {
+    font-size: 40px;
+    font-family: 'Montserrat', sans-serif;
+    color: #042354;
+    font-weight: bold;
+    display: flex;
+    height: 60px;
+}
+
+.HEADER-TEXT2{
+    font-size: 32px;
+    color: #042354;
+    font-weight: bold;
+    height: 55px;
+}
 .GESTION-GENERAL-TEXT {
     font-size: 40px;
     font-family: Monserrat;
@@ -116,4 +145,43 @@ Estilos de listar temas
     font-size: 32px;
     font-family: Monserrat;
     margin-top: 20px;
+}
+
+.LISTAR-BOTON{
+    display: flex;
+    justify-content: flex-end;
+}
+.LISTAR-BOTON button{
+    border-radius: 4px;
+    background-color: #042354;
+    border:none;
+    font-family: roboto;
+    transition:all 0.5s;
+    cursor:pointer;
+    width: 120px;
+}
+.LISTAR-BOTON button:hover{
+    background-color: #2179D4;
+}
+.LISTAR-BOTON button span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+.LISTAR-BOTON button span:after{
+    content:'\2295';
+    position:absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.LISTAR-BOTON button:hover span{
+    
+    padding-right:25px;
+}
+.LISTAR-BOTON button:hover span:after{
+    opacity: 1;
+    right: 0;
 }

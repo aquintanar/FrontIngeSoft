@@ -58,7 +58,7 @@ function Login() {
                         navigate('/alumno');
                     }
                     else if(response2.data[0].nombre ==='DOCENTE'){
-                        navigate('/docente');
+                        navigate('/profesor');
                     }
                     else if(response2.data[0].nombre ==='ASESOR'){
                         navigate('/asesor');

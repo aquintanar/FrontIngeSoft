@@ -9,6 +9,8 @@ import { IconContext } from 'react-icons/lib';
 import '../../Pagina.css';
 import '../../stylesheets/SideBar.css'
 import logo from '../../imagenes/logo.png';
+import {useAuth0 }from '@auth0/auth0-react'
+
 
 const Nav = styled.div`
   background: #042354;
@@ -34,7 +36,7 @@ const NavIcon = styled(Link)`
 const SidebarNav = styled.nav`
   background: #003C7A;
   width: 20%;
-  height: 100vh;
+  height: 93.6vh;
   display: flex;
   justify-content: center;
   position: absolute;
@@ -49,6 +51,7 @@ const SidebarWrap = styled.div`
 `;
 
 const Sidebar = () => {
+  const {logout, isAuthenticated}=useAuth0();
   const [sidebar, setSidebar] = useState(true);
 
   const showSidebar = () => setSidebar(sidebar);
@@ -69,6 +72,7 @@ const Sidebar = () => {
             {SidebarData.map((item, index) => {
               return <SubMenu item={item} key={index} />;
             })}
+             <button className='BOTON-EXIT' onClick={()=>logout()}> Cerrar Sesion</button>
           </SidebarWrap>
         </SidebarNav>
       </IconContext.Provider>

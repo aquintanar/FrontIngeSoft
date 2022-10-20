@@ -4,10 +4,11 @@ import './Pagina.css'
 import SidebarAsesor from './components/Asesor/SidebarAsesor';
 import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom';
 import "./pages/Asesor/buttonGroup.css";
-import ModalComponent from './pages/Asesor/ModalBuscarTema';
-import ProponerTemaAsesor from './pages/Asesor/proponerTemaAsesor';
-import BuscarTemaAsesor from './pages/Asesor/buscarTemaAsesor';
-
+import TemaTesis from './pages/Asesor/TemaTesis';
+import AlumnosAsesorados from './pages/Asesor/AlumnosAsesorados';
+import AlumnoSeleccionado from './pages/Asesor/AlumnoSeleccionado';
+import Entregables from './pages/Asesor/Entregables';
+import EntregableSeleccionado from './pages/Asesor/EntregableSeleccionado';
 function Asesor() {
     const[active, setActive] = useState("proponerTema");
     const[formato, setFormato] = useState("botonActivo1");
@@ -30,21 +31,14 @@ function Asesor() {
     return (
         <div>    
             <SidebarAsesor/>            
-            <div className="container">
                 <BarraVolver/>
-                <nav>
-                    <button onClick={() => {setActive("proponerTema");setFormato("botonActivo1")}} className={"botonActivo1" === formato ? "customButton active" : "customButton"}>Proponer tema</button>
-                    <button onClick={() => {setActive("buscarTema");setFormato("botonActivo2"); setShow(true)}} className={"botonActivo2" === formato ? "customButton active" : "customButton"}>Buscar tema</button>
-                    <button onClick={() => {setActive("solicitarCambios") ;setFormato("botonActivo3")}} className={"botonActivo3" === formato ? "customButton active" : "customButton"}>Solicitar cambios</button>
-                </nav>
-                <div>
-                    {active === "proponerTema" && <ProponerTemaAsesor temaTesis={temaTesis} setTemaTesis={setTemaTesis}/>}
-                    {active === "buscarTema" && <ModalComponent show={show} setShow={setShow} temaTesis={temaTesis} setTemaTesis={setTemaTesis}/>}
-                    {active === "buscarTema" && <BuscarTemaAsesor temaTesis={temaTesis} setTemaTesis={setTemaTesis}/>}
-                    {active === "solicitarCambios"}
-                </div>
-                
-            </div>
+                <Routes>
+                  <Route path='temaTesis' exact element= {<TemaTesis/>}/>
+                  <Route path='alumnos' exact element= {<AlumnosAsesorados/>}/>
+                  <Route path='alumnos/alumnoSeleccionado' exact element= {<AlumnoSeleccionado/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregables' exact element= {<Entregables/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregables/entregableSeleccionado' exact element= {<EntregableSeleccionado/>}/>
+              </Routes>
         </div>
     )
   }

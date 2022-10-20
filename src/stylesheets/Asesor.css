@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap');
+
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700');
+
+
+/*CONTENEDOR*/  
+.CONTAINERASESOR{
+    width: 65%;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    left: 22%;
+}
+
+/*ESTILOS CABECERAS*/
+.HEADER-TEXT1 {
+    font-size: 40px;
+    font-family: 'Montserrat', sans-serif;
+    color: #042354;
+    font-weight: bold;
+    display: flex;
+    height: 60px;
+}
+
+.HEADER-TEXT2{
+    font-size: 32px;
+    color: #042354;
+    font-weight: bold;
+    height: 55px;
+}

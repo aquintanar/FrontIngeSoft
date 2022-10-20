@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import * as AiIcons from 'react-icons/ai';
 import * as FaIcons from 'react-icons/fa';
-import { SidebarData } from './SidebarDataComite';
-import SubMenu from './SubMenuComite';
+import { SidebarData } from './SidebarDataProfesor';
+import SubMenu from './SubMenuProfesor';
 import { IconContext } from 'react-icons/lib';
-import logo from '../../imagenes/logo.png';
+import '../../Pagina.css';
 import '../../stylesheets/SideBar.css'
+import logo from '../../imagenes/logo.png';
 import {useAuth0 }from '@auth0/auth0-react'
+
 
 const Nav = styled.div`
   background: #042354;
@@ -23,32 +25,32 @@ const Nav = styled.div`
 `;
 
 const NavIcon = styled(Link)`
-margin-left: 2rem;
-font-size: 2rem;
-height: 80px;
-display: flex;
-justify-content: flex-start;
-align-items: center;
+  margin-left: 2rem;
+  font-size: 2rem;
+  height: 80px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 const SidebarNav = styled.nav`
-background: #003C7A;
-width: 20%;
-height: 93.6vh;
-display: flex;
-justify-content: center;
-position: absolute;
-top: 20;
-left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
-transition: 350ms;
-z-index: 10;
+  background: #003C7A;
+  width: 20%;
+  height: 93.6vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 20;
+  left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
+  transition: 350ms;
+  z-index: 10;
 `;
 
 const SidebarWrap = styled.div`
   width: 100%;
 `;
 
-const SidebarComite = () => {
+const Sidebar = () => {
   const {logout, isAuthenticated}=useAuth0();
   const [sidebar, setSidebar] = useState(true);
 
@@ -66,16 +68,16 @@ const SidebarComite = () => {
             </div>  
         </Nav>
         <SidebarNav sidebar={sidebar}>
-          <SidebarWrap>
-            {SidebarData.map((item, index) => {
-              return <SubMenu item={item} key={index} />;
-            })}
-             <button className='BOTON-EXIT' onClick={()=>logout()}> Cerrar Sesion</button>
-          </SidebarWrap>
+            <SidebarWrap>
+                {SidebarData.map((item, index) => {
+                  return <SubMenu item={item} key={index} />;
+                })}
+            </SidebarWrap>
+            <button className='BOTON-EXIT' onClick={()=>logout()}> Cerrar Sesion</button>
         </SidebarNav>
       </IconContext.Provider>
     </>
   );
 };
 
-export default SidebarComite;
+export default Sidebar;
