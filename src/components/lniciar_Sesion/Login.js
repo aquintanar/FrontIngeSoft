@@ -6,9 +6,15 @@ import axios from 'axios'
 import '../../stylesheets/Iniciar_Sesion.css'
 import { useAuth0 } from '@auth0/auth0-react';
 
-const LOGIN_URL = '......'
+const LOGIN_URL = 'https://localhost:7012/api/login/GetLogin'
 function Login() {
     const {loginWithRedirect,isAuthenticated} = useAuth0();
+    
+    const [cuentaSeleccionada, setCuentaSeleccionada]=useState({
+        correo: "",
+        contrasena: ""
+      })
+
 
     const {setAuth} = useAuth();
     const navigate = useNavigate();
@@ -35,25 +41,54 @@ function Login() {
         e.preventDefault();
         
         try{
-            /*
-            const response = await axios.post(LOGIN_URL,
-                JSON.stringify({user,pwd}),
+            cuentaSeleccionada.correo=user;
+            cuentaSeleccionada.contrasena=pwd;
+            console.log(cuentaSeleccionada);
+            
+           
+            const response = await axios.get(LOGIN_URL,
+                {params:{correo:user,contrasena:pwd}},
                 {
-                    headers:{'Contet-Type': 'application-json'},
-                    withCredentials:true
+                    _method:'GET'
+                })
+                .then(response=>{
+                        console.log(response);
+                        if(response.data.id===11){
+                            navigate('/administrador')
+                        }
+                        else if(response.data.id===12){
+                            navigate('/comite');
+                        }
+                        else if(response.data.id===13){
+                            navigate('/alumno');
+                        }
+                        else if(response.data.id===14){
+                            navigate('/asesor');
+                        }
+                }).catch(error=>{
+                    if(!error?.response){
+                        setErrMsg('No Server Response')
+                    }
+                    else if(error.response?.status===400){
+                        setErrMsg('Missing Username or Password');
+                    }
+                    else if(error.response?.status===401){
+                        setErrMsg('Unauthorized');
+                    }
+                    else{
+                        setErrMsg('Login Failed');
+                    }
+                    errRef.current.focus();
                 });
-                console.log(JSON.stringify(response?.data));
-
-                const accessToken = response?.data.accessToken;
-                const roles =response?.data?.roles;*/
+                
                 /*lOS ROLES SON UN ARREGLO DE NUMEROS */
-                /*setAuth({user,pwd,roles,accessToken});
+            /*setAuth({user,pwd,roles,accessToken});
 
             setUser('');
-            setPwd('');
-            navigate(from,{replace:true});*/
-            console.log(user)
-            if(user==="Administrador"){
+            setPwd('');*/
+            //navigate(from,{replace:true});
+            //console.log(user)
+            /*if(user==="Administrador"){
                 navigate('/administrador');
             }
             else if(user==="Alumno"){
@@ -64,25 +99,18 @@ function Login() {
             }
             else if(user==="Asesor"){
                 navigate('/asesor');
-            }
+            }*/
         }
         catch(err){
-                if(!err?.response){
-                    setErrMsg('No Server Response')
-                }
-                else if(err.response?.status===400){
-                    setErrMsg('Missing Username or Password');
-                }
-                else if(err.response?.status===401){
-                    setErrMsg('Unauthorized');
-                }
-                else{
-                    setErrMsg('Login Failed');
-                }
-                errRef.current.focus();
+                
         }   
     }
-    
+    function Autenticacion(){
+        if(isAuthenticated){
+            navigate('/administrador')
+        }
+    }
+    window.onload=Autenticacion()
     return (
         
         <div className='CONTAINER-GENERAL-LOGIN'>
@@ -90,7 +118,7 @@ function Login() {
             <p ref={errRef} className={errMsg?"errmsg" :
              "offscreen"} aria-live ="assertive">{errMsg}</p>
         <h1>Inicio de Sesión</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} onLoad='Autenticacion'>
             <label htmlFor='username'>
                 Usuario:
             </label>
