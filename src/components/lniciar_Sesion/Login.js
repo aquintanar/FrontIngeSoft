@@ -7,6 +7,7 @@ import '../../stylesheets/Iniciar_Sesion.css'
 import { useAuth0 } from '@auth0/auth0-react';
 
 const LOGIN_URL = 'https://localhost:7012/api/login/GetLogin'
+const LOGIN_URL2 = 'https://localhost:7012/api/Rol'
 function Login() {
     const {loginWithRedirect,isAuthenticated} = useAuth0();
     
@@ -36,7 +37,38 @@ function Login() {
     useEffect(()=>{
         userRef.current.focus();
     },[])
-    
+    const searchId = async(e)=>{
+        try{
+            console.log(e);
+            
+            const response2 = await axios.get(LOGIN_URL2,
+                {params:{idUsuario:e}},
+                {
+                    _method:'GET'
+                })
+                .then(response2=>{
+                    console.log(response2.data[0].nombre)
+                    if(response2.data[0].nombre ==='ADMINISTRADOR'){
+                        navigate('/administrador');
+                    }
+                    else if(response2.data[0].nombre ==='ALUMNO'){
+                        navigate('/alumno');
+                    }
+                    else if(response2.data[0].nombre ==='DOCENTE'){
+                        navigate('/docente');
+                    }
+                    else if(response2.data[0].nombre ==='ASESOR'){
+                        navigate('/asesor');
+                    }
+                }).catch(error=>{
+
+                });
+        }catch(err){
+
+        }
+    }
+
+
     const handleSubmit =async (e) =>{
         e.preventDefault();
         
@@ -53,18 +85,9 @@ function Login() {
                 })
                 .then(response=>{
                         console.log(response);
-                        if(response.data.id===11){
-                            navigate('/administrador')
-                        }
-                        else if(response.data.id===12){
-                            navigate('/comite');
-                        }
-                        else if(response.data.id===13){
-                            navigate('/alumno');
-                        }
-                        else if(response.data.id===14){
-                            navigate('/asesor');
-                        }
+                        const idUs=response.data.id
+                        searchId(idUs);
+                      
                 }).catch(error=>{
                     if(!error?.response){
                         setErrMsg('No Server Response')
