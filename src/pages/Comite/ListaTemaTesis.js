@@ -99,9 +99,9 @@ function ListaTemaTesis()  {
     const columns = [
         {
             dataField: "idTemaTesis",
-            text: "ID",
+            text: "Id",
             sort: true,
-            filter: textFilter(),
+            //filter: textFilter(),
             formatter: funcFormatter,
             headerStyle: {
                 backgroundColor: '#042354',
@@ -111,9 +111,9 @@ function ListaTemaTesis()  {
 
         {
             dataField: "tituloTesis",
-            text: "TITULO",
+            text: "Título",
             sort: true,
-            filter: textFilter(),
+            //filter: textFilter(),
             formatter: funcFormatter,
             headerStyle: {
                 backgroundColor: '#042354',
@@ -122,9 +122,9 @@ function ListaTemaTesis()  {
         },
         {
             dataField: "descripcion",
-            text: "DESCRIPCION",
+            text: "Descripción",
             sort: true,
-            filter: textFilter(),
+            //filter: textFilter(),
             formatter: funcFormatter,
             headerStyle: {
                 backgroundColor: '#042354',
@@ -134,9 +134,9 @@ function ListaTemaTesis()  {
         ,
         {
             dataField: "estadoTema",
-            text: "ESTADO",
+            text: "Estado",
             sort: true,
-            filter: textFilter(),
+            //filter: textFilter(),
             formatter: funcFormatter,
             headerStyle: {
                 backgroundColor: '#042354',
@@ -146,9 +146,9 @@ function ListaTemaTesis()  {
 
         {
             dataField: "nombreArea",
-            text: "AREA",
+            text: "Área",
             sort: true,
-            filter: textFilter(),
+            //filter: textFilter(),
             formatter: funcFormatter,
             headerStyle: {
                 backgroundColor: '#042354',
@@ -159,9 +159,9 @@ function ListaTemaTesis()  {
         },
         {
             dataField: "PalabraClave1",
-            text: "PALABRA CLAVE 1",
+            text: "PalabraClave 1",
             sort: true,
-            filter: textFilter(),
+            //filter: textFilter(),
             formatter: funcFormatter,
             headerStyle: {
                 backgroundColor: '#042354',
@@ -172,9 +172,9 @@ function ListaTemaTesis()  {
         },
         {
           dataField: "PalabraClave2",
-          text: "PALABRA CLAVE 2",
+          text: "PalabraClave 2",
           sort: true,
-          filter: textFilter(),
+          //filter: textFilter(),
           formatter: funcFormatter,
           headerStyle: {
               backgroundColor: '#042354',
@@ -209,14 +209,18 @@ function ListaTemaTesis()  {
                                    data={data}
                                    columns={columns}
                                    filter={filterFactory()}
+                                   bordered={ false }
                                   { ...props.baseProps }
                                 />
                               </div>
                             )
                           }
                         </ToolkitProvider>
-                      
-                        <button   onClick={()=>abrirCerrarModalGuardar()} className="boton">Publicar</button>
+                        <h1> </h1> 
+                        <div className='LISTAR-BOTON'>
+                        <button   onClick={()=>abrirCerrarModalGuardar()} className="btn btn-primary fs-4 fw-bold mb-3">Publicar</button>
+                        </div>  
+                        <p> </p>   
                     </div>
     
             </div>

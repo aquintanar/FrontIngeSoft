@@ -4,7 +4,8 @@ import '../../Pagina.css'
 import { BrowserRouter as Router , Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useNavigate,useParams } from 'react-router-dom';
 import axios from 'axios';
-
+import  '../../stylesheets/Comite.css';
+import { useTable } from 'react-table';
 
 const TemaSeleccionado = () => {
   const url="http://44.210.195.91/api/TemaTesis/GetTemaTesis";
@@ -28,7 +29,7 @@ const TemaSeleccionado = () => {
     }
   
     return (
-      <div class="container">
+      <div class="CONTAINERCOMITE">
       <div class="row">
           <p class="text-start fs-3 mb-4 fw-bold">Tema to Ver Tema</p>
       </div> 

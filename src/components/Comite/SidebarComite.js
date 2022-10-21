@@ -8,7 +8,6 @@ import SubMenu from './SubMenuComite';
 import { IconContext } from 'react-icons/lib';
 import logo from '../../imagenes/logo.png';
 import '../../stylesheets/SideBar.css'
-import {useAuth0 }from '@auth0/auth0-react'
 
 const Nav = styled.div`
   background: #042354;
@@ -22,6 +21,7 @@ const Nav = styled.div`
   }
 `;
 
+
 const NavIcon = styled(Link)`
 margin-left: 2rem;
 font-size: 2rem;
@@ -34,10 +34,10 @@ align-items: center;
 const SidebarNav = styled.nav`
 background: #003C7A;
 width: 20%;
-height: 93.6vh;
+height: 100vh;
 display: flex;
 justify-content: center;
-position: absolute;
+position: fixed;
 top: 20;
 left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
 transition: 350ms;
@@ -49,7 +49,6 @@ const SidebarWrap = styled.div`
 `;
 
 const SidebarComite = () => {
-  const {logout, isAuthenticated}=useAuth0();
   const [sidebar, setSidebar] = useState(true);
 
   const showSidebar = () => setSidebar(sidebar);
@@ -70,7 +69,6 @@ const SidebarComite = () => {
             {SidebarData.map((item, index) => {
               return <SubMenu item={item} key={index} />;
             })}
-             <button className='BOTON-EXIT' onClick={()=>logout()}> Cerrar Sesion</button>
           </SidebarWrap>
         </SidebarNav>
       </IconContext.Provider>
