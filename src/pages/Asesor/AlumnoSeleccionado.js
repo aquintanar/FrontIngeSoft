@@ -14,9 +14,30 @@ function AlumnoSeleccionado(){
         <div className='CONTAINERASESOR'>
         <h1 className='HEADER-TEXT1'>Portafolio de Entregables</h1>
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
-        <button  >Avances Semanales</button>
-        <button onClick={() =>navigate("entregables",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat}})}>Entregables</button>
-        <button>Entregables Parciales</button>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                <a class="navbar-brand HEADER-PORTAFOLIO1" href="#">Avances Semanles</a>
+                </div>
+            </nav>
+       </div>
+       <br></br>
+       <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                <a class="navbar-brand HEADER-PORTAFOLIO1" onClick={() =>navigate("entregables",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat}})}>Entregables</a>
+                </div>
+            </nav>
+       </div>
+       <br></br>
+       <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                <a class="navbar-brand HEADER-PORTAFOLIO1">Entregables Parciales</a>
+                </div>
+            </nav>
+       </div>
+       <br></br>
         </div>
     );
 }
