@@ -4,7 +4,7 @@ const SearchComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
     //setear los hooks useState
     const[Titles , setTitles] = useState([]);
     const[search , setSearch] = useState("");
-
+    const[searchClav,  setSearchClav] = useState("");
     const[record , setRecord] = useState([]);
     const[modelData , setModelData] = useState({
         id:"",
@@ -17,7 +17,7 @@ const SearchComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
         //EC2
         // http://44.210.195.91/
 
-    const URL = "http://44.210.195.91/api/TemaTesis/GetTemaTesis";
+    const URL = "https://localhost:7012/api/TemaTesis/GetTemaTesis";
     const showData = async() => {
         const response = await fetch(URL)
         const data = await response.json()
@@ -29,16 +29,30 @@ const SearchComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
         setSearch(e.target.value) ; 
         console.log(e.target.value);
     }
+    const searcherClav = (e) => {
+        setSearchClav(e.target.value) ; 
+        console.log(e.target.value)
+    }
+
      // metodo de filtrado
     let results = []
 
-    if(!search){
+    if(!search && !searchClav){
         results = Titles ; 
     }
     else {
-        results = Titles.filter((dato) =>
-        dato.tituloTesis.toLowerCase().includes(search.toLocaleLowerCase())
-        )
+        if (search){
+            results = Titles.filter((dato) =>
+            dato.tituloTesis.toLowerCase().includes(search.toLocaleLowerCase()))
+        }
+        else if (searchClav){
+            results = Titles.filter((dato) =>
+            dato.PalabraClave1.toLowerCase().includes(searchClav.toLocaleLowerCase()))
+
+        }
+
+            
+
     }
 
     useEffect(()=>{
@@ -55,6 +69,13 @@ const SearchComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
                     <label  class="col-form-label">Título de tesis</label>
                     <div class = "col-sm-12">
                     <input value = {search} onChange = {searcher} type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder=" Buscar"></input>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label  class="col-form-label">Palabra clave</label>
+                    <div class = "col-sm-12">
+                    <input value = {searchClav} onChange = {searcherClav} type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder=" Buscar por palabra clave"></input>
                     </div>
                 </div>
                 </div>
@@ -94,7 +115,7 @@ const SearchComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
                                             palabraClave2: temasTesis.palabraClave2,
                                             feedback:temasTesis.feedback,
                                         }); setShow(false)
-                                    }}> hola</button></td>
+                                    }}> Seleccionar</button></td>
                                     
                                 </tr>
 
