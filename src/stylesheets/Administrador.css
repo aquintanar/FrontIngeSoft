@@ -18,7 +18,13 @@
     font-family: 'Montserrat', sans-serif;
     left: 22%;
 }
-
+.HEADER-PORTAFOLIO1{
+    font-size: 28px;
+    color: #042354;
+    font-weight: bold;
+    height: 60px;
+    text-align: center;
+}
 /*ESTILOS CABECERAS*/
 .HEADER-TEXT1 {
     font-size: 40px;

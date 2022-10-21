@@ -23,7 +23,7 @@ export const SidebarData = [
     },
     {
         title: 'Portafolio',
-        path: '',
+        path: 'gestion/gesPortafolio',
         icon: <BsIcons.BsNewspaper />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
