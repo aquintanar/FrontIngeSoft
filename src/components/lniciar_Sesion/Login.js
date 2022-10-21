@@ -10,8 +10,9 @@ import { UserContext } from '../../UserContext';
 
 const LOGIN_URL = 'https://localhost:7012/api/login/GetLogin'
 const LOGIN_URL2 = 'https://localhost:7012/api/Rol'
+const LOGIN_URL_GOOGLE = 'https://localhost:7012/api/Usuario/BuscarUsuarioXCorreo'
 function Login() {
-    const {loginWithRedirect,isAuthenticated} = useAuth0();
+    const {user,loginWithRedirect,isAuthenticated} = useAuth0();
     
     const [cuentaSeleccionada, setCuentaSeleccionada]=useState({
         correo: "",
@@ -27,7 +28,7 @@ function Login() {
     const userRef = useRef();
     const errRef = useRef();
 
-    const [user,setUser] = useState('');
+    const [user1,setUser] = useState('');
     const [pwd,setPwd] = useState('');
     const [errMsg,setErrMsg] = useState('');
     
@@ -35,7 +36,7 @@ function Login() {
     const {value,setValue} = useContext(UserContext);
     useEffect(()=>{
         setErrMsg('');
-    },[user,pwd]);
+    },[user1,pwd]);
 
     useEffect(()=>{
         userRef.current.focus();
@@ -63,6 +64,9 @@ function Login() {
                     else if(response2.data[0].nombre ==='ASESOR'){
                         navigate('/asesor');
                     }
+                    else if(response2.data[0].nombre ==='COMITE DE TESIS'){
+                        navigate('/comite');
+                    }
                 }).catch(error=>{
 
                 });
@@ -76,18 +80,17 @@ function Login() {
         e.preventDefault();
         
         try{
-            cuentaSeleccionada.correo=user;
+            cuentaSeleccionada.correo=user1;
             cuentaSeleccionada.contrasena=pwd;
             console.log(cuentaSeleccionada);
             
            
             const response = await axios.get(LOGIN_URL,
-                {params:{correo:user,contrasena:pwd}},
+                {params:{correo:user1,contrasena:pwd}},
                 {
                     _method:'GET'
                 })
                 .then(response=>{
-                        console.log(response);
                         const idUs=response.data.id
                         setValue(idUs);
                         searchId(idUs);
@@ -109,22 +112,22 @@ function Login() {
                 });
                 
                 /*lOS ROLES SON UN ARREGLO DE NUMEROS */
-            /*setAuth({user,pwd,roles,accessToken});
+            /*setAuth({user1,pwd,roles,accessToken});
 
             setUser('');
             setPwd('');*/
             //navigate(from,{replace:true});
-            //console.log(user)
-            /*if(user==="Administrador"){
+            //console.log(user1)
+            /*if(user1==="Administrador"){
                 navigate('/administrador');
             }
-            else if(user==="Alumno"){
+            else if(user1==="Alumno"){
                 navigate('/alumno');
             }
-            else if(user==="Comite"){
+            else if(user1==="Comite"){
                 navigate('/comite');
             }
-            else if(user==="Asesor"){
+            else if(user1==="Asesor"){
                 navigate('/asesor');
             }*/
         }
@@ -132,12 +135,38 @@ function Login() {
                 
         }   
     }
-    function Autenticacion(){
+    const Autenticacion=async()=>{
         if(isAuthenticated){
-            navigate('/administrador')
+            try{
+                const response = await axios.get(LOGIN_URL_GOOGLE,
+                    {params:{correo:user.email}},
+                    {
+                        _method:'GET'
+                    })
+                    .then(response=>{
+                        console.log("HOLA")
+                        console.log(response);
+                        const idUs=response.data[0].idUsuario;
+                        console.log("Hola2")
+                        console.log(idUs);
+                        setValue(idUs);
+                        searchId(idUs);
+                    }).catch(error=>{
+
+                    });
+            }
+            catch(err){
+
+            }
+            //navigate('/administrador')
+            //handleAutenticacion(user.email);
+            console.log(user.email)
         }
     }
     window.onload=Autenticacion()
+    
+   
+    
     return (
         
         <div className='CONTAINER-GENERAL-LOGIN'>
@@ -155,7 +184,7 @@ function Login() {
                     ref={userRef}
                     autoComplete="off"
                     onChange={(e)=>setUser(e.target.value)}
-                    value={user}
+                    value={user1}
                     required
             />
             <label htmlFor='password'>

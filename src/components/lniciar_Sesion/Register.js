@@ -15,7 +15,7 @@ const REGISTERALUMNO_URL = 'https://localhost:7012/api/Alumno/PostAlumno';
 const REGISTERADMIN_URL = 'https://localhost:7012/api/Administrador/PostAdministrador';
 const REGISTERASESOR_URL = 'https://localhost:7012/api/Asesor/PostAsesor';
 const REGISTERDOCENTE_URL = 'https://localhost:7012/api/Docente/PostDocente';
-
+const REGISTERCOMITE_URL = 'https://localhost:7012/api/ComiteTesis/PostComiteTesis';
 
 const Register = () => {
     const userRef =useRef();
@@ -172,6 +172,16 @@ const Register = () => {
                   console.log(error.message);
                 })
             }
+            else if(value.value==='Comite de Tesis'){
+                await axios.post(REGISTERCOMITE_URL,UsuarioSeleccionado,{
+                    _method: 'POST'
+                  })
+                .then(response=>{
+                  
+                }).catch(error =>{
+                  console.log(error.message);
+                })
+            }
             
 
             /*
@@ -203,7 +213,8 @@ const Register = () => {
         {value:'Administrador',label:'Administrador'},
         {value:'Docente',label:'Docente'},
         {value:'Alumno',label:'Alumno'},
-        {value:'Asesor',label:'Asesor'}
+        {value:'Asesor',label:'Asesor'},
+        {value:'Comite de Tesis' ,label : 'Comite'}
     ]
 
     const onDropDownChange = (value) =>{
