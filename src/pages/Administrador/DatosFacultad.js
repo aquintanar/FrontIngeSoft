@@ -178,7 +178,7 @@ const handleChange=  (e)=>{
                       </div>
 
                       <div class=" col-6  LISTAR-TABLA">
-                          <p></p>
+                      <p>Lista de Especialidades</p>
                           <table className='table-responsive fs-6'>
                               <thead class ="bg-primary text-white">
                                 <tr class>
@@ -202,7 +202,7 @@ const handleChange=  (e)=>{
                 <div class="col-5 DATOS-IMAGE">
                   <div class="text-start fs-5 fw-normal "><p></p></div>
                    
-                   <img src={`data:image/jpeg;base64,${facultadSeleccionada.foto}`} alt="..." height="350px"/> 
+                  <img src={`data:image/jpeg;base64,${facultadSeleccionada.foto}`} height="350px"  alt="Imagen de Facultad" /> 
                    <div class="input-group input-group-lg mb-3">
                        <input type="file"  name="foto" id="foto"  multiple className="form-control rounded-0 border border-secondary" 
                             onChange={(e)=>convertirBase64(e.target.files)}  />    

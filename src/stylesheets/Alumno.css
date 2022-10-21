@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap');
+
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700');
+
+
+.busquedaEspecialidad{
+    margin-left: 100px;
+}
+
+
+/*CONTENEDOR PARA ALUMNO*/  
+.CONTAINERALUMNO{
+    width: 65%;
+    position: relative;
+    
+    font-family: 'Montserrat', sans-serif;
+    left: 22%;
+}
+
+
+.HEADER-TEXT1 {
+    font-size: 40px;
+    font-family: 'Montserrat', sans-serif;
+    color: #042354;
+    font-weight: bold;
+    display: flex;
+    height: 60px;
+}
+
+.HEADER-TEXT2{
+    font-size: 20px;
+    color: #000;
+    font-weight: bold;
+    height: 20px;
+}
+
+.HEADER-TEXT3{
+    font-size: 14px;
+    color: #000;
+    height: 20px;
+    text-align: center;
+
+}
+
+.HEADER-TEXT4{
+    font-size: 14px;
+    color: #9B9999;
+    height: 50px;
+    text-align: center;
+}
+
+
+.INSERTAR-BOTONES button{
+    border-radius: 4px;
+    font-family: roboto;
+    border:none;
+    transition:all 0.5s;
+    
+    cursor:pointer;
+    width: 120px;
+   
+  
+}
+.INSERTAR-BOTONES .GUARDAR{
+    background-color: #042354;
+    
+    margin : 10px;
+}
+.INSERTAR-BOTONES .CANCELAR{
+    background-color: #B80000;
+    margin : 10px;
+}
+.INSERTAR-BOTONES button span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+.INSERTAR-BOTONES .GUARDAR span:after{
+    content:'\1F4C1';
+}
+.INSERTAR-BOTONES .CANCELAR span:after{
+    content:'\1F5D9';
+}
+.INSERTAR-BOTONES button span:after{
+    position:absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.INSERTAR-BOTONES button:hover span{
+    
+    padding-right:25px;
+}
+.INSERTAR-BOTONES button:hover span:after{
+    
+    opacity: 1;
+    right: 0;
+}

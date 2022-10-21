@@ -16,7 +16,7 @@ export const SidebarData = [
     },
     {
         title: 'Notas',
-        path: '',
+        path: 'gestion/gesNota',
         icon: <BsIcons.BsPencil />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
