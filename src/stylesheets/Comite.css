@@ -8,7 +8,8 @@
     width: 65%;
     position: relative;
     font-family: 'Montserrat', sans-serif;
-    left: 22%;
+    left: 25%;
+    padding-top: 20px;
 }
 
 /*ESTILOS CABECERAS*/
@@ -184,4 +185,53 @@ Estilos de listar temas
 .LISTAR-BOTON button:hover span:after{
     opacity: 1;
     right: 0;
+}
+
+
+.LISTAR-TABLA-ELEMENTOS{
+    align-items: center;
+    font-size: 12px;
+    font-family: roboto;
+    text-indent: 0.4em;
+}
+
+/*ESTILOS PARA FILTROS*/
+.FILTRO-LISTAR p{
+    font-size: 14px;
+    font-family: roboto;
+}
+
+.FILTRO-LISTAR {
+    width: 16.5em;
+    margin-bottom: 10px;
+}
+.FILTRO-LISTAR input{
+    height: 32px;
+    font-size: 12px;
+    font-family: roboto;
+}
+.FILTRO-LISTAR select{
+    height:32px;
+    font-size: 12px;
+    font-family: roboto;
+}
+
+.FILTRO-LISTAR-BUSCAR p{
+    font-size: 14px;
+    font-family: roboto;
+}
+
+.FILTRO-LISTAR-BUSCAR {
+    width: 34.3em;
+    margin-bottom: 20px;
+}
+.FILTRO-LISTAR-BUSCAR input{
+    height: 32px;
+    font-size: 12px;
+    font-family: roboto;
+}
+.FILTRO-LISTAR-BUSCAR select{
+    height:40px;
+    font-size: 12px;
+    font-family: roboto;
 }

@@ -5,13 +5,11 @@
 
 /*CONTENEDOR*/  
 .CONTAINERASESOR{
+    width: 65%;
     position: relative;
     font-family: 'Montserrat', sans-serif;
     left: 22%;
 }
-
-/*GRUPO DE BOTONES*/
-
 
 /*ESTILOS CABECERAS*/
 .HEADER-TEXT1 {
@@ -28,4 +26,72 @@
     color: #042354;
     font-weight: bold;
     height: 55px;
+}
+.HEADER-TEXT3{
+    font-size: 27px;
+    color: #042354;
+    font-weight: bold;
+    height: 50px;
+}
+/*ESTILOS PARA TABLAS*/
+.LISTAR-TABLA {
+    align-items: center;
+}
+
+.LISTAR-TABLA th{
+    font-size: 14px;
+    font-family: roboto;
+    color: #fff;
+    background: #042354;
+    text-indent: 0.4em;
+}
+
+.LISTAR-TABLA td{
+    font-size: 12px;
+    font-family: roboto;
+    text-indent: 0.4em;
+}
+
+.BTN-ACCIONES svg{
+    color: #042354;
+    width: 1.5em;
+    height: 1.5em;
+    size: 2em;
+    
+}
+
+.BTN-ACCIONES:hover svg{
+    color: black;
+    width: 1.7em;
+    height: 1.7em;
+}
+
+.LISTAR-TABLA tr:hover{
+    font-size: 14px;
+    font-family: roboto;
+    text-indent: 0.4em;
+    background-color: rgba(33, 121, 212, 0.5);
+    color: black;
+    font-weight: bold;
+}
+
+.DATOS p{
+    font-size: 16px;
+    font-family: roboto;
+}
+.DATOS textarea{
+    min-height: 80px;
+    font-size: 14px;
+    font-family: roboto;
+    word-break: break-word;
+}
+.DATOS select{
+    height:35px;
+    font-size: 14px;
+    font-family: roboto;
+}
+.DATOS input{
+    min-height:40px;
+    font-size: 14px;
+    font-family: roboto;
 }
