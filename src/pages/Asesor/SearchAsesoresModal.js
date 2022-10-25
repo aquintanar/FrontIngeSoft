@@ -1,5 +1,6 @@
 import React ,{useState , useEffect} from "react";
 import { render } from 'react-dom';
+import './proponerTemaAsesor.css';
 const SearchAsesoresModal = ( {show ,setShow, asesorTesis, setAsesor} ) =>{
     //setear los hooks useState
     const[Asesores , setAsesores] = useState([]);
@@ -56,9 +57,9 @@ const SearchAsesoresModal = ( {show ,setShow, asesorTesis, setAsesor} ) =>{
         <div class = "container">
             <div class = "row">
                 <div class = "col-9">
-                <h1 class = "cambiar-color">Buscar asesores</h1>
+                <h1 class = "cambiar-color HEADER-TEXT1">Buscar asesores</h1>
                 <div class="mb-3 row">
-                    <label  class="col-form-label">Nombre del asesor</label>
+                    <label  class="col-form-label FUENTE-LABEL">Nombre del asesor</label>
                     <div class = "col-sm-12">
                     <input value = {search} onChange = {searcher} type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder=" Buscar"></input>
                     </div>
@@ -79,7 +80,7 @@ const SearchAsesoresModal = ( {show ,setShow, asesorTesis, setAsesor} ) =>{
                                 <tr key = {asesores.idUsuario}>
                                     <td>{asesores.idUsuario}</td>
                                     <td>{asesores.nombres + " " + asesores.apeMat }</td>
-                                    <td><button class = "btn" onClick={()=>{ 
+                                    <td><button className = "btn BUTTON_TABLA" onClick={()=>{ 
                                         setAsesor({
                                             idUsuario: asesores.idTemaTesis,
                                             nombres: asesores.nombres,

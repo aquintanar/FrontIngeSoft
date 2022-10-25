@@ -31,7 +31,7 @@ function Asesor() {
     return (
         <div>    
             <SidebarAsesor/>            
-                <BarraVolver/>
+                {/*<BarraVolver/>*/}
                 <Routes>
                   <Route path='temaTesis' exact element= {<TemaTesis/>}/>
                   <Route path='alumnos' exact element= {<AlumnosAsesorados/>}/>

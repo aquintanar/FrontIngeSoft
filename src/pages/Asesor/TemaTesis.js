@@ -5,7 +5,6 @@ import "./buttonGroup.css";
 import ModalComponent from './ModalBuscarTema';
 import ProponerTemaAsesor from './proponerTemaAsesor';
 import BuscarTemaAsesor from './buscarTemaAsesor';
-import  '../../stylesheets/Asesor.css';
 
 function TemaTesis() {
     const[active, setActive] = useState("proponerTema");
@@ -27,19 +26,18 @@ function TemaTesis() {
     })
 
     return (
-        <div className='CONTAINERASESOR'>             
-                <nav>
-                    <button onClick={() => {setActive("proponerTema");setFormato("botonActivo1")}} className={"botonActivo1" === formato ? "customButton active" : "customButton"}>Proponer tema</button>
-                    <button onClick={() => {setActive("buscarTema");setFormato("botonActivo2"); setShow(true)}} className={"botonActivo2" === formato ? "customButton active" : "customButton"}>Buscar tema</button>
-                    <button onClick={() => {setActive("solicitarCambios") ;setFormato("botonActivo3")}} className={"botonActivo3" === formato ? "customButton active" : "customButton"}>Solicitar cambios</button>
-                </nav>
+        <div >             
+            <nav className='NAVBUTTON'>
+                <button onClick={() => {setActive("proponerTema");setFormato("botonActivo1")}} className={"botonActivo1" === formato ? "customButton active" : "customButton"}>Proponer tema</button>
+                <button onClick={() => {setActive("buscarTema");setFormato("botonActivo2"); setShow(true)}} className={"botonActivo2" === formato ? "customButton active" : "customButton"}>Buscar tema</button>    
+                <button onClick={() => {setActive("solicitarCambios") ;setFormato("botonActivo3")}} className={"botonActivo3" === formato ? "customButton active" : "customButton"}>Solicitar cambios</button>
+            </nav>    
                 <div>
                     {active === "proponerTema" && <ProponerTemaAsesor temaTesis={temaTesis} setTemaTesis={setTemaTesis}/>}
                     {active === "buscarTema" && <ModalComponent show={show} setShow={setShow} temaTesis={temaTesis} setTemaTesis={setTemaTesis}/>}
                     {active === "buscarTema" && <BuscarTemaAsesor temaTesis={temaTesis} setTemaTesis={setTemaTesis}/>}
                     {active === "solicitarCambios"}
                 </div>
-                
         </div>
     )
   }

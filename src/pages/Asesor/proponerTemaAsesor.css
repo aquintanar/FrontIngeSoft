@@ -1,7 +1,12 @@
-.fonnnts{
+.FUENTE-LABEL{
     font-family: 'Roboto', sans-serif;
-    font-weight: bold;
-    font-size: large;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.BOTONES-FORM{
+    display: flex;
+    justify-content: flex-end;
 }
 
 .fonnnts2{
@@ -11,11 +16,12 @@
 }
 
 .botonForm{
+    width: 100px;
     background-color: #042354;
     color: #ffffff;
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
-    font-size: medium;
+    font-size: 14px;
 }
 
 .normal{
@@ -24,11 +30,26 @@
     font-size: medium;
 }
 
+.NAVBUTTON{
+    flex-direction: flex-end;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    width: 76%;
+    left: 20%;
+}
+
+.BOTON-SUPERIOR{
+    margin: 0;
+    padding: 0;
+}
+
 .CONTAINER-ASESOR{
     position: relative;
     font-family: 'Montserrat', sans-serif;
-    left: 19%;
-    width: 82%;
+    width: 76%;
+    padding-left: 0;
+    margin: 0;
+    left: 22%;
 }
 
 .HEADER-TEXT1 {
@@ -70,4 +91,13 @@
     width: 100%;
     font-family: roboto;
     word-break: break-word;
+}
+
+.BUTTON_TABLA{
+    background-color: #042354;
+    border: none;
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    height: 35px;
+    width: 80px;
 }

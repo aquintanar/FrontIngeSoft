@@ -1,6 +1,7 @@
 import React ,{useState , useEffect} from "react";
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import './proponerTemaAsesor.css';
 import SearchComponent from "./SearchComponent";
 const ModalComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{    
     const handleClose = () => setShow(false);
@@ -15,11 +16,8 @@ const ModalComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
         <SearchComponent show={show} setShow={setShow} temaTesis={temaTesis} setTemaTesis={setTemaTesis}/>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+          <Button variant="secondary" onClick={handleClose} className="BUTTON_TABLA">
+            Cancelar
           </Button>
         </Modal.Footer>
       </Modal>

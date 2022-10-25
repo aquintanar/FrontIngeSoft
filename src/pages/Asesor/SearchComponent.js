@@ -1,4 +1,5 @@
 import React ,{useState , useEffect} from "react";
+import './proponerTemaAsesor.css';
 
 const SearchComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
     //setear los hooks useState
@@ -64,16 +65,16 @@ const SearchComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
         <div class = "container">
             <div class = "row">
                 <div class = "col-9">
-                <h1 class = "cambiar-color">Buscar tema de tesis</h1>
+                <h1 class = "cambiar-color HEADER-TEXT1">Buscar tema de tesis</h1>
                 <div class="mb-3 row">
-                    <label  class="col-form-label">Título de tesis</label>
+                    <label  class="col-form-label FUENTE-LABEL">Título de tesis</label>
                     <div class = "col-sm-12">
                     <input value = {search} onChange = {searcher} type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder=" Buscar"></input>
                     </div>
                 </div>
 
                 <div class="mb-3 row">
-                    <label  class="col-form-label">Palabra clave</label>
+                    <label  class="col-form-label FUENTE-LABEL">Palabra clave</label>
                     <div class = "col-sm-12">
                     <input value = {searchClav} onChange = {searcherClav} type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder=" Buscar por palabra clave"></input>
                     </div>
@@ -105,7 +106,7 @@ const SearchComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
                                         }
                                     }) ()}
                                     </td>
-                                    <td><button class = "btn" onClick={()=>{ 
+                                    <td><button className= "btn BUTTON_TABLA" onClick={()=>{ 
                                         setTemaTesis({
                                             idTema: temasTesis.idTemaTesis,
                                             tituloTesis: temasTesis.tituloTesis,

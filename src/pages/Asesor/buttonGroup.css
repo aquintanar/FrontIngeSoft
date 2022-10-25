@@ -1,5 +1,5 @@
 .customButton {
-    width: 435px;
+    width: 33.3%;
     height: 50px;
     letter-spacing: 0.5px;
     background-color: #042354;
@@ -7,11 +7,13 @@
     font-size: 20px;
     border: none;
     border-radius: 0px;
-    cursor: pointer;
-    }
+    cursor: pointer;    
+}
 
 .active{
     background-color: rgb(255, 255, 255);
     border: none;
     color: #042354;
-    }
+}
+
+

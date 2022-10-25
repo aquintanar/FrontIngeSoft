@@ -5,11 +5,13 @@
 
 /*CONTENEDOR*/  
 .CONTAINERASESOR{
-    width: 65%;
     position: relative;
     font-family: 'Montserrat', sans-serif;
     left: 22%;
 }
+
+/*GRUPO DE BOTONES*/
+
 
 /*ESTILOS CABECERAS*/
 .HEADER-TEXT1 {
