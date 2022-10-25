@@ -21,7 +21,8 @@ function Entregables(){
  
     async function getData() {
       (async () => {
-        const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
+        const result = await axios(`https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
+        //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
         setData(result.data);
         console.log(data)
       })();
@@ -73,7 +74,7 @@ function Entregables(){
            prepareRow(row)
            return (
                <tr {...row.getRowProps()} onClick={() =>navigate("entregableSeleccionado",{state:{idAlumno:row.original.idAlumno,nombres:row.original.nombres,apellidoPat:row.original.apePat,
-               apellidoMaterno:row.original.apeMat,tituloDoc:row.original.documentosAlumno,linkDoc:row.original.linkDoc}})}>
+               apellidoMaterno:row.original.apeMat,tituloDoc:row.original.documentosAlumno,linkDoc:row.original.linkDoc,idEntregable:row.original.fidEntregable}})}>
                  {row.cells.map(cell => {
                    return (
                        <td

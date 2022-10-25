@@ -2,35 +2,49 @@ import React, { useMemo,useState, useEffect } from 'react';
 import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom';
 import "./buttonGroup.css";
 import  '../../stylesheets/Asesor.css';
-import { useTable ,useFilters} from 'react-table';
+import { useTable ,useFilters,setFilter} from 'react-table';
 import axios from 'axios';
 import {  useNavigate } from 'react-router-dom';
+import * as BsIcons from 'react-icons/bs';
 
 function AlumnosAsesorados() {
     let navigate = useNavigate();
-    const [data, setData] = useState([]);
+    let [dataI, setDataI] = useState([]);
     const [filterInput, setFilterInput] = useState("");
+    const [currentPage,SetCurrentPage] = useState(0);
+    const [search1, setSearch1] = useState("");
+    const [search2, setSearch2] = useState("");
+    const [fil, setFil] = useState(0);
+  
     useEffect(() => {
-      getData();
+      getDataI();
     }, []);
  
-    async function getData() {
+    async function getDataI() {
       (async () => {
-        const result = await axios("http://44.210.195.91/api/Alumno/ListAlumnosXIdAsesor?idAsesor=2");
-        setData(result.data);
-        console.log(data)
+        const result = await axios("https://localhost:7012/api/Alumno/ListAlumnosXIdAsesor?idAsesor=2");
+        //const result = await axios("http://44.210.195.91/api/Alumno/ListAlumnosXIdAsesor?idAsesor=2");
+        setDataI(result.data);
       })();
     };
-
+  
     const columns = React.useMemo(
         () => [
+          {
+            Header: 'Foto',
+            accessor: 'imagen', // accessor is the "key" in the data
+          },
           {
             Header: 'Apellido(s) / Nombre',
             accessor: d => `${d.apePat} ${d.nombres}`, // accessor is the "key" in the data
           },
           {
-            Header: 'Tema Tesis',
+            Header: 'Correo',
             accessor: 'correo',
+          },
+          {
+            Header: 'Código Pucp',
+            accessor: 'codigoPucp',
           },
 
         ],
@@ -38,10 +52,42 @@ function AlumnosAsesorados() {
     )
     const handleFilterChange = e => {
       const value = e.target.value || undefined;
-      setFilter("apePat", value);
+      setFilter("nombres", value);
       setFilterInput(value);
     };
-   
+      //Controla buscador--
+    const buscador1 = e=>{
+      setSearch1(e.target.value);
+    }
+    const buscador2 = e=>{
+      setSearch2(e.target.value);
+    }
+
+    let data =[];
+
+    if(!search1 && !search2){//sin filtro
+    data=dataI;
+  }
+  else{
+    if(search1 && search2){//ambos filtros
+      data=dataI.filter((dato)=>dato.apePat.toLowerCase().includes(search1.toLocaleLowerCase())) ;
+      data=dataI.filter((dato)=>dato.codigoPucp) ;
+    }
+    if(search1)
+    data=dataI.filter((dato)=>dato.apePat.toLowerCase().includes(search1.toLocaleLowerCase())) ;
+    if(search2)
+    data=dataI.filter((dato)=>dato.codigoPucp) ;
+  }
+    data = data.slice(currentPage,currentPage+4);
+    console.log(data);
+    const nextPage = () =>{
+      if(data.length>=currentPage) //VER CODIGO
+        SetCurrentPage(currentPage+4);
+    }
+    const previousPage =() =>{
+      if(currentPage>0)
+        SetCurrentPage(currentPage-4);
+    }
    
     const {
       getTableProps,
@@ -49,27 +95,35 @@ function AlumnosAsesorados() {
       headerGroups,
       rows,
       prepareRow,
-      setFilter // The useFilter Hook provides a way to set the filter
+      //setFilter, // The useFilter Hook provides a way to set the filter
     } = useTable(
       {
         columns,
-        data
+        data:data,
       },
-      useFilters // Adding the useFilters Hook to the table
-      // You can add as many Hooks as you want. Check the documentation for details. You can even add custom Hooks for react-table here
+      //useFilters, // Adding the useFilters Hook to the table
+
     );
     return(
   
         <div className='CONTAINERASESOR'>
         <h1 className='HEADER-TEXT1'>Alumnos Asesorados</h1>
         <h2 className='HEADER-TEXT2'>TESIS 1 - INGENIERIA INFORMATICA</h2>
-        <input
-    value={filterInput}
-    onChange={handleFilterChange}
-    placeholder={"Search"}
-        />
+      
+        <div class="col col-7 FILTRO-LISTAR-BUSCAR" >
+              <p>Ingresar apellido</p>
+              <div class="input-group mb-2 ">
+                  <input size="10" type="text" value={search1} class="form-control" name="search1" placeholder="Apellido" aria-label="serach" onChange={buscador1}/>
+              </div>
+              <p>Ingresar código</p>
+              <div class="input-group mb-2 ">
+                  <input size="10" type="text" value={search2} class="form-control" name="search2" placeholder="Código" aria-label="serach" onChange={buscador2}/>
+              </div>
+          </div>
+        <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
+      <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
         <table   {...getTableProps()} style={{minWidth: 650, borderCollapse: 'separate',
-    borderSpacing: '0px 20px'}}>
+    borderSpacing: '0px 10px'}}>
          <thead>
          {headerGroups.map(headerGroup => (
              <tr {...headerGroup.getHeaderGroupProps()}>

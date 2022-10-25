@@ -1,8 +1,6 @@
 import React from 'react'
 import './proponerTemaAsesor.css';
 import {useState , useEffect} from "react";
-import ModalBuscarAsesor from './ModalBuscarAsesor';
-import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import { BrowserRouter as Router , Routes, Route, Link, useLocation } from 'react-router-dom';
@@ -17,7 +15,7 @@ function AlumnoSeleccionado(){
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                <a class="navbar-brand HEADER-PORTAFOLIO1" href="#">Avances Semanles</a>
+                <a class="navbar-brand HEADER-PORTAFOLIO1" type='button'>Avances Semanales</a>
                 </div>
             </nav>
        </div>
@@ -25,7 +23,7 @@ function AlumnoSeleccionado(){
        <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                <a class="navbar-brand HEADER-PORTAFOLIO1" onClick={() =>navigate("entregables",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat}})}>Entregables</a>
+                <a class="navbar-brand HEADER-PORTAFOLIO1" type='button' onClick={() =>navigate("entregables",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat}})}>Entregables</a>
                 </div>
             </nav>
        </div>
@@ -33,7 +31,7 @@ function AlumnoSeleccionado(){
        <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                <a class="navbar-brand HEADER-PORTAFOLIO1">Entregables Parciales</a>
+                <a class="navbar-brand HEADER-PORTAFOLIO1 " type='button'>Entregables Parciales</a>
                 </div>
             </nav>
        </div>

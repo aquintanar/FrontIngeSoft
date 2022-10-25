@@ -9,6 +9,9 @@ import {makeStyles, createTheme} from '@material-ui/core/styles';
 import axios from 'axios';
 import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit';
 import '../../stylesheets/Comite.css'
+import * as BsIcons from 'react-icons/bs';
+import useModal from '../../hooks/useModals';
+
 const themeX = createTheme({
     palette: {
       type: "dark",
@@ -45,17 +48,22 @@ function ListaTemaTesis()  {
     const styles= useStyles();
     const [data, setData] = useState([]);
     const [modalGuardar, setModalGuardar]=useState(false);
+    const [isOpenModal, openModal ,closeModal ] = useModal();
+    const [search, setSearch] = useState("");
+    const [fil, setFil] = useState(0);
+    const [currentPage,SetCurrentPage] = useState(0);
 
-
+    
     const abrirCerrarModalGuardar=()=>{
         setModalGuardar(!modalGuardar);
     }
     const publicarTemas=()=>{
       data.forEach(function(tema, index) {
-       axios.put("http://44.210.195.91/api/TemaTesis/PublicarTemaTesis?idTemaTesis="+tema.idTemaTesis)
+        axios.put("https://localhost:7012/api/TemaTesis/PublicarTemaTesis?idTemaTesis="+tema.idTemaTesis)
+       //axios.put("http://44.210.195.91/api/TemaTesis/PublicarTemaTesis?idTemaTesis="+tema.idTemaTesis)
       .then(response=>{
         console.log("Publicado");
-        navigate("../temaTesis");
+        abrirCerrarModalGuardar()
       }).catch(error =>{
         console.log(error.message);
       })
@@ -79,22 +87,58 @@ function ListaTemaTesis()  {
     }, []);
    
     async function getData() {
-      const response = await fetch("http://44.210.195.91/api/TemaTesis/GetTemaTesis");
+      const response = await fetch("https://localhost:7012/api/TemaTesis/GetTemaTesis")
+      //const response = await fetch("http://44.210.195.91/api/TemaTesis/GetTemaTesis");
       const data = await response.json();
       setData(data);
+      console.log(data);
    };
 
     const selectRow = {
         mode : "checkbox",
     };
+
+    let filtrado =[];
+
+    filtrado=data;
+    filtrado = filtrado.slice(currentPage,currentPage+5);
+  
+    const nextPage = () =>{
+      if(filtrado.length>=currentPage) //VER CODIGO
+        SetCurrentPage(currentPage+5);
+    }
+    const previousPage =() =>{
+      if(currentPage>0)
+        SetCurrentPage(currentPage-5);
+    }
     const funcFormatter = (data, row ) => {
-      console.log(  row.idTemaTesis  );
       return <button className="btn" onClick={()=>{navigate("temaSeleccionado/"+row.idTemaTesis,{state:{id:row.idTemaTesis,titulo:row.tituloTesis,estado:row.estadoTema,
         descripcion:row.descripcion,asesor:row.idAsesor,nombresAsesor:row.nombresAsesor,apellidoPatAsesor:row.apePatAsesor,area:row.idArea,areaNombre:row.nombreArea,alumno:row.idAlumno,nombresAlumno:row.nombresAlumno,apellidoPatAlumno:row.apePatAlumno,
         motivoRechazo:row.motivoRechazo,palabraClave1:row.PalabraClave1,palabraClave2:row.PalabraClave2,fedd:row.feedback}})}}> {data} </button>
-
- 
   }
+  const MySearch = (props) => {
+    let input;
+    const handleClick = () => {
+      props.onSearch(input.value);
+    };
+    return (
+      <div>
+        <div className="row">
+        <div class="col col-6 ">
+        <p>Búsqueda por cualquier criterio</p>
+        <input
+          className="form-control"
+          ref={ n => input = n }
+          type="text"
+          placeholder="Búsqueda"
+          onChange={ handleClick }
+        />
+        </div>
+        </div>
+      </div>
+    );
+  };
+  
   const { SearchBar } = Search;
     const columns = [
         {
@@ -159,7 +203,7 @@ function ListaTemaTesis()  {
         },
         {
             dataField: "PalabraClave1",
-            text: "PalabraClave 1",
+            text: "PalabraClave1",
             sort: true,
             //filter: textFilter(),
             formatter: funcFormatter,
@@ -172,7 +216,7 @@ function ListaTemaTesis()  {
         },
         {
           dataField: "PalabraClave2",
-          text: "PalabraClave 2",
+          text: "PalabraClave2",
           sort: true,
           //filter: textFilter(),
           formatter: funcFormatter,
@@ -187,31 +231,37 @@ function ListaTemaTesis()  {
     ];
 
     return (
-        <div>    
-              <div className=" LISTAR-TEMAS-CONTAINER">
-                    <h2 className="TEMAS-TEXT">Temas</h2>
-                    <div className="contenedorTabla">
-                        <h4 className=" LISTADO-TEMAS-TEXT"> Listado de Propuestas  </h4>
+        <div className="CONTAINERCOMITE">    
+              <div>
+                    <h2 className="HEADER-TEXT1">Temas</h2>
+                    
+                        <h2 className="HEADER-TEXT2"> Listado de Propuestas  </h2>
+                      <div className="LISTAR-TABLA-ELEMENTOS">   
+                    
                         <ToolkitProvider
                           keyField="idTemaTesis"
-                          data={ data.slice(0,4) }
+                          data={ filtrado }
                           columns={ columns }
                           search
                           >
                           {
                             props => (
                               <div>
-                                <SearchBar { ...props.searchProps } />
+                                <MySearch { ...props.searchProps } />
                                 <hr />
-                                <BootstrapTable
-                                   class="black white-text"
+                                <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
+                                <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button> 
+                                <BootstrapTable 
+                                   className="black white-text"
                                    keyField="idTemaTesis"
                                    data={data}
                                    columns={columns}
                                    filter={filterFactory()}
                                    bordered={ false }
+                                   hover
                                   { ...props.baseProps }
                                 />
+                                
                               </div>
                             )
                           }
@@ -225,6 +275,8 @@ function ListaTemaTesis()  {
     
             </div>
             <Modal
+            isOpen={isOpenModal} 
+            closeModal={closeModal}
             open={modalGuardar}
         onClose={abrirCerrarModalGuardar}>
           {bodyGuardar}
