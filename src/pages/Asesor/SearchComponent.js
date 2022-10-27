@@ -69,7 +69,7 @@ const SearchComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
                 <div class="mb-3 row">
                     <label  class="col-form-label FUENTE-LABEL">Título de tesis</label>
                     <div class = "col-sm-12">
-                    <input value = {search} onChange = {searcher} type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder=" Buscar"></input>
+                    <input value = {search} onChange = {searcher} type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder="Buscar por tema de tesis"></input>
                     </div>
                 </div>
 

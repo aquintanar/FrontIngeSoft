@@ -10,7 +10,6 @@ const ModalComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
         <>
       <Modal show={show} onHide={handleClose} size="xl">
         <Modal.Header closeButton>
-          <Modal.Title>Buscar Tema</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <SearchComponent show={show} setShow={setShow} temaTesis={temaTesis} setTemaTesis={setTemaTesis}/>

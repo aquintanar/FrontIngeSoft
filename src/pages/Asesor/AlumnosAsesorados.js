@@ -119,7 +119,7 @@ function AlumnosAsesorados() {
   
         <div className='CONTAINERASESOR'>
         <h1 className='HEADER-TEXT1'>Alumnos Asesorados</h1>
-        <h2 className='HEADER-TEXT2'>TESIS 1 - INGENIERIA INFORMATICA</h2>
+        <h2 className='HEADER-TEXT2'>TESIS 1 - INGENIERIA INFORMÁTICA</h2>
       
         <div className="col col-7 FILTRO-LISTAR-BUSCAR" >
               <p>Ingresar apellido</p>

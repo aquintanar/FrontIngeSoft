@@ -95,15 +95,15 @@ const getEntregableID = async () => {
       <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
       <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
       <div class = "row   LISTAR-TABLA">
-        <div class=" col-10  ">
+        <div class=" col-12  ">
           <table className='table fs-6 '>
             <thead >
               <tr class>
-                  <th style={{width: 50}}>Entregable</th>
-                  <th style={{width:150}}>Fecha limite</th>
-                  <th style={{width:150}}>Fecha de entrega asesor</th>
-                  <th style={{width:150}}>Estado</th>
-                  <th style={{width:150}}>Historial</th>
+                  <th style={{width: 100}}>Entregable</th>
+                  <th style={{width:170}}>Fecha límite</th>
+                  <th style={{width:170}}>Fecha de entrega asesor</th>
+                  <th style={{width:170}}>Estado</th>
+                  <th style={{width:50}}>Historial</th>
               </tr>
             </thead>
             <tbody >
@@ -113,7 +113,15 @@ const getEntregableID = async () => {
                apellidoMaterno:entregables.apeMat,tituloDoc:entregables.documentosAlumno,linkDoc:entregables.linkDoc,idEntregable:entregables.fidEntregable,estado:entregables.estadoEntregable,fechaE:entregables.fechaSubida}})}>{entregables.TipoEntregable}</td>
                     <td>{entregables.fechaLim}</td>
                     <td>{entregables.fechaAsesor}</td>
-                    <td>{entregables.estadoEntregable}</td>
+                    <td>    
+                                    {(() => {
+                                        switch(entregables.estadoEntregable){
+                                            case "Calificado por el docente" : return <td class = "text-success">{entregables.estadoEntregable}</td> ;
+                                            case "Rechazado" : return <td class = "text-danger">{entregables.estadoEntregable}</td> ;
+                                            default: return <td class = "text-warning">{entregables.estadoEntregable}</td> ;
+                                        }
+                                    }) ()}
+                    </td>
                     <td>Ver Historial</td>                    
                 </tr>
               ))}
