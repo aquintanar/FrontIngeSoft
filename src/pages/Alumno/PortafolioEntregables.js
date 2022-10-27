@@ -29,7 +29,7 @@ let navigate = useNavigate();
       <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                <a class="navbar-brand HEADER-PORTAFOLIO1" href="#">Avances Semanales</a>
+                <a class="navbar-brand HEADER-PORTAFOLIO1" type = 'Button'>Avances Semanales</a>
                 </div>
             </nav>
        </div>
@@ -37,7 +37,7 @@ let navigate = useNavigate();
        <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                <a class="navbar-brand HEADER-PORTAFOLIO1" href="#">Entregables</a>
+                <a class="navbar-brand HEADER-PORTAFOLIO1" type = 'Button'>Entregables</a>
                 </div>
             </nav>
        </div>
@@ -45,7 +45,7 @@ let navigate = useNavigate();
        <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                <a class="navbar-brand HEADER-PORTAFOLIO1" onClick={()=>{navigate("EntregablesParciales")}}>Entregables Parciales</a>
+                <a class="navbar-brand HEADER-PORTAFOLIO1" type = 'Button' onClick={()=>{navigate("EntregablesParciales")}}>Entregables Parciales</a>
                 </div>
             </nav>
        </div>
@@ -53,7 +53,7 @@ let navigate = useNavigate();
        <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                <a class="navbar-brand HEADER-PORTAFOLIO1" href="#">Evaluaciones</a>
+                <a class="navbar-brand HEADER-PORTAFOLIO1" type = 'Button'>Evaluaciones</a>
                 </div>
             </nav>
        </div>          

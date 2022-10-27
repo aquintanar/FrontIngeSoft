@@ -1,7 +1,6 @@
 import React from 'react'
-import './proponerTemaAsesor.css';
+import './alumno.css';
 import {useState , useEffect} from "react";
-import ModalBuscarAsesor from './ModalBuscarAsesor';
 import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 import useModal from '../../hooks/useModals';
 import {  Button, Collapse} from '@material-ui/core';
@@ -15,7 +14,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
 
-function AvanceSemanalSeleccionado(){
+function EntregableParcialSeleccionado(){
     let navigate = useNavigate();
     const location = useLocation();
       const [data, setData] = useState([]);
@@ -71,10 +70,10 @@ function AvanceSemanalSeleccionado(){
   } = useTable({ columns, data:dataTablaIntermedia})
     return(
         <div className='CONTAINERASESOR'>
-        <span>
-        <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
+         <span>
+          <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
         </span>
-        <h1 className='HEADER-TEXT1'>Avance Semanal - { location.state.tituloDoc }</h1>
+        <h1 className='HEADER-TEXT1'>Entregable Parcial</h1>
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
         <div className='ContenidoPrincipal'>
         <table   {...getTableProps()} style={{minWidth: 650, borderCollapse: 'separate',
@@ -173,4 +172,4 @@ function AvanceSemanalSeleccionado(){
         </div>
     );
 }
-export default  AvanceSemanalSeleccionado;
+export default  EntregableParcialSeleccionado;

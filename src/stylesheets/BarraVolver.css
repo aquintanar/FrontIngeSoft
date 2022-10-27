@@ -1,8 +1,15 @@
 .barra2{
-    flex-direction:flex-end;
-
-    width:100%;
+    width: 80%;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    left: 20%;
+    
 }
 .tituloSistema{
-    margin-left: 17em;
+    margin-left: 2em;
+}
+
+.tituloBarra{
+    font-family: 'Montserrat', sans-serif;
+    margin-left: 20px;
 }

@@ -85,9 +85,11 @@ const getEntregableID = async () => {
  },[])
   return (      
     <div class=" CONTAINERADMIN">   
-
+    <span>
+      <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
+    </span>
       <p class="HEADER-TEXT1">Entregables Parciales</p>
-      <br></br>
+
       
         
       <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
@@ -107,7 +109,8 @@ const getEntregableID = async () => {
             <tbody >
               {filtrado.map(entregables => (
                 <tr key={entregables.TipoEntregable}>
-                    <td>{entregables.TipoEntregable}</td>
+                    <td type = 'Button' onClick={() =>navigate("entregableParcialSeleccionado",{state:{idAlumno:entregables.idAlumno,nombres:entregables.nombres,apellidoPat:entregables.apePat,
+               apellidoMaterno:entregables.apeMat,tituloDoc:entregables.documentosAlumno,linkDoc:entregables.linkDoc,idEntregable:entregables.fidEntregable,estado:entregables.estadoEntregable,fechaE:entregables.fechaSubida}})}>{entregables.TipoEntregable}</td>
                     <td>{entregables.fechaLim}</td>
                     <td>{entregables.fechaAsesor}</td>
                     <td>{entregables.estadoEntregable}</td>

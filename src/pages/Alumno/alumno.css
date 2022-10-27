@@ -1,0 +1,103 @@
+.FUENTE-LABEL{
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+    font-size: 18px;
+}
+
+.BOTONES-FORM{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.fonnnts2{
+    font-family: 'Roboto', sans-serif;
+    font-weight: lighter;
+    font-size: large;
+}
+
+.botonForm{
+    width: 100px;
+    background-color: #042354;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.normal{
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: medium;
+}
+
+.NAVBUTTON{
+    flex-direction: flex-end;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    width: 76%;
+    left: 20%;
+}
+
+.BOTON-SUPERIOR{
+    margin: 0;
+    padding: 0;
+}
+
+.CONTAINER-ASESOR{
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    width: 76%;
+    padding-left: 0;
+    margin: 0;
+    left: 22%;
+}
+
+.HEADER-TEXT1 {
+    font-size: 40px;
+    font-family: 'Montserrat', sans-serif;
+    color: #042354;
+    font-weight: bold;
+    display: flex;
+    height: 60px;
+}
+
+.HEADER-TEXT2{
+    font-size: 32px;
+    color: #042354;
+    font-weight: bold;
+    height: 55px;
+}
+
+.DATOS input{
+    height: 2vh;
+    width: 100%;
+}
+
+.DATOS {
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+.DATOS p{
+    font-family: 'Roboto', sans-serif;
+    font-weight: lighter;
+    font-size: 16px;
+}
+
+.DATOS textarea{
+    min-height: 34px;
+    font-size: 16px;
+    width: 100%;
+    font-family: roboto;
+    word-break: break-word;
+}
+
+.BUTTON_TABLA{
+    background-color: #042354;
+    border: none;
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    height: 35px;
+    width: 80px;
+}
