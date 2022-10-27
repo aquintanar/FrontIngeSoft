@@ -8,6 +8,10 @@ import EntregablesParciales from './pages/Alumno/EntregablesParciales';
 import NotaAlumno  from './pages/Alumno/NotaAlumno';
 import AvancesSemanales from './pages/Asesor/AvancesSemanales';
 import EntregableParcialSeleccionado from './pages/Alumno/EntregableParcialSeleccionado';
+import Informacion  from './pages/Alumno/Informacion';
+import Reuniones  from './pages/Alumno/Reuniones';
+import EvaluaAsesor  from './pages/Alumno/EvaluaAsesor';
+
 function Alumno() {
     return (
         <div>    
@@ -21,6 +25,11 @@ function Alumno() {
               <Route path='gestion/gesPortafolio/EntregablesParciales' exact element= {<EntregablesParciales/>}/>
               <Route path='gestion/gesPortafolio/EntregablesEvaluaciones' exact element= {<EntregablesParciales/>}/>
               <Route path='gestion/gesPortafolio/EntregablesParciales/entregableParcialSeleccionado' exact element= {<EntregableParcialSeleccionado/>}/>
+              
+              <Route path='gestion/Reuniones' exact element= {<Reuniones/>}/>
+
+              <Route path='gestion/Informacion' exact element= {<Informacion/>}/>
+              <Route path='gestion/EvaluaAsesor' exact element= {<EvaluaAsesor/>}/>
               </Routes>
         </div>
     )
