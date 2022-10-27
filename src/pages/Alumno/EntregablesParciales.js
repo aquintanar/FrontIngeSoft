@@ -100,8 +100,8 @@ const getEntregableID = async () => {
             <thead >
               <tr class>
                   <th style={{width: 50}}>Entregable</th>
-                  <th style={{width:150}}>Fecha limite</th>
-                  <th style={{width:150}}>Fecha de entrega asesor</th>
+                  <th style={{width:200}}>Fecha límite</th>
+                  <th style={{width:200}}>Fecha de entrega asesor</th>
                   <th style={{width:150}}>Estado</th>
                   <th style={{width:150}}>Historial</th>
               </tr>

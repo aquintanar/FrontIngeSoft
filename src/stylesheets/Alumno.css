@@ -49,6 +49,12 @@
     text-align: center;
 }
 
+.HEADER-TEXT2-INF{
+    font-size: 2vw;
+    color: #042354;
+    font-weight: bold;
+}
+
 
 .INSERTAR-BOTONES button{
     border-radius: 4px;

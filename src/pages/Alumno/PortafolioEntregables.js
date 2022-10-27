@@ -26,37 +26,15 @@ let navigate = useNavigate();
       <br></br>
       <h3 class = "NOMB-ASESOR">Asesor Peter, Fortaleza Monserrat</h3>
       <br></br>
-      <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                <a class="navbar-brand HEADER-PORTAFOLIO1" type = 'Button'>Avances Semanales</a>
-                </div>
-            </nav>
-       </div>
-       <br></br>
-       <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                <a class="navbar-brand HEADER-PORTAFOLIO1" type = 'Button'>Entregables</a>
-                </div>
-            </nav>
-       </div>
-       <br></br>
-       <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                <a class="navbar-brand HEADER-PORTAFOLIO1" type = 'Button' onClick={()=>{navigate("EntregablesParciales")}}>Entregables Parciales</a>
-                </div>
-            </nav>
-       </div>
-       <br></br>
-       <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                <a class="navbar-brand HEADER-PORTAFOLIO1" type = 'Button'>Evaluaciones</a>
-                </div>
-            </nav>
-       </div>          
+
+      <a class="BTN-CUADRADO" href="#">Avances Semanales</a>
+
+      <a class="BTN-CUADRADO" href="#">Entregables</a>
+
+      <a class="BTN-CUADRADO" onClick={()=>{navigate("EntregablesParciales")}}>Entregables Parciales</a>
+
+      <a class="BTN-CUADRADO" href="#">Evaluaciones</a>
+    
     </div>              
   )
 }
