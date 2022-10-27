@@ -10,7 +10,7 @@ function AlumnoSeleccionado(){
     const location = useLocation();
     return(
         <div className='CONTAINERASESOR'>
-         <a onClick={() =>navigate(-1)} className="btn btn-lg " role="button" aria-pressed="true"><RiIcons.RiArrowGoBackFill/> </a>
+        <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
         <h1 className='HEADER-TEXT1'>Portafolio de Entregables</h1>
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
        <br></br>

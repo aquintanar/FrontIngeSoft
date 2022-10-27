@@ -70,9 +70,7 @@ function EntregablesParciales(){
    
     return(
         <div className='CONTAINERASESOR'>
-          <span>
-        <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
-        </span>
+            <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
         <h1 className='HEADER-TEXT1'>Entregables Parciales</h1>
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
         <div class="col col-7 FILTRO-LISTAR-BUSCAR" >
@@ -104,19 +102,19 @@ function EntregablesParciales(){
         
                   <td>
                     <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableParcialSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
-               apellidoMaterno:dato.apeMat,tituloDoc:dato.documentosAlumno,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida}})}>{dato.documentosAlumno}</button>
+               apellidoMaterno:dato.apeMat,tituloDoc:dato.nombre,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida,tituloDocPDF:dato.documentosAlumno,idVersion:dato.idVersion}})}>{dato.nombre}</button>
                   </td>
                   <td>
                     <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableParcialSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
-               apellidoMaterno:dato.apeMat,tituloDoc:dato.documentosAlumno,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida}})}>{dato.fechaAsesor}</button>                    
+               apellidoMaterno:dato.apeMat,tituloDoc:dato.nombre,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida,tituloDocPDF:dato.documentosAlumno,idVersion:dato.idVersion}})}>{dato.fechaAsesor}</button>                    
                   </td>  
                   <td> 
                     <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableParcialSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
-               apellidoMaterno:dato.apeMat,tituloDoc:dato.documentosAlumno,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida}})}>{dato.fechaSubida}</button>
+               apellidoMaterno:dato.apeMat,tituloDoc:dato.nombre,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida,tituloDocPDF:dato.documentosAlumno,idVersion:dato.idVersion}})}>{dato.fechaSubida}</button>
                   </td> 
                   <td>
                     <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableParcialSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
-               apellidoMaterno:dato.apeMat,tituloDoc:dato.documentosAlumno,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida}})}>{dato.estadoEntregable}</button>
+               apellidoMaterno:dato.apeMat,tituloDoc:dato.nombre,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida,tituloDocPDF:dato.documentosAlumno,idVersion:dato.idVersion}})}>{dato.estadoEntregable}</button>
                   </td>
 
                     <td>

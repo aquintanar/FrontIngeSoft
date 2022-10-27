@@ -3,7 +3,7 @@ import {useState , useEffect} from "react";
 import useModal from '../../hooks/useModals';
 import {  Button, Collapse} from '@material-ui/core';
 import { BrowserRouter as Router , Routes, Route, Link, useLocation } from 'react-router-dom';
-import {  useNavigate } from 'react-router-dom';
+import {  useNavigate ,useParams} from 'react-router-dom';
 import axios from 'axios';
 import { useTable } from 'react-table';
 import * as BsIcons from 'react-icons/bs';
@@ -11,6 +11,7 @@ import '../../stylesheets/Profesor.css'
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
+import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 
 function EntregableParcialSeleccionado(){
     let navigate = useNavigate();
@@ -19,8 +20,53 @@ function EntregableParcialSeleccionado(){
     useEffect(() => {
       getData();
     }, []);
-    const handleChange=e=>{
-     
+    const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
+    const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
+    const [entSeleccionado, setEntSeleccionado]=useState({
+      idDetalleNotaRubrica: 0,
+      fidDetalleRubrica: 0,
+      fidVersion: parseInt(`${location.state.idVersion}`),
+      descuento: 0,
+      puntaje: 0,
+      comentario: '',
+      estado:1,
+      fidCalificador:35,
+  })
+    const handleChange= (nombre,e)=>{
+      const {name, value}=e.target;
+      if(/[0-9]/.test(value)){
+        setEntSeleccionado(prevState=>({
+          ...prevState,
+          [name]: parseFloat(value),
+          [`fidDetalleRubrica`]: parseInt(nombre),
+        }))
+      }
+      else{
+        setEntSeleccionado(prevState=>({
+          ...prevState,
+          [name]: value,
+          [`fidDetalleRubrica`]: parseInt(nombre),
+        }))
+        
+      }
+      console.log(nombre);
+      console.log(entSeleccionado);
+      
+    }
+    const peticionPost=async()=>{
+      await axios.post("https://localhost:7012/api/DetalleNotaRubrica/PostDetalleNotaRubrica",entSeleccionado,{
+          _method: 'POST'
+        })
+      .then(response=>{
+        closePostModal();
+        openGuardadoModal();
+      }).catch(error =>{
+        console.log(error.message);
+      })
+    }
+  
+    const cerrarPost=()=>{
+      closeGuardadoModal();
     }
     async function getData() {
       (async () => {
@@ -66,9 +112,10 @@ function EntregableParcialSeleccionado(){
     rows,
     prepareRow,
   } = useTable({ columns, data:dataTablaIntermedia})
+
     return(
         <div className='CONTAINERASESOR'>
-        <a onClick={() =>navigate(-1)} className="btn btn-lg " role="button" aria-pressed="true"><RiIcons.RiArrowGoBackFill/> </a>
+         <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
         <h1 className='HEADER-TEXT1'>Entregable Parcial- { location.state.tituloDoc }</h1>
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
         <div className='ContenidoPrincipal'>
@@ -116,7 +163,7 @@ function EntregableParcialSeleccionado(){
        </table>
 
         <form action={location.state.linkDoc}>
-          <button type="button" className="btn btn-light btn-lg"><BsIcons.BsFileEarmarkPdf/>  {location.state.tituloDoc }</button>
+          <button type="button" className="btn btn-light btn-lg"><BsIcons.BsFileEarmarkPdf/>  {location.state.tituloDocPDF}</button>
         </form>
         <h3 className='HEADER-TEXT3'>Rúbrica de Evaluación</h3>
         <div class = "row LISTAR-TABLA">
@@ -127,7 +174,9 @@ function EntregableParcialSeleccionado(){
                   <th style={{width: 100}}>Rubro</th>
                   <th style ={{width: 450}}>Nivel Deseado</th>
                   <th style = {{width:100}}>Puntaje Máximo</th>
+                  <th style = {{width:100}}>Puntaje</th>
                   <th style = {{width:100}}>Comentarios</th>
+                  <th style = {{width:100}}>Acciones</th>
               </tr>
             </thead>
             <tbody >
@@ -136,9 +185,15 @@ function EntregableParcialSeleccionado(){
                     <td >{rubrica.rubro}</td>
                     <td >{rubrica.nivelDeseado}</td>                    
                     <td>{rubrica.puntajeMaximo}</td>
+                    <td> <input onChange={(e) => handleChange(`${rubrica.idDetalleRubrica}`, e)} type="text" class="form-control" name="puntaje" placeholder="Puntaje" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
+                    /> </td>
                     <td>
+                    <input onChange={(e) => handleChange(`${rubrica.idDetalleRubrica}`, e)} type="text" class="form-control" name="comentario" placeholder="Comentario" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
+                    />
                     <button class="btn BTN-ACCIONES"> <FaIcons.FaCommentAlt /></button>
-                  
+                    </td>
+                    <td>
+                    <button type="button" className='btn btn-light' onClick={()=>openPostModal()}>Guardar</button>
                     </td>
                 </tr>
               ))}
@@ -150,21 +205,42 @@ function EntregableParcialSeleccionado(){
                 <div class = "col-12">
                     <div class="text-start fs-5 fw-normal "><p>Comentarios del asesor</p></div>
                     <div class="input-group input-group-lg mb-3">
-                        <textarea disabled="true"  class="form-control" name="Comentarios" placeholder="Comentarios" aria-label="comentarios"  
+                        <textarea disabled="true" class="form-control" name="Comentarios" placeholder="Comentarios" aria-label="comentarios"  
                           onChange={handleChange}/>
                     </div>
                 </div>
             </div>
             <br></br>
       <div className="row">                            
-              <div className="LISTAR-BOTON">
-               
+              <div className="LISTAR-BOTON">           
                   <button class="btn btn-primary fs-4 fw-bold mb-3 me-3 "  type="button">Guardar</button>
                   <button class="btn btn-danger fs-4 fw-bold mb-3 me-3" type="button">Cancelar</button>
               </div>
         </div>
         </div>
+        <ModalPregunta
+    isOpen={isOpenPostModal} 
+    closeModal={closePostModal}
+    procedimiento = "guardar"
+    objeto="el detalle"
+    elemento={entSeleccionado && entSeleccionado.nombre}
+  >
+    <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+      <Button class="btn  btn-success btn-lg" onClick={()=>peticionPost()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <Button class="btn btn-danger btn-lg"  onClick={closePostModal}>Cancelar</Button>
+    </div>
+  </ModalPregunta>
+  <ModalConfirmación
+              isOpen={isOpenGuardadoModal} 
+              closeModal={closeGuardadoModal}
+              procedimiento= "guardado"
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn btn-success btn-lg" onClick={()=>cerrarPost()}>Entendido</Button>
+              </div>
+            </ModalConfirmación>
         </div>
     );
+
 }
 export default  EntregableParcialSeleccionado;
