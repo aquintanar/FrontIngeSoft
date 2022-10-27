@@ -7,15 +7,7 @@ import * as IonIcons4 from "react-icons/io";
 
 export const SidebarData = [
     {
-        title: 'Alumnos',
-        path: 'alumnos',
-        icon: <BsIcons.BsPeople />,
-        iconClosed: <IonIcons4.IoIosArrowDown />,
-        iconOpened: <IonIcons4.IoIosArrowUp />,
-
-    },
-    {
-        title: 'Calendario',
+        title: 'Información',
         path: '',
         icon: <BsIcons.BsPencil />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
@@ -23,15 +15,16 @@ export const SidebarData = [
 
     },
     {
-        title: 'Tesis',
-        path: 'temaTesis',
-        icon: <BsIcons.BsNewspaper />,
+        title: 'Alumnos',
+        path: 'alumnos',
+        icon: <BsIcons.BsPeople />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
 
     },
+
     {
-        title: 'Reunión',
+        title: 'Calendario Entregas',
         path: '',
         icon: <BsIcons.BsJournalBookmark />,
         iconClosed: <IonIcons4.IoIosArrowDown />,

@@ -6,6 +6,7 @@ const SidebarLink = styled(Link)`
 display: flex;
 color: #ffffff;
 justify-content: space-between;
+-webkit-text-fill-color: white;
 align-items: center;
 padding: 20px;
 list-style: none;
@@ -47,14 +48,15 @@ text-decoration: none;
 color: #000000;
 font-size: 15.5px;
     
-  &:hover {
-    background: #9E9E9E;
-    cursor: pointer;
-    font-size: 16.25px;
-    font-weight: bold;
-    svg{
-      fill: #2179D4;
-    }
+&:hover {
+  background: #9E9E9E;
+  cursor: pointer;
+  font-size: 16.25px;
+  font-weight: bold;
+  color: #042354;
+  svg{
+    fill: #042354;
+  }
   }
 
   svg{

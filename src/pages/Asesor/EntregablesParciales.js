@@ -13,7 +13,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as RiIcons  from "react-icons/ri";
 import * as BsIcons from 'react-icons/bs';
 
-function Entregables(){
+function EntregablesParciales(){
     let navigate = useNavigate();
     const location = useLocation();
     const [currentPage,SetCurrentPage] = useState(0);
@@ -30,8 +30,8 @@ function Entregables(){
  
     async function getData() {
       (async () => {
-        const result = await axios(`https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=3`);
-        //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=3`);
+        const result = await axios(`https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
+        //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
         setData(result.data);
         console.log(data)
       })();
@@ -71,7 +71,7 @@ function Entregables(){
     return(
         <div className='CONTAINERASESOR'>
            <a onClick={() =>navigate(-1)} className="btn btn-lg " role="button" aria-pressed="true"><RiIcons.RiArrowGoBackFill/> </a>
-        <h1 className='HEADER-TEXT1'>Entregables</h1>
+        <h1 className='HEADER-TEXT1'>Entregables Parciales</h1>
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
         <div class="col col-7 FILTRO-LISTAR-BUSCAR" >
               <p>Ingresar Estado de Entregable</p>
@@ -101,19 +101,19 @@ function Entregables(){
                 <tr key={dato.idVersion}>
         
                   <td>
-                    <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
+                    <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableParcialSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
                apellidoMaterno:dato.apeMat,tituloDoc:dato.documentosAlumno,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida}})}>{dato.documentosAlumno}</button>
                   </td>
                   <td>
-                    <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
+                    <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableParcialSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
                apellidoMaterno:dato.apeMat,tituloDoc:dato.documentosAlumno,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida}})}>{dato.fechaAsesor}</button>                    
                   </td>  
                   <td> 
-                    <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
+                    <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableParcialSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
                apellidoMaterno:dato.apeMat,tituloDoc:dato.documentosAlumno,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida}})}>{dato.fechaSubida}</button>
                   </td> 
                   <td>
-                    <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
+                    <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableParcialSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
                apellidoMaterno:dato.apeMat,tituloDoc:dato.documentosAlumno,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida}})}>{dato.estadoEntregable}</button>
                   </td>
 
@@ -130,4 +130,4 @@ function Entregables(){
         </div>
     );
 }
-export default  Entregables;
+export default  EntregablesParciales;

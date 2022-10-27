@@ -1,14 +1,13 @@
 import React, { useMemo,useState, useEffect } from 'react';
 import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom';
-import "./buttonGroup.css";
-import  '../../stylesheets/Asesor.css';
+import  '../../stylesheets/Profesor.css';
 import { useTable ,useFilters,setFilter} from 'react-table';
 import axios from 'axios';
 import {  useNavigate } from 'react-router-dom';
 import * as BsIcons from 'react-icons/bs';
 import { NonceProvider } from 'react-select';
 
-function AlumnosAsesorados() {
+function Alumnos() {
     let navigate = useNavigate();
     let [dataI, setDataI] = useState([]);
     const [currentPage,SetCurrentPage] = useState(0);
@@ -22,8 +21,8 @@ function AlumnosAsesorados() {
  
     async function getDataI() {
       (async () => {
-        const result = await axios("https://localhost:7012/api/Alumno/ListAlumnosXIdAsesor?idAsesor=2");
-        //const result = await axios("http://44.210.195.91/api/Alumno/ListAlumnosXIdAsesor?idAsesor=2");
+        const result = await axios("https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=1");
+        //const result = await axios("http://44.210.195.91/api/Alumno/ListAlumnosXIdCurso?idCurso=1");
         setDataI(result.data);
       })();
     };
@@ -118,7 +117,7 @@ function AlumnosAsesorados() {
     return(
   
         <div className='CONTAINERASESOR'>
-        <h1 className='HEADER-TEXT1'>Alumnos Asesorados</h1>
+        <h1 className='HEADER-TEXT1'>Alumnos</h1>
         <h2 className='HEADER-TEXT2'>TESIS 1 - INGENIERIA INFORMATICA</h2>
       
         <div className="col col-7 FILTRO-LISTAR-BUSCAR" >
@@ -184,4 +183,4 @@ function AlumnosAsesorados() {
     );
 
 }
-export default  AlumnosAsesorados;
+export default  Alumnos;

@@ -15,7 +15,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
 
-function EntregableSeleccionado(){
+function AvanceSemanalSeleccionado(){
     let navigate = useNavigate();
     const location = useLocation();
       const [data, setData] = useState([]);
@@ -72,7 +72,7 @@ function EntregableSeleccionado(){
     return(
         <div className='CONTAINERASESOR'>
         <a onClick={() =>navigate(-1)} className="btn btn-lg " role="button" aria-pressed="true"><RiIcons.RiArrowGoBackFill/> </a>
-        <h1 className='HEADER-TEXT1'>Entregable - { location.state.tituloDoc }</h1>
+        <h1 className='HEADER-TEXT1'>Avance Semanal - { location.state.tituloDoc }</h1>
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
         <div className='ContenidoPrincipal'>
         <table   {...getTableProps()} style={{minWidth: 650, borderCollapse: 'separate',
@@ -171,4 +171,4 @@ function EntregableSeleccionado(){
         </div>
     );
 }
-export default  EntregableSeleccionado;
+export default  AvanceSemanalSeleccionado;

@@ -1,8 +1,5 @@
 import React from 'react'
-import './proponerTemaAsesor.css';
 import {useState , useEffect} from "react";
-import ModalBuscarAsesor from './ModalBuscarAsesor';
-import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 import useModal from '../../hooks/useModals';
 import {  Button, Collapse} from '@material-ui/core';
 import { BrowserRouter as Router , Routes, Route, Link, useLocation } from 'react-router-dom';
@@ -10,12 +7,12 @@ import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useTable } from 'react-table';
 import * as BsIcons from 'react-icons/bs';
-import '../../stylesheets/Asesor.css'
+import '../../stylesheets/Profesor.css'
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
 
-function EntregableSeleccionado(){
+function EntregableParcialSeleccionado(){
     let navigate = useNavigate();
     const location = useLocation();
       const [data, setData] = useState([]);
@@ -72,7 +69,7 @@ function EntregableSeleccionado(){
     return(
         <div className='CONTAINERASESOR'>
         <a onClick={() =>navigate(-1)} className="btn btn-lg " role="button" aria-pressed="true"><RiIcons.RiArrowGoBackFill/> </a>
-        <h1 className='HEADER-TEXT1'>Entregable - { location.state.tituloDoc }</h1>
+        <h1 className='HEADER-TEXT1'>Entregable Parcial- { location.state.tituloDoc }</h1>
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
         <div className='ContenidoPrincipal'>
         <table   {...getTableProps()} style={{minWidth: 650, borderCollapse: 'separate',
@@ -151,9 +148,9 @@ function EntregableSeleccionado(){
       </div>
       <div class = "DATOS">
                 <div class = "col-12">
-                    <div class="text-start fs-5 fw-normal "><p>Comentarios</p></div>
+                    <div class="text-start fs-5 fw-normal "><p>Comentarios del asesor</p></div>
                     <div class="input-group input-group-lg mb-3">
-                        <textarea class="form-control" name="Comentarios" placeholder="Comentarios" aria-label="comentarios"  
+                        <textarea disabled="true"  class="form-control" name="Comentarios" placeholder="Comentarios" aria-label="comentarios"  
                           onChange={handleChange}/>
                     </div>
                 </div>
@@ -162,13 +159,12 @@ function EntregableSeleccionado(){
       <div className="row">                            
               <div className="LISTAR-BOTON">
                
-                  <button class="btn btn-success fs-4 fw-bold mb-3 me-3 "  type="button">Aprobar</button>
-                  <button class="btn btn-primary fs-4 fw-bold mb-3 me-3" type="button">Enviar</button>
-                  <button class="btn btn-primary fs-4 fw-bold mb-3 me-3" type="button">Descargar</button>
+                  <button class="btn btn-primary fs-4 fw-bold mb-3 me-3 "  type="button">Guardar</button>
+                  <button class="btn btn-danger fs-4 fw-bold mb-3 me-3" type="button">Cancelar</button>
               </div>
         </div>
         </div>
         </div>
     );
 }
-export default  EntregableSeleccionado;
+export default  EntregableParcialSeleccionado;

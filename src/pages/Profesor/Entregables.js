@@ -1,8 +1,5 @@
 import React from 'react'
-import './proponerTemaAsesor.css';
 import {useState , useEffect} from "react";
-import ModalBuscarAsesor from './ModalBuscarAsesor';
-import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import { BrowserRouter as Router , Routes, Route, Link, useLocation } from 'react-router-dom';
@@ -93,7 +90,7 @@ function Entregables(){
                   <th style ={{width: 275}}>Fecha de Entrega Asesor</th>
                   <th style = {{width:100}}>Fecha de Entrega</th>
                   <th style = {{width:100}}>Estado</th>
-                  <th style = {{width:100}}>Historial</th>
+                  <th style = {{width:100}}>Calificación</th>
               </tr>
             </thead>
             <tbody >
@@ -118,7 +115,7 @@ function Entregables(){
                   </td>
 
                     <td>
-                    <button class="btn BTN-ACCIONES"> <FaIcons.FaBars/></button>
+                    <button class="btn BTN-ACCIONES"> - </button>
                     </td>
                 </tr>
               ))}

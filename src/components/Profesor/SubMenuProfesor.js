@@ -6,6 +6,7 @@ const SidebarLink = styled(Link)`
   display: flex;
   color: #ffffff;
   justify-content: space-between;
+  -webkit-text-fill-color: white;
   align-items: center;
   padding: 20px;
   list-style: none;
@@ -52,8 +53,9 @@ const DropdownLink = styled(Link)`
     cursor: pointer;
     font-size: 16.25px;
     font-weight: bold;
+    color: #042354;
     svg{
-      fill: #2179D4;
+      fill: #042354;
     }
   }
 
