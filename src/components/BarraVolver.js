@@ -15,7 +15,7 @@ export function BarraVolver() {
                 <h4 >Volver a mis cursos</h4>
             </div>
             <div>
-                <h4>2022-2 Tesis1 - Ing. Informatica()</h4>
+                <h4>2022-2 Tesis1 - Ing. Informática()</h4>
             </div>
         </div>
     );
