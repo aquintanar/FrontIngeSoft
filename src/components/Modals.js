@@ -43,3 +43,24 @@ export const ModalConfirmación = ({ isOpen, closeModal, procedimiento, children
         </div>
     )
 }
+
+
+export const ModalComentario = ({ isOpen, closeModal, procedimiento, children }) => {
+
+    const handleModalDialogClick = (e) => {
+        e.stopPropagation();
+    }
+
+    return (
+        <div className={`modal ${isOpen && 'modal-open'}`} onClick={closeModal}>
+            <div className="modal__dialog_comentario" onClick={handleModalDialogClick}>
+                <div align = "center">
+                    <div class="row">
+                        <p class= "text-white mt-5">{procedimiento} </p>
+                        {children} 
+                    </div>   
+                </div>
+            </div>
+        </div>
+    )
+}

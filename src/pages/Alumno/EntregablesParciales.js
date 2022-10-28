@@ -109,8 +109,8 @@ const getEntregableID = async () => {
             <tbody >
               {filtrado.map(entregables => (
                 <tr key={entregables.TipoEntregable}>
-                    <td type = 'Button' onClick={() =>navigate("entregableParcialSeleccionado",{state:{idAlumno:entregables.idAlumno,nombres:entregables.nombres,apellidoPat:entregables.apePat,
-               apellidoMaterno:entregables.apeMat,tituloDoc:entregables.documentosAlumno,linkDoc:entregables.linkDoc,idEntregable:entregables.fidEntregable,estado:entregables.estadoEntregable,fechaE:entregables.fechaSubida}})}>{entregables.TipoEntregable}</td>
+                    <td type = 'Button' onClick={() =>navigate("entregableParcialSeleccionado",{state:{idVersion:entregables.idVersion,idAlumno:entregables.fidAlumno,nombres:entregables.nombres,apellidoPat:entregables.apePat,
+               apellidoMaterno:entregables.apeMat,tituloDoc:entregables.nombre,linkDoc:entregables.linkDoc,idEntregable:entregables.fidEntregable,estado:entregables.estadoEntregable,fechaE:entregables.fechaSubida,fechaL:entregables.fechaLim, nombreEntregable:entregables.TipoEntregable,comentarios:entregables.comentarios}})}>{entregables.TipoEntregable}</td>
                     <td>{entregables.fechaLim}</td>
                     <td>{entregables.fechaAsesor}</td>
                     <td>    

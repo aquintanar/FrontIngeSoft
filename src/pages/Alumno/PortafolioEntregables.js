@@ -31,7 +31,7 @@ let navigate = useNavigate();
 
       <a class="BTN-CUADRADO" href="#">Entregables</a>
 
-      <a class="BTN-CUADRADO" onClick={()=>{navigate("EntregablesParciales")}}>Entregables Parciales</a>
+      <a class="BTN-CUADRADO" onClick={()=>{navigate("EntregablesParciales",{state:{idAlumno:'1',nombres:"Peter",apellidoPat:"Gonzales",apellidoMaterno: "Monserrat"}})}}>Entregables Parciales</a>
 
       <a class="BTN-CUADRADO" href="#">Evaluaciones</a>
     

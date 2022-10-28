@@ -48,7 +48,50 @@
     height: 50px;
     text-align: center;
 }
+.HEADER-TEXT5{
+    font-size: 27px;
+    color: #042354;
+    font-weight: bold;
+    height: 50px;
+    text-align: center;
+}
 
+.HEADER-TEXT6{
+    font-size: 16px;
+    color: #2179D4;
+    height: 20px;
+    text-align: center;
+    font-weight:bolder;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.HEADER-TEXT7{
+    font-size: 16px;
+    color: black;
+    height: 20px;
+    text-align: center;
+    font-weight:bolder;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.HEADER-TEXT8{
+    font-size: 15px;
+    color: #042354;
+    font-weight: bold;
+    height: 50px;
+    text-align: left;
+}
+
+
+.HEADER-TEXT9{
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+    height: 50px;
+    text-align: left;
+}
 .HEADER-TEXT2-INF{
     font-size: 2vw;
     color: #042354;
@@ -103,4 +146,41 @@
     
     opacity: 1;
     right: 0;
+}
+.BTN-ACCIONES-BASURA svg{
+    color: white;
+    width: 2em;
+    height: 2em;
+    size: 2em;
+    
+}
+
+.BTN-ACCIONES-BASURA:hover svg{
+    color: red;
+    width: 2.2em;
+    height: 2.2em;
+}
+
+.BTN-COMENTAR svg{
+    color: #042354;
+    width: 1.5em;
+    height: 1.5em;
+    size: 2em;
+    
+}
+
+.BTN-COMENTAR:hover svg{
+    color: black;
+    width: 1.7em;
+    height: 1.7em;
+}
+
+.BTN-SUBIR svg{
+    color: #2179D4;
+    border: none;
+    background-color: inherit;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
 }
