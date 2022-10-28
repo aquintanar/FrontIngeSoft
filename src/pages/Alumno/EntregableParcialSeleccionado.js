@@ -160,14 +160,6 @@ function EntregableParcialSeleccionado(){
                 </div>
             </div>
             <br></br>
-      <div className="row">                            
-              <div className="LISTAR-BOTON">
-               
-                  <button class="btn btn-success fs-4 fw-bold mb-3 me-3 "  type="button">Aprobar</button>
-                  <button class="btn btn-primary fs-4 fw-bold mb-3 me-3" type="button">Enviar</button>
-                  <button class="btn btn-primary fs-4 fw-bold mb-3 me-3" type="button">Descargar</button>
-              </div>
-        </div>
         </div>
         </div>
     );
