@@ -18,6 +18,28 @@
     font-family: 'Montserrat', sans-serif;
     left: 22%;
 }
+
+.CONTAINERENTREGABLE{
+    flex-direction:flex-end;
+    width: 79.4%;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    left: 20%;
+}
+
+.BOTONES_SUPERIORES{
+    margin: 0;
+    padding: 0;
+}
+
+.CONTAINERENTREGABLE button{
+    width: 100%;
+    cursor:pointer;
+}
+
+.CONTAINERENTREGABLE button:hover{
+    background-color: #2179D4;
+}
 .HEADER-PORTAFOLIO1{
     font-size: 28px;
     color: #042354;
@@ -84,6 +106,34 @@
     font-weight: bold;
 }
 
+/*ESTILOS PARA TABLAS*/
+.LISTAR-TABLA-EV {
+    align-items: center;
+}
+
+.LISTAR-TABLA-EV th{
+    font-size: 14px;
+    font-family: roboto;
+    color: #fff;
+    background: #042354;
+    text-indent: 0.4em;
+}
+
+.LISTAR-TABLA-EV td{
+    font-size: 12px;
+    font-family: roboto;
+    text-indent: 0.4em;
+}
+
+
+.LISTAR-TABLA-EV tr:hover{
+    font-size: 14px;
+    font-family: roboto;
+    text-indent: 0.4em;
+    background-color: rgba(33, 121, 212, 0.5);
+    color: black;
+    font-weight: bold;
+}
 /*ESTILOS PARA LA PAGINACION DE TABLAS*/
 .PAGINACION-BTN{
     width: 35px;
@@ -173,6 +223,18 @@
     font-family: roboto;
 }
 
+.FILTRO-FECHA p{
+    font-size: 14px;
+    font-family: roboto;
+}
+
+.FILTRO-FECHA input{
+    height: 32px;
+    font-size: 12px;
+    font-family: roboto;
+}
+
+
 .UPLOAD{
     width: 50%;
 }
@@ -225,6 +287,14 @@
     font-size: 16px;
     font-family: roboto;
 }
+
+
+.DATOS m{
+    font-size: 14px;
+    font-family: roboto;
+    color: #8d8e8e;
+}
+
 .DATOS textarea{
     min-height: 80px;
     font-size: 14px;
@@ -254,6 +324,12 @@
 .INSERTAR-BOTONES .GUARDAR{
     background-color: #042354;
 }
+.INSERTAR-BOTONES .AÑADIR{
+    background-color: #042354;
+}
+.INSERTAR-BOTONES .SIGUIENTE{
+    background-color: #042354;
+}
 .INSERTAR-BOTONES .CANCELAR{
     background-color: #B80000;
 }
@@ -266,8 +342,14 @@
 .INSERTAR-BOTONES .GUARDAR span:after{
     content:'\1F4C1';
 }
+.INSERTAR-BOTONES .SIGUIENTE span:after{
+    content:'\2794';
+}
 .INSERTAR-BOTONES .CANCELAR span:after{
     content:'\1F5D9';
+}
+.INSERTAR-BOTONES .AÑADIR span:after{
+    content:'\002B';
 }
 .INSERTAR-BOTONES button span:after{
     position:absolute;

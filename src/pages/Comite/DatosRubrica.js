@@ -1,0 +1,384 @@
+import React, { useState} from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
+import '../../stylesheets/Administrador.css';
+import axios from 'axios';
+import * as FaIcons from 'react-icons/fa';
+import * as BootIcons  from "react-icons/bs";
+import * as BsIcons from 'react-icons/bs';
+import { useNavigate,useParams } from 'react-router-dom';
+import useModal from '../../hooks/useModals';
+import {  Button} from '@material-ui/core';
+import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
+import { Comparator } from 'react-bootstrap-table2-filter';
+
+const url2= "https://localhost:7012/api/DetalleRubrica/";
+const url1= "https://localhost:7012/api/Entregable/";
+//const url2= "http://44.210.195.91/api/DetalleRubrica/";
+//const url1= "https://44.210.195.91/api/Entregable/";
+
+function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs})  {
+
+    let navigate = useNavigate();
+    const [currentPage,SetCurrentPage] = useState(0);
+    const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
+    const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
+    const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
+    const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
+    const [edit, SetEdit] = useState(0);
+    let confirm = 0;
+    let long = 0;
+    let vari = 0;
+
+    const [rubricaSeleccionada, setRubricaSeleccionada]=useState({
+        rubro: '',
+        nivelDeseado: '',
+        puntajeMaximo: 0,
+        fidRubrica: 0
+    })  
+
+    const handleChange=e=>{
+        const {name, value}=e.target;
+        setRubricaSeleccionada(prevState=>({
+          ...prevState,
+          [name]: value
+        }))
+    }
+
+
+    const nextPage = () =>{
+        if(rubricas.length>=currentPage) //VER CODIGO
+        SetCurrentPage(currentPage+5);
+    }
+    const previousPage =() =>{
+        if(currentPage>0)
+        SetCurrentPage(currentPage-5);
+    }
+
+    const agregaDatos=()=>{
+        rubricas.push(rubricaSeleccionada);
+        setRubricaSeleccionada({
+            rubro: '',
+            nivelDeseado: '',
+            puntajeMaximo: 0,
+            fidRubrica: 0
+        })
+        console.log(rubricas);
+    }
+
+    const quitaRubro=(elemento)=>{
+        var index = rubricas.indexOf(elemento);
+        rubricas.splice(index,1);
+        SetEdit(!edit);
+    }
+
+    const peticionPost=async(element)=>{
+        await axios.post(url2+"PostDetalleRubrica",element,{
+            _method: 'POST'
+          })
+        .then(response=>{
+            confirm = confirm+1;
+            console.log(long," no es ",confirm);
+            if(long===confirm){
+                closePostModal();
+                openGuardadoModal();
+            }
+        }).catch(error =>{
+            console.log(error.message);
+        })
+    }
+    
+    const verificaTipo =()=>{
+        if(entregable.fidTipoEntregable ===1 && (entregable.fechaEntregaAsesor === null 
+            || entregable.fechaEntregaAsesor===0)){
+            entregable.fechaEntregaAsesor = new Date();
+            entregable.responsableSubir = 1;
+            peticionPostEntregable2();
+        }
+        else{
+            peticionPostEntregable();
+        }
+    }
+
+    const peticionPostEntregable=async()=>{
+        await axios.post(url1+"PostEntregableConRubrica?linkDoc=jjjj",entregable,{
+            _method: 'POST'
+          })
+        .then(response=>{
+            entregable.idEntregable = response.data.idRubrica;
+            console.log("entregable Listo")
+            guarda();
+        }).catch(error =>{
+            console.log(error.message);
+        })  
+    }
+
+    const peticionSelecter =()=>{
+        if(id==='0'){
+          openPostModal();
+        }
+        else{
+          openEditModal();  
+        }
+    }
+
+    const peticionPutEntregable=async()=>{
+        await axios.put(url1+"PutEntregable",entregable)
+        .then(response=>{
+            console.log(entregable);
+            editaRubricas();
+        }).catch(error =>{
+            console.log(error.message);
+        })  
+    }
+
+    const peticionDeleteRubs=async(element)=>{
+        await axios.delete(url1+ "DeleteDetalleRubrica?idDetalleRubrica="+element).
+        then(response=>{
+            console.log("eliminando");
+            console.log(element);
+      })
+    }
+
+    const editaRubricas =()=>{
+        console.log(rubs);
+        console.log(rubricas);
+        if(rubricas.length === rubs.length){
+            for(var i=0;i<rubricas.length;i++)
+            {
+                if(rubs.includes(rubricas[0])){
+                    vari = 1;
+                }
+                else{
+                    vari =0;
+                    break;
+                }
+            }
+        }
+        else {
+            vari = 0;
+        }
+        if(vari===1){      
+            closeEditModal();
+            openEditadoModal();
+        }
+        else{
+            console.log("editando con rubrica");
+            console.log(rubs);
+            rubs.forEach(async element => {
+                await peticionDeleteRubs(element.idDetalleRubrica);
+            });
+            rubricas.forEach(async element => {
+                element.fidRubrica = entregable.idEntregable;
+                await peticionPost(element);
+            });
+        }
+    }    
+
+    const compara =()=>{
+        if(rubricas.length === rubs.length){
+            for(var i=0;i<rubricas.length;i++)
+            {
+                if(rubs.includes(rubricas[0])){
+                    vari = 1;
+                }
+                else{
+                    vari =0;
+                    break;
+                }
+            }
+        }
+        else {
+            vari = 0;
+        }
+    }    
+  
+
+    const peticionPostEntregable2=async()=>{
+        await axios.post(url1+"PostEntregableConRubricaMarcel?linkDoc=jjjj",entregable,{
+            _method: 'POST'
+          })
+        .then(response=>{
+            entregable.idEntregable = response.data.idRubrica;
+            console.log("entregable Listo")
+            guarda();
+        }).catch(error =>{
+            console.log(error.message);
+        })  
+    }
+
+
+    const guarda=()=>{
+        long = rubricas.length;
+        if(long===0){
+            closePostModal();
+            openGuardadoModal();
+        }
+        else{
+            rubricas.forEach(async element => {
+                element.fidRubrica = entregable.idEntregable;
+                await peticionPost(element);
+            });
+        }
+    }
+
+    const terminar=()=>{
+        closeGuardadoModal();
+        navigate("../preparacion/entregables");
+    }
+
+    const cargaRub =(elemento)=>{
+        setRubricaSeleccionada({
+            rubro: elemento.rubro,
+            nivelDeseado: elemento.nivelDeseado,
+            puntajeMaximo: elemento.puntajeMaximo,
+            fidRubrica: elemento.fidRubrica,
+        })
+        var index = rubricas.indexOf(elemento);
+        rubricas.splice(index,1);
+    }
+
+    return (      
+        <div class ="CONTAINERADMIN " >   
+    
+        <p class="HEADER-TEXT1 mb-5">Datos Rúbrica</p>
+
+
+        <div class="DATOS row" >
+            <div class="col-2">
+                <p>Entregable</p>
+            </div>
+            <div class="col">
+                <div class="input-group mb-3">
+                    <input type="text" disabled class="form-control" name="entregable" placeholder="Entregable" value={entregable.nombre}/>
+                </div>
+            </div>
+        </div>
+
+        <div class="DATOS row" >
+            <div class="col-2">
+                <p>Rubro</p>
+            </div>
+            <div class="col">
+                <div class="input-group mb-3 ">
+                    <input type="text"  class="form-control" name="rubro" placeholder="Rubro" 
+                          onChange={handleChange} value={rubricaSeleccionada && rubricaSeleccionada.rubro} />
+                </div>
+            </div>
+        </div>
+
+        <div class="DATOS row" >
+            <div class="col-2">
+                <p>Nivel Deseado</p>
+            </div>
+            <div class="col">
+                <div class="input-group  mb-3">
+                        <textarea class="form-control" name="nivelDeseado" placeholder="Descripción"
+                          onChange={handleChange} value={rubricaSeleccionada && rubricaSeleccionada.nivelDeseado} />
+                </div>
+            </div>
+        </div>
+
+        <div class="DATOS row" >
+            <div class="col-2">
+                <p>Puntaje Máximo</p>
+            </div>
+            <div class="col-3">
+                <div class="input-group mb-3 ">
+                    <input type="text"  class="form-control" name="puntajeMaximo" placeholder="Puntaje"  
+                          onChange={handleChange} value={rubricaSeleccionada && rubricaSeleccionada.puntajeMaximo} />
+                </div>
+            </div>
+        </div>
+
+        <div class="row INSERTAR-BOTONES">                            
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>agregaDatos()}><span>Añadir</span></button>
+                </div>
+        </div>   
+  
+          <p class="HEADER-TEXT2 mt-3" >Rúbrica</p>
+          <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
+          <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
+          <div class = "row LISTAR-TABLA-EV">
+            <div class=" col-12  ">
+              <table className='table fs-6 '>
+                <thead class >
+                  <tr class>
+                      <th style ={{width: 100}}>Rubro</th>
+                      <th style = {{width:300}} >Nivel Deseado</th>
+                      <th style = {{width:100}} >Puntaje Máximo</th>
+                      <th style = {{width:50}} >Acciones</th>
+                  </tr>
+                </thead>
+                <tbody >
+                  {rubricas.map(elemento => (
+                    <tr key={elemento.rubro}>
+                        <td >{elemento.rubro}</td>    
+                        <td >{elemento.nivelDeseado}</td>    
+                        <td>{elemento.puntajeMaximo}</td>    
+                        <td>
+                        <button class="btn BTN-ACCIONES" onClick={()=>cargaRub(elemento)}> <FaIcons.FaEdit /></button>
+                        <button  class=" btn BTN-ACCIONES" onClick={()=>quitaRubro(elemento)}> <BootIcons.BsTrash /></button>
+                        </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <ModalPregunta
+              isOpen={isOpenEditModal} 
+              closeModal={closeEditModal}
+              procedimiento = "modificar"
+              objeto="la evaluación"
+              elemento={entregable && entregable.nombre}
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn  btn-success btn-lg" onClick={()=>peticionPutEntregable()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Button class="btn btn-danger btn-lg"  onClick={closeEditModal}>Cancelar</Button>
+              </div>
+            </ModalPregunta>             
+
+          <ModalConfirmación
+              isOpen={isOpenEditadoModal} 
+              closeModal={closeEditadoModal}
+              procedimiento= "modificado"
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn btn-success btn-lg" onClick={terminar}>Entendido</Button>
+              </div>
+            </ModalConfirmación>
+
+          <ModalPregunta
+              isOpen={isOpenPostModal} 
+              closeModal={closePostModal}
+              procedimiento = "guardar"
+              objeto="la evaluación"
+              elemento={entregable && entregable.nombre}
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn  btn-success btn-lg" onClick={verificaTipo} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Button class="btn btn-danger btn-lg"  onClick={closePostModal}>Cancelar</Button>
+              </div>
+            </ModalPregunta>
+            <ModalConfirmación
+              isOpen={isOpenGuardadoModal} 
+              closeModal={closeGuardadoModal}
+              procedimiento= "guardado"
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn btn-success btn-lg" onClick={terminar}>Entendido</Button>
+              </div>
+            </ModalConfirmación>
+          
+            <div class="row INSERTAR-BOTONES">                            
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button"  onClick={()=>{navigate("../preparacion/entregables")}}><span>Cancelar</span></button>
+                    <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button"  onClick={()=>peticionSelecter()}><span>Guardar</span></button>
+                </div>
+            </div>           
+        </div>              
+    )
+}
+export default DatosRubrica;
