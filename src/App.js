@@ -6,6 +6,7 @@ import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom'
 import NavBar from "./NavBar";
 import Home  from "./Home";
 import Comite  from "./Comite";
+import ComiteCoordinador from './ComiteCoordinador';
 import Administrador from './Administrador';
 import Alumno from './Alumno';
 import Profesor from './Profesor';
@@ -30,6 +31,7 @@ function App() {
                 {/*Private Routes */}
                 
                   <Route path='/comite/*' exact element= {<Comite/>} />
+                  <Route path='/comiteCoordinador/*' exact element= {<ComiteCoordinador/>} />
                   <Route path='/administrador/*' exact element= {<Administrador/>} />
                   <Route path='/alumno/*' exact element= {<Alumno/>} />
                   <Route path='/profesor/*' exact element= {<Profesor/>} />
@@ -63,4 +65,7 @@ export default App;
            
     </Router>
 
+
+    <Route path='/comiteCoordinador/*' exact element= {<ComiteCoordinador/>} />
+    import ComiteCoordinador from './ComiteCoordinador';
 */

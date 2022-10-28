@@ -295,7 +295,7 @@ function ListaSemestre()  {
       <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
       <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
       <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
-          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosSemestre/0")}}>Registrar</button>
+          <button className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{navigate("datosSemestre/0")}}>Registrar</button>
       </div>   
       <div class = "row LISTAR-TABLA">
         <div class=" col-12 Table-style">
