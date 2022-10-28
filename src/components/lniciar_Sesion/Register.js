@@ -6,6 +6,7 @@ import axios from 'axios';
 import "../../stylesheets/Iniciar_Sesion.css";
 import Select from 'react-select';
 import useModal from '../../hooks/useModals';
+import { useNavigate } from 'react-router-dom';
 
 const USER_REGEX= /^[a-z0-9]+@[a-z]+\.[a-z]/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -49,7 +50,7 @@ const Register = () => {
     const [errMsg,setErrMsg] = useState('');
     const [success,setSuccess]=useState(false);
    
-
+    const navigate = useNavigate();
     const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
     const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
     const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
@@ -137,7 +138,7 @@ const Register = () => {
                     _method: 'POST'
                   })
                 .then(response=>{
-                  
+                    navigate('/')
                 }).catch(error =>{
                   console.log(error.message);
                 })
@@ -147,7 +148,7 @@ const Register = () => {
                     _method: 'POST'
                   })
                 .then(response=>{
-                  
+                    navigate('/')
                 }).catch(error =>{
                   console.log(error.message);
                 })
@@ -157,7 +158,7 @@ const Register = () => {
                     _method: 'POST'
                   })
                 .then(response=>{
-                  
+                    navigate('/')
                 }).catch(error =>{
                   console.log(error.message);
                 })
@@ -167,7 +168,7 @@ const Register = () => {
                     _method: 'POST'
                   })
                 .then(response=>{
-                  
+                    navigate('/')
                 }).catch(error =>{
                   console.log(error.message);
                 })
