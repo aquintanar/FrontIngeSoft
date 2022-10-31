@@ -155,8 +155,8 @@ function ListaFacultad()  {
   return (      
     <div class="CONTAINERADMIN">   
 
-      <p class="HEADER-TEXT1">Gestión General</p>
-      <p class="HEADER-TEXT2">Búsqueda de Facultad</p>
+      <p class="HEADER-TEXT1">Gestión de Facultades</p>
+      <p class="HEADER-TEXT2">Búsqueda de facultades</p>
 
       <div class="row ">
           <div class="col-lg-7 FILTRO-LISTAR-BUSCAR" >
@@ -170,7 +170,7 @@ function ListaFacultad()  {
       </div>
 
 
-      <p class="HEADER-TEXT2" >Lista de Facultades</p>
+      <p class="HEADER-TEXT2" >Lista de facultades</p>
       <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
       <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
       <div class = "row   LISTAR-TABLA">

@@ -74,6 +74,8 @@ function AvancesSemanales(){
         <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
         </span>
         <h1 className='HEADER-TEXT1'>Avances Semanales</h1>
+
+        
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
         <div class="col col-7 FILTRO-LISTAR-BUSCAR" >
               <p>Ingresar Estado de Entregable</p>

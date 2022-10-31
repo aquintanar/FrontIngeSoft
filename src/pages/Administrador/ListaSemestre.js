@@ -236,8 +236,8 @@ function ListaSemestre()  {
   return (      
     <div class="CONTAINERADMIN">   
 
-      <p class="HEADER-TEXT1">Gestión General</p>
-      <p class="HEADER-TEXT2">Búsqueda de Semestre Académico</p>
+      <p class="HEADER-TEXT1">Gestión de Semestres Académicos</p>
+      <p class="HEADER-TEXT2">Búsqueda de semestres académicos</p>
 
       <div class="row ">
           <div class="col-lg-6 FILTRO-LISTAR" >
@@ -291,12 +291,10 @@ function ListaSemestre()  {
 
       </div>
 
-      <p class="text-start  HEADER-TEXT2" >Listado de Semestres</p>
+      <p class="text-start  HEADER-TEXT2" >Lista de semestres académicos</p>
       <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
       <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
-      <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
-          <button className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{navigate("datosSemestre/0")}}>Registrar</button>
-      </div>   
+         
       <div class = "row LISTAR-TABLA">
         <div class=" col-12 Table-style">
           <table className='table fs-5  '>
@@ -334,6 +332,10 @@ function ListaSemestre()  {
           </table>
         </div>
       </div>
+      <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
+          <button className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{navigate("datosSemestre/0")}}>Registrar</button>
+      </div>
+      
       <Modal
       open={modalEliminar}
       onClose={abrirCerrarModalEliminar}>

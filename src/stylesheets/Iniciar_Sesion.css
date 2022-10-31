@@ -19,12 +19,14 @@ ESTILOS DE REGISTRO
     align-items: center;
     padding:1rem;
     background-color:#042354;
-    border-radius: 0.5rem;    
+    border-radius: 0.5rem;  
+    overflow-y: scroll;  
 }
 .CONTAINER-REGISTRO{
     width:100%;
+    height: fit-content;
     position:absolute;
-    opacity: 50%;
+    opacity: 90%;
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
@@ -36,15 +38,17 @@ ESTILOS DE REGISTRO
     align-content: center;
     align-items: center;
     padding:1rem;
+    color: #042354;
     background-color:#FFF;
     border-radius: 0.5rem;
+    
 }
 .CONTAINER-REGISTRO h1{
     font-family: 'monserrat';
 }
 .CONTAINER-REGISTRO label,
 .CONTAINER-REGISTRO p ,
-.CONTAINER-REGISTRO select,
+
 .CONTAINER-REGISTRO button{
     font-family: 'Roboto';
 }
@@ -55,28 +59,80 @@ ESTILOS DE REGISTRO
     flex-grow: 1;
     padding-bottom: 1rem;
 }
-.CONTAINER-REGISTRO a, a:visited{
-    color: #000;
+.CONTAINER-REGISTRO a{
     text-decoration: underline;
+    color: #2179D4;
+}
+.CONTAINER-REGISTRO a:hover{
+    text-decoration: underline;
+    text-shadow: 0 0 1px #2179D4;
 }
 
 .CONTAINER-REGISTRO input[type="text"],
 .CONTAINER-REGISTRO input[type="password"],
+
 .CONTAINER-REGISTRO button,
 .CONTAINER-REGISTRO textarea{
+    border: 1.5px solid #003C7A;
+    font-family: 'Roboto',sans-serif;
+    font-size: 17px;
+    padding:0.020rem 0.9rem 0.020rem;
+    border-radius: 0.5rem;
+    height: 37px;
+    margin-bottom: 1vh;
+    box-shadow: 3.5px 2.5px 1.5px rgba(4, 35, 84, 0.15);
+}
+.CONTAINER-REGISTRO Select{
     font-family: 'Roboto';
+
+}
+.CONTAINER-REGISTRO button{
+    margin-bottom: 1vh;
+    margin-top: 20px;
+    color: #ffffff;
+    background-color: #003C7A;
+    border: 1.5px solid #003C7A;
     font-size:17px;
     padding:0.005rem;
     border-radius: 0.5rem;
+    height: 37px;
+    box-shadow: 3.5px 2.5px 1.5px rgba(4, 35, 84, 0.15);
+}
+.CONTAINER-REGISTRO b{
+    letter-spacing: 0.2px;
+    align-self: center;
+    justify-self: center;
+    margin-top: 0px;
+    margin-bottom: 4px;
+    height: 35px;
 }
 
-.CONTAINER-REGISTRO label,
-.CONTAINER-REGISTRO button{
+.CONTAINER-REGISTRO input:hover, input:active, input:visited{
+    box-shadow: 0 0 6px #2179D4;
+    border: 1.5px solid #003C7A;
+}
+.CONTAINER-REGISTRO button:hover{
+    box-shadow: 0 0 6px #2179D4;
+    border: 1.5px solid #003C7A;
+    font-size:17px;
+    padding:0.005rem;
+    font-weight: bold;
+    border-radius: 0.5rem;
+}
+.CONTAINER-REGISTRO button:active{
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+.CONTAINER-REGISTRO label{
     margin-top: 0rem;
+    font-size: 17px;
 }
 .CONTAINER-REGISTRO button{
     margin-top: 20px;
     padding:0.5rem;
+    color: #ffffff;
+    background-color: #003C7A;
 }
 .CONTAINER-REGISTRO .instructions{
     font-size: 11px;
@@ -141,11 +197,12 @@ ESTILO DE INICIAR SESION
     padding:1rem;
     background-color:#042354;
     border-radius: 0.5rem;  
+    font-family: 'Montserrat', sans-serif;
 }
 .CONTAINER-LOGIN{
     width:100%;
     position:absolute;
-    opacity: 50%;
+    opacity: 90%;
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
@@ -157,7 +214,8 @@ ESTILO DE INICIAR SESION
     align-content: center;
     align-items: center;
     padding:1rem;
-    background-color:#FFF;
+    background-color:rgb(255, 255, 255);
+    color: #042354;
     border-radius: 0.5rem;
 }
 .CONTAINER-LOGIN h1{
@@ -176,31 +234,64 @@ ESTILO DE INICIAR SESION
     flex-grow: 1;
     padding-bottom: 1rem;
 }
-.CONTAINER-LOGIN a, a:visited{
-    color: #000;
+.CONTAINER-LOGIN a{
     text-decoration: underline;
+    color: #2179D4;
+}
+.CONTAINER-LOGIN a:hover{
+    text-decoration: underline;
+    text-shadow: 0 0 1px #2179D4;
 }
 
 .CONTAINER-LOGIN input[type="text"],
 .CONTAINER-LOGIN input[type="password"],
-.CONTAINER-LOGIN button,
+.CONTAINER-LOGIN button, google-btn,
 .CONTAINER-LOGIN textarea{
+    border: 1.5px solid #003C7A;
     font-family: 'Roboto',sans-serif;
-    font-size:17px;
-    padding:0.005rem;
+    font-size: 16px;
+    padding:0.020rem 0.9rem 0.020rem;
     border-radius: 0.5rem;
+    margin-bottom: 1vh;
+    box-shadow: 3.5px 2.5px 1.5px rgba(4, 35, 84, 0.15);
 }
+
+.CONTAINER-LOGIN input:hover, input:active, input:visited{
+    box-shadow: 0 0 6px #2179D4;
+    border: 1.5px solid #003C7A;
+
+}
+
 .CONTAINER-LOGIN .TEXTO-ABAJO{
     margin-right: 35px;
     
 }
-.CONTAINER-LOGIN label,
-.CONTAINER-LOGIN button{
+.CONTAINER-LOGIN label{
     margin-top: 0rem;
+    font-size: 17px;
 }
 .CONTAINER-LOGIN button{
+    margin-bottom: 1vh;
     margin-top: 20px;
-    padding:0.5rem;
+    color: #ffffff;
+    background-color: #003C7A;
+    border: 1.5px solid #003C7A;
+    font-size:17px;
+    padding:0.005rem;
+    border-radius: 0.5rem;
+    box-shadow: 3.5px 2.5px 1.5px rgba(4, 35, 84, 0.15);
+}
+.CONTAINER-LOGIN button:hover{
+    box-shadow: 0 0 6px #2179D4;
+    border: 1.5px solid #003C7A;
+    font-size:17px;
+    padding:0.005rem;
+    font-weight: bold;
+    border-radius: 0.5rem;
+}
+.CONTAINER-LOGIN button:active{
+    transform: translateY(4px);
+    box-shadow: none;
 }
 .CONTAINER-LOGIN .instructions{
     font-size: 11px;
@@ -243,47 +334,44 @@ ESTILO DE INICIAR SESION
 }
 
 .google-btn {
-    margin-top: 15px;
-  width: 184px;
-  height: 42px;
-  background-color: #4285f4;
-  border-radius: 2px;
-  box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
-   justify-content: center;
-   align-items: center;
-   margin-left: 7px;
+    border-radius: 0.5rem;
+    background-color: #003C7A;
+    border: 1.5px solid #003C7A;
+    box-shadow: 3.5px 2.5px 1.5px rgba(4, 35, 84, 0.15);
+    color: #ffffff;
+    cursor: pointer;
 }
 .google-icon-wrapper {
     position: absolute;
-    margin-top: 1px;
+    margin-top: 0.15px;
     margin-left: 1px;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 2px;
-    background-color: #fff;
   }
   .google-icon {
     position: absolute;
-    margin-top: 11px;
-    margin-left: 11px;
-    width: 18px;
+    margin-top: 25%;
+    margin-left: 20px;
+    width: 100px;
     height: 18px;
   }
   .btn-text {
     float: right;
-    margin-top: 8px;
-    color: #fff;
-    font-size: 14px;
+    margin-top: 1px;
+    margin-bottom: 4px;
+    font-size: 17px;
     letter-spacing: 0.2px;
     font-family: "Roboto";
     align-self: center;
     justify-self: center;
-    margin-right: 27px;
+    height: 29.095px;
+    margin-right: 35px;
   }
  .google-btn:Hover{
     box-shadow: 0 0 6px #4285f4;
+    font-weight: bold;
  }
  .google-btn:active{
     background: #1669F2;
  }
-

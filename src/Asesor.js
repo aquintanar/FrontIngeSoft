@@ -2,7 +2,7 @@ import { BarraVolver } from './components/BarraVolver';
 import React, { useState, useEffect } from 'react';
 import './Pagina.css'
 import SidebarAsesor from './components/Asesor/SidebarAsesor';
-import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router , Routes, Route, Link, useLocation } from 'react-router-dom';
 import "./pages/Asesor/buttonGroup.css";
 import TemaTesis from './pages/Asesor/TemaTesis';
 import AlumnosAsesorados from './pages/Asesor/AlumnosAsesorados';
@@ -31,9 +31,8 @@ function Asesor() {
         palabraClave2:'',
         feedback:'',
     })
-
     return (
-        <div>    
+        <div>   
             <SidebarAsesor/>            
                 <BarraVolver/>
                 <Routes>

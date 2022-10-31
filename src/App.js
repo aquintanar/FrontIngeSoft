@@ -21,15 +21,13 @@ function App() {
   return (
     <UserContext.Provider value={{value,setValue}}>
     <Router>
-                    
             <Routes>
                 {/*Public Routes */ }
                 <Route path='/' exact element= {<Login/>} />
                 <Route path='/Register' exact element= {<Register/>} />
                 <Route path="*" element={<ErrorPage/>}/>
                 
-                {/*Private Routes */}
-                
+                {/*Private Routes */}  
                   <Route path='/comite/*' exact element= {<Comite/>} />
                   <Route path='/comiteCoordinador/*' exact element= {<ComiteCoordinador/>} />
                   <Route path='/administrador/*' exact element= {<Administrador/>} />

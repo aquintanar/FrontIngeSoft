@@ -125,8 +125,8 @@ function ListaEspecialidad()  {
   return (      
     <div class=" CONTAINERADMIN">   
 
-      <p class="HEADER-TEXT1">Gestión General</p>
-      <p class="HEADER-TEXT2">Búsqueda de Especialidad</p>
+      <p class="HEADER-TEXT1">Gestión de Especialidades</p>
+      <p class="HEADER-TEXT2">Búsqueda de especialidades</p>
 
       <div class="row">
           <div class="col col-7 FILTRO-LISTAR-BUSCAR" >
@@ -148,7 +148,7 @@ function ListaEspecialidad()  {
       </div>
 
 
-      <p class="HEADER-TEXT2" >Lista de Especialidades</p>
+      <p class="HEADER-TEXT2" >Lista de especialidades</p>
       <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
       <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
       <div class = "row LISTAR-TABLA">

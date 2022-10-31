@@ -173,7 +173,7 @@ function Login() {
         <section className='CONTAINER-LOGIN'>
             <p ref={errRef} className={errMsg?"errmsg" :
              "offscreen"} aria-live ="assertive">{errMsg}</p>
-        <h1>Inicio de Sesión</h1>
+        <h1>Iniciar Sesión</h1>
         <form onSubmit={handleSubmit} onLoad='Autenticacion'>
             <label htmlFor='username'>
                 Usuario:
@@ -197,14 +197,16 @@ function Login() {
                     value={pwd}
                     required
             />
-            <button>Iniciar Sesion</button>
+            <button>Iniciar Sesión</button>
+
+            <p className='text-center'>o</p>
             
             <div onClick ={()=>loginWithRedirect() }className="google-btn">
                    <div className="google-icon-wrapper">
                         <img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
                    </div>
                    <p className='btn-text'>
-                       Iniciar Sesion
+                       Iniciar Sesión
                    </p>
             </div>
             
@@ -214,7 +216,7 @@ function Login() {
             ¿Necesita una cuenta?<br/>
             <span className='line'>
                     {/*Put router */}
-                    <a href="/Register"> Crear Cuenta</a>
+                    <a href="/Register"> Crea una cuenta</a>
             </span>
         </p>
 

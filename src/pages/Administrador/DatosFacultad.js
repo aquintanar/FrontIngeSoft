@@ -18,13 +18,14 @@ const urlEspe= "https://localhost:7012/api/Especialidad/";
 function DatosFacultad() {
   let navigate = useNavigate();
   let {id} = useParams();
-  const [subTitulo,setSubtitulo] = useState("Nueva Facultad");
+  const [subTitulo,setSubtitulo] = useState("Registrar Facultad");
   const [imagen, setImagen] = useState(null);
   const [espes, setEspes] = useState([]);
   const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
   const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
   const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
   const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
+  const [modificar, setModificar] = useState(0);
 
   const [facultadSeleccionada, setFacultadSeleccionada]=useState({
     idFacultad: 0,
@@ -121,6 +122,7 @@ const handleChange=  (e)=>{
       }
       );
       setSubtitulo("Modificar Facultad");
+      setModificar(1);
     }
   }
 
@@ -157,8 +159,8 @@ const handleChange=  (e)=>{
   return (
     <div class="CONTAINERADMIN">
         <div class="row">
-            <p class="HEADER-TEXT1">Gestión General</p>
-            <p class="HEADER-TEXT2">Registro de Facultad - {subTitulo}</p>
+            <p class="HEADER-TEXT1">Gestión de Facultades</p>
+            <p class="HEADER-TEXT2">{subTitulo}</p>
         </div> 
 
             <div class="row ">
@@ -172,11 +174,12 @@ const handleChange=  (e)=>{
                       <div class=" text-start fs-5 fw-normal ">
                           <p>Descripción</p>
                           <div class="input-group input-group-lg mb-3">
-                              <textarea class="form-control" name="descripcion" placeholder="Descripcion" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
+                              <textarea class="form-control" name="descripcion" placeholder="Descripción" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
                                 onChange={handleChange} value={facultadSeleccionada && facultadSeleccionada.descripcion}  />
                           </div>
                       </div>
 
+                      {!modificar ? null: 
                       <div class=" col-6  LISTAR-TABLA">
                       <p>Lista de Especialidades</p>
                           <table className='table-responsive fs-6'>
@@ -196,6 +199,7 @@ const handleChange=  (e)=>{
                               </tbody>
                           </table>
                       </div>
+                      }
 
                 </div>
 
@@ -261,8 +265,8 @@ const handleChange=  (e)=>{
 
             <div class="row INSERTAR-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold  CANCELAR " type="button" onClick={()=>{navigate("../gestion/gesFacultad")}}><span>Cancelar</span></button>
                     <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
+                    <button class="btn btn-primary fs-4 fw-bold  CANCELAR " type="button" onClick={()=>{navigate("../gestion/gesFacultad")}}><span>Cancelar</span></button>
                 </div>
             </div>
     </div>

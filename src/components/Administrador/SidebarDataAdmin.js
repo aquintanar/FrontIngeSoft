@@ -15,17 +15,17 @@ export const SidebarData = [
   
       subNav: [
         {
-          title: 'Gestión Facultad',
+          title: 'Gestión de Facultades',
           path: 'gestion/gesFacultad',
           icon: <FaIcons.FaUniversity />
         },
         {
-          title: 'Gestión Especialidad',
+          title: 'Gestión de Especialidades',
           path: 'gestion/gesEspecialidad',
           icon: <FaIcons.FaUserGraduate />
         },
         {
-          title: 'Gestión Semestre',
+          title: 'Gestión de Semestre Académicos',
           path: 'gestion/gesSemestre',
           icon: <MdIcons.MdOutlineEditCalendar />
         }

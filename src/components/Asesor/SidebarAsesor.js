@@ -36,10 +36,10 @@ const NavIcon = styled(Link)`
 const SidebarNav = styled.nav`
   background: #003C7A;
   width: 20%;
-  height: 90vh;
+  height: 89vh;
   display: flex;
   justify-content: center;
-  position: fixed;
+  position: absolute;
   top: 20;
   left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
   transition: 350ms;
@@ -72,7 +72,7 @@ const Sidebar = () => {
                 {SidebarData.map((item, index) => {
                   return <SubMenu item={item} key={index} />;
                 })}
-                 <button className='BOTON-EXIT' onClick={()=>logout()}> Cerrar Sesion</button>
+                 <button className='BOTON-EXIT' onClick={()=>logout()}> Cerrar sesión</button>
             </SidebarWrap>
         </SidebarNav>
       </IconContext.Provider>

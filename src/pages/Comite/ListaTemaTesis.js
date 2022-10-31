@@ -233,9 +233,9 @@ function ListaTemaTesis()  {
     return (
         <div className="CONTAINERCOMITE">    
               <div>
-                    <h2 className="HEADER-TEXT1">Temas</h2>
-                    
-                        <h2 className="HEADER-TEXT2"> Listado de Propuestas  </h2>
+                    <h2 className="HEADER-TEXT1">Temas de Tesis</h2>
+                        
+                        <h2 className="HEADER-TEXT2"> Lista de Propuestas  </h2>
                       <div className="LISTAR-TABLA-ELEMENTOS">   
                     
                         <ToolkitProvider

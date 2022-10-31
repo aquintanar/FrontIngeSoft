@@ -37,7 +37,7 @@ function DatosSemestre() {
   const [facus, setFacus] = useState([]);
   const [esp, setEsp] = useState([]);
   const [espBus, setEspBus] = useState([]);
-  const [subTitulo,setSubtitulo] = useState("Nuevo Semestre");
+  const [subTitulo,setSubtitulo] = useState("Registrar Semestre Académico");
   const [modificar, setModificar] = useState([0]);
   const [coordinadores, setCoord] = useState([]);
   const [list, setListar] = useState(true);
@@ -247,7 +247,7 @@ function DatosSemestre() {
                 idEspecialidad: response.data[0].idEspecialidad,
                 estado: response.data[0].estado}
             );
-            setSubtitulo("Modificar Semestre");
+            setSubtitulo("Modificar Semestre Académico");
             
         }
         else{
@@ -295,8 +295,8 @@ function DatosSemestre() {
     <div class=" CONTAINERADMIN">
 
             <div class="row">
-                <p class="HEADER-TEXT1">Gestión General</p>
-                <p class="HEADER-TEXT2">Gestión de Semestre - {subTitulo}</p>
+                <p class="HEADER-TEXT1">Gestión de Semestres Académicos</p>
+                <p class="HEADER-TEXT2">{subTitulo}</p>
             </div> 
 
             <div class="row DATOS">
@@ -488,8 +488,8 @@ function DatosSemestre() {
 
             <div class="row INSERTAR-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button" onClick={()=>{navigate("../gestion/gesSemestre")}}><span>Cancelar</span></button>
                     <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
+                    <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button" onClick={()=>{navigate("../gestion/gesSemestre")}}><span>Cancelar</span></button>
                 </div>
             </div>
     </div>

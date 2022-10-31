@@ -32,7 +32,7 @@ function Reuniones()  {
         <div class="col-lg-7 FILTRO-LISTAR-BUSCAR" >
               <div class="text-start fs-6  mb-1 fw-normal "><p>Ingresar nombre de la reunión</p></div>
               <div class="input-group mb-2 ">
-                <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre de la reunión" aria-label="serach" onChange={buscador}/>
+                <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Reunión" aria-label="serach" onChange={buscador}/>
               </div>
           </div>
 

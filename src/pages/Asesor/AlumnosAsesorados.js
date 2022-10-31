@@ -165,9 +165,9 @@ function AlumnosAsesorados() {
                        <td
                            {...cell.getCellProps()}
                            style={{
-                             padding: '12px',
-                             border: 'solid 1px gray'
-                           }}
+                            padding: '12px',
+                            border: 'solid 1px gray'
+                          }}
                            
                        >
                          {cell.render('Cell') }

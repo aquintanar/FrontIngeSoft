@@ -8,6 +8,7 @@ import SubMenu from './SubMenuComite';
 import { IconContext } from 'react-icons/lib';
 import logo from '../../imagenes/logo.png';
 import '../../stylesheets/SideBar.css'
+import {useAuth0 }from '@auth0/auth0-react'
 
 const Nav = styled.div`
   background: #042354;
@@ -37,7 +38,7 @@ width: 20%;
 height: 100vh;
 display: flex;
 justify-content: center;
-position: fixed;
+position: absolute;
 top: 20;
 left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
 transition: 350ms;
@@ -46,9 +47,16 @@ z-index: 10;
 
 const SidebarWrap = styled.div`
   width: 100%;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+}
 `;
 
 const SidebarComite = () => {
+  const {logout, isAuthenticated}=useAuth0();
   const [sidebar, setSidebar] = useState(true);
 
   const showSidebar = () => setSidebar(sidebar);
@@ -69,6 +77,7 @@ const SidebarComite = () => {
             {SidebarData.map((item, index) => {
               return <SubMenu item={item} key={index} />;
             })}
+            <button className='BOTON-EXIT' onClick={()=>logout()}> Cerrar sesión</button>
           </SidebarWrap>
         </SidebarNav>
       </IconContext.Provider>
