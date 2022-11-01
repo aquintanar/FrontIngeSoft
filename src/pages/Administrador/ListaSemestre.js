@@ -197,9 +197,7 @@ function ListaSemestre()  {
   }
 
   const peticionDelete=async()=>{
-    await axios.post(url+ "DeleteSemestre?idSemestre="+ semestreSeleccionada.idSemestre,{
-      _method: 'DELETE'
-    }).then(response=>{
+    await axios.delete(url+ "DeleteSemestre?idSemestre="+ semestreSeleccionada.idSemestre).then(response=>{
       setData(data.filter(semestre=>semestre.idSemestre!==semestreSeleccionada.idSemestre));
       abrirCerrarModalEliminar();
     })

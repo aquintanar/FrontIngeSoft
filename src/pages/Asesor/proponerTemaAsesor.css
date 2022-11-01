@@ -95,11 +95,20 @@
 
 .BUTTON_TABLA{
     background-color: #042354;
-    border: none;
+    border-color: #042354;
+    border-radius: 5px;
     font-size: 13px;
     color: rgb(255, 255, 255);
     height: 35px;
-    width: 80px;
+    width: 85px;
+}
+
+.BUTTON_TABLA:hover{ 
+    background-color: #2179D4;
+    border: 5px;
+    font-size: 13px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
 }
 
 
@@ -132,4 +141,27 @@
     transform: translateY(4px);
     box-shadow: none;
     text-shadow: none;
+}
+
+
+
+.TABLA-BUSQ th{
+    color: #fff;
+    background: #042354;
+    text-indent: 0.4em;
+}
+
+.TABLA-BUSQ td{
+    text-indent: 0.4em;
+}
+
+
+.TABLA-BUSQ tr:hover{
+    background-color: rgba(33, 121, 212, 0.5);
+    color: black;
+    font-weight: bold;
+}
+
+.CERRAR{
+    background-color: rgba(33, 121, 212, 0.5);
 }

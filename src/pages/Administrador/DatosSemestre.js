@@ -8,7 +8,13 @@ import useModal from '../../hooks/useModals';
 import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 import DataTable from "./DataTable";
 import * as Ionicons5 from 'react-icons/io5';
+import * as BsIcons from 'react-icons/bs';
 import * as BootIcons  from "react-icons/bs";
+import ModalBuscarUsuario from './ModalBuscarUsuario';
+import DatePicker from "react-date-picker";
+import '../../stylesheets/Calendar.css'
+import '../../stylesheets/DatePicker.css';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
 const url= "https://localhost:7012/api/Semestre/";
 const urlFacu= "https://localhost:7012/api/Facultad/";
@@ -30,6 +36,9 @@ const urlSemComi= "https://44.210.195.91/api/SemestreXComiteTesis/";
 
 var currentTime= new Date();
 var year = currentTime.getFullYear();
+var espDec = "";
+var datos;
+var coordRegist;
 
 function DatosSemestre() {
   let navigate = useNavigate();
@@ -39,10 +48,13 @@ function DatosSemestre() {
   const [espBus, setEspBus] = useState([]);
   const [subTitulo,setSubtitulo] = useState("Registrar Semestre Académico");
   const [modificar, setModificar] = useState([0]);
-  const [coordinadores, setCoord] = useState([]);
+  const [coordinadores, setCoord] = useState([]);		/// los seleccionados
+	const [coordElim, setCoordelim] = useState([]); 	/// los que se eliminaran
+	const [coordReg, setCoordReg] = useState([]);		/// los ya registrados
+	const [coordAReg, setCoordAReg] = useState([]);		/// los que se registraran
   const [list, setListar] = useState(true);
-  const [docentes, setDocentes] = useState([]);
-
+  const [currentPage,SetCurrentPage] = useState(0);
+ 
   const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
   const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
   const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
@@ -56,6 +68,7 @@ function DatosSemestre() {
   const [tableData, setTableData] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [data, setData] = useState([]);   //para User
+  const [fac, setFac] = useState(0);
 
   //Objeto semestre
   const [semestreSeleccionada, setSemestreSeleccionada]=useState({
@@ -65,15 +78,22 @@ function DatosSemestre() {
       enCurso: true,
       numSemestre: 1,
       idEspecialidad: 0,
+      fechaInicio: new Date(),
+      fechaFin: new Date(),
       lista_coordinadores: selectedRows
   });
+
+  const [fechaIni, setFechaIni] = useState(semestreSeleccionada.fechaInicio);
+  const [fechaFin, setFechaFin] = useState(semestreSeleccionada.fechaFin);
 
   const [coordinadorSeleccionada, setCoordinadorSeleccionada]=useState({
     idComiteTesis: 0,
     nombres: ''
     }); 
 
+  let especialidades = !fac? esp:esp.filter((dato)=>dato.facultad.idFacultad===fac);
 
+  var lista = []
 
   //Control cambio en inputs--
   const handleChange=e=>{
@@ -89,7 +109,7 @@ function DatosSemestre() {
   const cambioSelect =e=>{
       setSemestreSeleccionada(prevState=>({
         ...prevState,
-        nombre: semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre + "-"
+        nombre: semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre + "-"  + espDec
       }))
       console.log(semestreSeleccionada);
     }
@@ -99,6 +119,7 @@ function DatosSemestre() {
         setSemestreSeleccionada(prevState=>({
         ...prevState,
           anho: e.target.value,
+          nombre: semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre + "-"  + espDec
         }))
         console.log(semestreSeleccionada);
       }
@@ -108,20 +129,49 @@ function DatosSemestre() {
         setSemestreSeleccionada(prevState=>({
         ...prevState,
           numSemestre: e.target.value,
+          nombre: semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre + "-"  + espDec
         }))
         console.log(semestreSeleccionada);
       }
 
     //Control de cambio en select de especialidad
     const cambioSelectEsp =e=>{
+        cargaNombre(e.target.value);
         setSemestreSeleccionada(prevState=>({
         ...prevState,
           idEspecialidad: e.target.value,
-          nombre: semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre + "-" 
+          nombre: semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre + "-"  + espDec
         }))
         console.log(semestreSeleccionada);
         
       }
+
+    //no hacer nada
+    const carga =()=>{
+      console.log("llegue")
+      console.log()
+      selectedRows.forEach(element => {
+          semestreSeleccionada.lista_coordinadores.push({idComiteTesis:element.idUsuario})
+        })
+
+        setSemestreSeleccionada(prevState=>({
+        ...prevState,
+          lista_coordinadores: prevState.lista_coordinadores,
+        }))
+      
+      console.log(lista)
+      console.log(semestreSeleccionada)
+    }
+
+    //Carga el nombre del semestre
+    function cargaNombre(i){
+      especialidades.forEach((especialidad) => {
+        if(especialidad.idEspecialidad == i){
+          semestreSeleccionada.nombre = semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre + "-" + especialidad.descripcion
+          espDec = especialidad.descripcion
+        }
+      })
+    }
 
     //Lista facultades combo box--
     const petitionFacu=async()=>{
@@ -151,7 +201,7 @@ function DatosSemestre() {
       }).catch(error =>{
           console.log(error.message);
       })
-  }
+    }
 
     //Lista de asesores
     const petitionUser=async()=>{
@@ -166,12 +216,19 @@ function DatosSemestre() {
 
     //Insertar nuevo semestre--
     const peticionPost=async()=>{
-        await axios.post(url+"PostSemestre",semestreSeleccionada,{
-            _method: 'POST'
-        })
+        //carga();
+        console.log("Entro post")
+        carga2Bus();
+        cargaDatosFechas();
+        console.log(semestreSeleccionada)
+        console.log("Entro 2 post")
+        await axios.post(url+"PostSemestre",semestreSeleccionada)
           .then(response=>{
           closePostModal();
           openGuardadoModal();
+          console.log("Fin");
+          console.log(semestreSeleccionada);
+          console.log(coordinadores);
         }).catch(error =>{
         console.log(error.message);
         })
@@ -184,15 +241,89 @@ function DatosSemestre() {
 
     //Modificar semestre--
     const peticionPut=async()=>{
-        /*await axios.post(url+"ModifySemestre", semestreSeleccionada),{
-          method: 'PUT', 
-        })
+      console.log("Modificar coord regis");
+      coordRegElim();
+     /* console.log("Modificar coord regis");
+      console.log(coordinadores);
+      console.log(coordReg);
+      console.log(coordAReg);
+      console.log(coordElim);
+      console.log("Modificar coord a regi a eliminar");*/
+      
+      if(coordElim.length== 0 & coordAReg.length  == 0){
+        closePostModal();
+        openGuardadoModal();
+      }
+
+      //son para los coordinadores que se registraran
+        for(let i=0; i<coordAReg.length; i++){
+          await axios.post(urlSemComi + "PostSemestreXComiteTesis?idSemestre="+ parseInt(id) + "&idComiteTesis=" + coordAReg[i].idComiteTesis)
+            .then(response=>{
+            closePostModal();
+            openGuardadoModal();
+            console.log("Modificar coord");
+        })  .catch(error =>{ console.log(error.message);  })
+        }
+      
+      //son para los coordinadores que estaban registrados, pero seran eliminados
+      
+        for(let i=0; i<coordElim.length; i++){
+            await axios.delete(urlSemComi + "DeleteSemestreXComiteTesis?idSemestre="+ parseInt(id) + "&idComiteTesis=" + coordElim[i].idComiteTesis)
+              .then(response=>{
+              closePostModal();
+              openGuardadoModal();
+          })  .catch(error =>{ console.log(error.message);  })
+        }
+        docentes.imagen = null;
+
+        /*
+        await axios.put(url+"ModifySemestre", {
+          idSemestre: semestreSeleccionada.idSemestre,
+          nombre: semestreSeleccionada.nombre,
+          anho: semestreSeleccionada.anho,
+          enCurso: semestreSeleccionada.enCurso,
+          numSemestre: semestreSeleccionada.numSemestre,
+          fechaInicio: semestreSeleccionada.fechaInicio,
+          fechaFin: semestreSeleccionada.fechaFin,
+          idEspecialidad: semestreSeleccionada.idEspecialidad,
+          lista_coordinadores: docentes
+        }, {
+          headers: {
+            'Content-Type': "application/json",
+          },
+        }
+          )
           .then(response=>{
           closeEditModal();
-          openEditadoModal();
-        }).catch(error =>{
-        console.log(error.message);
-        })*/
+          openEditadoModal(); 
+        })  .catch(error =>{ console.log(error.message);  })*/
+      
+    }
+
+    const coordRegElim =()=>{
+      //buscaremos a los que registraremos
+      console.log(coordRegist);
+      coordinadores.forEach((element) => {
+          var index = coordRegist.indexOf(element);
+          if(index === -1){ //no encontro al coordSelec en los registrados
+              //se registrará 
+              var indexa = coordAReg.indexOf(element);
+              if(indexa === -1){
+                coordAReg.push(element);}
+          }
+      })
+
+      //buscaremos a los que eliminaremos
+      coordRegist.forEach((element) => {
+          var index = coordinadores.indexOf(element);
+          if(index === -1){ //no encontro al registrado previamente en los coordSelec
+            //se eliminará 
+            var indexa = coordElim.indexOf(element);
+              if(indexa === -1){
+                coordElim.push(element);}
+        }
+      })
+
     }
 
     const cerrarPut=()=>{
@@ -204,8 +335,12 @@ function DatosSemestre() {
     const petitionCoord=async()=>{
         await axios.get(urlComi+"GetComiteTesisXIdSemestre?idSemestre=" +parseInt(id))
         .then(response=>{
+          console.log("coordinadores");
           console.log(response);
+          datos = response.data;
           setCoord(response.data);
+          coordRegist = Object.assign(lista, datos);
+          console.log(coordRegist)
         }).catch(error =>{
           console.log(error.message);
         })
@@ -223,8 +358,6 @@ function DatosSemestre() {
 
     //Selección entre modificar o insertar
     const peticionSelecter =()=>{
-        petitionEspBusc();
-        semestreSeleccionada.nombre = semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre + "-" + espBus
         if(id==='0'){           
           openPostModal();
         }
@@ -239,16 +372,26 @@ function DatosSemestre() {
             petitionCoord();
             const response = await axios.get(url+"GetSemestreXId?idSemestre="+parseInt(id));
             setModificar(1);
+            console.log("response inicios");
+            console.log(response);
             setSemestreSeleccionada({
                 idSemestre: response.data[0].idSemestre,
                 nombre: response.data[0].nombre,
                 anho: response.data[0].anho,
                 numSemestre: response.data[0].numSemestre,
+                fechaInicio: new Date( response.data[0].fechaInicio),
+                fechaFin: new Date(response.data[0].fechaFin),
                 idEspecialidad: response.data[0].idEspecialidad,
-                estado: response.data[0].estado}
+                enCurso: response.data[0].enCurso,
+              }
+                
             );
             setSubtitulo("Modificar Semestre Académico");
-            
+            cargaNombre(semestreSeleccionada.idEspecialidad)
+            console.log("response fin");
+            console.log(semestreSeleccionada);
+            setFechaIni(new Date( response.data[0].fechaInicio));
+            setFechaFin(new Date(response.data[0].fechaFin));
         }
         else{
           setModificar(0);
@@ -268,6 +411,17 @@ function DatosSemestre() {
      const seleccionarCoordinador=(coord)=>{
         setCoordinadorSeleccionada(coord);
         openDeleteModal();
+    }
+
+    const cambio = (selectedIds) => {
+      setForceSelectionIdxs(selectedIds);
+      console.log("Hola");
+      console.log(selectedRows);
+      console.log(forceSelectionIdxs);
+    } 
+
+    const cambioFacu =e=>{
+      setFac( parseInt(e.target.value));
     }
 
     useEffect(()=>{
@@ -290,6 +444,109 @@ function DatosSemestre() {
         setSelectedRows(selected);
     }, [forceSelectionIdxs, tableData]);
 
+
+    const nextPage = () =>{
+      if(coordinadores.length>=currentPage) //VER CODIGO
+      SetCurrentPage(currentPage+5);
+    }
+    const previousPage =() =>{
+        if(currentPage>0)
+        SetCurrentPage(currentPage-5);
+    }
+
+    //const [coordinadores, setCoord] = useState([]);   //tiene los coordinadores del usuario en modificar
+    const [show, setShow] = useState(false);
+    const [selectCoord, setSelectCoord] =useState([]);
+    const [docentes, setDocentes] = useState({
+      idComiteTesis: 0,
+      nombres: '',
+      apeMat: '',
+      correo: '',
+      codigoPUCP: 0,
+
+      esCoordinador: '',
+      imagen: '',
+      esDocente: 0,
+      apePat: '',
+    })
+
+    const [edit, SetEdit] = useState(0);
+    const quitaCoord=(elemento)=>{
+      var index = coordinadores.indexOf(elemento);
+      console.log("quitaCoord de fsdc")
+      console.log(index);
+      coordinadores.splice(index,1);
+      SetEdit(!edit);
+    }
+
+    const agregarDatos=(doc1)=>{
+      console.log("agregar datos");
+      if(docentes.idUsuario == 0) return;
+      console.log(doc1);
+      let variable  = false;
+      //busca si ya está ingresado
+      coordinadores.forEach((element) =>{
+        if(element.idComiteTesis === doc1.idComiteTesis){
+            variable = element.idComiteTesis === doc1.idComiteTesis;
+            console.log(variable);
+        }
+      })
+      if(!variable){
+        console.log("se hace push");
+        coordinadores.push(doc1);
+      }       
+      setDocentes({
+        idComiteTesis: 0,
+        nombres: '',
+        apeMat: '',
+        correo: '',
+        codigoPUCP: 0,
+
+        esCoordinador: '',
+        imagen: null,
+        esDocente: 0,
+        apePat: '',
+      })
+      console.log(coordinadores);
+      console.log(coordReg);
+      console.log(coordRegist);
+      console.log(datos);
+      console.log("fin agregar datos");
+    }
+
+    const carga2Bus =()=>{
+      console.log("llegue")
+      console.log(coordinadores)
+      coordinadores.forEach(element => {
+          semestreSeleccionada.lista_coordinadores.push({idComiteTesis:element.idComiteTesis})
+        })
+
+        setSemestreSeleccionada(prevState=>({
+        ...prevState,
+          lista_coordinadores: prevState.lista_coordinadores,
+        }))
+      
+      console.log(lista)
+      console.log(semestreSeleccionada)
+    }
+
+    const cargaDatosFechas=()=>{
+      semestreSeleccionada.fechaInicio = fechaIni;
+      semestreSeleccionada.fechaFin = fechaFin;
+  }
+    
+    const handleChangeCoord = e =>{
+      setSelectCoord({
+          ...selectCoord,
+          [e.target.name]: e.target.value
+      })
+    /*
+      const handleChange = e =>{
+      setTemaTesis({
+          ...temaTesis,
+          [e.target.name]: e.target.value
+      })*/
+    }
 
   return (
     <div class=" CONTAINERADMIN">
@@ -339,90 +596,83 @@ function DatosSemestre() {
                     </select>
                 </div>
 
+                <div class= "col-4">
+                    <div class="fs-5 fw-normal  mb-1 ">Fecha de inicio</div>
+                    <div class="mb-3 FILTRO-FECHA">
+                        <DatePicker onChange={setFechaIni} value={fechaIni} />
+                    </div>
+                </div>
+
+                <div class= "col-4">
+                    <div class="fs-5 fw-normal  mb-1 ">Fecha fin</div>
+                    <div class="mb-3 FILTRO-FECHA">
+                    <DatePicker onChange={setFechaFin} value={fechaFin} />
+                    </div>
+                </div>
+                <p></p>
+                <hr></hr>
+                <div className="col">
+                    <div class="fs-5 fw-normal  mb-1 ">Nombre docente</div>
+                    <div class = "row DATOS3">
+                        <div className = "col-11 mb-2">
+                            <input type='text' onChange={handleChangeCoord}  className="form-control" id="nombreCoordinador" name="nombreCoordinador"  disabled
+                             value={docentes && (docentes.nombres + " " + docentes.apeMat)}/>
+                        </div> 
+                        <div class="INSERTAR-BOTONES col-1">
+                            <button type="button" onClick={() => {setShow(true)}} class=" btn btn-primary fs-4 fw-bold BUSCAR" >
+                                ...
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        {<ModalBuscarUsuario  show={show} setShow={setShow} 
+                                              docentes={docentes} setDocentes={setDocentes}
+                                              coordinadores={coordinadores} setCoord={setCoord}
+                        />}
+                    </div>  
+                    <div class="row INSERTAR-BOTONES">                            
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>agregarDatos(docentes)}  ><span>Añadir</span></button>
+                        </div>
+                    </div>   
+                </div>
+
             </div>
 
-            {modificar ? 
-                <table>
-                    <thead>
-                        <tr>
-                            <th style={{width: 100}}>ID</th>
-                            <th style ={{width: 250}}>Nombre</th>
-                            <th style = {{width:250}}>E-mail</th>
-                            <th style = {{width:100}}>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {coordinadores.map(coord =>(
-                            <tr key={coord.idComiteTesis}>
-                                <td >{coord.idComiteTesis}</td>
-                                <td >{coord.nombres} {coord.apePat} {coord.apeMat}</td>
-                                <td >{coord.correo}</td>
-                                <td>
-                                    <button  className=" btn" onClick={()=>seleccionarCoordinador(coord)}> <BootIcons.BsTrash /></button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table> : null
-            }
-
-            <p>   </p>
-            <div class="row">
-                <div class="col-sm-6">
-                    <Accordion defaultActiveKey="0">
-                    <Accordion.Item eventKey="0">
-                        <Accordion.Header >Coordinadores Seleccionados</Accordion.Header>
-                        <Accordion.Body>
-                        
-                        <table class= "">
-                            <thead class = "fs-5">
-                            <tr class>
-                                <th style={{width: 100}}>ID</th>
-                                <th style ={{width: 150}}>Nombre</th>
-                                <th style = {{width:100}}>E-mail</th>
-                            </tr>
-                            </thead>
-                            <tbody class= "fs-5">
-                            {selectedRows.map(docente => (
-                                <tr key={docente.idUsuario}>
-                                    <td >{docente.idUsuario}</td>
-                                    <td >{docente.nombres} {docente.apeMat}</td>                    
-                                    <td>{docente.correo}</td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    </Accordion>
-                </div>
-                
-                <div class="col-sm-6">
-                    <Accordion defaultActiveKey="0">
-                    <Accordion.Item eventKey="0">
-                        <Accordion.Header>Lista de docentes</Accordion.Header>
-                        <Accordion.Body>
-                            <div class = 'row'>
-                            <div class = 'col-4'>
-                                <div class="text-start fs-6 mb-1 fw-normal ">Ingresar nombre del usuario:</div>
-                            </div>
-                            <div class = 'col-8'>
-                                <div class="col-2 input-group mb-3 ">
-                                <input type="text" placeholder="Ingresar nombre de usuario" class="form-control" aria-label="Especialidad" 
-                                        aria-describedby="button-addon2" onChange={(e) => { setSearchKeyword(e.target.value); }}/>
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2" >Buscar</button>
-                                </div>
-                            </div>
-                            </div>
-
-                            <div>
-                            <DataTable class="fs-6" columns={COlumns} data={data} onChangeSelectedRowsId={(selectedIds) => { setForceSelectionIdxs(selectedIds); }} searchKeyword={searchKeyword}/>
-                            </div>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    </Accordion>
-                </div>
+            <p class="HEADER-TEXT2 mt-3" >Coordinadores</p>
+            <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
+            <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
+            <div class = "row LISTAR-TABLA-EV">
+              <div class=" col-12  ">
+                <table className='table fs-6 '>
+                  <thead class >
+                    <tr class>
+                        <th style ={{width: 100}}>ID</th>
+                        <th style = {{width:300}} >Nombre</th>
+                        <th style = {{width:300}} >Correo</th>
+                        <th style = {{width:50}} >Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    {coordinadores.map(elemento => (
+                      <tr key={elemento.idComiteTesis}>
+                          <td >{elemento.idComiteTesis}</td>    
+                          <td >{elemento.nombres} {elemento.apeMat}</td>      
+                          <td >{elemento.correo}</td> 
+                          <td>
+                          <button  class=" btn BTN-ACCIONES" onClick={()=>quitaCoord(elemento)}> <BootIcons.BsTrash /></button>
+                          </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
+
+
+
+
+
 
             <p>   </p>
 

@@ -19,9 +19,10 @@
     flex-grow: 1;
     flex-shrink: 0;
     border: thin solid rgb(212, 212, 212) !important;
+    border-radius: 5px;
   }
   .react-date-picker__inputGroup {
-    min-width: calc((3px * 2) +  1.4em * 8  +  1.4em * 2) !important;
+    min-width: calc((3px * 2) +  1.4em * 6.5  +  1.4em * 2) !important;
     width: 100%;
     flex-grow: 1;
     box-sizing: content-box;
