@@ -68,17 +68,17 @@ export const SidebarData = [
         subNav: [
             {
                 title: 'Reporte de Alumnos',
-                path: '',
+                path: 'ReporteAlumnos',
                 icon: <BsIcons.BsFileEarmarkPerson />
             },
             {
                 title: 'Reporte de tesis sustentadas',
-                path: '',
+                path: 'tesis',
                 icon: <FaIcons.FaUserGraduate />
             },
             {
                 title: 'Reporte del ciclo',
-                path: '',
+                path: 'reporteciclo',
                 icon: <MdIcons.MdOutlineEditCalendar />
             }
            
