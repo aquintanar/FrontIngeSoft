@@ -234,6 +234,18 @@
     font-family: roboto;
 }
 
+.FILTRO-FECHA1 p{
+    font-size: 14px;
+    font-family: roboto;
+}
+
+.FILTRO-FECHA1 input{
+    height: 32px;
+    
+    font-size: 12px;
+    font-family: roboto;
+}
+
 
 .UPLOAD{
     width: 50%;
@@ -323,6 +335,11 @@
 }
 .INSERTAR-BOTONES .GUARDAR{
     background-color: #042354;
+}
+.INSERTAR-BOTONES .BUSCAR{
+    background-color: #042354;
+    height: 30px;
+    width: 55px;
 }
 .INSERTAR-BOTONES .AÑADIR{
     background-color: #042354;
@@ -446,7 +463,9 @@
     text-shadow: none;
 }
 
-
+.DATOS3 input{
+    min-height: 35px;
+}
 
 
 /*

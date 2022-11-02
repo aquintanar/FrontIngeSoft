@@ -81,11 +81,11 @@ const SearchComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
                 </div>
                 </div>
             </div> 
-            <table class="table table-hover">
+            <table class="table table-hover TABLA-BUSQ">
                         <thead>
                             <tr>
                             <th scope="col">Nro</th>
-                            <th scope="col">Titulo de tesis</th>
+                            <th scope="col">Título de tesis</th>
                             <th scope="col">Estado</th>   
                             <th scope="col">Ver</th>                        
                             </tr>
@@ -106,7 +106,7 @@ const SearchComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
                                         }
                                     }) ()}
                                     </td>
-                                    <td><button className= "btn BUTTON_TABLA" onClick={()=>{ 
+                                    <td><button className= "BUTTON_TABLA" onClick={()=>{ 
                                         setTemaTesis({
                                             idTema: temasTesis.idTemaTesis,
                                             tituloTesis: temasTesis.tituloTesis,
