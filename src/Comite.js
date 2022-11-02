@@ -10,6 +10,7 @@ import DatosRubrica from "./pages/Comite/DatosRubrica";
 import Entregable from "./pages/Comite/Entregable";
 import  ListaEntregables from './pages/Comite/ListaEntregables';
 import DatosEntregable from "./pages/Comite/DatosEntregable";
+import AddEncuesta from "./pages/Comite/AddEncuesta";
 function Comite() {
 
     return (
@@ -25,6 +26,7 @@ function Comite() {
                   <Route path='preparacion/entregables/menu/:id' exact element= {<Entregable/>}/>
                   <Route path='preparacion/entregables/menu/:id/datosEntregable' exact element= {<DatosEntregable/>}/>
                   <Route path='preparacion/entregables/menu/:id/datosRubrica' exact element= {<DatosRubrica/>}/>
+                  <Route path='encuesta/anadirEncuesta' exact element = {<AddEncuesta/>}/>
               </Routes>
 
         </div>

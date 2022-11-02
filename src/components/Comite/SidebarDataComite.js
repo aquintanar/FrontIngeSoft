@@ -84,5 +84,26 @@ export const SidebarData = [
            
         ]
     },
+    {
+        title: 'Encuestas',
+        path: '',
+        icon: <BsIcons.BsFillFilePostFill />,
+        iconClosed: <IonIcons4.IoIosArrowDown />,
+        iconOpened: <IonIcons4.IoIosArrowUp />,
+
+        subNav: [
+            {
+                title: 'Elaborar encuesta',
+                path: 'encuesta/anadirEncuesta',
+                icon: <BsIcons.BsFileEarmarkPlusFill />
+            },
+            {
+                title: 'Reporte de encuesta',
+                path: '',
+                icon: <BsIcons.BsFileBarGraph />
+            },
+           
+        ]
+    },
 ];
 
