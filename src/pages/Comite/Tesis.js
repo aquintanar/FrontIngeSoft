@@ -12,8 +12,9 @@ import "../../stylesheets/Administrador.css";
 import "../../stylesheets/Comite.css";
 import useModal from "../../hooks/useModals";
 import { ModalPregunta, ModalConfirmación } from "../../components/Modals";
-import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
-const url = "https://localhost:7012/api/Alumno/";
+import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
+import i from "rechart/lib/chart";
+const url = "https://localhost:7012/api/TemaTesis/GetTemaTesis";
 
 /*
 const url= "http://44.210.195.91/api/Facultad/";
@@ -65,10 +66,15 @@ const Tesis = () => {
   const [isOpenDeleteModal, openDeleteModal, closeDeleteModal] = useModal();
   const [isOpenConfirmModal, openConfirmModal, closeConfirmModal] = useModal();
   //objeto Alumno--
-  const [alumnoSeleccionado, setAlumnoSeleccionado] = useState({
-    idAlumno: 0,
-    nombre: "",
-    email: "",
+  const [tesisSeleccionada, setTesisSeleccionada] = useState({
+    nombreAlumno: "",
+    apePatAlumno: "",
+    nombreAsesor: "",
+    apePatAsesor: "",
+    estadoTema: "",
+    tituloTesis: "",
+    descripcion: "",
+    nombreArea: "",
   });
   const [facultadSeleccionada, setFacultadSeleccionada] = useState({
     idFacultad: "",
@@ -77,11 +83,11 @@ const Tesis = () => {
     foto: null,
     estado: "",
   });
-  const data2 = [
-    { name: "Facebook", value: 200 },
-    { name: "Instagram", value: 300 },
-    { name: "Twitter", value: 400 },
-    { name: "Telegram", value: 100 },
+  var data2 = [
+    { name: "Aprobados", value: 200 },
+    { name: "Publicados", value: 300 },
+    { name: "Sustentados", value: 400 },
+    { name: "Propuestos", value: 100 },
   ];
 
   //Controla buscador--
@@ -105,27 +111,49 @@ const Tesis = () => {
   }
 
   //----------------
-  filtrado = filtrado.slice(currentPage, currentPage + 6);
+  filtrado = filtrado.slice(currentPage, currentPage + 4);
   const nextPage = () => {
     if (filtrado.length >= currentPage)
       //VER CODIGO
-      SetCurrentPage(currentPage + 6);
+      SetCurrentPage(currentPage + 4);
   };
   const previousPage = () => {
-    if (currentPage > 0) SetCurrentPage(currentPage - 6);
+    if (currentPage > 0) SetCurrentPage(currentPage - 4);
   };
   //----------------
   //Listar Alumnos tabla--
 
   const peticionGet = async () => {
     const response = await axios
-      .get("https://localhost:7012/api/Alumno/GetAlumnos", {
+      .get(url, {
         _method: "GET",
       })
       .then((response) => {
         console.log("AQUI ESTOY GAAAA");
-        console.log(response.data);
+        console.log(response.data[0].estadoTema);
         setData(response.data);
+        console.log("LLEGO AQUI");
+        var i = 0;
+        console.log("LLEGO AQUI2.0");
+        var cantidadAprobado = 0;
+        var cantidadPublicado = 0;
+        var cantidadSustentado = 0;
+        var cantidadPropuesto = 0;
+       
+        while (i < response.data.length) {
+          if (response.data[i].estadoTema == "Aprobados") cantidadAprobado++;
+          if (response.data[i].estadoTema == "Publicado") cantidadPublicado++;
+          if (response.data[i].estadoTema == "Sustentado") cantidadSustentado++;
+          if (response.data[i].estadoTema == "Propuesto") cantidadPropuesto++;
+
+          i++;
+        }
+        console.log('HOLIWIS');
+        data2[0].value = cantidadAprobado;
+        data2[1].value = cantidadPublicado;
+        data2[2].value = cantidadSustentado;
+        data2[3].value = cantidadPropuesto;
+        console.log(data2);
       })
       .catch((error) => {
         console.log(error.message);
@@ -199,8 +227,8 @@ const Tesis = () => {
       <div className="FONDO-TESIS">
         <h1 class="HEADER-TEXTCICLO">Ciclo 2022-1</h1>
         <div className="HEADER-TEXTO">
-        <h4 class="HEADER-TEXTALUMNOSI">Alumnos Inscritos :                   </h4>
-        <h4 class="HEADER-TEXTALUMNOSS">Alumnos que Sustentaron Tesis : </h4>
+          <h4 class="HEADER-TEXTALUMNOSI">Alumnos Inscritos : </h4>
+          <h4 class="HEADER-TEXTALUMNOSS">Alumnos que Sustentaron Tesis : </h4>
         </div>
         <p class="HEADER-TEXT2">Temas por Alumno : </p>
         <button onClick={previousPage} className="PAGINACION-BTN">
@@ -214,41 +242,17 @@ const Tesis = () => {
             <table className="table fs-6 ">
               <thead>
                 <tr class>
-                  <th style={{ width: 200 }}>Nombre</th>
-                  <th style={{ width: 200 }}>E-mail</th>
-                  <th style={{ width: 100 }}>Acciones</th>
+                  <th style={{ width: 600 }}>Titulo</th>
+                  <th style={{ width: 600 }}>Descripcion</th>
+                  <th style={{ width: 400 }}>Estado</th>
                 </tr>
               </thead>
               <tbody>
-                {filtrado.map((alumno) => (
-                  <tr key={alumno.nombres}>
-                    <td>{alumno.nombres}</td>
-                    <td>{alumno.correo}</td>
-
-                    <td>
-                      <button
-                        className="btn BTN-ACCIONES"
-                        onClick={
-                          /*()=>{navigate("datosFacultad/"+facultad.idFacultad)}*/ console.log(
-                            "hola"
-                          )
-                        }
-                      >
-                        {" "}
-                        <FaIcons.FaEdit />
-                      </button>
-                      <button
-                        className=" btn BTN-ACCIONES"
-                        onClick={
-                          /*()=>seleccionarFacultad(facultad)*/ console.log(
-                            "hola"
-                          )
-                        }
-                      >
-                        {" "}
-                        <BootIcons.BsTrash />
-                      </button>
-                    </td>
+                {filtrado.map((tema) => (
+                  <tr key={tema.idTemaTesis}>
+                    <td>{tema.tituloTesis}</td>
+                    <td>{tema.descripcion}</td>
+                    <td>{tema.estadoTema}</td>
                   </tr>
                 ))}
               </tbody>
