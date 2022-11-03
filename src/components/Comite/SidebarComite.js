@@ -11,6 +11,7 @@ import '../../stylesheets/SideBar.css'
 import {useAuth0 }from '@auth0/auth0-react'
 import { useContext } from 'react';
 import { UserContext } from '../../UserContext';
+import axios from 'axios';
 const Nav = styled.div`
   background: #042354;
   height: 60px;
@@ -60,13 +61,34 @@ const SidebarComite = () => {
   const {logout, isAuthenticated}=useAuth0();
   const [sidebar, setSidebar] = useState(true);
   const {value,setValue} = useContext(UserContext);
+  const [nombre , setNombre] = useState([]);
   const showSidebar = () => setSidebar(sidebar);
-
+  const peticionGet=async()=>{
+    console.log("hola");
+    const response =await axios.get("https://localhost:7012/api/ComiteTesis/GetComiteTesis")
+    .then(response=>{
+      console.log("HOLA SE LLEGO A HACER EL REQUEST");
+      console.log(response);
+      console.log(response.data[0].idUsuario);
+      for(let i in response.data){
+        console.log(response.data[i].idUsuario);
+        if(response.data[i].idUsuario===value){
+          console.log("SE LLEGA AQUI, el valor es  "+value);
+          setNombre(response.data[i].nombres +" "+ response.data[i].apeMat);
+          console.log(nombre);
+          break;
+        }
+      }
+    }).catch(error =>{
+      console.log(error.message);
+    })
+  }
+  window.onload=peticionGet()
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <Nav>
-          <h1 className='nombreUsuario'>{value}</h1>
+          <h1 className='nombreUsuario'>{nombre}</h1>
             <NavIcon to='#'>
               {showSidebar}
             </NavIcon> 
