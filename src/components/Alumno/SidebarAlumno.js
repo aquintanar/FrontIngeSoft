@@ -72,7 +72,7 @@ const Sidebar = () => {
             {SidebarData.map((item, index) => {
               return <SubMenu item={item} key={index} />;
             })}
-             <button className='BOTON-EXIT' onClick={()=>logout()}> Cerrar sesión</button>
+             <button className='BOTON-EXIT' onClick={()=>logout()}><FaIcons.FaDoorOpen /> Cerrar sesión</button>
           </SidebarWrap>
         </SidebarNav>
       </IconContext.Provider>

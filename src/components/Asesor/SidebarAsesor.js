@@ -36,7 +36,7 @@ const NavIcon = styled(Link)`
 const SidebarNav = styled.nav`
   background: #003C7A;
   width: 20%;
-  height: 89vh;
+  height: 93.6vh;
   display: flex;
   justify-content: center;
   position: absolute;
@@ -72,7 +72,7 @@ const Sidebar = () => {
                 {SidebarData.map((item, index) => {
                   return <SubMenu item={item} key={index} />;
                 })}
-                 <button className='BOTON-EXIT' onClick={()=>logout()}> Cerrar sesión</button>
+                 <button className='BOTON-EXIT' onClick={()=>logout()}><FaIcons.FaDoorOpen /> Cerrar sesión</button>
             </SidebarWrap>
         </SidebarNav>
       </IconContext.Provider>

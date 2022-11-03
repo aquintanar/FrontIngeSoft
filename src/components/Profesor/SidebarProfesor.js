@@ -73,7 +73,7 @@ const Sidebar = () => {
                   return <SubMenu item={item} key={index} />;
                 })}
             </SidebarWrap>
-            <button className='BOTON-EXIT' onClick={()=>logout()}> Cerrar Sesion</button>
+            <button className='BOTON-EXIT' onClick={()=>logout()}><FaIcons.FaDoorOpen /> Cerrar Sesion</button>
         </SidebarNav>
       </IconContext.Provider>
     </>
