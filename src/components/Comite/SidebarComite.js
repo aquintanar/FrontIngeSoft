@@ -9,7 +9,8 @@ import { IconContext } from 'react-icons/lib';
 import logo from '../../imagenes/logo.png';
 import '../../stylesheets/SideBar.css'
 import {useAuth0 }from '@auth0/auth0-react'
-
+import { useContext } from 'react';
+import { UserContext } from '../../UserContext';
 const Nav = styled.div`
   background: #042354;
   height: 60px;
@@ -58,13 +59,14 @@ const SidebarWrap = styled.div`
 const SidebarComite = () => {
   const {logout, isAuthenticated}=useAuth0();
   const [sidebar, setSidebar] = useState(true);
-
+  const {value,setValue} = useContext(UserContext);
   const showSidebar = () => setSidebar(sidebar);
 
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <Nav>
+          <h1 className='nombreUsuario'>{value}</h1>
             <NavIcon to='#'>
               {showSidebar}
             </NavIcon> 

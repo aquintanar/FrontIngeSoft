@@ -1,3 +1,9 @@
 .tituloSistema{
     margin-right: 20px;
 }
+.nombreUsuario{
+    color:#fff;
+    font-family: roboto;
+    font-size: 25px;
+    margin-left: 30px;
+}
