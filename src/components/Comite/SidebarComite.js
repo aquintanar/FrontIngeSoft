@@ -68,22 +68,51 @@ const SidebarComite = () => {
     const response =await axios.get("https://localhost:7012/api/ComiteTesis/GetComiteTesis")
     .then(response=>{
       console.log("HOLA SE LLEGO A HACER EL REQUEST");
+      console.log("El valor de value es" + value);
       console.log(response);
       console.log(response.data[0].idUsuario);
       for(let i in response.data){
         console.log(response.data[i].idUsuario);
-        if(response.data[i].idUsuario===value){
-          console.log("SE LLEGA AQUI, el valor es  "+value);
-          setNombre(response.data[i].nombres +" "+ response.data[i].apeMat);
-          console.log(nombre);
-          break;
+        if(value!=0 && value!=undefined && value!=null && value!='' && value!='Hello from context'){
+          if(response.data[i].idUsuario===value){
+            console.log("PASE POR VALUE");
+            setNombre(response.data[i].nombres +" "+ response.data[i].apeMat);
+            console.log(nombre);
+            break;
+          }  
         }
+        else{
+          var valorGuardado = localStorage.getItem("IDUSUARIO");
+          console.log("El valor de ID es " + response.data[i].idUsuario);
+          console.log("El valor guardado es " + localStorage.getItem("IDUSUARIO"));
+          if(response.data[i].idUsuario==valorGuardado){
+            console.log("PASE POR EL LOCAL STORAGE");
+            setNombre(response.data[i].nombres +" "+ response.data[i].apeMat);
+            console.log(nombre);
+            break;
+          }  
+        }
+        
       }
+      console.log("El nombre actual es : " + nombre)
     }).catch(error =>{
       console.log(error.message);
     })
   }
-  window.onload=peticionGet()
+  function guardarLocalStorage(){
+    if(value!="Hello from context"){
+      localStorage.setItem("IDUSUARIO",value);
+    }
+  }
+  function obtenerLocalStorage(){
+    let variable = localStorage.getItem("IDUSUARIO");
+    setValue(variable);
+    console.log("SOY VALUE ACTUALMENTE"+value);
+  }
+
+  guardarLocalStorage();
+  obtenerLocalStorage();
+  peticionGet() 
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
