@@ -11,14 +11,14 @@ import Informacion  from './pages/Alumno/Informacion';
 import Reuniones  from './pages/Alumno/Reuniones';
 import SubirArchivos  from './pages/Alumno/SubirArchivos';
 import EvaluaAsesor  from './pages/Alumno/EvaluaAsesor';
-
+import NotaAlumno  from './pages/Alumno/NotaAlumno';
 function Alumno() {
     return (
         <div>    
             <SidebarAlumno/>
               <BarraVolver/>
               <Routes>
-
+              
               <Route path='gestion/gesPortafolio' exact element= {<PortafolioEntregables/>}/>
               <Route path='gestion/gesPortafolio/AvancesSemanales' exact element= {<AvancesSemanales/>}/>
               <Route path='gestion/gesPortafolio/EntregablesParciales' exact element= {<EntregablesParciales/>}/>
@@ -26,7 +26,7 @@ function Alumno() {
               <Route path='gestion/gesPortafolio/EntregablesParciales/entregableParcialSeleccionado' exact element= {<EntregableParcialSeleccionado/>}/>
               <Route path='gestion/gesPortafolio/EntregablesParciales/entregableParcialSeleccionado/SubirArchivos' exact element= {<SubirArchivos/>}/>
               <Route path='gestion/Reuniones' exact element= {<Reuniones/>}/>
-
+              <Route path='gestion/gesNota' exact element= {<NotaAlumno/>}/>
               <Route path='gestion/Informacion' exact element= {<Informacion/>}/>
               <Route path='gestion/EvaluaAsesor' exact element= {<EvaluaAsesor/>}/>
               </Routes>

@@ -93,6 +93,7 @@ function Login() {
                 })
                 .then(response=>{
                         const idUs=response.data.id
+                        console.log('SI FUNCIONA')
                         setValue(idUs);
                         searchId(idUs);
                       

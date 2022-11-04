@@ -13,8 +13,9 @@ import "../../stylesheets/Comite.css";
 import useModal from "../../hooks/useModals";
 import { ModalPregunta, ModalConfirmación } from "../../components/Modals";
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
-import i from "rechart/lib/chart";
-const url = "https://localhost:7012/api/TemaTesis/GetTemaTesis";
+import jsPDF from "jspdf";
+import logo from "../../imagenes/logopucp.jpg";
+const url = "https://localhost:7012/api/Alumno/";
 
 /*
 const url= "http://44.210.195.91/api/Facultad/";
@@ -66,15 +67,10 @@ const Tesis = () => {
   const [isOpenDeleteModal, openDeleteModal, closeDeleteModal] = useModal();
   const [isOpenConfirmModal, openConfirmModal, closeConfirmModal] = useModal();
   //objeto Alumno--
-  const [tesisSeleccionada, setTesisSeleccionada] = useState({
-    nombreAlumno: "",
-    apePatAlumno: "",
-    nombreAsesor: "",
-    apePatAsesor: "",
-    estadoTema: "",
-    tituloTesis: "",
-    descripcion: "",
-    nombreArea: "",
+  const [alumnoSeleccionado, setAlumnoSeleccionado] = useState({
+    idAlumno: 0,
+    nombre: "",
+    email: "",
   });
   const [facultadSeleccionada, setFacultadSeleccionada] = useState({
     idFacultad: "",
@@ -83,11 +79,11 @@ const Tesis = () => {
     foto: null,
     estado: "",
   });
-  var data2 = [
-    { name: "Aprobados", value: 200 },
-    { name: "Publicados", value: 300 },
-    { name: "Sustentados", value: 400 },
-    { name: "Propuestos", value: 100 },
+  const data2 = [
+    { name: "Facebook", value: 200 },
+    { name: "Instagram", value: 300 },
+    { name: "Twitter", value: 400 },
+    { name: "Telegram", value: 100 },
   ];
 
   //Controla buscador--
@@ -111,53 +107,57 @@ const Tesis = () => {
   }
 
   //----------------
-  filtrado = filtrado.slice(currentPage, currentPage + 4);
+  filtrado = filtrado.slice(currentPage, currentPage + 6);
   const nextPage = () => {
     if (filtrado.length >= currentPage)
       //VER CODIGO
-      SetCurrentPage(currentPage + 4);
+      SetCurrentPage(currentPage + 6);
   };
   const previousPage = () => {
-    if (currentPage > 0) SetCurrentPage(currentPage - 4);
+    if (currentPage > 0) SetCurrentPage(currentPage - 6);
   };
   //----------------
   //Listar Alumnos tabla--
 
   const peticionGet = async () => {
     const response = await axios
-      .get(url, {
+      .get("https://localhost:7012/api/TemaTesis/GetTemaTesis", {
         _method: "GET",
       })
       .then((response) => {
         console.log("AQUI ESTOY GAAAA");
-        console.log(response.data[0].estadoTema);
+        console.log(response.data);
         setData(response.data);
-        console.log("LLEGO AQUI");
-        var i = 0;
-        console.log("LLEGO AQUI2.0");
-        var cantidadAprobado = 0;
-        var cantidadPublicado = 0;
-        var cantidadSustentado = 0;
-        var cantidadPropuesto = 0;
-       
-        while (i < response.data.length) {
-          if (response.data[i].estadoTema == "Aprobados") cantidadAprobado++;
-          if (response.data[i].estadoTema == "Publicado") cantidadPublicado++;
-          if (response.data[i].estadoTema == "Sustentado") cantidadSustentado++;
-          if (response.data[i].estadoTema == "Propuesto") cantidadPropuesto++;
-
-          i++;
-        }
-        console.log('HOLIWIS');
-        data2[0].value = cantidadAprobado;
-        data2[1].value = cantidadPublicado;
-        data2[2].value = cantidadSustentado;
-        data2[3].value = cantidadPropuesto;
-        console.log(data2);
       })
       .catch((error) => {
         console.log(error.message);
       });
+  };
+  const GeneratePDF = () => {
+    console.log("SE CLICKEO");
+    var doc = new jsPDF("landscape", "px", "a4", "false");
+    doc.text(190,70,"PONTIFICIA UNIVERSIDAD CATÓLICA DEL PERÚ");
+    doc.addImage(logo, "PNG", 250, 105, 150, 150);
+    doc.text(240,350,"REPORTE DE TEMAS DE TESIS");
+    doc.addPage();
+    var j = 60;
+    var k=0;
+    for (let i in data) {
+      doc.text(60,j,'_______________________________________________________________________________');
+      doc.text(60,j+20,"ASESOR          : "+data[i].nombresAsesor+" " + data[i].apePatAsesor);
+      doc.text(60,j+40,"ALUMNO          : "+data[i].nombresAlumno+" " + data[i].apePatAlumno);
+      doc.text(60,j+60,"TITULO             : "+data[i].tituloTesis);
+      doc.text(60,j+80,"DESCRIPCION : "+data[i].descripcion);
+      doc.text(60,j+100,"ESTADO           : "+data[i].estadoTema);
+      k++;
+      if(k==3){
+        doc.addPage();
+        j=-60
+        k=0;
+      }
+      j += 120;
+    }
+    doc.save("ReporteDeTesis.pdf");
   };
   //Eliminar una facultad--
   const peticionDelete = async () => {
@@ -221,7 +221,7 @@ const Tesis = () => {
 
   return (
     <div className="CONTAINERADMIN">
-      <p class="HEADER-TEXT1">Reporte de Tesis Sustentadas y Pendientes</p>
+      <p class="HEADER-TEXT1">Reporte de Tesis Susentantadas y Pendientes</p>
       <p class="HEADER-TEXT2">Previsualización</p>
 
       <div className="FONDO-TESIS">
@@ -242,17 +242,17 @@ const Tesis = () => {
             <table className="table fs-6 ">
               <thead>
                 <tr class>
-                  <th style={{ width: 600 }}>Titulo</th>
-                  <th style={{ width: 600 }}>Descripcion</th>
-                  <th style={{ width: 400 }}>Estado</th>
+                  <th style={{ width: 200 }}>Titulo</th>
+                  <th style={{ width: 200 }}>Descripcion</th>
+                  <th style={{ width: 100 }}>Estado</th>
                 </tr>
               </thead>
               <tbody>
-                {filtrado.map((tema) => (
-                  <tr key={tema.idTemaTesis}>
-                    <td>{tema.tituloTesis}</td>
-                    <td>{tema.descripcion}</td>
-                    <td>{tema.estadoTema}</td>
+                {filtrado.map((tesis) => (
+                  <tr key={tesis.idTemaTesis}>
+                    <td>{tesis.tituloTesis}</td>
+                    <td>{tesis.descripcion}</td>
+                    <td>{tesis.estadoTema}</td>
                   </tr>
                 ))}
               </tbody>
@@ -261,9 +261,7 @@ const Tesis = () => {
           <div className="d-grid gap-2 d-md-flex justify-content-md-end LISTAR-BOTON ">
             <button
               className="btn btn-primary fs-4 fw-bold mb-3 "
-              onClick={() => {
-                navigate("datosFacultad/0");
-              }}
+              onClick={() => GeneratePDF()}
             >
               <span>Descargar</span>
             </button>
