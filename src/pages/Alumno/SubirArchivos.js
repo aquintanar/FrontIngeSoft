@@ -67,17 +67,17 @@ useEffect(() => {
     cargarVersion();
 
   }, []);
+ 	
 
 
 
 
-
-  const S3_BUCKET = "react-s3-software";
+  const S3_BUCKET = "reactionando-s3-software";
   const REGION = "us-east-1";
 
   AWS.config.update({
-    accessKeyId: "AKIASUAJKDQB3FZ25YNH",
-    secretAccessKey: "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",
+    accessKeyId: "AKIA3322RXFUFYNYYL6P",
+    secretAccessKey: "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",
   });
 
   const myBucket = new AWS.S3({

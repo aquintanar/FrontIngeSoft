@@ -1,6 +1,6 @@
 variable "s3_bucket_name" {
   type    = string
-  default = "react-s3-software"
+  default = "reactionando-s3-software"
 }
 
 resource "aws_s3_bucket" "upload-bucket" {
