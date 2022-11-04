@@ -32,7 +32,7 @@ export const SidebarData = [
     },
     {
         title: 'Reunión',
-        path: '',
+        path: 'reunion',
         icon: <BsIcons.BsJournalBookmark />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,

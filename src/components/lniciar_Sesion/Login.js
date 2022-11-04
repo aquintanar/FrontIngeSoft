@@ -44,6 +44,7 @@ function Login() {
     const searchId = async(e)=>{
         try{
             console.log(e);
+            setValue(e);
             
             const response2 = await axios.get(LOGIN_URL2,
                 {params:{idUsuario:e}},
