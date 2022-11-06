@@ -16,6 +16,7 @@ import Register from './components/lniciar_Sesion/Register';
 import RequireAuth from './components/lniciar_Sesion/RequireAuth';
 import ErrorPage from './ErrorPage'
 import { UserContext } from './UserContext';
+import Cursos from './Cursos';
 function App() {
   const [value,setValue] = useState('Hello from context');
   return (
@@ -30,6 +31,7 @@ function App() {
                 {/*Private Routes */}  
                   <Route path='/comite/*' exact element= {<Comite/>} />
                   <Route path='/comiteCoordinador/*' exact element= {<ComiteCoordinador/>} />
+                  <Route path='/cursos/*' exact element= {<Cursos/>} />
                   <Route path='/administrador/*' exact element= {<Administrador/>} />
                   <Route path='/alumno/*' exact element= {<Alumno/>} />
                   <Route path='/profesor/*' exact element= {<Profesor/>} />

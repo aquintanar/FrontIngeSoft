@@ -106,6 +106,7 @@ function Login() {
             }
             console.log(infoSemestre);
             localStorage.setItem("infoEspecialidad",JSON.stringify(infoSemestre));
+            localStorage.setItem("IDUSUARIO",value);
             navigate("/comiteCoordinador");
           }
         })
@@ -129,13 +130,21 @@ function Login() {
         .then((response2) => {
           console.log(response2.data[0].nombre);
           if (response2.data[0].nombre === "ADMINISTRADOR") {
+            localStorage.setItem("TIPOUSUARIO","ADMINISTRADOR");
+            localStorage.setItem("IDUSUARIO",value);
             navigate("/administrador");
           } else if (response2.data[0].nombre === "ALUMNO") {
-            navigate("/alumno");
+            localStorage.setItem("TIPOUSUARIO","ALUMNO");
+            localStorage.setItem("IDUSUARIO",value);
+            navigate("/cursos");
           } else if (response2.data[0].nombre === "DOCENTE") {
-            navigate("/profesor");
+            localStorage.setItem("TIPOUSUARIO","DOCENTE");
+            localStorage.setItem("IDUSUARIO",value);
+            navigate("/cursos");
           } else if (response2.data[0].nombre === "ASESOR") {
-            navigate("/asesor");
+            localStorage.setItem("TIPOUSUARIO","ASESOR");
+            localStorage.setItem("IDUSUARIO",value);
+            navigate("/cursos");
           } else if (response2.data[0].nombre === "COMITE DE TESIS") {
             validarCoordinador(e);
           }
