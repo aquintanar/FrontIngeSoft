@@ -26,6 +26,7 @@ export function BarraVolver() {
         setAnhio(response.data[0].anhoSemestre);
         setSem(response.data[0].numSemestre);
         setNom(response.data[0].nombre);
+        setEsp(response.data[0].nombreEspecialidad);
       })
       .catch((error) => {
         console.log(error.message);
@@ -43,7 +44,7 @@ export function BarraVolver() {
         <h4><a href="/cursos">Volver a mis cursos</a></h4>
       </div>
       <div>
-        <h4>{anhio + "-" + sem + " " + nom}</h4>
+        <h4>{anhio + "-" + sem + " " + nom + " " + esp}</h4>
       </div>
     </div>
   );
