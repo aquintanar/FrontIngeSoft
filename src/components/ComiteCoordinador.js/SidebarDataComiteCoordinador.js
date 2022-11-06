@@ -16,7 +16,7 @@ export const SidebarData = [
     },
     {
         title: 'Visualizar Curso',
-        path: '',
+        path: 'VisualizarCursos',
         icon: <BsIcons.BsNewspaper />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
