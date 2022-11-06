@@ -99,7 +99,7 @@ function GestionarCurso()  {
         alumnoPropone: false,
         temaAsignado: false
     })
-
+    var arregloIDs =[];
     const petitionSem=async()=>{
         await axios.get(urlSem+"GetSemestres/")
         .then(response=>{
@@ -173,7 +173,31 @@ function GestionarCurso()  {
         petitionEsp();
         petitionCurso();
     },[])
+    function seleccionarFila() {
+      const rows=document.querySelectorAll('tr');
+      for(var i=1;i<rows.length;i++){
+        //Tomar cada celda
+          var cell1 = rows[i].cells[0];
+          var cell2 = rows[i].cells[1];
+          arregloIDs.push(cell1.textContent);
+          console.log(arregloIDs);
+          rows[i].onclick= function(){
+            //console.log(this.rowIndex);
+            console.log(arregloIDs[this.rowIndex-1]);
+            localStorage.setItem("idCurso",arregloIDs[this.rowIndex-1]);
+            navigate("/comite");
+          }  
 
+          rows[i].onclick=function(){
+            console.log(arregloIDs[this.rowIndex-1]);
+            localStorage.setItem("idCurso",arregloIDs[this.rowIndex-1]);
+            navigate("/comite");
+          }
+          
+      }
+     }
+  seleccionarFila();
+  
     return(
         <div className="CONTAINERCOMITE">
             <h1 className="HEADER-TEXT1">Mis Cursos</h1>
@@ -217,9 +241,9 @@ function GestionarCurso()  {
 
           <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
           <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
-          <div class = "row LISTAR-TABLA">
+          <div class = "row LISTAR-TABLA" id="LISTAR-TABLA">
             <div class=" col-12 ">
-              <table className='table fs-6 '>
+              <table className='table fs-6 TABLALISTARCURSOS' >
                 <thead class >
                   <tr class>
                       <th style = {{width:10}}>Id</th>
