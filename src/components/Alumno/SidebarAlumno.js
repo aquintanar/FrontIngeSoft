@@ -93,6 +93,7 @@ const Sidebar = () => {
       console.log(error.message);
     })
   }
+
   function guardarLocalStorage(){
     if(value!="Hello from context"){
       localStorage.setItem("IDUSUARIO",value);
