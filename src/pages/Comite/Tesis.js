@@ -14,6 +14,7 @@ import useModal from "../../hooks/useModals";
 import { ModalPregunta, ModalConfirmación } from "../../components/Modals";
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
 import jsPDF from "jspdf";
+import ReactHtmlTableToExcel from "react-html-table-to-excel";
 import logo from "../../imagenes/logopucp.jpg";
 const url = "https://localhost:7012/api/Alumno/";
 
@@ -239,7 +240,7 @@ const Tesis = () => {
         </button>
         <div class="row   LISTAR-TABLA">
           <div class=" col-10  ">
-            <table className="table fs-6 ">
+            <table className="table fs-6 " id="excel-table">
               <thead>
                 <tr class>
                   <th style={{ width: 200 }}>Titulo</th>
@@ -257,6 +258,13 @@ const Tesis = () => {
                 ))}
               </tbody>
             </table>
+            <ReactHtmlTableToExcel 
+            className="btn btn-info"
+            table='excel-table'
+            filename="ReporteTesis"
+            sheet="Sheet"
+            buttonText="Export to Excel"
+            />
           </div>
           <div className="d-grid gap-2 d-md-flex justify-content-md-end LISTAR-BOTON ">
             <button
@@ -267,19 +275,7 @@ const Tesis = () => {
             </button>
           </div>
         </div>
-        <PieChart width={400} height={400} className="GRAFICO-PIE">
-          <Pie
-            dataKey="value"
-            isAnimationActive={false}
-            data={data2}
-            cx="50%"
-            cy="50%"
-            outerRadius={80}
-            fill="#042354"
-            label
-          />
-          <Tooltip />
-        </PieChart>
+        
       </div>
     </div>
   );
