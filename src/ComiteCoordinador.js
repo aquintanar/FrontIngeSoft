@@ -13,7 +13,7 @@ function ComiteCoordinador() {
               <SidebarComiteCoordinador/>
               <Routes>
                 <Route path='GestionarCurso' exact element= {<GestionarCurso/>}/>
-                <Route path='GestionarCurso/DatosCurso' exact element= {<DatosCurso/>}/>        
+                <Route path='GestionarCurso/DatosCurso/:id' exact element= {<DatosCurso/>}/>        
               </Routes>
         </div>
     )
