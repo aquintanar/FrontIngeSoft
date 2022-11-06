@@ -185,15 +185,18 @@ function GestionarCurso()  {
             //console.log(this.rowIndex);
             console.log(arregloIDs[this.rowIndex-1]);
             localStorage.setItem("idCurso",arregloIDs[this.rowIndex-1]);
-            navigate("/comite");
+            if(localStorage.getItem("TIPOUSUARIO")=="ALUMNO")navigate('/alumno');
+            if(localStorage.getItem("TIPOUSUARIO")=="ASESOR")navigate('/asesor');
+            if(localStorage.getItem("TIPOUSUARIO")=="DOCENTE")navigate('/profesor');
           }  
 
           rows[i].onclick=function(){
             console.log(arregloIDs[this.rowIndex-1]);
             localStorage.setItem("idCurso",arregloIDs[this.rowIndex-1]);
-            navigate("/comite");
-          }
-          
+            if(localStorage.getItem("TIPOUSUARIO")=="ALUMNO")navigate('/alumno');
+            if(localStorage.getItem("TIPOUSUARIO")=="ASESOR")navigate('/asesor');
+            if(localStorage.getItem("TIPOUSUARIO")=="DOCENTE")navigate('/profesor');
+          }  
       }
      }
   seleccionarFila();
