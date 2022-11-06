@@ -35,16 +35,27 @@ function DatosCurso() {
     const petitionEsp=async()=>{
         await axios.get(urlEsp+"GetEspecialidades/")
         .then(response=>{
-        setEsp(response.data);
+        const filtradoEsp = response.data.filter((Especialidad)=>{
+            for(let i in infoSemestre.esp){
+              return Especialidad.nombre == infoSemestre.esp[i];
+            }
+        });
+        setEsp(filtradoEsp);
         }).catch(error =>{
         console.log(error.message);
         })
     }
-
+    let infoSemestre = JSON.parse(localStorage.getItem("infoEspecialidad"));
     const petitionSem=async()=>{
         await axios.get(urlSem+"GetSemestres/")
         .then(response=>{
-        setSem(response.data);
+        const filtradoSem = response.data.filter((Semestre)=>{
+            for(let i in infoSemestre.sem){
+              return Semestre.idSemestre == infoSemestre.sem[i];
+            }
+        });
+        console.log(response);
+        setSem(filtradoSem);
         }).catch(error =>{
         console.log(error.message);
         })
@@ -53,7 +64,12 @@ function DatosCurso() {
     const petitionFac=async()=>{
         await axios.get(urlFac+"GetFacultades/")
         .then(response=>{
-            setFac(response.data);
+          const filtradoFac = response.data.filter((facultad)=>{
+              for(let i in infoSemestre.fac){
+                return facultad.nombre == infoSemestre.fac[i];
+              }
+          });
+          setFac(filtradoFac);
         }).catch(error =>{
         console.log(error.message);
         })
@@ -238,7 +254,7 @@ function DatosCurso() {
                   <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelectSem} selected value = {cursoNuevo && cursoNuevo.idSemestre}>
                       <option selected value = "0">Todos</option>
                       {sem.map(elemento=>(
-                        <option key={elemento.idSemestre} value={elemento.idSemestre}>{elemento.anho + '-' + elemento.numSemestre}</option>  
+                        <option key={elemento.idSemestre} value={elemento.idSemestre}>{elemento.nombre}</option>  
                       ))} 
                   </select>
                 </div>
