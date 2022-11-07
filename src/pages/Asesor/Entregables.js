@@ -115,8 +115,17 @@ function Entregables(){
                apellidoMaterno:dato.apeMat,tituloDoc:dato.nombre,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida,tituloDocPDF:dato.documentosAlumno,idVersion:dato.idVersion}})}>{dato.fechaSubida}</button>
                   </td> 
                   <td>
-                    <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
-               apellidoMaterno:dato.apeMat,tituloDoc:dato.nombre,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida,tituloDocPDF:dato.documentosAlumno,idVersion:dato.idVersion}})}>{dato.estadoEntregable}</button>
+                  {(() => {
+                                        switch(dato.estadoEntregable){
+                                          case "Por Entregar" : return <td class = "text-black">Por Entregar</td> ;
+                                          case "Enviado para retroalimentacion": return <td class = "text-primary">Enviado para retroalimentacion</td> ;
+                                          case "Con retroalimentacion" : return <td class = "text-success">Con retroalimentacion</td> ;
+                                          case "Entregado a docente" : return <td class = "text-primary">Entregado a docente</td> ;
+                                          case "Calificado por el docente" : return <td class = "text-success">Calificado por el docente</td> ;
+                                            
+                                            default: return <td class = "text-black">Por Entregar</td> ;
+                                        }
+                    }) ()}
                   </td>
 
                     <td>

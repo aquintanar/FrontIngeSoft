@@ -244,10 +244,8 @@ function EntregableSeleccionado(){
          </tbody>
        </table>
 
-        <form action={location.state.linkDoc}>
-        <a href={location.state.linkDoc}>
-          <button type="button" className="btn btn-light btn-lg"><BsIcons.BsFileEarmarkPdf/>  {location.state.tituloDoc }pdf </button>
-          </a>
+       <form action={location.state.linkDoc}>
+          <BsIcons.BsFileEarmarkPdf/> <input type="submit" value={location.state.tituloDocPDF} /> 
         </form>
 
         <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,

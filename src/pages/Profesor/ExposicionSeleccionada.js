@@ -1,5 +1,4 @@
 import React from 'react'
-import './proponerTemaAsesor.css';
 import {useState , useEffect} from "react";
 import useModal from '../../hooks/useModals';
 import {  Button, Collapse} from '@material-ui/core';
@@ -8,13 +7,13 @@ import {  useNavigate ,useParams} from 'react-router-dom';
 import axios from 'axios';
 import { useTable } from 'react-table';
 import * as BsIcons from 'react-icons/bs';
-import '../../stylesheets/Asesor.css'
+import '../../stylesheets/Profesor.css'
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
 import {ModalConfirmación, ModalPregunta,ModalComentario} from '../../components/Modals';
 
-function EntregableParcialSeleccionado(){
+function ExposicionSeleccionada(){
   let navigate = useNavigate();
   const location = useLocation();
   const [data, setData] = useState([]);
@@ -197,7 +196,7 @@ const {
     return(
         <div className='CONTAINERASESOR'>
          <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
-        <h1 className='HEADER-TEXT1'>Entregable Parcial-{ location.state.tituloDoc }</h1>
+        <h1 className='HEADER-TEXT1'>Exposición-{ location.state.tituloDoc }</h1>
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
         <div className='ContenidoPrincipal'>
         <table   {...getTableProps()} style={{minWidth: 650, borderCollapse: 'separate',
@@ -243,13 +242,12 @@ const {
          </tbody>
        </table>
 
-        <form action={location.state.linkDoc}>
+       <form action={location.state.linkDoc}>
           <BsIcons.BsFileEarmarkPdf/> <input type="submit" value={location.state.tituloDocPDF} /> 
         </form>
-        
         <h3 className='HEADER-TEXT3'>Rúbrica de Evaluación</h3>
-        <div className = "row LISTAR-TABLA">
-        <div className=" col-12  ">
+        <div class = "row LISTAR-TABLA">
+        <div class=" col-12  ">
           <table className='table fs-6 '>
             <thead class >
               <tr class>
@@ -270,7 +268,7 @@ const {
                     <td> <input onChange={(e) => handleChange(`${rubrica.idDetalleRubrica}`, e)} type="text" class="form-control" name="puntaje" placeholder="Puntaje" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
                     /> </td>
                     <td>
-                    <button class="btn BTN-ACCIONES" onClick={()=>abrirPost(setTitulo(rubrica.rubro))}> <FaIcons.FaCommentAlt /></button>
+                    <button  onClick={()=>abrirPost(setTitulo(rubrica.rubro))} class="btn BTN-ACCIONES"> <FaIcons.FaCommentAlt /></button>
                     </td>
                     <td>
                     <button type="button" className='btn btn-light' onClick={()=>openPostModal()}>Guardar</button>
@@ -281,21 +279,27 @@ const {
           </table>
         </div>
       </div>
-      <div className = "DATOS">
-                <div className = "col-12">
-                    <div className="text-start fs-5 fw-normal "><p>Comentarios</p></div>
-                    <div className="input-group input-group-lg mb-3">
-                        <textarea className="form-control" name="comentarios" placeholder="Comentarios" aria-label="comentarios"  
+      <div class = "DATOS">
+                <div class = "col-12">
+                    <div class="text-start fs-5 fw-normal "><p>Comentarios del asesor</p></div>
+                    <div class="input-group input-group-lg mb-3">
+                        <textarea value="{dataV[0].comentarios}" disabled="true" class="form-control" name="Comentarios" placeholder="Comentarios" aria-label="comentarios"  
+                          />
+                    </div>
+                </div>
+                <div class = "col-12">
+                    <div class="text-start fs-5 fw-normal "><p>Comentarios</p></div>
+                    <div class="input-group input-group-lg mb-3">
+                        <textarea  class="form-control" name="comentarios" placeholder="Comentarios" aria-label="comentarios"  
                           onChange={(e) => handleChangeComentario(e)}/>
                     </div>
                 </div>
             </div>
             <br></br>
       <div className="row">                            
-              <div className="LISTAR-BOTON">
-               
-                  <button className="btn btn-success fs-4 fw-bold mb-3 me-3 "  type="button">Aprobar</button>
-                  <button  onClick={()=>openEditModal()} class="btn btn-primary fs-4 fw-bold mb-3 me-3" type="button">Enviar comentarios</button>
+              <div className="LISTAR-BOTON">           
+                  <button  onClick={()=>openEditModal()} class="btn btn-primary fs-4 fw-bold mb-3 me-3 "  type="button">Guardar</button>
+                  <button class="btn btn-danger fs-4 fw-bold mb-3 me-3" type="button">Cancelar</button>
               </div>
         </div>
         </div>
@@ -354,6 +358,5 @@ const {
             </ModalComentario>
         </div>
     );
-
 }
-export default  EntregableParcialSeleccionado;
+export default  ExposicionSeleccionada;

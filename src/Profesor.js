@@ -9,6 +9,9 @@ import Entregables from './pages/Profesor/Entregables';
 import EntregableSeleccionado from './pages/Profesor/EntregableSeleccionado';
 import EntregableParcialSeleccionado from './pages/Profesor/EntregableParcialSeleccionado';
 import EntregablesParciales from './pages/Profesor/EntregablesParciales';
+import Exposiciones from "./pages/Profesor/Exposiciones";
+import ExposicionSeleccionada from "./pages/Profesor/ExposicionSeleccionada";
+import HistorialVersiones from "./pages/Asesor/HistorialVersiones";
 function Profesor() {
     return (
     <div>    
@@ -19,6 +22,11 @@ function Profesor() {
                   <Route path='alumnos/alumnoSeleccionado' exact element= {<AlumnoSeleccionado/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregables' exact element= {<Entregables/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales' exact element= {<EntregablesParciales/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/exposiciones' exact element= {<Exposiciones/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/exposiciones/historialVersiones' exact element= {<HistorialVersiones/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/avancesSemanales/historialVersiones' exact element= {<HistorialVersiones/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregablesParciales/historialVersiones' exact element= {<HistorialVersiones/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/exposiciones/exposicionSeleccionada' exact element= {<ExposicionSeleccionada/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregables/entregableSeleccionado' exact element= {<EntregableSeleccionado/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales/entregableParcialSeleccionado' exact element= {<EntregableParcialSeleccionado/>}/>
               </Routes>   
