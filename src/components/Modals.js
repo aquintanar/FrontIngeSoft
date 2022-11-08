@@ -1,12 +1,15 @@
 
 import React from 'react'
 import '../stylesheets/Modals.css'
-import {  Button} from '@material-ui/core';
 
 export const ModalPregunta = ({ isOpen, closeModal, procedimiento,objeto, elemento, children }) => {
 
     const handleModalDialogClick = (e) => {
         e.stopPropagation();
+    }
+
+    if(elemento.length >26){
+        elemento = elemento.substr(0,26) + '...';
     }
 
     return (

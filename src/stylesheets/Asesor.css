@@ -11,6 +11,29 @@
     left: 22%;
 }
 
+.CONTAINERASESOR2{
+    width: 75%;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    left: 22%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: fit-content;
+    max-height: 73vh;
+}
+
+.CONTAINERASESOR2::-webkit-scrollbar{
+    width: 9px;
+    background-color: #F1F1F1;
+    
+}
+
+.CONTAINERASESOR2::-webkit-scrollbar-thumb{
+    width: 9px;
+    background-color: #C1C1C1;
+    border-radius: 5px;
+}
+
 /*ESTILOS CABECERAS*/
 .HEADER-TEXT1 {
     font-size: 40px;
@@ -32,6 +55,7 @@
     color: #042354;
     font-weight: bold;
     height: 50px;
+    text-align: left;
 }
 /*ESTILOS PARA TABLAS*/
 .LISTAR-TABLA {
@@ -106,6 +130,36 @@
     width: 75%;
     padding: 5px;
 }
+
+
+.LISTAR-TABLA2 {
+    align-items: center;
+}
+
+.LISTAR-TABLA2 table{
+    border-collapse : separate;
+    border-spacing: 0px 10px;
+    border: none;
+}
+
+.LISTAR-TABLA2 th{
+    
+    color: #031D45;
+    font-size: 16px;
+    font-family: roboto;
+    text-indent: 0.4em;
+    font-weight: bolder;
+    border: none;
+}
+
+.LISTAR-TABLA2 td{
+    font-size: 12px;
+    font-family: roboto;
+    padding: 15px;
+    border-block: solid 1px gray;
+    color:#042354;
+    
+} 
 
 .TEXTAREA2{
     min-height: 40px;

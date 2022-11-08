@@ -1,8 +1,5 @@
 import React from 'react';
-import * as FaIcons from 'react-icons/fa';
 import * as BsIcons from 'react-icons/bs';
-import * as RiIcons from 'react-icons/ri';
-import * as MdIcons from 'react-icons/md';
 import * as IonIcons4 from "react-icons/io";
 
 export const SidebarData = [
@@ -15,12 +12,11 @@ export const SidebarData = [
 
     },
     {
-        title: 'Calendario',
-        path: '',
-        icon: <BsIcons.BsPencil />,
+        title: 'Calendario ',
+        path: 'calendario',
+        icon: <BsIcons.BsCalendar3Week />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
-
     },
     {
         title: 'Tesis',

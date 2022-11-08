@@ -1,5 +1,5 @@
 import { BarraVolver } from './components/BarraVolver';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Pagina.css'
 import SidebarAsesor from './components/Asesor/SidebarAsesor';
 import { BrowserRouter as Router , Routes, Route, Link, useLocation } from 'react-router-dom';
@@ -14,6 +14,7 @@ import AvanceSemanalSeleccionado from './pages/Asesor/AvanceSemanalSeleccionado'
 import EntregableParcialSeleccionado from './pages/Asesor/EntregableParcialSeleccionado';
 import EntregablesParciales from './pages/Asesor/EntregablesParciales';
 import HistorialVersiones from './pages/Asesor/HistorialVersiones';
+import Calendario from './pages/Asesor/Calendario';
 function Asesor() {
     const[active, setActive] = useState("proponerTema");
     const[formato, setFormato] = useState("botonActivo1");
@@ -39,6 +40,7 @@ function Asesor() {
                 <Routes>
                   <Route path='temaTesis' exact element= {<TemaTesis/>}/>
                   <Route path='alumnos' exact element= {<AlumnosAsesorados/>}/>
+                  <Route path='calendario' exact element= {<Calendario/>}/>
                   <Route path='alumnos/alumnoSeleccionado' exact element= {<AlumnoSeleccionado/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregables' exact element= {<Entregables/>}/>
                   <Route path='alumnos/alumnoSeleccionado/avancesSemanales' exact element= {<AvancesSemanales/>}/>

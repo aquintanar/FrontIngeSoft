@@ -5,18 +5,17 @@ import axios from 'axios';
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as BsIcons from 'react-icons/bs';
-import { useNavigate,useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
-import { Comparator } from 'react-bootstrap-table2-filter';
 
 const url2= "https://localhost:7012/api/DetalleRubrica/";
 const url1= "https://localhost:7012/api/Entregable/";
 //const url2= "http://44.210.195.91/api/DetalleRubrica/";
 //const url1= "https://44.210.195.91/api/Entregable/";
 
-function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs})  {
+function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,idRub})  {
 
     let navigate = useNavigate();
     const [currentPage,SetCurrentPage] = useState(0);
@@ -27,7 +26,11 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs}
     const [edit, SetEdit] = useState(0);
     let confirm = 0;
     let long = 0;
-    let vari = 0;
+    let borrar = [];
+    let nuevo = [];
+    let filtrado=[];
+
+    filtrado = rubricas;
 
     const [rubricaSeleccionada, setRubricaSeleccionada]=useState({
         rubro: '',
@@ -36,6 +39,8 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs}
         fidRubrica: 0
     })  
 
+    filtrado = filtrado.slice(currentPage,currentPage+5);
+
     const handleChange=e=>{
         const {name, value}=e.target;
         setRubricaSeleccionada(prevState=>({
@@ -43,7 +48,7 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs}
           [name]: value
         }))
     }
-
+    
 
     const nextPage = () =>{
         if(rubricas.length>=currentPage) //VER CODIGO
@@ -62,7 +67,6 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs}
             puntajeMaximo: 0,
             fidRubrica: 0
         })
-        console.log(rubricas);
     }
 
     const quitaRubro=(elemento)=>{
@@ -77,10 +81,15 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs}
           })
         .then(response=>{
             confirm = confirm+1;
-            console.log(long," no es ",confirm);
             if(long===confirm){
-                closePostModal();
-                openGuardadoModal();
+                if(id==='0'){
+                    closePostModal();
+                    openGuardadoModal();
+                }
+                  else{
+                    closeEditModal();
+                    openEditadoModal(); 
+                }
             }
         }).catch(error =>{
             console.log(error.message);
@@ -105,7 +114,6 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs}
           })
         .then(response=>{
             entregable.idEntregable = response.data.idRubrica;
-            console.log("entregable Listo")
             guarda();
         }).catch(error =>{
             console.log(error.message);
@@ -124,74 +132,76 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs}
     const peticionPutEntregable=async()=>{
         await axios.put(url1+"PutEntregable",entregable)
         .then(response=>{
-            console.log(entregable);
             editaRubricas();
         }).catch(error =>{
             console.log(error.message);
-        })  
+        })
     }
 
-    const peticionDeleteRubs=async(element)=>{
-        await axios.delete(url1+ "DeleteDetalleRubrica?idDetalleRubrica="+element).
-        then(response=>{
-            console.log("eliminando");
-            console.log(element);
-      })
+    
+
+    const compara =(obj1,obj2)=>{
+        if(obj1.rubro===obj2.rubro && 
+            obj1.nivelDeseado===obj2.nivelDeseado 
+            && obj1.puntajeMaximo === obj2.puntajeMaximo ){
+                return 1;
+        }
+        else{
+            return 0;
+        }
     }
 
     const editaRubricas =()=>{
-        console.log(rubs);
-        console.log(rubricas);
-        if(rubricas.length === rubs.length){
-            for(var i=0;i<rubricas.length;i++)
-            {
-                if(rubs.includes(rubricas[0])){
-                    vari = 1;
-                }
-                else{
-                    vari =0;
+        for (let i = 0; i < rubricas.length; i++) {
+            if(rubs.length===0){
+                nuevo.push(rubricas[i]);
+            }
+            for (let j = 0; j < rubs.length; j++) {
+                if(compara(rubs[j],rubricas[i])){
                     break;
+                }
+                if(j===(rubs.length-1)){
+                    nuevo.push(rubricas[i]);
                 }
             }
         }
-        else {
-            vari = 0;
+        for (let i = 0; i < rubs.length; i++) {
+            if(rubricas.length===0){
+                borrar.push(rubs[i]);
+            }
+            for (let j = 0; j < rubricas.length; j++) {
+                if(compara(rubs[i],rubricas[j])){
+                    break;
+                }
+                if(j===(rubricas.length-1)){
+                    borrar.push(rubs[i]);
+                }
+            }
         }
-        if(vari===1){      
+        guardaRubrica();
+    }
+    
+    const guardaRubrica=()=>{
+        borrar.forEach(async element => {
+            await peticionDeleteRubs(element.idDetalleRubrica);
+        });
+        long = nuevo.length;
+        nuevo.forEach(async element => {
+            element.fidRubrica = idRub;
+            await peticionPost(element);
+        });
+        if(long===0){//no se agrega nada
             closeEditModal();
-            openEditadoModal();
+            openEditadoModal(); 
         }
-        else{
-            console.log("editando con rubrica");
-            console.log(rubs);
-            rubs.forEach(async element => {
-                await peticionDeleteRubs(element.idDetalleRubrica);
-            });
-            rubricas.forEach(async element => {
-                element.fidRubrica = entregable.idEntregable;
-                await peticionPost(element);
-            });
-        }
-    }    
+    }
 
-    const compara =()=>{
-        if(rubricas.length === rubs.length){
-            for(var i=0;i<rubricas.length;i++)
-            {
-                if(rubs.includes(rubricas[0])){
-                    vari = 1;
-                }
-                else{
-                    vari =0;
-                    break;
-                }
-            }
-        }
-        else {
-            vari = 0;
-        }
-    }    
-  
+    const peticionDeleteRubs=async(element)=>{
+        await axios.delete(url2+ "DeleteDetalleRubrica?idDetalleRubrica="+element).
+        then(response=>{
+            console.log("eliminando " + {element});
+      })
+    }
 
     const peticionPostEntregable2=async()=>{
         await axios.post(url1+"PostEntregableConRubricaMarcel?linkDoc=jjjj",entregable,{
@@ -199,7 +209,6 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs}
           })
         .then(response=>{
             entregable.idEntregable = response.data.idRubrica;
-            console.log("entregable Listo")
             guarda();
         }).catch(error =>{
             console.log(error.message);
@@ -244,18 +253,18 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs}
 
 
         <div class="DATOS row" >
-            <div class="col-2">
-                <p>Entregable</p>
+            <div class="col-3">
+                <p>Entrega o Presentación</p>
             </div>
             <div class="col">
                 <div class="input-group mb-3">
-                    <input type="text" disabled class="form-control" name="entregable" placeholder="Entregable" value={entregable.nombre}/>
+                    <input type="text" disabled class="form-control" name="entregable" placeholder="Entrega o presentación" value={entregable.nombre}/>
                 </div>
             </div>
         </div>
 
         <div class="DATOS row" >
-            <div class="col-2">
+            <div class="col-3">
                 <p>Rubro</p>
             </div>
             <div class="col">
@@ -267,7 +276,7 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs}
         </div>
 
         <div class="DATOS row" >
-            <div class="col-2">
+            <div class="col-3">
                 <p>Nivel Deseado</p>
             </div>
             <div class="col">
@@ -279,7 +288,7 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs}
         </div>
 
         <div class="DATOS row" >
-            <div class="col-2">
+            <div class="col-3">
                 <p>Puntaje Máximo</p>
             </div>
             <div class="col-3">
@@ -296,22 +305,22 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs}
                 </div>
         </div>   
   
-          <p class="HEADER-TEXT2 mt-3" >Rúbrica</p>
+          <p class="HEADER-TEXT2 mt-0" >Rúbrica</p>
           <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
           <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
-          <div class = "row LISTAR-TABLA-EV">
-            <div class=" col-12  ">
+          <div class = "row LISTAR-TABLA-EV mb-1">
+            <div class=" col-12">
               <table className='table fs-6 '>
                 <thead class >
                   <tr class>
-                      <th style ={{width: 100}}>Rubro</th>
+                      <th style ={{width: 120}}>Rubro</th>
                       <th style = {{width:300}} >Nivel Deseado</th>
-                      <th style = {{width:100}} >Puntaje Máximo</th>
-                      <th style = {{width:50}} >Acciones</th>
+                      <th style = {{width:90}} >Puntaje Máximo</th>
+                      <th style = {{width:40}} >Acciones</th>
                   </tr>
                 </thead>
                 <tbody >
-                  {rubricas.map(elemento => (
+                  {filtrado.map(elemento => (
                     <tr key={elemento.rubro}>
                         <td >{elemento.rubro}</td>    
                         <td >{elemento.nivelDeseado}</td>    

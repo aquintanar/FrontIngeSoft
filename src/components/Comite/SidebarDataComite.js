@@ -17,7 +17,6 @@ export const SidebarData = [
     },
     {
         title: 'Preparación',
-        path: '',
         icon: <BsIcons.BsPencil />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
@@ -39,7 +38,7 @@ export const SidebarData = [
                 icon: <MdIcons.MdOutlineEditCalendar />
             },
             {
-                title: 'Gestión de Evaluaciones',
+                title: 'Entregas y Presentaciones',
                 path: 'preparacion/entregables',
                 icon: <ImIcons.ImFileText2 />
             },

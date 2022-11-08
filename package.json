@@ -25,6 +25,7 @@
     "react-data-export": "^0.6.0",
     "react-date-picker": "^9.0.0",
     "react-datepicker": "^4.8.0",
+    "react-datetime-picker": "^4.0.1",
     "react-dom": "^18.2.0",
     "react-export-excel": "^0.5.3",
     "react-html-table-to-excel": "^2.0.0",

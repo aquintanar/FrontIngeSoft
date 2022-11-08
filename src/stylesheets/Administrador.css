@@ -141,6 +141,32 @@
     text-indent: 0.4em;
 }
 
+.LISTAR-TABLA-EV td:nth-child(1){
+    font-size: 12px;
+    max-width: 100px;
+    font-family: roboto;
+    text-indent: 0.4em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.LISTAR-TABLA-EV td:nth-child(2){
+    font-size: 12px;
+    max-width: 100px;
+    font-family: roboto;
+    text-indent: 0.4em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.LISTAR-TABLA-EV td:nth-child(3){
+    font-size: 12px;
+    max-width: 100px;
+    font-family: roboto;
+    text-align: center;
+}
 
 .LISTAR-TABLA-EV tr:hover{
     font-size: 14px;
@@ -362,6 +388,7 @@
 }
 .INSERTAR-BOTONES .SIGUIENTE{
     background-color: #042354;
+    height: 30px;
 }
 .INSERTAR-BOTONES .CANCELAR{
     background-color: #B80000;
