@@ -23,7 +23,7 @@ const KILO_BYTES_PER_BYTE = 1000;
 const convertBytesToKB = (bytes) => Math.round(bytes / KILO_BYTES_PER_BYTE);
 
 const Upload = ({ label, files,linkDoc,tituloDoc, nombreArchivo,idAlumno,idEntregable,setFiles, ...otherProps }) => {
-  var urlInicial = "https://react-s3-software.s3.amazonaws.com/";
+  var urlInicial = "https://reactionando-s3-software.s3.amazonaws.com/";
   var titulo = "";
   var link= "";
 const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
@@ -200,13 +200,13 @@ const peticionPut=async()=>{
                 <div>
                   {
                     <ImagePreview
-                      src="https://react-s3-software.s3.amazonaws.com/1156975.png"
+                      src="https://reactionando-s3-software.s3.amazonaws.com/1156975.png"
                       alt={`file preview ${tituloDoc}`}
                       
                     />
                   }
                   <FileMetaData >
-                    <span>{nombreArchivo}</span>
+                    <span>{tituloDoc}pdf</span>
                     
                     <aside>
                      
@@ -239,7 +239,7 @@ const peticionPut=async()=>{
                 <div>
                   {
                     <ImagePreview
-                      src="https://react-s3-software.s3.amazonaws.com/1156975.png"
+                      src="https://reactionando-s3-software.s3.amazonaws.com/1156975.png"
                       alt={`file preview ${index}`}
                       
                     />

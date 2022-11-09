@@ -16,12 +16,23 @@ import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 function EntregableSeleccionado(){
   let navigate = useNavigate();
   const location = useLocation();
-    const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
+  const [dataV, setDataV] = useState([]);
   useEffect(() => {
     getData();
+    getDataV();
   }, []);
+  
+
+  
   const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
+  const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
+  const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
+  const [isOpenComentarioModal, openComentarioModal ,closeComentarioModal ] = useModal();
+  const [titulo,setTitulo] = useState("");
+  const [idDetalleRubrica,setIdDetalleRubrica] = useState("");
   const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
+  const [comentario,setComentario] = useState("");
   const [entSeleccionado, setEntSeleccionado]=useState({
     idDetalleNotaRubrica: 0,
     fidDetalleRubrica: 0,
@@ -31,8 +42,46 @@ function EntregableSeleccionado(){
     comentario: '',
     estado:1,
     fidCalificador:35,
-})
-  const handleChange= (nombre,e)=>{
+});
+
+const [versionSeleccionada, setVersionSeleccionada]=useState([{
+  idVersion: 0,
+  fidEntregable: 0,
+  linkDoc: " ",
+  fechaSubida: " ",
+  fidEstadoEntregable:0,
+  documentosAlumno:" ",
+  documentosRetroalimentacion:" ",
+  estado:0,
+  fidAlumno:0,
+  comentarios:' ',
+  fechaModificacion: " ",
+  notaVersion: 0,
+}]);
+
+const  getDataV = async() => {
+    const response= await axios(`https://localhost:7012/api/Version/ListVersionXId?idVersion=${location.state.idVersion}`);
+    setDataV(response.data);
+    console.log(response.data);
+    setVersionSeleccionada({
+      idVersion: 0,
+      fidEntregable: parseInt(response.data[0].fidEntregable),
+      linkDoc: response.data[0].linkDoc,
+      fechaSubida: new Date(response.data[0].fechaSubida).toISOString(),
+      fidEstadoEntregable:parseInt(response.data[0].fidEstadoEntregable),
+      documentosAlumno:response.data[0].documentosAlumno,
+      documentosRetroalimentacion:response.data[0].documentosRetroalimentacion,
+      estado:1,
+      fidAlumno:parseInt(response.data[0].fidAlumno),
+      comentarios:' ',
+      fechaModificacion:new Date(response.data[0].fechaModificacion).toISOString(),
+      notaVersion: parseInt(response.data[0].notaVersion),
+    });
+  };
+
+
+
+const handleChange= (nombre,e)=>{
     const {name, value}=e.target;
     if(/[0-9]/.test(value)){
       setEntSeleccionado(prevState=>({
@@ -49,9 +98,19 @@ function EntregableSeleccionado(){
       }))
       
     }
+    setIdDetalleRubrica(parseInt(nombre));
     console.log(nombre);
     console.log(entSeleccionado);
     
+  }
+  const handleChangeComentario= (e)=>{
+    const {name, value}=e.target;
+
+    setVersionSeleccionada(prevState=>({
+    ...prevState,
+    [name]: value
+  }))
+  console.log(versionSeleccionada);
   }
   const peticionPost=async()=>{
     await axios.post("https://localhost:7012/api/DetalleNotaRubrica/PostDetalleNotaRubrica",entSeleccionado,{
@@ -64,9 +123,24 @@ function EntregableSeleccionado(){
       console.log(error.message);
     })
   }
+  
+  const peticionEdit=async()=>{
+    await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionada,{
+      _method: 'POST'
+    })
+    .then(response=>{
+      closeEditModal();
+      openGuardadoModal();
+    }).catch(error =>{
+      console.log(error.message);
+    })
+  }
 
   const cerrarPost=()=>{
     closeGuardadoModal();
+  }
+  const cerrarComentario=()=>{
+    closeComentarioModal();
   }
   async function getData() {
     (async () => {
@@ -76,6 +150,12 @@ function EntregableSeleccionado(){
       console.log(data)
     })();
   };
+  
+
+  const abrirPost=()=>{
+    openComentarioModal();
+   // navigate("../gestion");     
+  }
   const dataTablaIntermedia = React.useMemo(
     () => [
       {
@@ -164,7 +244,7 @@ const {
        </table>
 
        <form action={location.state.linkDoc}>
-          <button type="button" className="btn btn-light btn-lg"><BsIcons.BsFileEarmarkPdf/>  {location.state.tituloDocPDF}</button>
+          <BsIcons.BsFileEarmarkPdf/> <input type="submit" value={location.state.tituloDocPDF} /> 
         </form>
         <h3 className='HEADER-TEXT3'>Rúbrica de Evaluación</h3>
         <div class = "row LISTAR-TABLA">

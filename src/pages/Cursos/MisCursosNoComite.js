@@ -99,7 +99,7 @@ function GestionarCurso()  {
         alumnoPropone: false,
         temaAsignado: false
     })
-
+    var arregloIDs =[];
     const petitionSem=async()=>{
         await axios.get(urlSem+"GetSemestres/")
         .then(response=>{
@@ -173,7 +173,33 @@ function GestionarCurso()  {
         petitionEsp();
         petitionCurso();
     },[])
+    function seleccionarFila() {
+      const rows=document.querySelectorAll('tr');
+      for(var i=1;i<rows.length;i++){
+        //Tomar cada celda
+          var cell1 = rows[i].cells[0];
+          var cell2 = rows[i].cells[1];
+          arregloIDs.push(cell1.textContent);
+          console.log(arregloIDs);
+          rows[i].onclick= function(){
+            //console.log(this.rowIndex);
+            console.log(arregloIDs[this.rowIndex-1]);
+            localStorage.setItem("idCurso",arregloIDs[this.rowIndex-1]);
+            if(localStorage.getItem("TIPOUSUARIO")=="ALUMNO")navigate('/alumno');
+            if(localStorage.getItem("TIPOUSUARIO")=="ASESOR")navigate('/asesor');
+            if(localStorage.getItem("TIPOUSUARIO")=="DOCENTE")navigate('/profesor');
+          }  
 
+          rows[i].onclick=function(){
+            console.log(arregloIDs[this.rowIndex-1]);
+            localStorage.setItem("idCurso",arregloIDs[this.rowIndex-1]);
+            if(localStorage.getItem("TIPOUSUARIO")=="ALUMNO")navigate('/alumno');
+            if(localStorage.getItem("TIPOUSUARIO")=="ASESOR")navigate('/asesor');
+            if(localStorage.getItem("TIPOUSUARIO")=="DOCENTE")navigate('/profesor');
+          }  
+      }
+     }
+  seleccionarFila();
     return(
         <div className="CONTAINERCOMITE">
             <h1 className="HEADER-TEXT1">Mis Cursos</h1>
@@ -217,55 +243,26 @@ function GestionarCurso()  {
 
           <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
           <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
-          <div class = "row LISTAR-TABLA">
+          <div class = "row LISTAR-TABLA" id="LISTAR-TABLA">
             <div class=" col-12 ">
-              <table className='table fs-6 '>
+              <table className='table fs-6 TABLALISTARCURSOS' >
                 <thead class >
                   <tr class>
+                      <th style = {{width:10}}>Id</th>
                       <th style ={{width: 275}}>Nombre</th>
-                      <th style = {{width:100}}>Acciones</th>
                   </tr>
                 </thead>
                 <tbody >
                   {filtrado.map(curso => (
                     <tr key={curso.idCurso}>
+                        <td>{curso.idCurso}</td>
                         <td >{curso.nombre}</td>
-                        <td>
-                        <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosCurso/"+curso.idCurso)}}> <FaIcons.FaEdit /></button>
-                        <button class=" btn BTN-ACCIONES" onClick={()=>seleccionarCurso(curso)}> <BootIcons.BsTrash /></button>
-                        </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           </div>
-          <ModalPregunta
-        isOpen={isOpenDeleteModal} 
-        closeModal={closeDeleteModal}
-        procedimiento = "eliminar"
-        objeto="la especialidad"
-        elemento={cursoSeleccionado && cursoSeleccionado.nombre}
-      >
-        <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-          <Button class="btn  btn-success btn-lg" onClick={()=>peticionDelete()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Button class="btn btn-danger btn-lg"  onClick={closeDeleteModal}>Cancelar</Button>
-        </div>
-      </ModalPregunta>
-
-      <ModalConfirmación
-        isOpen={isOpenConfirmModal} 
-        closeModal={closeConfirmModal}
-        procedimiento= "eliminado"
-      >
-        <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-          <Button class="btn btn-success btn-lg" onClick={closeConfirmModal}>Entendido</Button>
-        </div>
-      </ModalConfirmación>
-
-            <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
-                <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("DatosCurso/0")}}> Agregar Curso</button>
-            </div>
         </div>
     )
 }

@@ -4,6 +4,9 @@ import {useState , useEffect} from "react";
 import ModalBuscarAsesor from './ModalBuscarAsesor';
 import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 import useModal from '../../hooks/useModals';
+import axios from 'axios';
+const urlCoAsesor= "https://localhost:7012/api/TemaTesisXAsesor/";
+const urlTemaTesis= "https://localhost:7012/api/TemaTesis/";
 
 const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
     const [show, setShow] = useState(false);
@@ -16,6 +19,42 @@ const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
         nombres: '',
         apeMat: '',
     })
+
+    const [asesorTesisXTema, setAsesorXTema] = useState({
+        idTemaTesisXAsesor: '',
+        idAsesor: '',
+        idTemaTesis: '',
+        esPrincipal: ''
+    })
+
+    const subirCoasesor=async()=>{
+        setAsesorXTema({
+            idTemaTesisXAsesor: 0,
+            idAsesor: asesorTesis.idUsuario,
+            idTemaTesis: temaTesis.idTema,
+            esPrincipal: 0
+        });
+        await axios.post(urlCoAsesor+"PostTemaTesisXAsesor/",asesorTesisXTema,{
+            _method: 'POST'
+        })
+        .then(response=>{
+            openEditadoModal();
+          }).catch(error =>{
+          console.log(error.message);
+          })
+    }
+
+    const subirTemaTesis=async()=>{
+        await axios.post(urlTemaTesis+"PostTemaTesis/",temaTesis,{
+            _method: 'POST'
+        })
+        .then(response=>{
+            temaTesis.idTema = response.data.idTemaTesis;
+            subirCoasesor();            
+          }).catch(error =>{
+          console.log(error.message);
+          })
+    }
 
     const handleChange = e =>{
         setTemaTesis({
@@ -76,20 +115,20 @@ const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
         <form>
             <h1 className='HEADER-TEXT1'>Proponer tema de tesis</h1>
             <div className="form-group DATOS row">
-                <label for="tituloTesis" className="col-md-2 col-form-label mt-2 FUENTE-LABEL"> Título de tesis: </label>
+                <p for="tituloTesis" className="col-md-2 col-form-label mt-2"> Título de tesis: </p>
                 <div className = "col-md-10" >
                     <input onChange={handleChange} type='text' className="form-control" id="tituloTesis" name="tituloTesis"
                     style={{display: 'flex'}}/>
                 </div>
             </div>
             <div className="form-group DATOS row mt-3">
-                <label for="asesor" className="col-md-2 col-form-label FUENTE-LABEL"> Nombre asesor:</label>
+                <p for="asesor" className="col-md-2 col-form-label"> Nombre asesor:</p>
                 <div className = "col-md-10">
-                    <p > Ing. Covas </p>
+                    <p > Daniel Augusto Peirano </p>
                 </div>
             </div>
             <div className="form-group DATOS row mt-3">
-                <label for="coasesor" className="col-md-2 col-form-label FUENTE-LABEL"> Nombre co-asesor:</label>
+                <p for="coasesor" className="col-md-2 col-form-label"> Nombre co-asesor:</p>
                 <div className = "col-md-9">
                     <input onChange={handleChange} type='text' className="form-control" id="nombreCoAsesor" name="nombreCoAsesor"  disabled
                     style={{display: 'flex'}} value={asesorTesis && (asesorTesis.nombres + " " + asesorTesis.apeMat)}/>
@@ -105,19 +144,19 @@ const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
             </div>
 
             <div className="form-group  DATOS row mt-3">
-                <label for="descripcionTema" className="col-md-6 col-form-label FUENTE-LABEL"> Descripción del tema:</label>
+                <p for="descripcionTema" className="col-md-6 col-form-label"> Descripción del tema:</p>
                 <div className = "col-md-12">
                     <textarea onChange={handleChange} class="form-control" id="desciripcionTema" name="descripcion" rows={6}></textarea>
                 </div>                
             </div>
 
             <div className="form-group DATOS row mt-3">
-                <label for="palabraClave1" className="col-md-2 col-form-label FUENTE-LABEL"> Palabra clave 1:</label>
+                <p for="palabraClave1" className="col-md-2 col-form-label "> Palabra clave 1:</p>
                 <div className = "col-md-4">
                     <input onChange={handleChange} type='text' className="form-control" id="palabraClave1" name="palabraClave1"
                     style={{display: 'flex'}}/>
                 </div>
-                <label for="palabraClave2" className="col-md-2 col-form-label FUENTE-LABEL"> Palabra clave 2:</label>
+                <label for="palabraClave2" className="col-md-2 col-form-label"> Palabra clave 2:</label>
                 <div className = "col-md-4">
                     <input onChange={handleChange} type='text' className="form-control" id="palabraClave2" name="palabraClave2"
                     style={{display: 'flex'}}/>
@@ -125,11 +164,11 @@ const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
             </div>
 
             <div className="form-group DATOS row mt-3">
-                <label for="Estado" className="col-md-2 col-form-label FUENTE-LABEL"> Estado aprobación:</label>                
+                <p for="Estado" className="col-md-2 col-form-label "> Estado aprobación:</p>                
                 <div className = "col-md-10">
                     <p className='fonnnts'> PENDIENTE </p>
                 </div>
-                <label for="Estado" className="col-md-2 col-form-label FUENTE-LABEL"> Retroalimentación:</label>
+                <p for="Estado" className="col-md-2 col-form-label"> Retroalimentación:</p>
                 <div className = "col-md-12">
                     <textarea className="form-control" id="motivoRechazo" name="motivoRechazo" rows={3} disabled></textarea>
                 </div>
@@ -143,7 +182,7 @@ const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
                     elemento={temaTesis && temaTesis.tituloTesis}
                 >
                     <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-                        <button class="btn  btn-success btn-lg" type="button" onClick={()=>handleSubmmit()}>Confirmar</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="btn  btn-success btn-lg" type="button" onClick={()=>subirTemaTesis()}>Confirmar</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <button class="btn btn-danger btn-lg"  onClick={closePostModal}>Cancelar</button>
                     </div>
                 </ModalPregunta>

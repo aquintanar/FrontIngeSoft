@@ -19,10 +19,12 @@ const urlFacu= "http://44.210.195.91/api/Facultad/";
 */
 function EntregablesParciales()  {
     const [data, setData]=useState([]);
+    const [curso,setCurso]=useState(0);
     const [entregables , SetEntregables] = useState([]);
     const [search, setSearch] = useState("");
     const [modalEliminar, setModalEliminar]=useState(false);
     const [currentPage,SetCurrentPage] = useState(0);
+    const [estado,setEstado]=useState("");
     let navigate = useNavigate();
     const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
     const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
@@ -35,10 +37,44 @@ function EntregablesParciales()  {
       estado: ''
     })
   //Listar especialidades tabla--
+
+  const getidCurso= async()=>{
+    (async () => {
+      const result = await axios('https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=1');
+      //SetEntregablesParciales(result.data);
+      let i = 0  ; 
+      for ( i = 0 ; i < result.data.length ; i++){ 
+            if(result.data[i].idAlumno == 1) setCurso(1);   
+      }   
+
+      const result2 = await axios('https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=3');
+      //SetEntregablesParciales(result.data);
+      let j = 0  ; 
+      for ( j = 0 ; j < result2.data.length ; j++){ 
+            if(result2.data[j].idAlumno == 1) setCurso(3);   
+      }   
+    })();
+  }
   const peticionEntregables = async() => {
+    (async () => {
+      const result = await axios('https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=1');
+      //SetEntregablesParciales(result.data);
+      let i = 0  ; 
+      for ( i = 0 ; i < result.data.length ; i++){ 
+            if(result.data[i].idAlumno == 1) setCurso(1);   
+      }   
+
+      const result2 = await axios('https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=3');
+      //SetEntregablesParciales(result.data);
+      let j = 0  ; 
+      for ( j = 0 ; j < result2.data.length ; j++){ 
+            if(result2.data[j].idAlumno == 1) setCurso(3);   
+      }   
+    })();
     const idAlumno = 1 
     const idTipoEntregable = 2 
-    const urlEntregable  = 'https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+idTipoEntregable
+    const urlEntregable  = 'https://localhost:7012/api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso='+1+'&idTipoEntregable='+2+'&idAlumno='+1;
+    const urlEntregable2  = 'https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+idTipoEntregable;
     const response = await fetch(urlEntregable)
     const data = await response.json()
     console.log(data)
@@ -108,20 +144,25 @@ const getEntregableID = async () => {
             </thead>
             <tbody >
               {filtrado.map(entregables => (
-                <tr key={entregables.TipoEntregable}>
-                    <td type = 'Button' onClick={() =>navigate("entregableParcialSeleccionado",{state:{idVersion:entregables.idVersion,idAlumno:entregables.fidAlumno,nombres:entregables.nombres,apellidoPat:entregables.apePat,
-               apellidoMaterno:entregables.apeMat,tituloDoc:entregables.nombre,linkDoc:entregables.linkDoc,idEntregable:entregables.fidEntregable,estado:entregables.estadoEntregable,fechaE:entregables.fechaSubida,fechaL:entregables.fechaLim, nombreEntregable:entregables.TipoEntregable,comentarios:entregables.comentarios}})}>{entregables.TipoEntregable}</td>
-                    <td>{entregables.fechaLim}</td>
-                    <td>{entregables.fechaAsesor}</td>
-                    <td>    
-                                    {(() => {
-                                        switch(entregables.estadoEntregable){
-                                            case "Calificado por el docente" : return <td class = "text-success">{entregables.estadoEntregable}</td> ;
-                                            case "Rechazado" : return <td class = "text-danger">{entregables.estadoEntregable}</td> ;
-                                            default: return <td class = "text-warning">{entregables.estadoEntregable}</td> ;
+                <tr key={entregables.idEntregable}>
+                    <td type = 'Button' onClick={() =>navigate("entregableParcialSeleccionado",{state:{idVersion:entregables.idVersion,idAlumno:1,tituloDoc:entregables.nombre,linkDoc:entregables.linkDoc,notaVersion:entregables.notaVersion,
+                      idEntregable:entregables.idEntregable,estado:entregables.estadoMasReciente,fechaE:entregables.fechaSubida,fechaL:entregables.fechaLimite, nombreEntregable:entregables.tipoEntregable,comentarios:entregables.comentarios}})}>{entregables.nombre}</td>
+                    <td>{entregables.fechaLimite}</td>
+                    <td>{entregables.fechaEntregaAsesor} </td>
+                    <td>  
+                           {(() => {
+                                        switch(entregables.estadoMasReciente){
+                                          case 1 : return <td class = "text-black">Por Entregar</td> ;
+                                          case 2 : return <td class = "text-primary">Enviado para retroalimentacion</td> ;
+                                          case 3 : return <td class = "text-success">Con retroalimentacion</td> ;
+                                          case 4 : return <td class = "text-primary">Entregado a docente</td> ;
+                                            case 5 : return <td class = "text-success">Calificado por el docente</td> ;
+                                            
+                                            default: return <td class = "text-black">Por Entregar</td> ;
                                         }
                                     }) ()}
                     </td>
+
                     <td>Ver Historial</td>                    
                 </tr>
               ))}

@@ -7,14 +7,6 @@ import * as IonIcons4 from "react-icons/io";
 
 export const SidebarData = [
     {
-        title: 'Gestionar Curso',
-        path: 'GestionarCurso',
-        icon: <BsIcons.BsPeople />,
-        iconClosed: <IonIcons4.IoIosArrowDown />,
-        iconOpened: <IonIcons4.IoIosArrowUp />,
-
-    },
-    {
         title: 'Visualizar Curso',
         path: 'VisualizarCursos',
         icon: <BsIcons.BsNewspaper />,

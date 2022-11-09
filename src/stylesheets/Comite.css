@@ -235,3 +235,24 @@ Estilos de listar temas
     font-size: 12px;
     font-family: roboto;
 }
+
+
+/*
+
+REPORTE DE TESIS SUSTENTADAS
+
+*/
+.FONDO-TESIS{
+    background-color: #F3EEBF;
+    width:100%;
+}
+.HEADER-TEXTO{
+    display: flex;
+    justify-content: space-between;
+}
+.HEADER-TEXTCICLO{
+    margin-left: 40%;
+}
+.GRAFICO-PIE{
+    margin-left: 37%;
+}

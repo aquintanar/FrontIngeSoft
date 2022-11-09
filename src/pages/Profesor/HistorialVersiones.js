@@ -13,7 +13,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as RiIcons  from "react-icons/ri";
 import * as BsIcons from 'react-icons/bs';
 
-function AvancesSemanales(){
+function HistorialVersiones(){
     let navigate = useNavigate();
     const location = useLocation();
     const [currentPage,SetCurrentPage] = useState(0);
@@ -22,29 +22,16 @@ function AvancesSemanales(){
     useEffect(() => {
       getData();
     }, []);
-    const [dataE, setDataE] = useState([]);
-    useEffect(() => {
-      getDataE();
-    }, []);
 
  
     async function getData() {
       (async () => {
-        const result = await axios(`https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=1`);
-        //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=1`);
+        const result = await axios(`https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdEntregable?idAlumno=${location.state.idAlumno}&idEntregable=${location.state.idEntregable}`);
+        //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
         setData(result.data);
         console.log(data)
       })();
     };
-    async function getDataE() {
-      (async () => {
-        const result = await axios(`https://localhost:7012/api/Entregable/BuscarEntregableXId?idEntregable=4`);
-        //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
-        setDataE(result.data);
-        console.log(data)
-      })();
-    };
-   
     const buscador1 = e=>{
       setSearch1(e.target.value);
     }
@@ -67,15 +54,10 @@ function AvancesSemanales(){
       if(currentPage>0)
         SetCurrentPage(currentPage-4);
     }
-   
     return(
         <div className='CONTAINERASESOR'>
-          <span>
-        <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
-        </span>
-        <h1 className='HEADER-TEXT1'>Avances Semanales</h1>
-
-        
+         <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
+        <h1 className='HEADER-TEXT1'>Historial Versiones-{location.state.tituloDoc}</h1>
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
         <div class="col col-7 FILTRO-LISTAR-BUSCAR" >
               <p>Ingresar Estado de Entregable</p>
@@ -93,11 +75,9 @@ function AvancesSemanales(){
           <table className='table fs-6 '>
             <thead class >
               <tr class>
-                  <th style={{width: 50}}>Entregable</th>
-                  <th style ={{width: 275}}>Fecha de Entrega Asesor</th>
+                  <th style={{width: 50}}>Última modificación</th>
                   <th style = {{width:100}}>Fecha de Entrega</th>
                   <th style = {{width:100}}>Estado</th>
-                  <th style = {{width:100}}>Historial</th>
               </tr>
             </thead>
             <tbody >
@@ -105,16 +85,11 @@ function AvancesSemanales(){
                 <tr key={dato.idVersion}>
         
                   <td>
-                    <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("avanceSemanalSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
-               apellidoMaterno:dato.apeMat,tituloDoc:dato.documentosAlumno,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida}})}>{dato.documentosAlumno}</button>
+                    <button class="btn btn-lg navbar-toggle">{dato.fechaModificacion}</button>
                   </td>
-                  <td>
-                    <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("avanceSemanalSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
-               apellidoMaterno:dato.apeMat,tituloDoc:dato.documentosAlumno,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida}})}>{dato.fechaAsesor}</button>                    
-                  </td>  
+                  
                   <td> 
-                    <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("avanceSemanalSeleccionado",{state:{idAlumno:dato.idAlumno,nombres:dato.nombres,apellidoPat:dato.apePat,
-               apellidoMaterno:dato.apeMat,tituloDoc:dato.documentosAlumno,linkDoc:dato.linkDoc,idEntregable:dato.fidEntregable,estado:dato.estadoEntregable,fechaE:dato.fechaSubida}})}>{dato.fechaSubida}</button>
+                    <button class="btn btn-lg navbar-toggle">{dato.fechaPresentacionAlumno}</button>
                   </td> 
                   <td>
                   {(() => {
@@ -129,10 +104,6 @@ function AvancesSemanales(){
                                         }
                     }) ()}
                   </td>
-
-                    <td>
-                    <button class="btn BTN-ACCIONES"> <FaIcons.FaBars/></button>
-                    </td>
                 </tr>
               ))}
             </tbody>
@@ -142,5 +113,6 @@ function AvancesSemanales(){
        </div>
         </div>
     );
+
 }
-export default  AvancesSemanales;
+export default  HistorialVersiones;

@@ -6,7 +6,23 @@
     width:100%;
     bottom: 0;
     position: absolute;
+    background-color: #042354;
+    font-family: roboto;
+    color:#fff;
 }
+.BOTON-EXIT:hover {
+    background: #2179D4;    
+    border-left: 4px solid #ffffff;
+    color:#ffffff;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+}
+.BOTON-EXIT:hover svg{
+    width: 1.75em;
+    height: 1.75em;
+}
+
 .busquedaEspecialidad{
     margin-left: 100px;
 }

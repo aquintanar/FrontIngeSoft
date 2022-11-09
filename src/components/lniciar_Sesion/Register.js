@@ -127,12 +127,14 @@ const Register = () => {
         }
         try{/*Poner como en el backend*/ 
             //UsuarioSeleccionado.Password=pwd;
+            console.log("se registra todo");
             UsuarioSeleccionado.correo=user;
             UsuarioSeleccionado.nombres=name;
             UsuarioSeleccionado.apePat=apellidoP;
             UsuarioSeleccionado.apeMat=apellidoM;
             UsuarioSeleccionado.contrasena=pwd;
             console.log(UsuarioSeleccionado)
+            console.log(value.value);
             if(value.value==='Administrador'){
                 await axios.post(REGISTERADMIN_URL,UsuarioSeleccionado,{
                     _method: 'POST'
@@ -173,12 +175,13 @@ const Register = () => {
                   console.log(error.message);
                 })
             }
-            else if(value.value==='Comite de Tesis'){
+            else if(value.value==='Comite'){
+                console.log('Se ha ingresado en comite');
                 await axios.post(REGISTERCOMITE_URL,UsuarioSeleccionado,{
                     _method: 'POST'
                   })
                 .then(response=>{
-                  
+                    navigate('/')
                 }).catch(error =>{
                   console.log(error.message);
                 })
@@ -215,7 +218,7 @@ const Register = () => {
         {value:'Docente',label:'Docente'},
         {value:'Alumno',label:'Alumno'},
         {value:'Asesor',label:'Asesor'},
-        {value:'Comite de Tesis' ,label : 'Comite'}
+        {value:'Comite' ,label : 'Comite'}
     ]
 
     const onDropDownChange = (value) =>{

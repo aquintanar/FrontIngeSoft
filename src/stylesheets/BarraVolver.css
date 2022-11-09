@@ -13,3 +13,14 @@
     font-family: 'Montserrat', sans-serif;
     margin-left: 20px;
 }
+a{
+    padding-top: 15px;
+    font-family:roboto;
+    text-decoration: none;
+    color:black;
+}
+.titulo-info{
+    font-family: roboto;
+    font-size: 25px;
+    margin-right: 15px;
+}

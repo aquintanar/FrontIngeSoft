@@ -13,6 +13,7 @@ import AvancesSemanales from './pages/Asesor/AvancesSemanales';
 import AvanceSemanalSeleccionado from './pages/Asesor/AvanceSemanalSeleccionado';
 import EntregableParcialSeleccionado from './pages/Asesor/EntregableParcialSeleccionado';
 import EntregablesParciales from './pages/Asesor/EntregablesParciales';
+import HistorialVersiones from './pages/Asesor/HistorialVersiones';
 function Asesor() {
     const[active, setActive] = useState("proponerTema");
     const[formato, setFormato] = useState("botonActivo1");
@@ -42,6 +43,9 @@ function Asesor() {
                   <Route path='alumnos/alumnoSeleccionado/entregables' exact element= {<Entregables/>}/>
                   <Route path='alumnos/alumnoSeleccionado/avancesSemanales' exact element= {<AvancesSemanales/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales' exact element= {<EntregablesParciales/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregables/historialVersiones' exact element= {<HistorialVersiones/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/avancesSemanales/historialVersiones' exact element= {<HistorialVersiones/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregablesParciales/historialVersiones' exact element= {<HistorialVersiones/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregables/entregableSeleccionado' exact element= {<EntregableSeleccionado/>}/>
                   <Route path='alumnos/alumnoSeleccionado/avancesSemanales/avanceSemanalSeleccionado' exact element= {<AvanceSemanalSeleccionado/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales/entregableParcialSeleccionado' exact element= {<EntregableParcialSeleccionado/>}/>

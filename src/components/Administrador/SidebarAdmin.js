@@ -11,7 +11,11 @@ import '../../stylesheets/Administrador.css'
 import {useAuth0 }from '@auth0/auth0-react'
 import { useContext } from 'react';
 import { UserContext } from '../../UserContext';
-
+import * as FaIcons from 'react-icons/fa';
+import * as BsIcons from 'react-icons/bs';
+import * as RiIcons from 'react-icons/ri';
+import * as MdIcons from 'react-icons/md';
+import * as IonIcons4 from "react-icons/io";
 
 const Nav = styled.div`
   background: #042354;
@@ -79,7 +83,7 @@ const Sidebar = () => {
               {SidebarData.map((item, index) => {
                 return <SubMenu item={item} key={index} />;
               })}
-              <button className='BOTON-EXIT' onClick={()=>logout()}> Cerrar sesión</button>
+              <button className='BOTON-EXIT' onClick={()=>logout()}><FaIcons.FaDoorOpen /> Cerrar sesión</button>
         </SidebarWrap>
             
         </SidebarNav>

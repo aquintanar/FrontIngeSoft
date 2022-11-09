@@ -15,9 +15,6 @@ import * as RiIcons  from "react-icons/ri";
 
 //https://localhost:7012/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=1
 function EntregableSeleccionado(){
-  var cali="Califiación           ";
-  let modifiedArr=0;
-  
     var aux=0;
     let navigate = useNavigate();
     const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
@@ -28,6 +25,7 @@ function EntregableSeleccionado(){
     const [comentario,setComentario] = useState("");
     const [titulo,setTitulo] = useState("");
     const [notaFinal,setnotaFinal] = useState(0);
+    const [version, setVersion] = useState([]);
     const [detalleNota, setDetalleNota] = useState([]);
     const [nota, setNota] = useState({
       idDetalleNotaRubrica: 0,
@@ -45,19 +43,22 @@ function EntregableSeleccionado(){
       },
 
   });
-
+  const getVersion = async() => {
+    (async () => {
+        const result = await axios('https://localhost:7012/api/Version/ListVersionXId?idVersion='+location.state.idVersion);
+        setVersion(result.data[0]);
+      })();
+    }
   const [entregable,setEntregable] = useState({
     idEntregable: 0,
     responsableEvalua: ''
 });
     useEffect(() => {
-    //  getData();
-       getDetalleNotaRubrica();
-      seleccionarTipodeEntrega();
       seleccionarTipoCalificado();
-      
+      getDetalleNotaRubrica();
+      seleccionarTipodeEntrega();
       getEntregable();
-    //  getDetallesNotaRubrica();
+      getVersion();
     }, []);
 
     const abrirPost=()=>{
@@ -137,27 +138,29 @@ function EntregableSeleccionado(){
       }
     }
     const seleccionarTipoCalificado =()=>{
-      if(aux=1){
+      if(location.state.notaVersion>=0){
         //setCalificado("Calificado")
         getDetallesNotaRubrica();
         aux=1;
       }
-      else if(aux=0){
+      else {
         //setCalificado("No Calificado")
         getData();       
         aux=0;
       }
     }
     const dataTablaIntermedia = React.useMemo(
-      
+
+    
       () => [
 
-        
+
         {
-          col1: `${location.state.estado}`,
+          col1: `${location.state.estado==5?"Calificado por el docente":(location.state.estado==4?"Entregado a docente":(location.state.estado==3?"Con retroalimentacion":(location.state.estado==2?"Enviado para retroalimentacion":"Por Entregar")))}`,
+   //       col1: `${location.state.estado==5?"Calificado":"Sin Calificar"}`,
        //   col2: `${calificado}`,
           col3: `${location.state.fechaL}`,
-          col4: `${location.state.fechaE}`,
+          col4: `${location.state.idVersion>0?location.state.fechaE:"Sin Modificación"}`,
         },
       ],
       []
@@ -169,7 +172,7 @@ function EntregableSeleccionado(){
           accessor: 'col1',
         },
      //   {
-     //     Header: 'Estado de Calificación',
+     //     Header: 'Estado de Califiación',
      //     accessor: 'col2',
      //   },
         {
@@ -177,7 +180,7 @@ function EntregableSeleccionado(){
           accessor: 'col3',
         },
         {
-          Header: 'Fecha de modificación',
+          Header: 'Fecha de modifiación',
           accessor: 'col4',
         },
         
@@ -241,12 +244,13 @@ function EntregableSeleccionado(){
          </tbody>
        </table>
 
-        <form action={location.state.linkDoc}>
-          <button type="button" className="btn btn-light btn-lg"><BsIcons.BsFileEarmarkPdf/>  {location.state.tituloDoc }pdf  </button>
+       <form action={location.state.linkDoc}>
+          <BsIcons.BsFileEarmarkPdf/> <input type="submit" value={location.state.tituloDocPDF} /> 
         </form>
 
         <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
-          tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estadoEntregable,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios}})} >{subTitulo} {location.state.nombreEntregable}</p>
+          tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estadoEntregable,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios}})} >
+            {location.state.estado==5?"Modificar ":(location.state.estado==4?"Modificar ":(location.state.estado==3?"Modificar ":(location.state.estado==2?"Modificar ":"Agregar ")))} {location.state.nombreEntregable}</p>
         <p class="HEADER-TEXT5">Rúbrica de Evaluación</p>
         <div class = "row LISTAR-TABLA">
         <div class=" col-10  ">
@@ -293,7 +297,7 @@ function EntregableSeleccionado(){
                 <div class = "col-12">
                     <div class="text-start fs-5 fw-normal "><p>Comentarios del {entregable.responsableEvalua}</p></div>
                     <div class="input-group input-group-lg mb-3">
-                        <textarea class="form-control" name="Comentarios" placeholder={location.state.comentarios} aria-label="comentarios"  disabled="true" cols="10" rows="5
+                        <textarea class="form-control" name="Comentarios" placeholder={version.comentarios} aria-label="comentarios"  disabled="true" cols="10" rows="5
                         " 
                              />
                     </div>
