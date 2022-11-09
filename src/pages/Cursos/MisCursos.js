@@ -14,7 +14,7 @@ const urlFac= "https://localhost:7012/api/Facultad/";
 const urlEsp= "https://localhost:7012/api/Especialidad/";
 const urlCur= "https://localhost:7012/api/Curso/";
 
-function GestionarCurso()  {
+function MisCursos()  {
     let navigate = useNavigate();
     const [currentPage,SetCurrentPage] = useState(0);
     const [data, setData]=useState([]);
@@ -264,4 +264,4 @@ function GestionarCurso()  {
         </div>
     )
 }
-export default GestionarCurso;
+export default MisCursos;

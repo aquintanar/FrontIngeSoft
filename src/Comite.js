@@ -13,6 +13,8 @@ import DatosEntregable from "./pages/Comite/DatosEntregable";
 import ReporteAlumnos from "./pages/Comite/ReporteAlumnos";
 import Tesis from "./pages/Comite/Tesis";
 import ReporteCiclo from "./pages/Comite/ReporteCiclo";
+import ListarAsesores from "./pages/Comite/ListarAsesores";
+import DatosAsesor from "./pages/Comite/DatosAsesor";
 function Comite() {
 
     return (
@@ -24,6 +26,8 @@ function Comite() {
               <Routes>
                   <Route path='temaTesis' exact element= {<ListaTemaTesis/>}/>
                   <Route path='temaTesis/temaSeleccionado/:id' exact element= {<TemaSeleccionado/>}/>
+                  <Route path='asesor' exact element= {<ListarAsesores/>}/>
+                  <Route path='asesor/DatosAsesor/:id' exact element= {<DatosAsesor/>}/>
                   <Route path='preparacion/entregables' exact element= {<ListaEntregables/>}/>
                   <Route path='preparacion/entregables/menu/:id' exact element= {<Entregable/>}/>
                   <Route path='preparacion/entregables/menu/:id/datosEntregable' exact element= {<DatosEntregable/>}/>

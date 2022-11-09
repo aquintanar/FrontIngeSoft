@@ -332,7 +332,7 @@ function DatosCurso() {
             <div class="row INSERTAR-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button" onClick={()=>{navigate("../GestionarCurso")}}><span>Cancelar</span></button>
-                    <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>openPostModal()}><span>Guardar</span></button>
+                    <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
                 </div>
             </div>
         </div>

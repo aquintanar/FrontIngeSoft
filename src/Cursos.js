@@ -5,19 +5,16 @@ import DatosCurso from "./pages/ComiteCoordinador/DatosCurso";
 import SideBarCurso from "./components/Cursos/SideBarCurso";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import GestionarCurso from "./pages/ComiteCoordinador/gestionarCurso";
-import MisCursosNoComite from "./pages/Cursos/MisCursosNoComite";
-function ComiteCoordinador() {
+import MisCursos from "./pages/Cursos/MisCursos";
+function Cursos() {
   return (
     <div>
-      <SideBarCurso/>
-      <Routes>
-        <Route path="VisualizarCursos" exact element={<MisCursosNoComite />} />
-      </Routes>
+      <MisCursos/>
     </div>
   );
 }
 
-export default ComiteCoordinador;
+export default Cursos;
 
 /* onClick={()=>{navigate("DatosCurso/")}} */
 /* <Route path='GestionarCurso/DatosCurso' exact element= {<DatosCurso/>}/>*/
