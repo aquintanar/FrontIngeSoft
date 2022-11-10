@@ -55,6 +55,7 @@ function Login() {
   }, []);
 
   const validarCoordinador = async (e) => {
+    console.log("SE LLEGA A VALIDAR COORDINADOR");
     try {
       const response3 = await axios
         .get(
@@ -67,7 +68,9 @@ function Login() {
         .then((response3) => {
           console.log(response3.data);
           if (Object.keys(response3.data).length ===0) {
-            navigate("/comite");
+            
+            //console.log("NO SOY COORDINADOR");
+            navigate("/cursos");
           } else {
             for(let i in response3.data){
                 var j1=0,k1=0,p1=0,n1=0;
@@ -115,6 +118,7 @@ function Login() {
   };
 
   const searchId = async (e) => {
+    console.log("SE LLEGA A BUSCAR SU ID"); 
     try {
       console.log(e);
       setValue(e);
@@ -157,7 +161,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("SE LLEGA A BUSCARhandlesubmit"); 
     try {
       cuentaSeleccionada.correo = user1;
       cuentaSeleccionada.contrasena = pwd;
@@ -172,6 +176,7 @@ function Login() {
           }
         )
         .then((response) => {
+          console.log("SE PASO EL SUBMIT");
           const idUs = response.data.id;
           console.log("SI FUNCIONA");
           setValue(idUs);

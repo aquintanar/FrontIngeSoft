@@ -182,12 +182,15 @@ function GestionarCurso()  {
           arregloIDs.push(cell1.textContent);
           console.log(arregloIDs);
           rows[i].onclick= function(){
-            //console.log(this.rowIndex);
+            console.log(this.rowIndex);
             console.log(arregloIDs[this.rowIndex-1]);
+            console.log("me hicieron click");
             localStorage.setItem("idCurso",arregloIDs[this.rowIndex-1]);
+            
             if(localStorage.getItem("TIPOUSUARIO")=="ALUMNO")navigate('/alumno');
             if(localStorage.getItem("TIPOUSUARIO")=="ASESOR")navigate('/asesor');
             if(localStorage.getItem("TIPOUSUARIO")=="DOCENTE")navigate('/profesor');
+            if(localStorage.getItem("TIPOUSUARIO")=="COMITE")navigate('/comite');
           }  
 
           rows[i].onclick=function(){
@@ -196,6 +199,7 @@ function GestionarCurso()  {
             if(localStorage.getItem("TIPOUSUARIO")=="ALUMNO")navigate('/alumno');
             if(localStorage.getItem("TIPOUSUARIO")=="ASESOR")navigate('/asesor');
             if(localStorage.getItem("TIPOUSUARIO")=="DOCENTE")navigate('/profesor');
+            if(localStorage.getItem("TIPOUSUARIO")=="COMITE")navigate('/comite');
           }  
       }
      }
