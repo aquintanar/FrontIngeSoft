@@ -13,13 +13,12 @@ import useModal from "../../hooks/useModals";
 import { useNavigate } from "react-router-dom";
 import AsyncSelect from "react-select/async";
 import { EmailJSResponseStatus } from "emailjs-com";
-import emailjs from 'emailjs-com'
-
+import emailjs from "emailjs-com";
 
 const USER_REGEX = /^[a-zñ0-9]+@[a-z]+\.[a-z]/;
 const PWD_REGEX = /^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const NAME_REGEX = /^[a-zA-ZÑñà-úÀ-Ú]{1,50}$/;
-const CODIGO_REGEX=/^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/
+const CODIGO_REGEX = /^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/;
 
 const REGISTERALUMNO_URL = "https://localhost:7012/api/Alumno/PostAlumno";
 const REGISTERADMIN_URL =
@@ -86,19 +85,28 @@ const Register = () => {
     codigoPucp: "",
     contrasena: "",
     imagen: null,
-    fidEspecialidad:0,
+    fidEspecialidad: 0,
   });
 
   const sendEmail = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm('service_8uiyf6d', 'template_tztg52n', e.target, 'mS-WY7k1FE9ixytEf')
-      .then((result) => {
+    emailjs
+      .sendForm(
+        "service_8uiyf6d",
+        "template_tztg52n",
+        e.target,
+        "mS-WY7k1FE9ixytEf"
+      )
+      .then(
+        (result) => {
           console.log(result.text);
-      }, (error) => {
+        },
+        (error) => {
           console.log(error.text);
-      });
-    };
+        }
+      );
+  };
 
   useEffect(() => {
     userRef.current.focus();
@@ -113,10 +121,10 @@ const Register = () => {
     const result = NAME_REGEX.test(name);
     setValidNa(result);
   }, [name]);
-  useEffect(()=>{
+  useEffect(() => {
     const result = CODIGO_REGEX.test(codigoPUCP);
-    setValidCodigoPUCP(result)
-  })
+    setValidCodigoPUCP(result);
+  });
 
   useEffect(() => {
     const result = NAME_REGEX.test(apellidoP);
@@ -148,13 +156,13 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Si llega a handle summit")
+    console.log("Si llega a handle summit");
     const v1 = USER_REGEX.test(user);
     const v2 = PWD_REGEX.test(pwd);
     const v3 = NAME_REGEX.test(name);
     const v4 = NAME_REGEX.test(apellidoP);
     const v5 = NAME_REGEX.test(apellidoM);
-    const v6 = CODIGO_REGEX.test(codigoPUCP)
+    const v6 = CODIGO_REGEX.test(codigoPUCP);
     if (!v1 || !v2 || !v3 || !v4 || !v5 || !v6) {
       setErrMsg("invalid Entry");
       return;
@@ -168,10 +176,10 @@ const Register = () => {
       UsuarioSeleccionado.apeMat = apellidoM;
       UsuarioSeleccionado.contrasena = pwd;
       UsuarioSeleccionado.codigoPucp = codigoPUCP;
-      UsuarioSeleccionado.fidEspecialidad =value2;
+      UsuarioSeleccionado.fidEspecialidad = value2;
       console.log(UsuarioSeleccionado);
       console.log(value.value);
-      
+
       if (value.value === "Administrador") {
         await axios
           .post(REGISTERADMIN_URL, UsuarioSeleccionado, {
@@ -224,14 +232,12 @@ const Register = () => {
           })
           .then((response) => {
             console.log("Se llego a registrar");
-            //navigate('/')
+            navigate("/");
           })
           .catch((error) => {
             console.log(error.message);
           });
       }
-
-     
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No server Response");
@@ -260,7 +266,7 @@ const Register = () => {
         });
     } catch (err) {}
   };
-  
+
   const options = [
     { value: "Administrador", label: "Administrador" },
     { value: "Docente", label: "Docente" },
@@ -289,7 +295,6 @@ const Register = () => {
         </section>
       ) : (
         <div className="CONTAINER-GENERAL-REGISTRO">
-          
           <section className="CONTAINER-REGISTRO">
             <p
               ref={errRef}
@@ -542,7 +547,8 @@ const Register = () => {
                     }
                   >
                     <FontAwesomeIcon icon={faInfoCircle} />
-                    Solo se permiten numeros<br/>
+                    Solo se permiten numeros
+                    <br />
                     Debe tener 8 digitos
                   </p>
                   <label>Especialidad:</label>
@@ -551,7 +557,7 @@ const Register = () => {
                     select
                     class="form-select Cursor"
                     aria-label="Default select example"
-                    onChange={e=>setValues2(e.target.value)}
+                    onChange={(e) => setValues2(e.target.value)}
                   >
                     <option selected value="0">
                       Todos
@@ -560,7 +566,6 @@ const Register = () => {
                       <option
                         key={elemento.idEspecialidad}
                         value={elemento.idEspecialidad}
-                        
                       >
                         {elemento.nombre}
                       </option>
