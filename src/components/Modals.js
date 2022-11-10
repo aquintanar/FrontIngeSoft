@@ -7,11 +7,6 @@ export const ModalPregunta = ({ isOpen, closeModal, procedimiento,objeto, elemen
     const handleModalDialogClick = (e) => {
         e.stopPropagation();
     }
-
-    if(elemento.length >26){
-        elemento = elemento.substr(0,26) + '...';
-    }
-
     return (
         <div className={`modal ${isOpen && 'modal-open'}`} onClick={closeModal}>
             <div className="modal__dialog" onClick={handleModalDialogClick}>

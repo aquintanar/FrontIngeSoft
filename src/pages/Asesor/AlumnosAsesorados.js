@@ -31,14 +31,6 @@ function AlumnosAsesorados() {
     const columns = React.useMemo(
         () => [
           {
-            Header: 'Foto',
-            accessor: 'imagen', // accessor is the "key" in the data
-            Cell: ({ value }) => (
-              <button class="btn btn-lg navbar-toggle"> {value}
-              </button>
-            )
-          },
-          {
             Header: 'Apellido(s) / Nombre',
             accessor: d => `${d.apePat} ${d.nombres}`, // accessor is the "key" in the data
             Cell: ({ value }) => (
@@ -122,11 +114,11 @@ function AlumnosAsesorados() {
         <h2 className='HEADER-TEXT2'>TESIS 1 - INGENIERIA INFORMÁTICA</h2>
       
         <div className="col col-7 FILTRO-LISTAR-BUSCAR" >
-              <p>Ingresar apellido</p>
+              <p>Ingresar apellido para realizar búsqueda</p>
               <div className="input-group mb-2 ">
                   <input size="10" type="text" value={search1} class="form-control" name="search1" placeholder="Apellido" aria-label="serach" onChange={buscador1}/>
               </div>
-              <p>Ingresar código</p>
+              <p>Ingresar código para realizar búsqueda</p>
               <div className="input-group mb-2 ">
                   <input size="10" type="text" value={search2} class="form-control" name="search2" placeholder="Código" aria-label="serach" onChange={buscador2}/>
               </div>
@@ -134,7 +126,7 @@ function AlumnosAsesorados() {
           <div className="ContenidoPrincipal">
         <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
         <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
-        <table   {...getTableProps()} style={{minWidth: 650, borderCollapse: 'separate',
+        <table   {...getTableProps()} style={{minWidth: 650,borderCollapse: 'separate',
     borderSpacing: '0px 10px'}}>
          <thead>
          {headerGroups.map(headerGroup => (
@@ -166,7 +158,9 @@ function AlumnosAsesorados() {
                            {...cell.getCellProps()}
                            style={{
                             padding: '12px',
-                            border: 'solid 1px gray'
+                            border: 'solid 1px gray',
+                            borderLeft: "none",
+                            borderRight: "none",
                           }}
                            
                        >

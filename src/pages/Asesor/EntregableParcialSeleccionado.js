@@ -246,7 +246,7 @@ const {
         <form action={location.state.linkDoc}>
           <BsIcons.BsFileEarmarkPdf/> <input type="submit" value={location.state.tituloDocPDF} /> 
         </form>
-        
+     
         <h3 className='HEADER-TEXT3'>Rúbrica de Evaluación</h3>
         <div className = "row LISTAR-TABLA">
         <div className=" col-12  ">
@@ -281,9 +281,12 @@ const {
           </table>
         </div>
       </div>
+      <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
+          tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios}})} >
+           Agregar Documentos de Retroalimentación</p>
       <div className = "DATOS">
                 <div className = "col-12">
-                    <div className="text-start fs-5 fw-normal "><p>Comentarios</p></div>
+                    <div className="text-start fs-5 fw-normal "><p>Comentarios Generales</p></div>
                     <div className="input-group input-group-lg mb-3">
                         <textarea className="form-control" name="comentarios" placeholder="Comentarios" aria-label="comentarios"  
                           onChange={(e) => handleChangeComentario(e)}/>
@@ -316,6 +319,7 @@ const {
               closeModal={closeEditModal}
               procedimiento = "Guardar"
               objeto="el comentario general"
+              elemento={versionSeleccionada && versionSeleccionada.comentario}
             >
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
                 <Button class="btn  btn-success btn-lg" onClick={()=>peticionEdit()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

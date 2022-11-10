@@ -11,7 +11,7 @@ import '../../stylesheets/Asesor.css'
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
-import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
+import {ModalConfirmación, ModalPregunta,ModalComentario} from '../../components/Modals';
 
 function EntregableSeleccionado(){
   let navigate = useNavigate();
@@ -282,12 +282,25 @@ const {
           </table>
         </div>
       </div>
+      <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
+          tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios}})} >
+           Agregar Documentos de Retroalimentación</p>
       <div class = "DATOS">
+      <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
+          tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios}})} >
+           Agregar Documentos de Retroalimentación</p>
       <div class = "col-12">
                     <div class="text-start fs-5 fw-normal "><p>Comentarios del asesor</p></div>
                     <div class="input-group input-group-lg mb-3">
                         <textarea disabled="true" class="form-control" name="Comentarios" placeholder="Comentarios" aria-label="comentarios"  
                           onChange={handleChange}/>
+                    </div>
+                </div>
+                <div class = "col-12">
+                    <div class="text-start fs-5 fw-normal "><p>Comentarios Generales</p></div>
+                    <div class="input-group input-group-lg mb-3">
+                        <textarea  class="form-control" name="comentarios" placeholder="Comentarios" aria-label="comentarios"  
+                          onChange={(e) => handleChangeComentario(e)}/>
                     </div>
                 </div>
             </div>
@@ -303,7 +316,7 @@ const {
     isOpen={isOpenPostModal} 
     closeModal={closePostModal}
     procedimiento = "guardar"
-    objeto="el detalle"
+    objeto="el puntaje y comentario para este rubro"
     elemento={entSeleccionado && entSeleccionado.nombre}
   >
     <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
@@ -311,15 +324,47 @@ const {
       <Button class="btn btn-danger btn-lg"  onClick={closePostModal}>Cancelar</Button>
     </div>
   </ModalPregunta>
+  <ModalPregunta
+              isOpen={isOpenEditModal} 
+              closeModal={closeEditModal}
+              procedimiento = "Guardar"
+              objeto="el comentario general"
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn  btn-success btn-lg" onClick={()=>peticionEdit()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Button class="btn btn-danger btn-lg"  onClick={closeEditModal}>Cancelar</Button>
+              </div>
+            </ModalPregunta>
   <ModalConfirmación
               isOpen={isOpenGuardadoModal} 
               closeModal={closeGuardadoModal}
               procedimiento= "guardado"
             >
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-                <Button class="btn btn-success btn-lg" onClick={()=>cerrarPost()}>Entendido</Button>
+                <Button class="btn btn-success btn-lg" onClick={()=>closeGuardadoModal()}>Entendido</Button>
               </div>
             </ModalConfirmación>
+  <ModalComentario
+              isOpen={isOpenComentarioModal} 
+              closeModal={closeComentarioModal}
+              procedimiento= {titulo}
+            >
+                <div align = "left">
+                <p class= "text-white mt-5">Comentarios </p></div>
+             <div class = "DATOS">
+                <div class = "col-12">
+                    <div class="input-group input-group-lg mb-3">
+                        <textarea class="form-control" name="comentario" placeholder={comentario} aria-label="comentarios"   cols="10" rows="15
+                        "   onChange={(e) => handleChange(idDetalleRubrica, e)}/>
+                    </div>
+                </div>
+            </div>
+            <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+              <div class="align-text-bottom">
+                <Button class="btn btn-danger btn-lg position-relative" onClick={()=>cerrarComentario()}>Volver</Button>
+                </div>
+                </div>
+            </ModalComentario>
         </div>
     );
 
