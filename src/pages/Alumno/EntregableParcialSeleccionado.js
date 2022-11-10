@@ -53,9 +53,29 @@ function EntregableSeleccionado(){
       },
 
   });
-
+  const [versionSeleccionada, setVersionSeleccionada]=useState({
+    idVersion: 0,
+    linkDoc: '',
+    entregable: {
+    fidEntregable:1 
+  },
+    estadoEntregable: {
+    fidEstadoEntregable:1 
+  },
+  documentosAlumno: '',
+  documentosRetroalimentación: '',
+  alumno: {
+    fidAlumno:1 
+  }
+  })
   const cargarVersion=async()=>{
+    setVersionSeleccionada({
+      fidEntregable: location.state.idEntregable,
+      fidEstadoEntregable:1,
+      fidAlumno: 1
+  });
 
+    console.log(versionSeleccionada);
     if(location.state.idVersion!=null){
       (async () => {
       const urlDocumentos  = `https://localhost:7012/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${location.state.idVersion}`
@@ -65,6 +85,17 @@ function EntregableSeleccionado(){
       console.log(documentosVersion);
     })();
       //  setSubtitulo("Modificar Entrega");
+      }
+      
+      else {
+        await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionada,{
+          _method: 'POST'
+        })
+      .then(response=>{
+        console.log(location.state.versionSeleccionada);
+      }).catch(error =>{
+        console.log(versionSeleccionada);
+      })
       }
   }
 
