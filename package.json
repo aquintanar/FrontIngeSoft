@@ -14,12 +14,8 @@
     "@wojtekmaj/react-daterange-picker": "^4.0.0",
     "aws-sdk": "^2.1237.0",
     "axios": "^0.27.2",
-<<<<<<< HEAD
     "bootstrap": "^5.2.2",
-=======
-    "bootstrap": "^5.2.1",
     "emailjs-com": "^3.2.0",
->>>>>>> 5a26edf8f5a8d3e0edc3bd45cc4e8f76c928786f
     "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
