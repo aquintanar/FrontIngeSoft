@@ -276,19 +276,7 @@ const Tesis = () => {
             </button>
           </div>
         </div>
-        <PieChart width={400} height={400} className="GRAFICO-PIE">
-          <Pie
-            dataKey="value"
-            isAnimationActive={false}
-            data={data2}
-            cx="50%"
-            cy="50%"
-            outerRadius={80}
-            fill="#042354"
-            label
-          />
-          <Tooltip />
-        </PieChart>
+       
       </div>
     </div>
   );
