@@ -129,7 +129,7 @@ const AddEncuesta = () => {
                     onChange={handleChange}/>
                 </div>
                 <div class="col-lg-3 FILTRO-LISTAR" >
-                    <div class=" fs-5 fw-normal  mb-1 "><p>Seleccione el Cursos</p></div>
+                    <div class=" fs-5 fw-normal  mb-1 "><p>Seleccione el Curso</p></div>
                     <select select class="form-select Cursor" aria-label="Default select example" onChange={cambioSelect}>
                         
                         <option selected value = "0">Cursos disponibles</option>
