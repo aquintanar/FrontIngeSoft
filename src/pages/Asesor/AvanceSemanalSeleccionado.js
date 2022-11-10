@@ -282,9 +282,12 @@ const {
           </table>
         </div>
       </div>
+      <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
+          tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios}})} >
+           Agregar Documentos de Retroalimentación</p>
       <div className = "DATOS">
                 <div className = "col-12">
-                    <div className="text-start fs-5 fw-normal "><p>Comentarios</p></div>
+                    <div className="text-start fs-5 fw-normal "><p>Comentarios Generales</p></div>
                     <div className="input-group input-group-lg mb-3">
                         <textarea className="form-control" name="comentarios" placeholder="Comentarios" aria-label="comentarios"  
                           onChange={(e) => handleChangeComentario(e)}/>

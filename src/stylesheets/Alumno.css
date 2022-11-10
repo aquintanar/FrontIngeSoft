@@ -109,7 +109,13 @@
     height: 30px;
     text-align: left;
 }
+.HEADER-TEXT13-DOCUMENTO{
+    font-size: 14px;
+    color: #000;
+    height: 20px;
+    text-align: center;
 
+}
 .HEADER-TEXT11:hover{
    text-decoration: none;
 }

@@ -18,18 +18,49 @@ import useModal from '../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import * as BootIcons  from "react-icons/bs";
 import axios from 'axios';
+import { Buffer } from "buffer";
+import AWS from "aws-sdk";
+Buffer.from("anything", "base64");
+window.Buffer = window.Buffer || require("buffer").Buffer;
 const KILO_BYTES_PER_BYTE = 1000;
-
+var documents="22";
 const convertBytesToKB = (bytes) => Math.round(bytes / KILO_BYTES_PER_BYTE);
 
-const Upload = ({ label, files,linkDoc,tituloDoc, nombreArchivo,idAlumno,idEntregable,setFiles, ...otherProps }) => {
+const Upload = ({ label, files,linkDoc,tituloDoc, nombreArchivo,idAlumno,idEntregable,idVersion,estadoEntregable,tieneDocumento,setFiles, ...otherProps }) => {
   var urlInicial = "https://reactionando-s3-software.s3.amazonaws.com/";
   var titulo = "";
   var link= "";
+  var idVersionPrueba=0;
 const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
 const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
 const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
 const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
+const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
+const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
+const [documentosVersion , setDocumentosVersion] = useState([]);
+const [documentosVersionNuevo , setDocumentosVersionNuevo] = useState([]);
+const [documentoVersionNuevo , setDocumentoVersionNuevo] =useState({
+  idDocumentoVersion: 0,
+  version: {
+  idVersion:1 
+},
+ nombreDocumento: '',
+ linkDoc: '',
+ documentosRetroalimentacion:' ',
+ esTarea: '',
+ esRetroalimentacion:' ',
+})
+const [documentoVersion, setDocumentoVersion]=useState({
+  idDocumentoVersion: 0,
+  version: {
+  idVersion:1 
+},
+ nombreDocumento: '',
+ linkDoc: '',
+ documentosRetroalimentacion:' ',
+ esTarea: '',
+ esRetroalimentacion:' ',
+})
 const [versionSeleccionada, setVersionSeleccionada]=useState({
   idVersion: 0,
   linkDoc: '',
@@ -43,10 +74,8 @@ documentosAlumno: '',
 documentosRetroalimentación: '',
 alumno: {
   fidAlumno:1 
-},
-comentarios: '',
+}
 })
-
 const handleChange=e=>{
   const {name, value}=e.target;
   setVersionSeleccionada(prevState=>({
@@ -57,6 +86,59 @@ const handleChange=e=>{
 }
   let navigate = useNavigate();
   var documentos="";
+
+
+
+
+
+
+  const S3_BUCKET = "reactionando-s3-software";
+  const REGION = "us-east-1";
+
+  AWS.config.update({
+    accessKeyId: "AKIA3322RXFUFYNYYL6P",
+    secretAccessKey: "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",
+  });
+
+  const myBucket = new AWS.S3({
+    params: { Bucket: S3_BUCKET },
+    region: REGION,
+  });
+
+  const uploadImageToS3 = (file) => {
+    console.log(file);
+    const params = {
+      ACL: "public-read",
+      Body: file,
+      Bucket: S3_BUCKET,
+      Key: file.name,
+    };
+
+    console.log("params", params);
+
+    myBucket.putObject(params).send((err) => {
+      if (err) console.log(err);
+    });
+  };
+
+  const handleUpload = () => {
+     console.log("Uploading files");
+    for (const file in files) {
+      uploadImageToS3(files[file].file);
+      documents = documents + "^" + files[file].file.name ;
+      console.log(documents);
+    }
+    setFiles([]);
+  };
+
+
+
+
+
+
+
+
+
 
   const fileInputField = useRef();
 
@@ -88,33 +170,93 @@ const handleChange=e=>{
 
 
 const cerrarPost=()=>{
+  handleUpload();
   closeGuardadoModal();
-  navigate(-1);
+  navigate("/alumno/gestion/gesPortafolio/EntregablesParciales");
 }
 const cerrarPut=()=>{
+  handleUpload();
   closeEditadoModal();
-  navigate(-1);
+  navigate("/alumno/gestion/gesPortafolio/EntregablesParciales");
 }
-const peticionSelecter =()=>{
+const peticionSelecter =async()=>{
+if(idVersion>0){
+  setDocumentoVersionNuevo({
+    esRetroalimentacion : 0,
+});
+}
+else{
+  setDocumentoVersionNuevo({
+    esRetroalimentacion : 0,
+    idVersion : 40,
+});
+}
+  if(estadoEntregable==1){
+    setVersionSeleccionada({
+      fidEntregable: idEntregable,
+      fidEstadoEntregable:2,
+      fidAlumno: idAlumno
+  });
+    openPostModal();
+  }
   
-  if(tituloDoc!=null){
-    versionSeleccionada.linkDoc =link;
-    versionSeleccionada.documentosAlumno = titulo;
-    
-    setVersionSeleccionada(versionSeleccionada);
-    openEditModal();
-
- //   console.log(versionSeleccionada);
+  if(estadoEntregable==2){
+    setVersionSeleccionada({
+      idVersion: idVersion,
+      fidEntregable: idEntregable,
+      fidEstadoEntregable:2,
+      fidAlumno: idAlumno
+  });
+     openEditModal();
+  }
+  else if(estadoEntregable==3){
+    openPostModal();
+    setVersionSeleccionada({
+      fidEntregable: idEntregable,
+      fidEstadoEntregable:4,
+      fidAlumno: idAlumno
+  });
+       openPostModal();
+  }
+  else if(estadoEntregable==4){
+    setVersionSeleccionada({
+      idVersion: idVersion,
+      fidEntregable: idEntregable,
+      fidEstadoEntregable:4,
+      fidAlumno: idAlumno
+  });
+  openEditModal();
+  }
+  else if(estadoEntregable==5){
+    setVersionSeleccionada({
+      idVersion: idVersion,
+      fidEntregable: idEntregable,
+      fidEstadoEntregable:5,
+      fidAlumno: idAlumno
+  });
+      openEditModal();
   }
   else{
-    openPostModal();  
+    setVersionSeleccionada({
+      fidEntregable: idEntregable,
+      fidEstadoEntregable:2,
+      fidAlumno: idAlumno
+  });
+    openPostModal();
   }
-
 }
 
 const cargarVersion=async()=>{
- // if(location.state.comentarios!=null){
-    const response = await axios.get(`https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdEntregable?idAlumno=${idAlumno}&idEntregable=${idEntregable}`);
+
+  if(idVersion!=null){
+    (async () => {
+    const urlDocumentos  = `https://localhost:7012/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${idVersion}`
+    const responseDocumentos  = await fetch(urlDocumentos)
+    const dataDocumentos = await responseDocumentos.json()
+    setDocumentosVersion(dataDocumentos)
+    console.log(documentosVersion);
+
+    const response = await axios.get(`https://localhost:7012/api/Version/ListVersionXId?idVersion=${idVersion}`);
     setVersionSeleccionada({
       idVersion: response.data[0].idVersion,
       linkDoc: response.data[0].linkDoc,
@@ -125,12 +267,11 @@ const cargarVersion=async()=>{
       alumno:{fidAlumno: response.data[0].fidAlumno},
       comentarios: response.data[0].comentarios,
     } 
-
   );
-  //  setSubtitulo("Modificar Entrega");
-    
- // console.log(versionSeleccionada)
-  //}
+  })();
+       console.log(versionSeleccionada)
+    }
+
 }
 useEffect(() => {
  
@@ -140,16 +281,47 @@ useEffect(() => {
 
 
 const peticionPost=async()=>{
+  console.log(versionSeleccionada);
   await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionada,{
       _method: 'POST'
     })
   .then(response=>{
+    idVersionPrueba = response.data.idVersion;
+    console.log(response.data.idVersion);
+    if(idVersion==null){
+    setDocumentoVersionNuevo({
+      idVersion : idVersionPrueba, //LLAMAR CON RESPONSE AL IDVERSION Y LUEGO LLAMAR A LA FUNCION PARA CREAR DOCUMENTO
+  });
+  documentoVersionNuevo.idVersion = idVersionPrueba;
+}
+  guarda();
     closePostModal();
     openGuardadoModal();
   }).catch(error =>{
     console.log(error.message);
   })
+ /* 
+  if(idVersion==null){
+    setDocumentoVersionNuevo({
+      idVersion : versionSeleccionada.idVersion,
+  });
+
+  }*/
+  
+
 }
+
+const guarda=async()=>{
+  await axios.post("https://localhost:7012/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
+      _method: 'POST'
+    })
+  .then(response=>{
+  }).catch(error =>{
+    console.log(error.message);
+  })
+
+}
+
 
 const peticionPut=async()=>{
   await axios.put("https://localhost:7012/api/Version/ModifyVersion",versionSeleccionada,{
@@ -162,21 +334,47 @@ const peticionPut=async()=>{
   }).catch(error =>{
     console.log(error.message);
   })
+  if(idVersion==null){
+    setDocumentoVersionNuevo({
+      idVersion : 38,
+  });
+
+  }
+  console.log(documentoVersionNuevo);
+  await axios.post("https://localhost:7012/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
+      _method: 'POST'
+    })
+  .then(response=>{
+  }).catch(error =>{
+    console.log(error.message);
+  })
+
 }
-
-
+const peticionDelete=async()=>{
+  await axios.delete("https://localhost:7012/api/DocumentoVersion/EliminarDocumentoVersion?idDocumentoVersion="+ documentoVersion.idDocumentoVersion).then(response=>{
+    cargarVersion();
+    closeDeleteModal();
+    openConfirmModal();
+  })
+}
+const seleccionarDocumentoVersion=(documentos)=>{
+  setDocumentoVersion(documentos);
+  openDeleteModal();
+}
 //src={URL.createObjectURL(fileObj)}
 // <span>{convertBytesToKB(linkDoc.size)} kb</span>  
 //<span>{convertBytesToKB(fileObj.size)} kb</span> 
   return (
     <>
       <FileUploadContainer>
+      {(( estadoEntregable>1) ? " ":
       <div align = "center">
         <img width="140px" float= "left" top="1000px"  src={require('../imagenes/subida.png')} alt="archivo"></img>
-        </div>    
-        <p class="HEADER-TEXT3">Seleccione o suelte un archivo</p>
+         
+        <center>
+        <p class="HEADER-TEXT2" >Seleccione o suelte un archivo</p></center>
         <p class="HEADER-TEXT4">Los archivos JPG, PNG O PDF, no pueden superar las 100 MB de tamaño</p>
-         <p class="HEADER-TEXT9">{idAlumno}</p>
+         <p class="HEADER-TEXT9">{idAlumno}</p></div> )}
         <FormField
           type="file"
           ref={fileInputField}
@@ -184,7 +382,7 @@ const peticionPut=async()=>{
           title=""
           value=""
           {...otherProps}
-        />
+        /> 
            <div class="row INSERTAR-BOTONES">                            
         <div align = "center">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end"></div>   
@@ -196,29 +394,29 @@ const peticionPut=async()=>{
 
         <PreviewList>
 
-        <PreviewContainer key={tituloDoc}>
-                <div>
-                  {
-                    <ImagePreview
-                      src="https://reactionando-s3-software.s3.amazonaws.com/1156975.png"
-                      alt={`file preview ${tituloDoc}`}
-                      
-                    />
-                  }
-                  <FileMetaData >
-                    <span>{tituloDoc}pdf</span>
-                    
-                    <aside>
-                     
-                      <button class="btn BTN-ACCIONES-BASURA" onClick={() =>removeFile(tituloDoc)}><BootIcons.BsTrash /> </button>
+
+              {((idVersion >= 0) ? documentosVersion.map((documentos) => {
+                   return (
+              
+                  <PreviewContainer key={documentos.idDocumentoVersion}>
+                         <div>
+                          {<ImagePreview src="https://reactionando-s3-software.s3.amazonaws.com/document.png" alt={`file preview ${tituloDoc}`}/>}
+                     <FileMetaData>
+                    <span>{documentos.nombreDocumento}</span>                   
+                    <aside>                    
+                      <button class="btn BTN-ACCIONES-BASURA" onClick={()=>seleccionarDocumentoVersion(documentos)}><BootIcons.BsTrash /> </button>
                     </aside>     
                   </FileMetaData>
                 </div>
         
-       </PreviewContainer>
+              </PreviewContainer>
+              
+            );
+                }): " ")} 
           {
           
           files.map((file, index) => {
+            if(index==0){
             const fileObj = file.file;
             let isImageFile = fileObj.type.split("/")[0] === "image";
             let fileName = fileObj.name;
@@ -226,20 +424,25 @@ const peticionPut=async()=>{
             link=urlInicial+fileName;
             titulo=fileObj.name;
             urlInicial=urlInicial+fileName;
-      //      console.log(urlInicial);
             versionSeleccionada.linkDoc = urlInicial;
-     //       console.log(versionSeleccionada.linkDoc);
             versionSeleccionada.documentosAlumno = fileName;
-      //      console.log(versionSeleccionada.documentosAlumno);
-     //       console.log(versionSeleccionada);
-            
-            return (
+
+            documentoVersionNuevo.idDocumentoVersion = 1;
+            if(idVersion>0){
+              documentoVersionNuevo.idVersion = idVersion;
+            }
+       //     else documentoVersionNuevo.idVersion = 41;  //ACA DEBERIA IR LAS VERSIONES CREADAS
+            documentoVersionNuevo.nombreDocumento = fileName;
+            documentoVersionNuevo.linkDoc = "https://reactionando-s3-software.s3.amazonaws.com/"+fileName;
+            documentoVersionNuevo.esTarea = 1;
+
+         return (
               
               <PreviewContainer key={fileName}>
                 <div>
                   {
                     <ImagePreview
-                      src="https://reactionando-s3-software.s3.amazonaws.com/1156975.png"
+                      src="https://reactionando-s3-software.s3.amazonaws.com/document.png"
                       alt={`file preview ${index}`}
                       
                     />
@@ -254,16 +457,11 @@ const peticionPut=async()=>{
                   </FileMetaData>
                 </div>
         
-              </PreviewContainer>
-              
-            );
-          
+              </PreviewContainer>              
+            );         
+          }      } 
+          )       
           }
-          
-          )
-          
-          }
-
         </PreviewList>
 
       </FileUploadContainer>
@@ -273,8 +471,8 @@ const peticionPut=async()=>{
               isOpen={isOpenEditModal} 
               closeModal={closeEditModal}
               procedimiento = "modificar"
-              objeto="los "
-              elemento={"archivos"}
+              objeto="tu entrega "
+              elemento={tituloDoc}
             >
 
               
@@ -288,8 +486,8 @@ const peticionPut=async()=>{
               isOpen={isOpenPostModal} 
               closeModal={closePostModal}
               procedimiento = "guardar"
-              objeto="los "
-              elemento={"archivos"}
+              objeto="tu entrega  "
+              elemento={tituloDoc}
             >
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
                 <Button class="btn  btn-success btn-lg" type="submmit" onClick={()=>peticionPost()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -307,27 +505,51 @@ const peticionPut=async()=>{
             >
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
               <div class="align-text-bottom">
-                <Button class="btn btn-success btn-lg" onClick={()=>cerrarPost()}>Entendido</Button>
+              <Button class="btn btn-success btn-lg"  onClick={()=>cerrarPost()}><span>Entendido</span></Button>
                 </div>
               </div>
             </ModalConfirmación>
-
             <ModalConfirmación
               isOpen={isOpenEditadoModal} 
               closeModal={closeEditadoModal}
               procedimiento= "modificado"
             >
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-                <Button class="btn btn-success btn-lg" onClick={()=>cerrarPut()}>Entendido</Button>
+              <Button class="btn btn-success btn-lg"    onClick={()=>cerrarPut()}><span>Entendido</span></Button>
               </div>
             </ModalConfirmación>
+
+
+
+            <ModalPregunta
+        isOpen={isOpenDeleteModal} 
+        closeModal={closeDeleteModal}
+        procedimiento = "eliminar"
+        objeto="el documento"
+        elemento={documentoVersion && documentoVersion.nombreDocumento}
+      >
+        <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+          <Button class="btn  btn-success btn-lg" onClick={()=>peticionDelete()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <Button class="btn btn-danger btn-lg"  onClick={closeDeleteModal}>Cancelar</Button>
+        </div>
+      </ModalPregunta>
+
+      <ModalConfirmación
+        isOpen={isOpenConfirmModal} 
+        closeModal={closeConfirmModal}
+        procedimiento= "eliminado"
+      >
+        <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+          <Button class="btn btn-success btn-lg"  onClick={closeConfirmModal}>Entendido</Button>
+        </div>
+      </ModalConfirmación>
 
 
       <div class="row INSERTAR-BOTONES">                            
         <div align = "center">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end"></div>   
-        <button class="btn btn-primary fs-4 fw-bold  GUARDAR" type="submmit" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
-        <button class="btn btn-primary fs-4 fw-bold  CANCELAR " type="button"onClick={()=>{navigate(-1)}}><span>Cancelar</span></button>
+        <button class="btn btn-primary fs-4 fw-bold  GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
+        <button class="btn btn-primary fs-4 fw-bold  CANCELAR " type="button" onClick={()=>{navigate(-1)}}><span>Cancelar</span></button>
         </div>
         </div>
     </>

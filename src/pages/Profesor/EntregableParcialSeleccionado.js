@@ -279,16 +279,20 @@ const {
           </table>
         </div>
       </div>
+      <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
+          tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios}})} >
+           Agregar Documentos de Retroalimentación</p>
       <div class = "DATOS">
                 <div class = "col-12">
                     <div class="text-start fs-5 fw-normal "><p>Comentarios del asesor</p></div>
                     <div class="input-group input-group-lg mb-3">
-                        <textarea value="{dataV[0].comentarios}" disabled="true" class="form-control" name="Comentarios" placeholder="Comentarios" aria-label="comentarios"  
+                        <textarea value={dataV[0].comentarios} disabled="true" class="form-control" name="Comentarios" placeholder="Comentarios" aria-label="comentarios"  
                           />
                     </div>
                 </div>
+                
                 <div class = "col-12">
-                    <div class="text-start fs-5 fw-normal "><p>Comentarios</p></div>
+                    <div class="text-start fs-5 fw-normal "><p>Comentarios Generales</p></div>
                     <div class="input-group input-group-lg mb-3">
                         <textarea  class="form-control" name="comentarios" placeholder="Comentarios" aria-label="comentarios"  
                           onChange={(e) => handleChangeComentario(e)}/>
@@ -341,7 +345,7 @@ const {
               procedimiento= {titulo}
             >
                 <div align = "left">
-                <p class= "text-white mt-5">Comentarios del Asesor:</p></div>
+                <p class= "text-white mt-5">Comentarios</p></div>
              <div class = "DATOS">
                 <div class = "col-12">
                     <div class="input-group input-group-lg mb-3">

@@ -30,14 +30,6 @@ function Alumnos() {
     const columns = React.useMemo(
         () => [
           {
-            Header: 'Foto',
-            accessor: 'imagen', // accessor is the "key" in the data
-            Cell: ({ value }) => (
-              <button class="btn btn-lg navbar-toggle"> {value}
-              </button>
-            )
-          },
-          {
             Header: 'Apellido(s) / Nombre',
             accessor: d => `${d.apePat} ${d.nombres}`, // accessor is the "key" in the data
             Cell: ({ value }) => (
@@ -121,11 +113,11 @@ function Alumnos() {
         <h2 className='HEADER-TEXT2'>TESIS 1 - INGENIERÍA INFORMÁTICA</h2>
       
         <div className="col col-7 FILTRO-LISTAR-BUSCAR" >
-              <p>Ingresar apellido</p>
+              <p>Ingresar apellido para realizar búsqueda</p>
               <div className="input-group mb-2 ">
                   <input size="10" type="text" value={search1} class="form-control" name="search1" placeholder="Apellido" aria-label="serach" onChange={buscador1}/>
               </div>
-              <p>Ingresar código</p>
+              <p>Ingresar código para realizar búsqueda</p>
               <div className="input-group mb-2 ">
                   <input size="10" type="text" value={search2} class="form-control" name="search2" placeholder="Código" aria-label="serach" onChange={buscador2}/>
               </div>
@@ -165,7 +157,9 @@ function Alumnos() {
                            {...cell.getCellProps()}
                            style={{
                              padding: '12px',
-                             border: 'solid 1px gray'
+                             border: 'solid 1px gray',
+                             borderLeft: "none",
+                             borderRight: "none",
                            }}
                            
                        >

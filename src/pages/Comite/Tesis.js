@@ -108,7 +108,7 @@ const Tesis = () => {
   }
 
   //----------------
-  filtrado = filtrado.slice(currentPage, currentPage + 6);
+  //filtrado = filtrado.slice(currentPage, currentPage + 6);
   const nextPage = () => {
     if (filtrado.length >= currentPage)
       //VER CODIGO
@@ -183,11 +183,7 @@ const Tesis = () => {
     setModalEliminar(!modalEliminar);
   };
 
-  //Selecciona facultad a eliminar--
-  const seleccionarFacultad = (facultad) => {
-    setFacultadSeleccionada(facultad);
-    openDeleteModal();
-  };
+  
 
   useEffect(() => {
     peticionGet();
@@ -258,21 +254,23 @@ const Tesis = () => {
                 ))}
               </tbody>
             </table>
-            <ReactHtmlTableToExcel 
-            className="btn btn-info"
-            table='excel-table'
-            filename="ReporteTesis"
-            sheet="Sheet"
-            buttonText="Export to Excel"
-            />
+            
           </div>
           <div className="d-grid gap-2 d-md-flex justify-content-md-end LISTAR-BOTON ">
             <button
               className="btn btn-primary fs-4 fw-bold mb-3 "
               onClick={() => GeneratePDF()}
             >
-              <span>Descargar</span>
+              <span>PDF</span>
             </button>
+            <ReactHtmlTableToExcel 
+            className="btn btn-primary fs-4 fw-bold mb-3"
+            table='excel-table'
+            filename="ReporteTesis"
+            sheet="Sheet"
+            buttonText="Excel"
+            
+            />
           </div>
         </div>
         

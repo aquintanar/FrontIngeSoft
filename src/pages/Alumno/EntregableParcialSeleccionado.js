@@ -12,7 +12,16 @@ import '../../stylesheets/Alumno.css'
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
-
+import {
+  FileUploadContainer,
+  FormField,
+  ImagePreview,
+  PreviewContainer,
+  PreviewList,
+  FileMetaData,
+  RemoveFileIcon,
+  FilePreviewContainer
+} from "../../components/Upload.styles";
 //https://localhost:7012/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=1
 function EntregableSeleccionado(){
     var aux=0;
@@ -27,6 +36,7 @@ function EntregableSeleccionado(){
     const [notaFinal,setnotaFinal] = useState(0);
     const [version, setVersion] = useState([]);
     const [detalleNota, setDetalleNota] = useState([]);
+    const [documentosVersion , setDocumentosVersion] = useState([]);
     const [nota, setNota] = useState({
       idDetalleNotaRubrica: 0,
       DetalleRubrica: {
@@ -43,6 +53,52 @@ function EntregableSeleccionado(){
       },
 
   });
+  const [versionSeleccionada, setVersionSeleccionada]=useState({
+    idVersion: 0,
+    linkDoc: '',
+    entregable: {
+    fidEntregable:1 
+  },
+    estadoEntregable: {
+    fidEstadoEntregable:1 
+  },
+  documentosAlumno: '',
+  documentosRetroalimentación: '',
+  alumno: {
+    fidAlumno:1 
+  }
+  })
+  const cargarVersion=async()=>{
+    setVersionSeleccionada({
+      fidEntregable: location.state.idEntregable,
+      fidEstadoEntregable:1,
+      fidAlumno: 1
+  });
+
+    console.log(versionSeleccionada);
+    if(location.state.idVersion!=null){
+      (async () => {
+      const urlDocumentos  = `https://localhost:7012/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${location.state.idVersion}`
+      const responseDocumentos  = await fetch(urlDocumentos)
+      const dataDocumentos = await responseDocumentos.json()
+      setDocumentosVersion(dataDocumentos)
+      console.log(documentosVersion);
+    })();
+      //  setSubtitulo("Modificar Entrega");
+      }
+      
+      else {
+        await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionada,{
+          _method: 'POST'
+        })
+      .then(response=>{
+        console.log(location.state.versionSeleccionada);
+      }).catch(error =>{
+        console.log(versionSeleccionada);
+      })
+      }
+  }
+
   const getVersion = async() => {
     (async () => {
         const result = await axios('https://localhost:7012/api/Version/ListVersionXId?idVersion='+location.state.idVersion);
@@ -59,6 +115,7 @@ function EntregableSeleccionado(){
       seleccionarTipodeEntrega();
       getEntregable();
       getVersion();
+      cargarVersion();
     }, []);
 
     const abrirPost=()=>{
@@ -139,12 +196,10 @@ function EntregableSeleccionado(){
     }
     const seleccionarTipoCalificado =()=>{
       if(location.state.notaVersion>=0){
-        //setCalificado("Calificado")
         getDetallesNotaRubrica();
         aux=1;
       }
       else {
-        //setCalificado("No Calificado")
         getData();       
         aux=0;
       }
@@ -244,12 +299,23 @@ function EntregableSeleccionado(){
          </tbody>
        </table>
 
-       <form action={location.state.linkDoc}>
-          <BsIcons.BsFileEarmarkPdf/> <input type="submit" value={location.state.tituloDocPDF} /> 
-        </form>
 
+          
+     
+
+
+ <PreviewList>
+{((location.state.idVersion >= 0) ? documentosVersion.map((documentos) => {
+                   return (
+              
+                    <a href={documentos.linkDoc}>
+                    <button><BsIcons.BsFileEarmarkPdf/> {documentos.nombreDocumento} </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                  </a>    
+              
+            );
+                }): " ")} </PreviewList>
         <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
-          tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estadoEntregable,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios}})} >
+          tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}})} >
             {location.state.estado==5?"Modificar ":(location.state.estado==4?"Modificar ":(location.state.estado==3?"Modificar ":(location.state.estado==2?"Modificar ":"Agregar ")))} {location.state.nombreEntregable}</p>
         <p class="HEADER-TEXT5">Rúbrica de Evaluación</p>
         <div class = "row LISTAR-TABLA">
