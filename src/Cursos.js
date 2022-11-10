@@ -6,10 +6,12 @@ import SideBarCurso from "./components/Cursos/SideBarCurso";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import GestionarCurso from "./pages/ComiteCoordinador/gestionarCurso";
 import MisCursos from "./pages/Cursos/MisCursos";
+import MisCursosNoComite from './pages/Cursos/MisCursosNoComite'
 function Cursos() {
   return (
     <div>
-      <MisCursos/>
+      <SideBarCurso/>
+      <MisCursosNoComite/>
     </div>
   );
 }
