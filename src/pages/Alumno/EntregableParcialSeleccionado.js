@@ -53,9 +53,29 @@ function EntregableSeleccionado(){
       },
 
   });
-
+  const [versionSeleccionada, setVersionSeleccionada]=useState({
+    idVersion: 0,
+    linkDoc: '',
+    entregable: {
+    fidEntregable:1 
+  },
+    estadoEntregable: {
+    fidEstadoEntregable:1 
+  },
+  documentosAlumno: '',
+  documentosRetroalimentación: '',
+  alumno: {
+    fidAlumno:1 
+  }
+  })
   const cargarVersion=async()=>{
+    setVersionSeleccionada({
+      fidEntregable: location.state.idEntregable,
+      fidEstadoEntregable:1,
+      fidAlumno: 1
+  });
 
+    console.log(versionSeleccionada);
     if(location.state.idVersion!=null){
       (async () => {
       const urlDocumentos  = `https://localhost:7012/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${location.state.idVersion}`
@@ -65,6 +85,17 @@ function EntregableSeleccionado(){
       console.log(documentosVersion);
     })();
       //  setSubtitulo("Modificar Entrega");
+      }
+      
+      else {
+        await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionada,{
+          _method: 'POST'
+        })
+      .then(response=>{
+        console.log(location.state.versionSeleccionada);
+      }).catch(error =>{
+        console.log(versionSeleccionada);
+      })
       }
   }
 
@@ -286,7 +317,7 @@ function EntregableSeleccionado(){
         <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
           tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}})} >
             {location.state.estado==5?"Modificar ":(location.state.estado==4?"Modificar ":(location.state.estado==3?"Modificar ":(location.state.estado==2?"Modificar ":"Agregar ")))} {location.state.nombreEntregable}</p>
-        <p class="HEADER-TEXT5">Rúbrica de Evaluación</p>
+        <p class="HEADER-TEXT5">Rúbrica de Evaluación {location.state.idVersion} {location.state.idEntregable}</p>
         <div class = "row LISTAR-TABLA">
         <div class=" col-10  ">
           <table className='table fs-6 '>

@@ -116,6 +116,10 @@ useEffect(() => {
     setFiles([]);
   };
 
+  const vacio = (event) => {
+    event.preventDefault();
+
+  };
   /*
           <div class="row INSERTAR-BOTONES">                            
         <div align = "center">
@@ -132,7 +136,7 @@ useEffect(() => {
    <p class="HEADER-TEXT2">Archivos enviados</p>
    <div class="row ">
 
-          <form onSubmit={handleUpload}>
+      
         <Upload
          accept=".pdf,.docx"
           files={files}
@@ -149,7 +153,7 @@ useEffect(() => {
           multiple
         />
 
-      </form>
+ 
 
       </div>
 

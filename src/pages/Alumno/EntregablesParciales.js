@@ -36,6 +36,21 @@ function EntregablesParciales()  {
       foto: null,
       estado: ''
     })
+    const [versionSeleccionada, setVersionSeleccionada]=useState({
+      idVersion: 0,
+      linkDoc: '',
+      entregable: {
+      fidEntregable:1 
+    },
+      estadoEntregable: {
+      fidEstadoEntregable:1 
+    },
+    documentosAlumno: '',
+    documentosRetroalimentación: '',
+    alumno: {
+      fidAlumno:1 
+    }
+    })
   //Listar especialidades tabla--
 
   const getidCurso= async()=>{
@@ -119,6 +134,19 @@ const getEntregableID = async () => {
     peticionEntregables();
     getEntregableID();
  },[])
+ const crearVersion =async(idVersion,idEntregable,nombre,linkDoc,notaVersion,estadoMasReciente,fechaSubida,fechaLimite,tipoEntregable,comentarios)=>{
+
+    setVersionSeleccionada({
+      fidEntregable: idEntregable,
+      fidEstadoEntregable:1,
+      fidAlumno: 1
+  });
+
+    navigate("entregableParcialSeleccionado",{state:{idVersion:idVersion,idAlumno:1,tituloDoc:nombre,linkDoc:linkDoc,notaVersion: notaVersion,
+      idEntregable: idEntregable,estado:estadoMasReciente,fechaE:fechaSubida,fechaL:fechaLimite, nombreEntregable:tipoEntregable,comentarios:comentarios,versionCreada: versionSeleccionada}})
+ }
+
+
   return (      
     <div class=" CONTAINERADMIN">   
     <span>
@@ -145,8 +173,7 @@ const getEntregableID = async () => {
             <tbody >
               {filtrado.map(entregables => (
                 <tr key={entregables.idEntregable}>
-                    <td type = 'Button' onClick={() =>navigate("entregableParcialSeleccionado",{state:{idVersion:entregables.idVersion,idAlumno:1,tituloDoc:entregables.nombre,linkDoc:entregables.linkDoc,notaVersion:entregables.notaVersion,
-                      idEntregable:entregables.idEntregable,estado:entregables.estadoMasReciente,fechaE:entregables.fechaSubida,fechaL:entregables.fechaLimite, nombreEntregable:entregables.tipoEntregable,comentarios:entregables.comentarios}})}>{entregables.nombre}</td>
+                    <td type = 'Button' onClick={() =>crearVersion(entregables.idVersion,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersion,entregables.estadoMasReciente,entregables.fechaSubida,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)}>{entregables.nombre}</td>
                     <td>{entregables.fechaLimite}</td>
                     <td>{entregables.fechaEntregaAsesor} </td>
                     <td>  

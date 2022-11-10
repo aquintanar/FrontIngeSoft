@@ -18,8 +18,12 @@ import useModal from '../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import * as BootIcons  from "react-icons/bs";
 import axios from 'axios';
+import { Buffer } from "buffer";
+import AWS from "aws-sdk";
+Buffer.from("anything", "base64");
+window.Buffer = window.Buffer || require("buffer").Buffer;
 const KILO_BYTES_PER_BYTE = 1000;
-
+var documents="22";
 const convertBytesToKB = (bytes) => Math.round(bytes / KILO_BYTES_PER_BYTE);
 
 const Upload = ({ label, files,linkDoc,tituloDoc, nombreArchivo,idAlumno,idEntregable,idVersion,estadoEntregable,tieneDocumento,setFiles, ...otherProps }) => {
@@ -82,6 +86,59 @@ const handleChange=e=>{
   let navigate = useNavigate();
   var documentos="";
 
+
+
+
+
+
+  const S3_BUCKET = "reactionando-s3-software";
+  const REGION = "us-east-1";
+
+  AWS.config.update({
+    accessKeyId: "AKIA3322RXFUFYNYYL6P",
+    secretAccessKey: "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",
+  });
+
+  const myBucket = new AWS.S3({
+    params: { Bucket: S3_BUCKET },
+    region: REGION,
+  });
+
+  const uploadImageToS3 = (file) => {
+    console.log(file);
+    const params = {
+      ACL: "public-read",
+      Body: file,
+      Bucket: S3_BUCKET,
+      Key: file.name,
+    };
+
+    console.log("params", params);
+
+    myBucket.putObject(params).send((err) => {
+      if (err) console.log(err);
+    });
+  };
+
+  const handleUpload = () => {
+     console.log("Uploading files");
+    for (const file in files) {
+      uploadImageToS3(files[file].file);
+      documents = documents + "^" + files[file].file.name ;
+      console.log(documents);
+    }
+    setFiles([]);
+  };
+
+
+
+
+
+
+
+
+
+
   const fileInputField = useRef();
 
   const handleUploadBtnClick = () => {
@@ -112,14 +169,27 @@ const handleChange=e=>{
 
 
 const cerrarPost=()=>{
+  handleUpload();
   closeGuardadoModal();
   navigate("/alumno/gestion/gesPortafolio/EntregablesParciales");
 }
 const cerrarPut=()=>{
+  handleUpload();
   closeEditadoModal();
   navigate("/alumno/gestion/gesPortafolio/EntregablesParciales");
 }
 const peticionSelecter =async()=>{
+if(idVersion>0){
+  setDocumentoVersionNuevo({
+    esRetroalimentacion : 0,
+});
+}
+else{
+  setDocumentoVersionNuevo({
+    esRetroalimentacion : 0,
+    idVersion : 40,
+});
+}
   if(estadoEntregable==1){
     setVersionSeleccionada({
       fidEntregable: idEntregable,
@@ -173,36 +243,7 @@ const peticionSelecter =async()=>{
   });
     openPostModal();
   }
-  var i=0;
-
-  console.log(documentoVersionNuevo);
-
-  setDocumentoVersionNuevo({
-    esRetroalimentacion : 0
-});
-    peticionPostDocumento();
-
-  console.log(documentoVersionNuevo);
-  console.log(versionSeleccionada);
 }
-const peticionPostDocumento=async()=>{
-  const requestInit = {
-    method: 'POST',
-    headers: {'Content-type': 'application/json'},
-    body: JSON.stringify(documentoVersionNuevo)
-}
-console.log(documentoVersionNuevo);
-  fetch('https://localhost:7012/api/DocumentoVersion/InsertarDocumentoVersion', requestInit)
-  await axios.post("https://localhost:7012/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
-      _method: 'POST'
-    })
-  .then(response=>{
-  }).catch(error =>{
-    console.log(error.message);
-  })
-
-}
-
 
 const cargarVersion=async()=>{
 
@@ -225,9 +266,8 @@ const cargarVersion=async()=>{
       alumno:{fidAlumno: response.data[0].fidAlumno},
       comentarios: response.data[0].comentarios,
     } 
-    );
+  );
   })();
-    //  setSubtitulo("Modificar Entrega");
        console.log(versionSeleccionada)
     }
 
@@ -245,11 +285,32 @@ const peticionPost=async()=>{
       _method: 'POST'
     })
   .then(response=>{
+
+    setDocumentoVersionNuevo({
+      idVersion : versionSeleccionada.idVersion, //LLAMAR CON RESPONSE AL IDVERSION Y LUEGO LLAMAR A LA FUNCION PARA CREAR DOCUMENTO
+  });
+
     closePostModal();
     openGuardadoModal();
   }).catch(error =>{
     console.log(error.message);
   })
+  if(idVersion==null){
+    setDocumentoVersionNuevo({
+      idVersion : versionSeleccionada.idVersion,
+  });
+
+  }
+  
+  console.log(documentoVersionNuevo);
+  await axios.post("https://localhost:7012/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
+      _method: 'POST'
+    })
+  .then(response=>{
+  }).catch(error =>{
+    console.log(error.message);
+  })
+
 }
 
 const peticionPut=async()=>{
@@ -263,6 +324,21 @@ const peticionPut=async()=>{
   }).catch(error =>{
     console.log(error.message);
   })
+  if(idVersion==null){
+    setDocumentoVersionNuevo({
+      idVersion : 38,
+  });
+
+  }
+  console.log(documentoVersionNuevo);
+  await axios.post("https://localhost:7012/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
+      _method: 'POST'
+    })
+  .then(response=>{
+  }).catch(error =>{
+    console.log(error.message);
+  })
+
 }
 const peticionDelete=async()=>{
   await axios.delete("https://localhost:7012/api/DocumentoVersion/EliminarDocumentoVersion?idDocumentoVersion="+ documentoVersion.idDocumentoVersion).then(response=>{
@@ -340,27 +416,15 @@ const seleccionarDocumentoVersion=(documentos)=>{
             urlInicial=urlInicial+fileName;
             versionSeleccionada.linkDoc = urlInicial;
             versionSeleccionada.documentosAlumno = fileName;
-          /*  setDocumentosVersionNuevo({
-              idVersion: idVersion,
-              documentosAlumno: fileName,
-              linkDoc: "https://reactionando-s3-software.s3.amazonaws.com/"+fileName,
-              esTarea: 1
-          });*/
-          //  documentosVersionNuevo.data[index].idVersion = idVersion;
-         //   documentosVersionNuevo[index].documentosAlumno = fileName;
-         //   documentosVersionNuevo[index].linkDoc = "https://reactionando-s3-software.s3.amazonaws.com/"+fileName;
-         //   documentosVersionNuevo[index].esTarea = 1;
-         //  setDocumentosVersionNuevo(documentosVersionNuevo);
-     /*       setDocumentoVersionNuevo({
-          idVersion: idVersion,
-          documentosAlumno: fileName,
-          linkDoc: "https://reactionando-s3-software.s3.amazonaws.com/"+fileName,
-          esTarea: 1
-      });*/
-      documentoVersionNuevo.idVersion = idVersion;
-      documentoVersionNuevo.nombreDocumento = fileName;
-      documentoVersionNuevo.linkDoc = "https://reactionando-s3-software.s3.amazonaws.com/"+fileName;
-      documentoVersionNuevo.esTarea = 1;
+
+            documentoVersionNuevo.idDocumentoVersion = 1;
+            if(idVersion>0){
+              documentoVersionNuevo.idVersion = idVersion;
+            }
+       //     else documentoVersionNuevo.idVersion = 41;  //ACA DEBERIA IR LAS VERSIONES CREADAS
+            documentoVersionNuevo.nombreDocumento = fileName;
+            documentoVersionNuevo.linkDoc = "https://reactionando-s3-software.s3.amazonaws.com/"+fileName;
+            documentoVersionNuevo.esTarea = 1;
 
          return (
               
@@ -397,8 +461,8 @@ const seleccionarDocumentoVersion=(documentos)=>{
               isOpen={isOpenEditModal} 
               closeModal={closeEditModal}
               procedimiento = "modificar"
-              objeto="los "
-              elemento={"archivos"}
+              objeto="tu entrega "
+              elemento={tituloDoc}
             >
 
               
@@ -412,8 +476,8 @@ const seleccionarDocumentoVersion=(documentos)=>{
               isOpen={isOpenPostModal} 
               closeModal={closePostModal}
               procedimiento = "guardar"
-              objeto="los "
-              elemento={"archivos"}
+              objeto="tu entrega  "
+              elemento={tituloDoc}
             >
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
                 <Button class="btn  btn-success btn-lg" type="submmit" onClick={()=>peticionPost()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -431,7 +495,7 @@ const seleccionarDocumentoVersion=(documentos)=>{
             >
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
               <div class="align-text-bottom">
-                <Button class="btn btn-success btn-lg" onClick={()=>cerrarPost()}>Entendido</Button>
+              <Button class="btn btn-success btn-lg"  onClick={()=>cerrarPost()}><span>Entendido</span></Button>
                 </div>
               </div>
             </ModalConfirmación>
@@ -441,7 +505,7 @@ const seleccionarDocumentoVersion=(documentos)=>{
               procedimiento= "modificado"
             >
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-                <Button class="btn btn-success btn-lg" onClick={()=>cerrarPut()}>Entendido</Button>
+              <Button class="btn btn-success btn-lg"    onClick={()=>cerrarPut()}><span>Entendido</span></Button>
               </div>
             </ModalConfirmación>
 
@@ -466,7 +530,7 @@ const seleccionarDocumentoVersion=(documentos)=>{
         procedimiento= "eliminado"
       >
         <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-          <Button class="btn btn-success btn-lg" onClick={closeConfirmModal}>Entendido</Button>
+          <Button class="btn btn-success btn-lg"  onClick={closeConfirmModal}>Entendido</Button>
         </div>
       </ModalConfirmación>
 
@@ -474,8 +538,8 @@ const seleccionarDocumentoVersion=(documentos)=>{
       <div class="row INSERTAR-BOTONES">                            
         <div align = "center">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end"></div>   
-        <button class="btn btn-primary fs-4 fw-bold  GUARDAR" type="submmit" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
-        <button class="btn btn-primary fs-4 fw-bold  CANCELAR " type="button"onClick={()=>{navigate(-1)}}><span>Cancelar</span></button>
+        <button class="btn btn-primary fs-4 fw-bold  GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
+        <button class="btn btn-primary fs-4 fw-bold  CANCELAR " type="button" onClick={()=>{navigate(-1)}}><span>Cancelar</span></button>
         </div>
         </div>
     </>
