@@ -41,6 +41,7 @@ export const FileMetaData = styled.div`
   display: ${(props) => (props.isImageFile ? "none" : "flex")};
   flex-direction: column;
   position: absolute;
+  height: 165px;
   top: 0;
   left: 0;
   right: 0;
@@ -74,7 +75,6 @@ width: auto;
 export const PreviewContainer = styled.section`
   padding: 0.25rem;
   width: 20%;
-  height: 150px;
   border-radius: 6px;
   box-sizing: border-box;
   &:hover {

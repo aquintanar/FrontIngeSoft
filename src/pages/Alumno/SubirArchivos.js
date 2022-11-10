@@ -45,8 +45,8 @@ const [versionSeleccionada, setVersionSeleccionada]=useState({
 })
 
 const cargarVersion=async()=>{
-  if(location.state.comentarios!=null){
-    const response = await axios.get(`https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdEntregable?idAlumno=${location.state.idAlumno}&idEntregable=${location.state.idEntregable}`);
+  if(location.state.idVersion!=null){
+    const response = await axios.get(`https://localhost:7012/api/Version/ListVersionXId?idVersion=${location.state.idVersion}`);
     setVersionSeleccionada({
       idVersion: response.data[0].idVersion,
       linkDoc: response.data[0].linkDoc,
@@ -55,12 +55,14 @@ const cargarVersion=async()=>{
       documentosRetroalimentación: response.data[0].documentosRetroalimentación,
       alumno:{fidAlumno: response.data[0].fidAlumno},
     } 
+    
 
   );
   //  setSubtitulo("Modificar Entrega");
      console.log(versionSeleccionada)
      aux=1;
   }
+
 }
 useEffect(() => {
  
@@ -138,7 +140,10 @@ useEffect(() => {
           tituloDoc={location.state.tituloDoc}
           nombreArchivo={versionSeleccionada.documentosAlumno}
           idAlumno={location.state.idAlumno}
-          idEntregable={location.state.idEntregable}          
+          idEntregable={location.state.idEntregable}      
+          idVersion = {location.state.idVersion}    
+          estadoEntregable = {location.state.estado}  
+          tieneDocumento = {location.state.tieneDocumento}
           setFiles={setFiles}
           
           multiple

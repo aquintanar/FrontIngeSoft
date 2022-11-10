@@ -137,7 +137,7 @@ const getEntregableID = async () => {
               <tr class>
                   <th style={{width: 100}}>Entregable</th>
                   <th style={{width:170}}>Fecha límite</th>
-                  <th style={{width:170}}>Fecha de entrega asesor</th>
+                  <th style={{width:170}}>Fecha de entrega al asesor</th>
                   <th style={{width:170}}>Estado</th>
                   <th style={{width:50}}>Historial</th>
               </tr>

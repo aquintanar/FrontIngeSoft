@@ -22,7 +22,7 @@ const KILO_BYTES_PER_BYTE = 1000;
 
 const convertBytesToKB = (bytes) => Math.round(bytes / KILO_BYTES_PER_BYTE);
 
-const Upload = ({ label, files,linkDoc,tituloDoc, nombreArchivo,idAlumno,idEntregable,setFiles, ...otherProps }) => {
+const Upload = ({ label, files,linkDoc,tituloDoc, nombreArchivo,idAlumno,idEntregable,idVersion,estadoEntregable,tieneDocumento,setFiles, ...otherProps }) => {
   var urlInicial = "https://reactionando-s3-software.s3.amazonaws.com/";
   var titulo = "";
   var link= "";
@@ -30,6 +30,32 @@ const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
 const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
 const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
 const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
+const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
+const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
+const [documentosVersion , setDocumentosVersion] = useState([]);
+const [documentosVersionNuevo , setDocumentosVersionNuevo] = useState([]);
+const [documentoVersionNuevo , setDocumentoVersionNuevo] =useState({
+  idDocumentoVersion: 0,
+  version: {
+  idVersion:1 
+},
+ nombreDocumento: '',
+ linkDoc: '',
+ documentosRetroalimentacion:' ',
+ esTarea: '',
+ esRetroalimentacion:' ',
+})
+const [documentoVersion, setDocumentoVersion]=useState({
+  idDocumentoVersion: 0,
+  version: {
+  idVersion:1 
+},
+ nombreDocumento: '',
+ linkDoc: '',
+ documentosRetroalimentacion:' ',
+ esTarea: '',
+ esRetroalimentacion:' ',
+})
 const [versionSeleccionada, setVersionSeleccionada]=useState({
   idVersion: 0,
   linkDoc: '',
@@ -43,10 +69,8 @@ documentosAlumno: '',
 documentosRetroalimentación: '',
 alumno: {
   fidAlumno:1 
-},
-comentarios: '',
+}
 })
-
 const handleChange=e=>{
   const {name, value}=e.target;
   setVersionSeleccionada(prevState=>({
@@ -89,32 +113,108 @@ const handleChange=e=>{
 
 const cerrarPost=()=>{
   closeGuardadoModal();
-  navigate(-1);
+  navigate("/alumno/gestion/gesPortafolio/EntregablesParciales");
 }
 const cerrarPut=()=>{
   closeEditadoModal();
-  navigate(-1);
+  navigate("/alumno/gestion/gesPortafolio/EntregablesParciales");
 }
-const peticionSelecter =()=>{
+const peticionSelecter =async()=>{
+  if(estadoEntregable==1){
+    setVersionSeleccionada({
+      fidEntregable: idEntregable,
+      fidEstadoEntregable:2,
+      fidAlumno: idAlumno
+  });
+    openPostModal();
+  }
   
-  if(tituloDoc!=null){
-    versionSeleccionada.linkDoc =link;
-    versionSeleccionada.documentosAlumno = titulo;
-    
-    setVersionSeleccionada(versionSeleccionada);
-    openEditModal();
-
- //   console.log(versionSeleccionada);
+  if(estadoEntregable==2){
+    setVersionSeleccionada({
+      idVersion: idVersion,
+      fidEntregable: idEntregable,
+      fidEstadoEntregable:2,
+      fidAlumno: idAlumno
+  });
+     openEditModal();
+  }
+  else if(estadoEntregable==3){
+    openPostModal();
+    setVersionSeleccionada({
+      fidEntregable: idEntregable,
+      fidEstadoEntregable:4,
+      fidAlumno: idAlumno
+  });
+       openPostModal();
+  }
+  else if(estadoEntregable==4){
+    setVersionSeleccionada({
+      idVersion: idVersion,
+      fidEntregable: idEntregable,
+      fidEstadoEntregable:4,
+      fidAlumno: idAlumno
+  });
+  openEditModal();
+  }
+  else if(estadoEntregable==5){
+    setVersionSeleccionada({
+      idVersion: idVersion,
+      fidEntregable: idEntregable,
+      fidEstadoEntregable:5,
+      fidAlumno: idAlumno
+  });
+      openEditModal();
   }
   else{
-    openPostModal();  
+    setVersionSeleccionada({
+      fidEntregable: idEntregable,
+      fidEstadoEntregable:2,
+      fidAlumno: idAlumno
+  });
+    openPostModal();
   }
+  var i=0;
+
+  console.log(documentoVersionNuevo);
+
+  setDocumentoVersionNuevo({
+    esRetroalimentacion : 0
+});
+    peticionPostDocumento();
+
+  console.log(documentoVersionNuevo);
+  console.log(versionSeleccionada);
+}
+const peticionPostDocumento=async()=>{
+  const requestInit = {
+    method: 'POST',
+    headers: {'Content-type': 'application/json'},
+    body: JSON.stringify(documentoVersionNuevo)
+}
+console.log(documentoVersionNuevo);
+  fetch('https://localhost:7012/api/DocumentoVersion/InsertarDocumentoVersion', requestInit)
+  await axios.post("https://localhost:7012/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
+      _method: 'POST'
+    })
+  .then(response=>{
+  }).catch(error =>{
+    console.log(error.message);
+  })
 
 }
 
+
 const cargarVersion=async()=>{
- // if(location.state.comentarios!=null){
-    const response = await axios.get(`https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdEntregable?idAlumno=${idAlumno}&idEntregable=${idEntregable}`);
+
+  if(idVersion!=null){
+    (async () => {
+    const urlDocumentos  = `https://localhost:7012/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${idVersion}`
+    const responseDocumentos  = await fetch(urlDocumentos)
+    const dataDocumentos = await responseDocumentos.json()
+    setDocumentosVersion(dataDocumentos)
+    console.log(documentosVersion);
+
+    const response = await axios.get(`https://localhost:7012/api/Version/ListVersionXId?idVersion=${idVersion}`);
     setVersionSeleccionada({
       idVersion: response.data[0].idVersion,
       linkDoc: response.data[0].linkDoc,
@@ -125,12 +225,12 @@ const cargarVersion=async()=>{
       alumno:{fidAlumno: response.data[0].fidAlumno},
       comentarios: response.data[0].comentarios,
     } 
+    );
+  })();
+    //  setSubtitulo("Modificar Entrega");
+       console.log(versionSeleccionada)
+    }
 
-  );
-  //  setSubtitulo("Modificar Entrega");
-    
- // console.log(versionSeleccionada)
-  //}
 }
 useEffect(() => {
  
@@ -140,6 +240,7 @@ useEffect(() => {
 
 
 const peticionPost=async()=>{
+  console.log(versionSeleccionada);
   await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionada,{
       _method: 'POST'
     })
@@ -163,20 +264,31 @@ const peticionPut=async()=>{
     console.log(error.message);
   })
 }
-
-
+const peticionDelete=async()=>{
+  await axios.delete("https://localhost:7012/api/DocumentoVersion/EliminarDocumentoVersion?idDocumentoVersion="+ documentoVersion.idDocumentoVersion).then(response=>{
+    cargarVersion();
+    closeDeleteModal();
+    openConfirmModal();
+  })
+}
+const seleccionarDocumentoVersion=(documentos)=>{
+  setDocumentoVersion(documentos);
+  openDeleteModal();
+}
 //src={URL.createObjectURL(fileObj)}
 // <span>{convertBytesToKB(linkDoc.size)} kb</span>  
 //<span>{convertBytesToKB(fileObj.size)} kb</span> 
   return (
     <>
       <FileUploadContainer>
+      {(( estadoEntregable>1) ? " ":
       <div align = "center">
         <img width="140px" float= "left" top="1000px"  src={require('../imagenes/subida.png')} alt="archivo"></img>
-        </div>    
-        <p class="HEADER-TEXT3">Seleccione o suelte un archivo</p>
+         
+        <center>
+        <p class="HEADER-TEXT2" >Seleccione o suelte un archivo</p></center>
         <p class="HEADER-TEXT4">Los archivos JPG, PNG O PDF, no pueden superar las 100 MB de tamaño</p>
-         <p class="HEADER-TEXT9">{idAlumno}</p>
+         <p class="HEADER-TEXT9">{idAlumno}</p></div> )}
         <FormField
           type="file"
           ref={fileInputField}
@@ -184,7 +296,7 @@ const peticionPut=async()=>{
           title=""
           value=""
           {...otherProps}
-        />
+        /> 
            <div class="row INSERTAR-BOTONES">                            
         <div align = "center">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end"></div>   
@@ -196,29 +308,29 @@ const peticionPut=async()=>{
 
         <PreviewList>
 
-        <PreviewContainer key={tituloDoc}>
-                <div>
-                  {
-                    <ImagePreview
-                      src="https://reactionando-s3-software.s3.amazonaws.com/1156975.png"
-                      alt={`file preview ${tituloDoc}`}
-                      
-                    />
-                  }
-                  <FileMetaData >
-                    <span>{tituloDoc}pdf</span>
-                    
-                    <aside>
-                     
-                      <button class="btn BTN-ACCIONES-BASURA" onClick={() =>removeFile(tituloDoc)}><BootIcons.BsTrash /> </button>
+
+              {((idVersion >= 0) ? documentosVersion.map((documentos) => {
+                   return (
+              
+                  <PreviewContainer key={documentos.idDocumentoVersion}>
+                         <div>
+                          {<ImagePreview src="https://reactionando-s3-software.s3.amazonaws.com/document.png" alt={`file preview ${tituloDoc}`}/>}
+                     <FileMetaData>
+                    <span>{documentos.nombreDocumento}</span>                   
+                    <aside>                    
+                      <button class="btn BTN-ACCIONES-BASURA" onClick={()=>seleccionarDocumentoVersion(documentos)}><BootIcons.BsTrash /> </button>
                     </aside>     
                   </FileMetaData>
                 </div>
         
-       </PreviewContainer>
+              </PreviewContainer>
+              
+            );
+                }): " ")} 
           {
           
           files.map((file, index) => {
+            if(index==0){
             const fileObj = file.file;
             let isImageFile = fileObj.type.split("/")[0] === "image";
             let fileName = fileObj.name;
@@ -226,20 +338,37 @@ const peticionPut=async()=>{
             link=urlInicial+fileName;
             titulo=fileObj.name;
             urlInicial=urlInicial+fileName;
-      //      console.log(urlInicial);
             versionSeleccionada.linkDoc = urlInicial;
-     //       console.log(versionSeleccionada.linkDoc);
             versionSeleccionada.documentosAlumno = fileName;
-      //      console.log(versionSeleccionada.documentosAlumno);
-     //       console.log(versionSeleccionada);
-            
-            return (
+          /*  setDocumentosVersionNuevo({
+              idVersion: idVersion,
+              documentosAlumno: fileName,
+              linkDoc: "https://reactionando-s3-software.s3.amazonaws.com/"+fileName,
+              esTarea: 1
+          });*/
+          //  documentosVersionNuevo.data[index].idVersion = idVersion;
+         //   documentosVersionNuevo[index].documentosAlumno = fileName;
+         //   documentosVersionNuevo[index].linkDoc = "https://reactionando-s3-software.s3.amazonaws.com/"+fileName;
+         //   documentosVersionNuevo[index].esTarea = 1;
+         //  setDocumentosVersionNuevo(documentosVersionNuevo);
+     /*       setDocumentoVersionNuevo({
+          idVersion: idVersion,
+          documentosAlumno: fileName,
+          linkDoc: "https://reactionando-s3-software.s3.amazonaws.com/"+fileName,
+          esTarea: 1
+      });*/
+      documentoVersionNuevo.idVersion = idVersion;
+      documentoVersionNuevo.nombreDocumento = fileName;
+      documentoVersionNuevo.linkDoc = "https://reactionando-s3-software.s3.amazonaws.com/"+fileName;
+      documentoVersionNuevo.esTarea = 1;
+
+         return (
               
               <PreviewContainer key={fileName}>
                 <div>
                   {
                     <ImagePreview
-                      src="https://reactionando-s3-software.s3.amazonaws.com/1156975.png"
+                      src="https://reactionando-s3-software.s3.amazonaws.com/document.png"
                       alt={`file preview ${index}`}
                       
                     />
@@ -254,16 +383,11 @@ const peticionPut=async()=>{
                   </FileMetaData>
                 </div>
         
-              </PreviewContainer>
-              
-            );
-          
+              </PreviewContainer>              
+            );         
+          }      } 
+          )       
           }
-          
-          )
-          
-          }
-
         </PreviewList>
 
       </FileUploadContainer>
@@ -311,7 +435,6 @@ const peticionPut=async()=>{
                 </div>
               </div>
             </ModalConfirmación>
-
             <ModalConfirmación
               isOpen={isOpenEditadoModal} 
               closeModal={closeEditadoModal}
@@ -321,6 +444,31 @@ const peticionPut=async()=>{
                 <Button class="btn btn-success btn-lg" onClick={()=>cerrarPut()}>Entendido</Button>
               </div>
             </ModalConfirmación>
+
+
+
+            <ModalPregunta
+        isOpen={isOpenDeleteModal} 
+        closeModal={closeDeleteModal}
+        procedimiento = "eliminar"
+        objeto="el documento"
+        elemento={documentoVersion && documentoVersion.nombreDocumento}
+      >
+        <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+          <Button class="btn  btn-success btn-lg" onClick={()=>peticionDelete()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <Button class="btn btn-danger btn-lg"  onClick={closeDeleteModal}>Cancelar</Button>
+        </div>
+      </ModalPregunta>
+
+      <ModalConfirmación
+        isOpen={isOpenConfirmModal} 
+        closeModal={closeConfirmModal}
+        procedimiento= "eliminado"
+      >
+        <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+          <Button class="btn btn-success btn-lg" onClick={closeConfirmModal}>Entendido</Button>
+        </div>
+      </ModalConfirmación>
 
 
       <div class="row INSERTAR-BOTONES">                            
