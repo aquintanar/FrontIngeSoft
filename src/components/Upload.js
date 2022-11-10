@@ -30,6 +30,7 @@ const Upload = ({ label, files,linkDoc,tituloDoc, nombreArchivo,idAlumno,idEntre
   var urlInicial = "https://reactionando-s3-software.s3.amazonaws.com/";
   var titulo = "";
   var link= "";
+  var idVersionPrueba=0;
 const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
 const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
 const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
@@ -285,24 +286,32 @@ const peticionPost=async()=>{
       _method: 'POST'
     })
   .then(response=>{
-
+    idVersionPrueba = response.data.idVersion;
+    console.log(response.data.idVersion);
+    if(idVersion==null){
     setDocumentoVersionNuevo({
-      idVersion : versionSeleccionada.idVersion, //LLAMAR CON RESPONSE AL IDVERSION Y LUEGO LLAMAR A LA FUNCION PARA CREAR DOCUMENTO
+      idVersion : idVersionPrueba, //LLAMAR CON RESPONSE AL IDVERSION Y LUEGO LLAMAR A LA FUNCION PARA CREAR DOCUMENTO
   });
-
+  documentoVersionNuevo.idVersion = idVersionPrueba;
+}
+  guarda();
     closePostModal();
     openGuardadoModal();
   }).catch(error =>{
     console.log(error.message);
   })
+ /* 
   if(idVersion==null){
     setDocumentoVersionNuevo({
       idVersion : versionSeleccionada.idVersion,
   });
 
-  }
+  }*/
   
-  console.log(documentoVersionNuevo);
+
+}
+
+const guarda=async()=>{
   await axios.post("https://localhost:7012/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
       _method: 'POST'
     })
@@ -312,6 +321,7 @@ const peticionPost=async()=>{
   })
 
 }
+
 
 const peticionPut=async()=>{
   await axios.put("https://localhost:7012/api/Version/ModifyVersion",versionSeleccionada,{
