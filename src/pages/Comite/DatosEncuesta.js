@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState , useEffect} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../../stylesheets/Administrador.css';
 import axios from 'axios';
@@ -8,15 +8,17 @@ import * as BsIcons from 'react-icons/bs';
 import { useNavigate,useParams } from 'react-router-dom';
 import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
-import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
+import {ModalConfirmación, ModalPregunta , ModalInsertar} from '../../components/Modals';
 import { Comparator } from 'react-bootstrap-table2-filter';
 
 const url2= "https://localhost:7012/api/DetalleRubrica/";
 const url1= "https://localhost:7012/api/Entregable/";
+const urlPregunta= "https://localhost:7012/api/PreguntaEncuesta/";
+
 //const url2= "http://44.210.195.91/api/DetalleRubrica/";
 //const url1= "https://44.210.195.91/api/Entregable/";
 
-function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs})  {
+function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs,curso,setCurso})  {
 
     let navigate = useNavigate();
     const [currentPage,SetCurrentPage] = useState(0);
@@ -25,6 +27,13 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
     const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
     const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
     const [edit, SetEdit] = useState(0);
+    const [encuestaSeleccionada , setEncuestaSeleccionada] = useState({
+        idPreguntaEncuesta: 0,
+        fidEncuesta: 0,
+        pregunta: '',
+
+    })
+    const [preguntas, setPreguntas] = useState([]);
     let confirm = 0;
     let long = 0;
     let vari = 0;
@@ -38,10 +47,12 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
 
     const handleChange=e=>{
         const {name, value}=e.target;
-        setRubricaSeleccionada(prevState=>({
+        setEncuestaSeleccionada(prevState=>({
           ...prevState,
-          [name]: value
+          fidEncuesta: id,
+          pregunta: value 
         }))
+        console.log(encuestaSeleccionada);
     }
 
 
@@ -113,12 +124,7 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
     }
 
     const peticionSelecter =()=>{
-        if(id==='0'){
-          openPostModal();
-        }
-        else{
-          openEditModal();  
-        }
+        openPostModal();
     }
 
     const peticionPutEntregable=async()=>{
@@ -205,6 +211,15 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
             console.log(error.message);
         })  
     }
+    const peticionDeletePregunta=async(id)=>{
+        await axios.delete(urlPregunta+"EliminarPreguntaEncuesta?idPreguntaEncuesta="+id)
+        .then(response=>{
+            console.log(response)
+            console.log("SE HA ELIMINADO CORRECTAMENTE")
+        }).catch(error =>{
+        console.log(error.message);
+        })
+    }
 
 
     const guarda=()=>{
@@ -237,6 +252,35 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
         rubricas.splice(index,1);
     }
 
+    const peticionPostPregunta = async()=>{
+        console.log(encuestaSeleccionada)
+        await axios.post(urlPregunta+"InsertarPreguntaEncuesta",encuestaSeleccionada,{
+            _method: 'POST'
+          })
+        .then(response=>{
+          closePostModal();
+          openGuardadoModal();
+          console.log(response)
+        }).catch(error =>{
+          console.log(error.message);
+        })
+      }
+    
+      const peticionPreguntas =async()=>{
+        console.log("PETICION DE PREGUNTAS")
+        await axios.get(urlPregunta+"BuscarPreguntaEncuestaXIdEncuesta?idEncuesta="+id)
+        .then(response=>{
+            setPreguntas(response.data);
+            console.log(preguntas)
+        }).catch(error =>{
+        console.log(error.message);
+        })
+      }
+    useEffect(()=>{
+        peticionPreguntas();
+     },[]) 
+
+    
     return (      
         <div class ="CONTAINERADMIN " >   
     
@@ -249,19 +293,18 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
             </div>
             <div class="col">
                 <div class="input-group mb-3">
-                    <input type="text" disabled class="form-control" name="entregable" placeholder="Entregable" value={entregable.nombre}/>
+                    <input type="text" disabled class="form-control" name="entregable" placeholder="Nombre Encuesta" value={entregable.nombre}/>
                 </div>
             </div>
         </div>
 
         <div class="DATOS row" >
             <div class="col-2">
-                <p>Horario</p>
+                <p>Curso</p>
             </div>
             <div class="col">
                 <div class="input-group mb-3 ">
-                    <input type="text" disabled class="form-control" name="rubro" placeholder="Rubro" 
-                          onChange={handleChange} value={rubricaSeleccionada && rubricaSeleccionada.rubro} />
+                    <input type="text" disabled class="form-control" name="rubro" placeholder="Curso" value={curso.nombre} />
                 </div>
             </div>
         </div>
@@ -272,15 +315,15 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
             </div>
             <div class="col">
                 <div class="input-group mb-3 ">
-                    <input type="text" class="form-control" name="pregunta" placeholder="Pregunta de la encuesta" 
-                          onChange={handleChange} value={rubricaSeleccionada && rubricaSeleccionada.rubro} />
+                    <input type="text" class="form-control" name="pregunta" id = 'pregunta' placeholder="Pregunta de la encuesta" 
+                          onChange={handleChange} />
                 </div>
             </div>
         </div>
 
         <div class="row INSERTAR-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>agregaDatos()}><span>Añadir</span></button>
+                    <button class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>peticionSelecter()}><span>Añadir</span></button>
                 </div>
         </div>   
   
@@ -298,13 +341,12 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
                   </tr>
                 </thead>
                 <tbody >
-                  {rubricas.map(elemento => (
-                    <tr key={elemento.rubro}>
-                        <td >{elemento.rubro}</td>    
-                        <td >{elemento.nivelDeseado}</td>       
+                  {preguntas.map(elemento => (
+                    <tr key={elemento.idPreguntaEncuesta}>
+                        <td >{elemento.idPreguntaEncuesta}</td>    
+                        <td >{elemento.pregunta}</td>       
                         <td>
-                        <button class="btn BTN-ACCIONES" onClick={()=>cargaRub(elemento)}> <FaIcons.FaEdit /></button>
-                        <button  class=" btn BTN-ACCIONES" onClick={()=>quitaRubro(elemento)}> <BootIcons.BsTrash /></button>
+                        <button  class="btn BTN-ACCIONES" onClick={()=>peticionDeletePregunta(elemento.idPreguntaEncuesta)}> <BootIcons.BsTrash /></button>
                         </td>
                     </tr>
                   ))}
@@ -336,25 +378,25 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
               </div>
             </ModalConfirmación>
 
-          <ModalPregunta
+          <ModalInsertar
               isOpen={isOpenPostModal} 
               closeModal={closePostModal}
-              procedimiento = "guardar"
-              objeto="la evaluación"
+              procedimiento = "añadir"
+              objeto="pregunta"
               elemento={entregable && entregable.nombre}
             >
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-                <Button class="btn  btn-success btn-lg" onClick={verificaTipo} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Button class="btn  btn-success btn-lg" onClick={()=>peticionPostPregunta()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <Button class="btn btn-danger btn-lg"  onClick={closePostModal}>Cancelar</Button>
               </div>
-            </ModalPregunta>
+            </ModalInsertar>
             <ModalConfirmación
               isOpen={isOpenGuardadoModal} 
               closeModal={closeGuardadoModal}
               procedimiento= "guardado"
             >
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-                <Button class="btn btn-success btn-lg" onClick={terminar}>Entendido</Button>
+                <Button class="btn btn-success btn-lg" onClick={closeGuardadoModal}>Entendido</Button>
               </div>
             </ModalConfirmación>
           

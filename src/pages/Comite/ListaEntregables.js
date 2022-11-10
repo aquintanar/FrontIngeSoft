@@ -42,7 +42,6 @@ function ListaEntregables()  {
     const [search, setSearch] = useState("");
     const [data, setData]=useState([]);
     const [fil, setFil] = useState(0);
-    const [filtro,setFiltro] = useState("");
     const [fechas, setFechas] = useState([new Date(),new Date()]);
     const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
     const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();    
@@ -136,10 +135,9 @@ function ListaEntregables()  {
 
     //Listar entregable tabla--
     const peticionGet=async()=>{
-      await axios.get(url1+"ListEntregablesXIdCurso?idCurso=1")
+      await axios.get(url1+"ListEntregablesXIdCurso?idCurso="+localStorage.getItem('idCurso'))
       .then(response=>{
         setData(response.data);
-        console.log(response.data);
       }).catch(error =>{
         console.log(error.message);
       })
@@ -162,14 +160,14 @@ function ListaEntregables()  {
     return (      
         <div class=" CONTAINERADMIN">   
     
-        <p class="HEADER-TEXT1">Gestión de Evaluaciones</p>
-        <p class="HEADER-TEXT2">Búsqueda de Evaluaciones</p>
+        <p class="HEADER-TEXT1">Gestión de entregas y presentaciones</p>
+        <p class="HEADER-TEXT2">Búsqueda de entregas o presentaciones</p>
    
         <div class="row">
               <div class="col  FILTRO-LISTAR-BUSCAR" >
-                  <p>Ingresar nombre de la evaluación</p>
+                  <p>Ingresar nombre de la entregas o presentación</p>
                   <div class="input-group  ">
-                      <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre de la Evaluación" aria-label="serach" onChange={buscador}/>
+                      <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre de la entrega o presentación" aria-label="serach" onChange={buscador}/>
                   </div>
               </div>
         </div>
@@ -184,7 +182,6 @@ function ListaEntregables()  {
                 <div class=" fs-5 fw-normal  mb-1 "><p>Tipo</p></div>
                 <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelect}>
                     <option key="0" selected value = "0">Todos</option>
-                    <option key="1" value="1">Avance Semanal</option>
                     <option key="2" value="2">Entregable Parcial</option>
                     <option key="3" value="3">Entregable</option>
                     <option key="4" value="4">Exposición</option>
@@ -192,7 +189,7 @@ function ListaEntregables()  {
               </div>
         </div>
   
-          <p class="HEADER-TEXT2 mt-5" >Lista de Evaluaciones</p>
+          <p class="HEADER-TEXT2 mt-5" >Lista de entregas y presentaciones</p>
           <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
           <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
           <div class = "row LISTAR-TABLA">

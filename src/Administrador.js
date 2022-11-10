@@ -1,8 +1,8 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Pagina.css'
 import SidebarAdmin from './components/Administrador/SidebarAdmin';
-import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import ListaEspecialidad  from './pages/Administrador/ListaEspecialidad';
 import DatosEspecialidad from './pages/Administrador/DatosEspecialidad';
 import ListaSemestre from './pages/Administrador/ListaSemestre';

@@ -12,6 +12,7 @@ import EntregablesParciales from './pages/Profesor/EntregablesParciales';
 import Exposiciones from "./pages/Profesor/Exposiciones";
 import ExposicionSeleccionada from "./pages/Profesor/ExposicionSeleccionada";
 import HistorialVersiones from "./pages/Asesor/HistorialVersiones";
+import Calendario from './pages/Profesor/Calendario';
 function Profesor() {
     return (
     <div>    
@@ -20,6 +21,7 @@ function Profesor() {
                 <Routes>
                   <Route path='alumnos' exact element= {<Alumnos/>}/>
                   <Route path='alumnos/alumnoSeleccionado' exact element= {<AlumnoSeleccionado/>}/>
+                  <Route path='calendario' exact element= {<Calendario/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregables' exact element= {<Entregables/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales' exact element= {<EntregablesParciales/>}/>
                   <Route path='alumnos/alumnoSeleccionado/exposiciones' exact element= {<Exposiciones/>}/>

@@ -25,24 +25,25 @@ function Entregable() {
         responsableSubir: 1,
         responsableEvaluar: 4,
         fidTipoEntregable: 1,
-        fidCurso: 1,
+        fidCurso: localStorage.getItem('idCurso'),
         fidNota: 0,
     })
 
     const[rubricas, setRubricas] = useState([]);
     const[rubs, setRubs] = useState([]);
+    const[idRub, setIdrub] = useState(0);
+    let aux=[];
      //Carga especialidad a modificar
     const cargaEntregable=async()=>{
         if(id!=='0'){
             await axios.get(url1+"BuscarEntregableXId?idEntregable="+parseInt(id)).
             then(response=>{
                 let aux = response.data[0];
-                console.log(aux);
+                setIdrub(aux.idRubrica);
                 if(aux.fechaEntregaAsesor==="null"){
                     aux.fechaEntregaAsesor = null;
                     aux.responsableSubir =0;
                 }
-                console.log(aux);
                 setEntregable({
                     idEntregable: aux.idEntregable,
                     nombre: aux.nombre,
@@ -54,7 +55,6 @@ function Entregable() {
                     responsableSubir:  aux.responsableSubir,
                     responsableEvaluar:  aux.responsableEvaluar,
                     fidTipoEntregable: aux.fidTipoEntregable,
-                    fidCurso : 1,
                     fidNota: 1
                 });
             });
@@ -65,7 +65,8 @@ function Entregable() {
         if(id!=='0'){
             const response = await axios.get(url2+"ListDetalleRubricaXIdEntregable?idEntregable="+parseInt(id));
             setRubricas(response.data);
-            setRubs(response.data);
+            aux = response.data;
+            setRubs([].concat(aux));
         }
     }
 
@@ -87,7 +88,7 @@ function Entregable() {
              <nav className="CONTAINERENTREGABLE">
                     <div class="row">
                         <div class="col BOTONES_SUPERIORES">
-                            <button onClick={() => {setActive("datosEntregable");setFormato("botonActivo1")}} className={"botonActivo1" === formato ? "customButton active" : "customButton"}>Datos Evaluación</button>
+                            <button onClick={() => {setActive("datosEntregable");setFormato("botonActivo1")}} className={"botonActivo1" === formato ? "customButton active" : "customButton"}>Datos Entrega o Presentación</button>
                         </div>
                         <div class="col BOTONES_SUPERIORES">
                             <button onClick={() => {setActive("datosRubrica");setFormato("botonActivo2")}} className={"botonActivo2" === formato ? "customButton active" : "customButton"}>Datos Rúbrica</button>
@@ -98,7 +99,7 @@ function Entregable() {
                
                 <div>
                     {active === "datosEntregable" && <DatosEntregable entregable={entregable} setEntregable={setEntregable} active={active} setActive={setActive}/>}
-                    {active === "datosRubrica" && <DatosRubrica entregable={entregable} setEntregable={setEntregable} rubricas={rubricas} setRubricas={setRubricas} id={id} rubs={rubs}/>}
+                    {active === "datosRubrica" && <DatosRubrica entregable={entregable} setEntregable={setEntregable} rubricas={rubricas} setRubricas={setRubricas} id={id} rubs={rubs} idRub={idRub}/>}
                 </div>
                 
             </div>

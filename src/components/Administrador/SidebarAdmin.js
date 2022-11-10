@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link, Navigate ,useNavigate} from 'react-router-dom';
-import * as AiIcons from 'react-icons/ai';
+import { Link ,useNavigate} from 'react-router-dom';
 import { SidebarData } from './SidebarDataAdmin';
 import SubMenu from './SubMenuAdmin';
 import { IconContext } from 'react-icons/lib';
@@ -12,10 +11,6 @@ import {useAuth0 }from '@auth0/auth0-react'
 import { useContext } from 'react';
 import { UserContext } from '../../UserContext';
 import * as FaIcons from 'react-icons/fa';
-import * as BsIcons from 'react-icons/bs';
-import * as RiIcons from 'react-icons/ri';
-import * as MdIcons from 'react-icons/md';
-import * as IonIcons4 from "react-icons/io";
 
 const Nav = styled.div`
   background: #042354;

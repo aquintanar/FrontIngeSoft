@@ -155,7 +155,7 @@ function DatosEspecialidad() {
                 <div class = "col-12">
                     <div class="text-start fs-5 fw-normal "><p>Nombre de la especialidad</p></div>
                     <div class="input-group mb-3 ">
-                        <textarea   class="form-control" name="nombre" placeholder="Nombre especialidad" 
+                        <input  type="text" class="form-control" name="nombre" placeholder="Nombre especialidad" 
                           onChange={handleChange} value={especialidadSeleccionada && especialidadSeleccionada.nombre} />
                     </div>
                 </div>

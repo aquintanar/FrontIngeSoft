@@ -115,7 +115,7 @@ const ReportexAlumno = () => {
             _method:'GET'
         })
         .then(response=>{
-            console.log("AQUI ESTOY GAAAA")
+            console.log("AQUI ESTOY")
             console.log(response.data);
             setData(response.data);
             

@@ -61,8 +61,6 @@ const Sidebar = () => {
     console.log("hola");
     const response =await axios.get("https://localhost:7012/api/Alumno/GetAlumnos")
     .then(response=>{
-      console.log("HOLA SE LLEGO A HACER EL REQUEST");
-      console.log("El valor de value es" + value);
       console.log(response);
       console.log(response.data[0].idUsuario);
       for(let i in response.data){

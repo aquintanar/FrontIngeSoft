@@ -174,7 +174,7 @@ function ListaFacultad()  {
       <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
       <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
       <div class = "row   LISTAR-TABLA">
-        <div class=" col-10  ">
+        <div class=" col-12  ">
           <table className='table fs-6 '>
             <thead >
               <tr class>

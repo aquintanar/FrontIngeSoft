@@ -1,9 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BarraVolver } from './components/BarraVolver';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Pagina.css'
 import SidebarComite from './components/Comite/SidebarComite';
-import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router , Routes, Route } from 'react-router-dom';
 import  TemaSeleccionado from './pages/Comite/TemaSeleccionado';
 import ListaTemaTesis from "./pages/Comite/ListaTemaTesis";
 import DatosRubrica from "./pages/Comite/DatosRubrica";
@@ -12,7 +12,6 @@ import  ListaEntregables from './pages/Comite/ListaEntregables';
 import DatosEntregable from "./pages/Comite/DatosEntregable";
 import AddEncuesta from "./pages/Comite/AddEncuesta";
 import ReporteAlumnos from "./pages/Comite/ReporteAlumnos";
-import tesisSustentar from './pages/Comite/tesisSustentar';
 import Tesis from "./pages/Comite/Tesis";
 import ReporteCiclo from "./pages/Comite/ReporteCiclo";
 import EncuestaPreguntas from "./pages/Comite/EncuestaPreguntas";

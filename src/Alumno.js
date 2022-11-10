@@ -12,6 +12,8 @@ import Reuniones  from './pages/Alumno/Reuniones';
 import SubirArchivos  from './pages/Alumno/SubirArchivos';
 import EvaluaAsesor  from './pages/Alumno/EvaluaAsesor';
 import NotaAlumno  from './pages/Alumno/NotaAlumno';
+import Calendario from './pages/Alumno/Calendario';
+import Encuesta from './pages/Alumno/Encuesta';
 function Alumno() {
     return (
         <div>    
@@ -29,6 +31,8 @@ function Alumno() {
               <Route path='gestion/gesNota' exact element= {<NotaAlumno/>}/>
               <Route path='gestion/Informacion' exact element= {<Informacion/>}/>
               <Route path='gestion/EvaluaAsesor' exact element= {<EvaluaAsesor/>}/>
+              <Route path='calendario' exact element= {<Calendario/>}/>
+              <Route path='encuesta' exact element = {<Encuesta/>}/>
               </Routes>
         </div>
     )
