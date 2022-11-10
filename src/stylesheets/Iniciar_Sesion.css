@@ -2,6 +2,17 @@
 
 ESTILOS DE REGISTRO
 */
+.seccion-der{
+    margin-left: 40px;
+}
+.seccion-izq{
+    margin-right: 40px;
+}
+
+.GrupoInfo{
+    display: flex;
+    justify-content: space-between;
+}
 .CONTAINER-GENERAL-REGISTRO{
     width:100%;
     height: 100%;
@@ -30,7 +41,7 @@ ESTILOS DE REGISTRO
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
-    max-width: 420px;
+    max-width: 720px;
     min-height: 400px;
     display: flex;
     flex-direction: column;
