@@ -317,7 +317,7 @@ function EntregableSeleccionado(){
         <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
           tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}})} >
             {location.state.estado==5?"Modificar ":(location.state.estado==4?"Modificar ":(location.state.estado==3?"Modificar ":(location.state.estado==2?"Modificar ":"Agregar ")))} {location.state.nombreEntregable}</p>
-        <p class="HEADER-TEXT5">Rúbrica de Evaluación {location.state.idVersion} {location.state.idEntregable}</p>
+        <p class="HEADER-TEXT5">Rúbrica de Evaluación</p>
         <div class = "row LISTAR-TABLA">
         <div class=" col-10  ">
           <table className='table fs-6 '>
