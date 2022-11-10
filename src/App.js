@@ -17,6 +17,7 @@ import RequireAuth from './components/lniciar_Sesion/RequireAuth';
 import ErrorPage from './ErrorPage'
 import { UserContext } from './UserContext';
 import Cursos from './Cursos';
+import ConfirmarRegistro from './ConfirmarRegistro';
 function App() {
   const [value,setValue] = useState('Hello from context');
   return (
@@ -36,7 +37,7 @@ function App() {
                   <Route path='/alumno/*' exact element= {<Alumno/>} />
                   <Route path='/profesor/*' exact element= {<Profesor/>} />
                   <Route path='/asesor/*' exact element= {<Asesor/>} />
-                
+                  <Route path='/confirmarRegistro/*' exact element={<ConfirmarRegistro/>}/>
             </Routes>
            
     </Router>

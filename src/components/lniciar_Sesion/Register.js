@@ -3,6 +3,7 @@ import {
   faCheck,
   faTimes,
   faInfoCircle,
+  faWindowRestore,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
@@ -87,17 +88,17 @@ const Register = () => {
     imagen: null,
     fidEspecialidad: 0,
   });
+  const [credenciales,setCredenciales]=useState({
+    idDirectorio:0,
+    correo:"",
+    codigo:""
 
+  })
   const sendEmail = (e) => {
     e.preventDefault();
 
     emailjs
-      .sendForm(
-        "service_8uiyf6d",
-        "template_tztg52n",
-        e.target,
-        "mS-WY7k1FE9ixytEf"
-      )
+      .sendForm("service_8uiyf6d", "template_tztg52n", e, "mS-WY7k1FE9ixytEf")
       .then(
         (result) => {
           console.log(result.text);
@@ -154,6 +155,12 @@ const Register = () => {
     ListarEsp();
   }, []);
 
+  const enviarCodigo = async () => {
+    try {
+      let response = await axios.post();
+    } catch (err) {}
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Si llega a handle summit");
@@ -167,9 +174,62 @@ const Register = () => {
       setErrMsg("invalid Entry");
       return;
     }
+    UsuarioSeleccionado.correo = user;
+    UsuarioSeleccionado.nombres = name;
+    UsuarioSeleccionado.apePat = apellidoP;
+    UsuarioSeleccionado.apeMat = apellidoM;
+    UsuarioSeleccionado.contrasena = pwd;
+    UsuarioSeleccionado.codigoPucp = codigoPUCP;
+    UsuarioSeleccionado.fidEspecialidad = value2;
+    window.localStorage.setItem(
+      "INFOREGISTRO",
+      JSON.stringify(UsuarioSeleccionado)
+    );
+    window.localStorage.setItem("TIPOUSUARIO",value.value);
+    console.log(UsuarioSeleccionado);
+    console.log(value.value);
+    var random_string = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
+    for (var i, i = 0; i < 4; i++) {
+      random_string += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    credenciales.correo=user;
+    credenciales.codigo=random_string;
     try {
-      /*Poner como en el backend*/
-      //UsuarioSeleccionado.Password=pwd;
+      let response = await axios
+        .post('https://localhost:7012/api/Directorio/PostDirectorio', credenciales, {
+          _method: "POST",
+        })
+        .then((response) => {
+          emailjs
+            .send(
+              "service_8uiyf6d",
+              "template_tztg52n",
+              {
+                to_name: name,
+                parameter1: random_string,
+                toEmail: user,
+              },
+              "mS-WY7k1FE9ixytEf"
+            )
+            .then((respone) => {
+              console.log("SE LOGRO");
+              navigate("/confirmarRegistro");
+            })
+            .catch((err) => {
+              console.log("chamare");
+            });
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    } catch (err) {}
+
+    /*try {
+      
       UsuarioSeleccionado.correo = user;
       UsuarioSeleccionado.nombres = name;
       UsuarioSeleccionado.apePat = apellidoP;
@@ -247,7 +307,7 @@ const Register = () => {
         setErrMsg("Registration Failed");
       }
       errRef.current.focus();
-    }
+    }*/
   };
 
   const ListarEsp = async (e) => {
