@@ -16,7 +16,7 @@ export function BarraVolver() {
   const InfoArribaDinamica = async () => {
     const response = await axios
       .get(
-        "https://localhost:7012/api/Curso/BuscarCursoXId",
+        "http://34.195.33.246/api/Curso/BuscarCursoXId",
         { params: { idCurso: localStorage.getItem("idCurso") } },
         {
           _method: "GET",

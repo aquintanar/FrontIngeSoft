@@ -5,8 +5,8 @@ import ModalBuscarAsesor from './ModalBuscarAsesor';
 import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 import useModal from '../../hooks/useModals';
 import axios from 'axios';
-const urlCoAsesor= "https://localhost:7012/api/TemaTesisXAsesor/";
-const urlTemaTesis= "https://localhost:7012/api/TemaTesis/";
+const urlCoAsesor= "http://34.195.33.246/api/TemaTesisXAsesor/";
+const urlTemaTesis= "http://34.195.33.246/api/TemaTesis/";
 
 const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
     const [show, setShow] = useState(false);
@@ -76,7 +76,7 @@ const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
             body: JSON.stringify(temaTesis)
         }
         //local
-        //https://localhost:7012/
+        //http://34.195.33.246/
         //EC2
         // http://44.210.195.91/
         fetch('http://44.210.195.91/api/TemaTesis/PostTemaTesis', requestInit)

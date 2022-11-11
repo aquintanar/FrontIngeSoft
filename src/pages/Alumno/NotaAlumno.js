@@ -48,7 +48,7 @@ var  parcial=0;
     //console.log(data)
     
     (async () => {
-        const result = await axios('https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+2);
+        const result = await axios('http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+2);
         //SetEntregablesParciales(result.data);
         let i = 0  ; 
         let index = 0 ; 
@@ -59,7 +59,7 @@ var  parcial=0;
         }   
         if(result.data.length==0) result.data.length=1;
         
-        const resultAvance = await axios('https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+1);
+        const resultAvance = await axios('http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+1);
         //SetEntregablesParciales(result.data);
         let j = 0  ; 
         let indexAvance = 0 ; 
@@ -68,7 +68,7 @@ var  parcial=0;
             else indexAvance=0;
         }   
         if(resultAvance.data.length==0) resultAvance.data.length=1;
-        const resultEntregable = await axios('https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+3);
+        const resultEntregable = await axios('http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+3);
         //SetEntregablesParciales(result.data);
         let k = 0  ; 
         let indexEntregable = 0 ; 
@@ -77,7 +77,7 @@ var  parcial=0;
             else indexEntregable=0;      
         }   
         if(resultEntregable.data.length==0) resultEntregable.data.length=1;
-        const resultExposicion = await axios('https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+4);
+        const resultExposicion = await axios('http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+4);
         //SetEntregablesParciales(result.data);
         let l = 0  ; 
         let indexExposicion = 0 ; 
@@ -89,23 +89,23 @@ var  parcial=0;
         SetNotaFinal(((2*(index/result.data.length))+(3*(indexAvance/resultAvance.data.length))+(3*(indexEntregable/resultEntregable.data.length))+(2*(indexExposicion/resultExposicion.data.length)))/10)
         console.log(notaFinal);
       })();
-    const urlAvances  = 'https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+1
+    const urlAvances  = 'http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+1
     const responseAvances = await fetch(urlAvances)
     const dataAvances = await responseAvances.json()
  //   console.log(dataAvances)
     SetAvances(dataAvances)
 
-    const urlEntregablesParciales  = 'https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+2
+    const urlEntregablesParciales  = 'http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+2
     const responseEntregablesParciales = await fetch(urlEntregablesParciales)
     const dataEntregablesParciales = await responseEntregablesParciales.json()
     SetEntregablesParciales(dataEntregablesParciales);
 
-    const urlEntregables  = 'https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+3
+    const urlEntregables  = 'http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+3
     const responseEntregables = await fetch(urlEntregables)
     const dataEntregables = await responseEntregables.json()
   //  console.log(dataEntregables)
     SetEntregables(dataEntregables)
-    const urlExposiciones = 'https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+4
+    const urlExposiciones = 'http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+4
     const responseExposiciones = await fetch(urlExposiciones)
     const dataExposiciones = await responseExposiciones.json()
    // console.log(dataExposiciones)
@@ -117,7 +117,7 @@ var  parcial=0;
 /*
   function getDetallesNotaExposicion(idEntregable) {
     (async () => {
-        const resultIndex = await axios('https://localhost:7012/api/Entregable/CalcularPuntajeEntregableXAlumno?idEntregable='+idEntregable+'&idAlumno='+1);
+        const resultIndex = await axios('http://34.195.33.246/api/Entregable/CalcularPuntajeEntregableXAlumno?idEntregable='+idEntregable+'&idAlumno='+1);
         if(resultIndex.data[0].puntajeTotal>=0) setValorEx(resultIndex.data[0].puntajeTotal); 
         else setValorEx(0); 
         console.log(resultIndex.data[0].puntajeTotal);

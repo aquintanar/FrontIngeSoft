@@ -10,9 +10,9 @@ import useModal from '../../hooks/useModals';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 import * as BsIcons from 'react-icons/bs';
 
-const url= "https://localhost:7012/api/Especialidad/";
-const urlFacu= "https://localhost:7012/api/Facultad/";
-const urlEntregablesParciales = "https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable" ; 
+const url= "http://34.195.33.246/api/Especialidad/";
+const urlFacu= "http://34.195.33.246/api/Facultad/";
+const urlEntregablesParciales = "http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable" ; 
 /*
 const url= "http://44.210.195.91/api/Especialidad/";
 const urlFacu= "http://44.210.195.91/api/Facultad/";
@@ -55,14 +55,14 @@ function EntregablesParciales()  {
 
   const getidCurso= async()=>{
     (async () => {
-      const result = await axios('https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=1');
+      const result = await axios('http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=1');
       //SetEntregablesParciales(result.data);
       let i = 0  ; 
       for ( i = 0 ; i < result.data.length ; i++){ 
             if(result.data[i].idAlumno == 1) setCurso(1);   
       }   
 
-      const result2 = await axios('https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=3');
+      const result2 = await axios('http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=3');
       //SetEntregablesParciales(result.data);
       let j = 0  ; 
       for ( j = 0 ; j < result2.data.length ; j++){ 
@@ -72,14 +72,14 @@ function EntregablesParciales()  {
   }
   const peticionEntregables = async() => {
     (async () => {
-      const result = await axios('https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=1');
+      const result = await axios('http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=1');
       //SetEntregablesParciales(result.data);
       let i = 0  ; 
       for ( i = 0 ; i < result.data.length ; i++){ 
             if(result.data[i].idAlumno == 1) setCurso(1);   
       }   
 
-      const result2 = await axios('https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=3');
+      const result2 = await axios('http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=3');
       //SetEntregablesParciales(result.data);
       let j = 0  ; 
       for ( j = 0 ; j < result2.data.length ; j++){ 
@@ -88,20 +88,20 @@ function EntregablesParciales()  {
     })();
     const idAlumno = 1 
     const idTipoEntregable = 2 
-    const urlEntregable  = 'https://localhost:7012/api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso='+1+'&idTipoEntregable='+2+'&idAlumno='+1;
-    const urlEntregable2  = 'https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+idTipoEntregable;
+    const urlEntregable  = 'http://34.195.33.246/api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso='+1+'&idTipoEntregable='+2+'&idAlumno='+1;
+    const urlEntregable2  = 'http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+idTipoEntregable;
     const response = await fetch(urlEntregable)
     const data = await response.json()
     console.log(data)
     SetEntregables(data)
     setData(data)
-    // const urlEntregableXid = 'https://localhost:7012/api/Entregable/BuscarEntregableXId?idEntregable='+data.fidEntregable
+    // const urlEntregableXid = 'http://34.195.33.246/api/Entregable/BuscarEntregableXId?idEntregable='+data.fidEntregable
     // const response2 = await fetch (urlEntregableXid)
     // const data2 = await response2.json()
     // console.log(data2)
 }
 const getEntregableID = async () => {
-  const urlEntregableXid = 'https://localhost:7012/api/Entregable/BuscarEntregableXId?idEntregable=4'
+  const urlEntregableXid = 'http://34.195.33.246/api/Entregable/BuscarEntregableXId?idEntregable=4'
   const response = await fetch(urlEntregableXid)
   const data = await response.json()
   console.log(data)

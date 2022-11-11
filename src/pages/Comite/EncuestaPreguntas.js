@@ -6,11 +6,11 @@ import '../../stylesheets/Administrador.css'
 import { useParams } from 'react-router-dom';
 import DatosEncuesta from './DatosEncuesta';
 
-const url1= "https://localhost:7012/api/Entregable/";
-const url2= "https://localhost:7012/api/DetalleRubrica/";
-const urlEncuesta = "https://localhost:7012/api/Encuesta/"
-const urlDetalleEncuesta = "https://localhost:7012/api/DetallePreguntaEncuesta/"
-const urlCurso = "https://localhost:7012/api/Curso/"
+const url1= "http://34.195.33.246/api/Entregable/";
+const url2= "http://34.195.33.246/api/DetalleRubrica/";
+const urlEncuesta = "http://34.195.33.246/api/Encuesta/"
+const urlDetalleEncuesta = "http://34.195.33.246/api/DetallePreguntaEncuesta/"
+const urlCurso = "http://34.195.33.246/api/Curso/"
 //const url1= "http://44.210.195.91/api/Entregable/";
 //const url2= "http://44.210.195.91/api/DetalleRubrica/";
 

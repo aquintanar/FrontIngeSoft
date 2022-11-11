@@ -20,8 +20,8 @@ import { UserContext } from '../../UserContext';
 import { AsesorContext } from './AsesorContext';
 import { AiTwotoneDollarCircle } from 'react-icons/ai';
 
-const url= "https://localhost:7012/api/ReunionAlumnoAsesor/";
-const urlAlxAs = "https://localhost:7012/api/Alumno/";
+const url= "http://34.195.33.246/api/ReunionAlumnoAsesor/";
+const urlAlxAs = "http://34.195.33.246/api/Alumno/";
 //const url= "http://44.210.195.91/api/Reunion/";
 
 function ListaReunion(alumno, setAlumno)  {

@@ -22,7 +22,7 @@ import {
   RemoveFileIcon,
   FilePreviewContainer
 } from "../../components/Upload.styles";
-//https://localhost:7012/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=1
+//http://34.195.33.246/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=1
 function EntregableSeleccionado(){
     var aux=0;
     let navigate = useNavigate();
@@ -78,7 +78,7 @@ function EntregableSeleccionado(){
     console.log(versionSeleccionada);
     if(location.state.idVersion!=null){
       (async () => {
-      const urlDocumentos  = `https://localhost:7012/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${location.state.idVersion}`
+      const urlDocumentos  = `http://34.195.33.246/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${location.state.idVersion}`
       const responseDocumentos  = await fetch(urlDocumentos)
       const dataDocumentos = await responseDocumentos.json()
       setDocumentosVersion(dataDocumentos)
@@ -88,7 +88,7 @@ function EntregableSeleccionado(){
       }
       
       else {
-        await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionada,{
+        await axios.post("http://34.195.33.246/api/Version/PostVersion",versionSeleccionada,{
           _method: 'POST'
         })
       .then(response=>{
@@ -101,7 +101,7 @@ function EntregableSeleccionado(){
 
   const getVersion = async() => {
     (async () => {
-        const result = await axios('https://localhost:7012/api/Version/ListVersionXId?idVersion='+location.state.idVersion);
+        const result = await axios('http://34.195.33.246/api/Version/ListVersionXId?idVersion='+location.state.idVersion);
         setVersion(result.data[0]);
       })();
     }
@@ -128,7 +128,7 @@ function EntregableSeleccionado(){
     }
     async function getData() {
       (async () => {
-        const result = await axios(`https://localhost:7012/api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
+        const result = await axios(`http://34.195.33.246/api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
         setDetalleNota(result.data);
         let i = 0  ; 
         for ( i = 0 ; i < result.data.length ; i++){
@@ -145,7 +145,7 @@ function EntregableSeleccionado(){
 
     async function getDetallesNotaRubrica() {
       (async () => {
-        const result = await axios(`https://localhost:7012/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
+        const result = await axios(`http://34.195.33.246/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
         setDetalleNota(result.data);
         let i = 0  ; 
         let index = 0 ; 
@@ -160,7 +160,7 @@ function EntregableSeleccionado(){
       })();
     };
     const getEntregable=async()=>{
-        const response = await axios.get(`https://localhost:7012/api/Entregable/BuscarEntregableXId?idEntregable=${location.state.idEntregable}`);
+        const response = await axios.get(`http://34.195.33.246/api/Entregable/BuscarEntregableXId?idEntregable=${location.state.idEntregable}`);
         setEntregable({
           idEntregable: response.data[0].idEntregable,
           responsableEvalua: response.data[0].responsableEvalua,
@@ -170,7 +170,7 @@ function EntregableSeleccionado(){
         
     }
     const getDetalleNotaRubrica=async()=>{
-        const response = await axios.get(`https://localhost:7012/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
+        const response = await axios.get(`http://34.195.33.246/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
         setNota({
           idDetalleNotaRubrica: response.data[0].idDetalleNotaRubrica,
           DetalleRubrica:{fidDetalleRubrica: response.data[0].fidDetalleRubrica},

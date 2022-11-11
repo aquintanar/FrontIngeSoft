@@ -26,7 +26,7 @@ function HistorialVersiones(){
  
     async function getData() {
       (async () => {
-        const result = await axios(`https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdEntregable?idAlumno=${location.state.idAlumno}&idEntregable=${location.state.idEntregable}`);
+        const result = await axios(`http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdEntregable?idAlumno=${location.state.idAlumno}&idEntregable=${location.state.idEntregable}`);
         //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
         setData(result.data);
         console.log(data)

@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 //import './proponerTemaAsesor.css';
 import '../Asesor/proponerTemaAsesor.css';
 
-const URL= "https://localhost:7012/api/Alumno/GetAlumnos";
+const URL= "http://34.195.33.246/api/Alumno/GetAlumnos";
 
 
 const SearchUsuariosModal = ( {show ,setShow, al, setAl,idAlum,setIdAlum} ) =>{
@@ -13,7 +13,7 @@ const SearchUsuariosModal = ( {show ,setShow, al, setAl,idAlum,setIdAlum} ) =>{
     const[search , setSearch] = useState("");
     //const URL = "http://44.210.195.91/api/Asesor/GetAsesores";
     //local
-        //https://localhost:7012/
+        //http://34.195.33.246/
         //EC2
         // http://44.210.195.91/
         //hacer axios aca carga tabla con setAsesores

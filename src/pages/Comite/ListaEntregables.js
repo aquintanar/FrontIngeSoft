@@ -13,7 +13,7 @@ import useModal from '../../hooks/useModals';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
 
-const url1= "https://localhost:7012/api/Entregable/";
+const url1= "http://34.195.33.246/api/Entregable/";
 
 //const url1= "http://44.210.195.91/api/Entregable/";
 

@@ -250,13 +250,13 @@ const cargarVersion=async()=>{
 
   if(idVersion!=null){
     (async () => {
-    const urlDocumentos  = `https://localhost:7012/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${idVersion}`
+    const urlDocumentos  = `http://34.195.33.246/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${idVersion}`
     const responseDocumentos  = await fetch(urlDocumentos)
     const dataDocumentos = await responseDocumentos.json()
     setDocumentosVersion(dataDocumentos)
     console.log(documentosVersion);
 
-    const response = await axios.get(`https://localhost:7012/api/Version/ListVersionXId?idVersion=${idVersion}`);
+    const response = await axios.get(`http://34.195.33.246/api/Version/ListVersionXId?idVersion=${idVersion}`);
     setVersionSeleccionada({
       idVersion: response.data[0].idVersion,
       linkDoc: response.data[0].linkDoc,
@@ -282,7 +282,7 @@ useEffect(() => {
 
 const peticionPost=async()=>{
   console.log(versionSeleccionada);
-  await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionada,{
+  await axios.post("http://34.195.33.246/api/Version/PostVersion",versionSeleccionada,{
       _method: 'POST'
     })
   .then(response=>{
@@ -312,7 +312,7 @@ const peticionPost=async()=>{
 }
 
 const guarda=async()=>{
-  await axios.post("https://localhost:7012/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
+  await axios.post("http://34.195.33.246/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
       _method: 'POST'
     })
   .then(response=>{
@@ -324,7 +324,7 @@ const guarda=async()=>{
 
 
 const peticionPut=async()=>{
-  await axios.put("https://localhost:7012/api/Version/ModifyVersion",versionSeleccionada,{
+  await axios.put("http://34.195.33.246/api/Version/ModifyVersion",versionSeleccionada,{
     _method: 'PUT'
   })
   .then(response=>{
@@ -341,7 +341,7 @@ const peticionPut=async()=>{
 
   }
   console.log(documentoVersionNuevo);
-  await axios.post("https://localhost:7012/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
+  await axios.post("http://34.195.33.246/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
       _method: 'POST'
     })
   .then(response=>{
@@ -351,7 +351,7 @@ const peticionPut=async()=>{
 
 }
 const peticionDelete=async()=>{
-  await axios.delete("https://localhost:7012/api/DocumentoVersion/EliminarDocumentoVersion?idDocumentoVersion="+ documentoVersion.idDocumentoVersion).then(response=>{
+  await axios.delete("http://34.195.33.246/api/DocumentoVersion/EliminarDocumentoVersion?idDocumentoVersion="+ documentoVersion.idDocumentoVersion).then(response=>{
     cargarVersion();
     closeDeleteModal();
     openConfirmModal();

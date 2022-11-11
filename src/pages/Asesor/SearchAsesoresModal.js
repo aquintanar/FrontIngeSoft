@@ -7,7 +7,7 @@ const SearchAsesoresModal = ( {show ,setShow, asesorTesis, setAsesor} ) =>{
     const[search , setSearch] = useState("");
     const URL = "http://44.210.195.91/api/Asesor/GetAsesores";
     //local
-        //https://localhost:7012/
+        //http://34.195.33.246/
         //EC2
         // http://44.210.195.91/
     const showData = async() => {

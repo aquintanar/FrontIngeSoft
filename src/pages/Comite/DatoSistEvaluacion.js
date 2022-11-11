@@ -17,9 +17,9 @@ import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyl
 import { UserContext } from '../../UserContext';
 import { AiTwotoneDollarCircle } from 'react-icons/ai';
 
-const urlNota= "https://localhost:7012/api/Nota/";
-const urlTipoEnt= "https://localhost:7012/api/TipoEntregable/"
-const urlEnt= "https://localhost:7012/api/Entregable/";
+const urlNota= "http://34.195.33.246/api/Nota/";
+const urlTipoEnt= "http://34.195.33.246/api/TipoEntregable/"
+const urlEnt= "http://34.195.33.246/api/Entregable/";
 
 function DatoSistEvaluacion()  {
 

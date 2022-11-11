@@ -9,8 +9,8 @@ import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 import {  Button} from '@material-ui/core';
 import '../../stylesheets/Administrador.css'
 
-const url= "https://localhost:7012/api/Facultad/";
-const urlEspe= "https://localhost:7012/api/Especialidad/";
+const url= "http://34.195.33.246/api/Facultad/";
+const urlEspe= "http://34.195.33.246/api/Especialidad/";
 
 //const url= "http://44.210.195.91/api/Facultad/";
 //const urlEspe= "http://44.210.195.91/api/Especialidad/";

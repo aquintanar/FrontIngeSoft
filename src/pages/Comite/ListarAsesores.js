@@ -9,8 +9,8 @@ import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
-const urlAs= "https://localhost:7012/api/Asesor/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
+const urlAs= "http://34.195.33.246/api/Asesor/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
 
 function ListarAsesores()  {
   let navigate = useNavigate();

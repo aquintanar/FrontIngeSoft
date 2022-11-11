@@ -12,7 +12,7 @@ import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 import * as BsIcons from 'react-icons/bs';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
 
-const url= "https://localhost:7012/api/ReunionAlumnoAsesor/";
+const url= "http://34.195.33.246/api/ReunionAlumnoAsesor/";
 
 function Reuniones()  {
 

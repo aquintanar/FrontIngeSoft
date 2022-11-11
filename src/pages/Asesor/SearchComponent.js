@@ -14,11 +14,11 @@ const SearchComponent = ({show, setShow, temaTesis, setTemaTesis}) =>{
     })
 
     //local
-        //https://localhost:7012/
+        //http://34.195.33.246/
         //EC2
         // http://44.210.195.91/
 
-    const URL = "https://localhost:7012/api/TemaTesis/GetTemaTesis";
+    const URL = "http://34.195.33.246/api/TemaTesis/GetTemaTesis";
     const showData = async() => {
         const response = await fetch(URL)
         const data = await response.json()
