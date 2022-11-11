@@ -172,9 +172,9 @@ const handleChange=  (e)=>{
                       </div>
 
                       <div class=" text-start fs-5 fw-normal ">
-                          <p>Descripción</p>
+                          <p>Clave</p>
                           <div class="input-group input-group-lg mb-3">
-                              <textarea class="form-control" name="descripcion" placeholder="Descripción" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
+                            <input type="text" class="form-control" name="descripcion" placeholder="Clave"  
                                 onChange={handleChange} value={facultadSeleccionada && facultadSeleccionada.descripcion}  />
                           </div>
                       </div>

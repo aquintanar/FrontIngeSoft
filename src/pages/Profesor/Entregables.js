@@ -1,13 +1,9 @@
 import React from 'react'
 import {useState , useEffect} from "react";
-import useModal from '../../hooks/useModals';
-import {  Button} from '@material-ui/core';
 import { BrowserRouter as Router , Routes, Route, Link, useLocation } from 'react-router-dom';
 import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useTable } from 'react-table';
 import * as FaIcons from 'react-icons/fa';
-import * as RiIcons  from "react-icons/ri";
 import * as BsIcons from 'react-icons/bs';
 
 function Entregables(){
