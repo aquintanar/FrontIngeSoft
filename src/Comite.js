@@ -18,6 +18,8 @@ import EncuestaPreguntas from "./pages/Comite/EncuestaPreguntas";
 import DatosEncuesta from "./pages/Comite/DatosEncuesta";
 import ListarAsesores from "./pages/Comite/ListarAsesores";
 import DatosAsesor from "./pages/Comite/DatosAsesor";
+import ListSistEvaluacion from './pages/Comite/ListSistEvaluacion';
+import DatoSistEvaluación from './pages/Comite/DatoSistEvaluacion';
 function Comite() {
 
     return (
@@ -41,6 +43,8 @@ function Comite() {
                   <Route path='reportealumnos' exact element={<ReporteAlumnos/>}/>
                   <Route path='tesis' exact element={<Tesis/>}/>
                   <Route path='reporteciclo' exact element={<ReporteCiclo/>} />
+                  <Route path='sistEvaluacion' exact element={<ListSistEvaluacion/>} />
+                  <Route path='sistEvaluacion/datoSistEvalución/:id' exact element= {<DatoSistEvaluación/>}/>
               </Routes>
 
         </div>

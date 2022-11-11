@@ -172,14 +172,18 @@ function DatosAsesor() {
       <div class="CONTAINERCOMITE">
           <p className="HEADER-TEXT1">{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat}</p>
           <div className='row'>
-              <div className='col-8'>
-                  <p> Correo: {asesorSeleccionado.correo} </p>
-                  <p> Áreas de interes y especialización: {especialidadAs.nombre} </p>
+              <div className='col-8 PERFIL'>
+                  <div class='BLOCK PERFIL-HEADER fw-bold'>{asesorSeleccionado.correo} </div>
+                  <div class = 'BLOCK PERFIL-TITLE fw-bold'> Áreas de interés y especialización: {especialidadAs.nombre} 
+                      <div class = "fw-normal text-black">
+                        {especialidadAs.nombre}
+                      </div>
+                    </div>
               </div>
           </div>
           <div className='row INSERTAR-BOTONES'>
               <div className='col-4'>
-                  <p> Cantidad maxima asesorados:</p> <input onChange={cambioMax} type="number" id="maxAsesorados" name="maxAsesorados"
+                  <p> Cantidad máxima de asesorados:</p> <input onChange={cambioMax} type="number" id="maxAsesorados" name="maxAsesorados"
                   min="0" max="10" value={max}/>
                   <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>openEditModal()}><span>Guardar</span></button>
               </div>
@@ -194,7 +198,7 @@ function DatosAsesor() {
               </div>
               <div class="col-6 d-grid gap-2 d-md-flex justify-content-md-end">                    
                   <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button"><span>Observar</span></button>
-                  <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>cargaDatos()}><span>Accion
+                  <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>cargaDatos()}><span>Acción
                   </span></button>
               </div>
           </div>

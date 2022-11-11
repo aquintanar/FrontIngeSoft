@@ -5,6 +5,7 @@ import * as AiIcons from 'react-icons/ai';
 import * as MdIcons from 'react-icons/md';
 import * as ImIcons from 'react-icons/im';
 import * as IonIcons4 from "react-icons/io";
+import * as BoxIcons from 'react-icons/bi';
 
 export const SidebarData = [
     {
@@ -51,11 +52,21 @@ export const SidebarData = [
     },
     {
         title: 'Calificación',
-        path: '',
         icon: <BsIcons.BsNewspaper />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
-
+        subNav: [
+            {
+                title: 'Gestión de jurados',
+                path: '',
+                icon: <BsIcons.BsFileEarmarkPerson />
+            },
+            {
+                title: 'Sistema de evaluación',
+                path: 'sistEvaluacion', 
+                icon: <BoxIcons.BiBadgeCheck />
+            },           
+        ]
     },
     {
         title: 'Análisis',
