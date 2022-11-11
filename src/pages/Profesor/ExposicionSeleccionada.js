@@ -286,7 +286,7 @@ const {
                 <div class = "col-12">
                     <div class="text-start fs-5 fw-normal "><p>Comentarios del asesor</p></div>
                     <div class="input-group input-group-lg mb-3">
-                        <textarea value={dataV[0].comentarios} disabled="true" class="form-control" name="Comentarios" placeholder="Comentarios" aria-label="comentarios"  
+                        <textarea disabled="true" class="form-control" name="Comentarios" placeholder="Comentarios" aria-label="comentarios"  
                           />
                     </div>
                 </div>
