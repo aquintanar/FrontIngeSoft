@@ -15,6 +15,7 @@ function Entregable() {
     const[active, setActive] = useState("datosEntregable");
     const[formato, setFormato] = useState("botonActivo1");
     let {id} = useParams();
+    const [cero,Setcero] = useState(1);
     const[entregable, setEntregable] = useState({
         idEntregable: 0,
         nombre: '',
@@ -41,7 +42,7 @@ function Entregable() {
                 let aux = response.data[0];
                 setIdrub(aux.idRubrica);
                 if(aux.fechaEntregaAsesor==="null"){
-                    aux.fechaEntregaAsesor = null;
+                    aux.fechaEntregaAsesor = 0;
                     aux.responsableSubir =0;
                 }
                 setEntregable({
@@ -49,7 +50,7 @@ function Entregable() {
                     nombre: aux.nombre,
                     descripcion: aux.descripcion,
                     fidCurso: aux.fidCurso,
-                    fechaEntregaAsesor: new Date(aux.fechaEntregaAsesor),
+                    fechaEntregaAsesor: !aux.fechaEntregaAsesor?0:new Date(aux.fechaEntregaAsesor),
                     fechaLimite: new Date(aux.fechaLimite),
                     fechaPresentacionAlumno: new Date(aux.fechaPresentacionAlumno),
                     responsableSubir:  aux.responsableSubir,
@@ -98,7 +99,7 @@ function Entregable() {
             <div >
                
                 <div>
-                    {active === "datosEntregable" && <DatosEntregable entregable={entregable} setEntregable={setEntregable} active={active} setActive={setActive}/>}
+                    {active === "datosEntregable" && <DatosEntregable entregable={entregable} setEntregable={setEntregable} active={active} setActive={setActive} cero={cero}/>}
                     {active === "datosRubrica" && <DatosRubrica entregable={entregable} setEntregable={setEntregable} rubricas={rubricas} setRubricas={setRubricas} id={id} rubs={rubs} idRub={idRub}/>}
                 </div>
                 

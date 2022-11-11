@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const DatosEntregable = ({entregable, setEntregable, active, setActive}) => {
+const DatosEntregable = ({entregable, setEntregable, active, setActive,cero}) => {
     let navigate = useNavigate();
     const [fechaEntrega, onChangeFechaEntrega] = useState(entregable.fechaPresentacionAlumno);
     const [fechaParcial, onChangeFechaParcial] = useState(entregable.fechaEntregaAsesor);
@@ -76,7 +76,7 @@ const DatosEntregable = ({entregable, setEntregable, active, setActive}) => {
                     <p>Revisor Final:</p>
                     <select select class="form-select  mb-3" aria-label="Default select example" onChange={handleChange2} 
                     id="responsableEvaluar" name="responsableEvaluar" selected value ={entregable.responsableEvaluar}>  
-                        <option key={4}  value = {4}>Profesor</option>
+                        <option key={2}  value = {2}>Profesor</option>
                         <option key={1} value={1}>Asesor</option>
                         <option key={3} value={3}>Jurado</option>
                     </select>

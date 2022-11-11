@@ -51,7 +51,7 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
     
 
     const nextPage = () =>{
-        if(rubricas.length>=currentPage) //VER CODIGO
+        if(rubricas.length>=5) //VER CODIGO
         SetCurrentPage(currentPage+5);
     }
     const previousPage =() =>{
@@ -197,8 +197,8 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
     }
 
     const peticionDeleteRubs=async(element)=>{
-        await axios.delete(url2+ "DeleteDetalleRubrica?idDetalleRubrica="+element).
-        then(response=>{
+        await axios.delete(url2+ "DeleteDetalleRubrica?idDetalleRubrica="+element)
+        .then(response=>{
             console.log("eliminando " + {element});
       })
     }

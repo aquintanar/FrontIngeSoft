@@ -116,7 +116,7 @@ function ListaSemestre()  {
   filtrado = filtrado.slice(currentPage,currentPage+5);
 
   const nextPage = () =>{
-    if(filtrado.length>=currentPage) //VER CODIGO
+    if(filtrado.length>=5) //VER CODIGO
       SetCurrentPage(currentPage+5);
   }
   const previousPage =() =>{

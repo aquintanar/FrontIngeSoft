@@ -59,7 +59,6 @@ export const SidebarData = [
     },
     {
         title: 'Análisis',
-        path: '',
         icon: <BsIcons.BsJournalBookmark />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
@@ -85,7 +84,6 @@ export const SidebarData = [
     },
     {
         title: 'Encuestas',
-        path: '',
         icon: <BsIcons.BsFillFilePostFill />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,

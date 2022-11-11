@@ -74,7 +74,7 @@ function Calendario(){
             {arr.map((algo) =>{
                 valid =0;
                 {ind.forEach(elem => {
-                    if(elem.sem ===inicio+algo){
+                    if(elem.sem ===inicio+algo &&(elem.responsableEvaluar === 'Asesor' || elem.responsableSubir === 'Asesor')){
                         valid = 1;
                     }})}
                 {if(valid ===1){        
