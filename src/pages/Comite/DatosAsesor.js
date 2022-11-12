@@ -182,24 +182,22 @@ function DatosAsesor() {
               </div>
           </div>
           <div className='row INSERTAR-BOTONES'>
-              <div className='col-4'>
+              <div className='col-8'>
                   <p> Cantidad máxima de asesorados:</p> <input onChange={cambioMax} type="number" id="maxAsesorados" name="maxAsesorados"
                   min="0" max="10" value={max}/>
                   <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>openEditModal()}><span>Guardar</span></button>
               </div>
+          </div>
+          <div className='row INSERTAR-BOTONES'>
               <div className='col-8'>
                   <p> Evaluaciones: </p>
               </div>
           </div>
 
           <div class="row INSERTAR-BOTONES">                            
-              <div class="col-6 d-grid gap-2 d-md-flex justify-content-md-begin">
+              <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
+              <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button"><span>Observar</span></button>
               <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../asesor")}}><span>Cancelar</span></button>
-              </div>
-              <div class="col-6 d-grid gap-2 d-md-flex justify-content-md-end">                    
-                  <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button"><span>Observar</span></button>
-                  <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>cargaDatos()}><span>Acción
-                  </span></button>
               </div>
           </div>
 
