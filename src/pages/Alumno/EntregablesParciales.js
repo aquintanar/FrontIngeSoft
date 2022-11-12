@@ -121,14 +121,14 @@ const getEntregableID = async () => {
   }
 
   //----------------
-  filtrado=filtrado.slice(currentPage,currentPage+6);
+  filtrado=filtrado.slice(currentPage,currentPage+5);
   const nextPage = () =>{
-    if(filtrado.length>=currentPage) //VER CODIGO
-      SetCurrentPage(currentPage+6);
+    if(filtrado.length>=5) //VER CODIGO
+      SetCurrentPage(currentPage+5);
   }
   const previousPage =() =>{
     if(currentPage>0)
-      SetCurrentPage(currentPage-6);
+      SetCurrentPage(currentPage-5);
   }
   useEffect(()=>{
     peticionEntregables();
@@ -172,8 +172,8 @@ const getEntregableID = async () => {
             </thead>
             <tbody >
               {filtrado.map(entregables => (
-                <tr key={entregables.idEntregable}>
-                    <td type = 'Button' onClick={() =>crearVersion(entregables.idVersion,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersion,entregables.estadoMasReciente,entregables.fechaSubida,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)}>{entregables.nombre}</td>
+                <tr style={{cursor:'pointer'}} onClick={() =>crearVersion(entregables.idVersion,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersion,entregables.estadoMasReciente,entregables.fechaSubida,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)} key={entregables.idEntregable}>
+                    <td>{entregables.nombre}</td>
                     <td>{entregables.fechaLimite}</td>
                     <td>{entregables.fechaEntregaAsesor} </td>
                     <td>  

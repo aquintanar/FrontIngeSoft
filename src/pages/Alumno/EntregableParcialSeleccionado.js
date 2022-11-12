@@ -235,7 +235,7 @@ function EntregableSeleccionado(){
           accessor: 'col3',
         },
         {
-          Header: 'Fecha de modifiación',
+          Header: 'Fecha de modificación',
           accessor: 'col4',
         },
         
@@ -252,7 +252,9 @@ function EntregableSeleccionado(){
 
     return(
         <div className='CONTAINERALUMNO'>
-        <a onClick={() =>navigate(-1)} className="btn btn-lg " role="button" aria-pressed="true"><RiIcons.RiArrowGoBackFill/> </a>
+            <span>
+              <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
+            </span>
         <h1 className='HEADER-TEXT1'>{location.state.nombreEntregable} - { location.state.tituloDoc }</h1>
 
         <div className='ContenidoPrincipal'>
@@ -319,7 +321,7 @@ function EntregableSeleccionado(){
             {location.state.estado==5?"Modificar ":(location.state.estado==4?"Modificar ":(location.state.estado==3?"Modificar ":(location.state.estado==2?"Modificar ":"Agregar ")))} {location.state.nombreEntregable}</p>
         <p class="HEADER-TEXT5">Rúbrica de Evaluación</p>
         <div class = "row LISTAR-TABLA">
-        <div class=" col-10  ">
+        <div class=" col-12  ">
           <table className='table fs-6 '>
             <thead class >
               <tr class>
@@ -342,7 +344,7 @@ function EntregableSeleccionado(){
                     
                     <td> {((aux = 1) ? (rubricaNota.puntaje-rubricaNota.puntaje*rubricaNota.descuento) : "" )}</td>
                     <td>
-                    <button class="btn BTN-COMENTAR" onClick={()=>abrirPost(setComentario(rubricaNota.comentario), setTitulo(rubricaNota.rubro))}> <FaIcons.FaCommentAlt /></button>
+                    <button title='Comentario'  class="btn BTN-COMENTAR" onClick={()=>abrirPost(setComentario(rubricaNota.comentario), setTitulo(rubricaNota.rubro))}> <FaIcons.FaCommentAlt /></button>
                  
                     </td>
                 </tr>
@@ -379,14 +381,12 @@ function EntregableSeleccionado(){
              <div class = "DATOS">
                 <div class = "col-12">
                     <div class="input-group input-group-lg mb-3">
-                        <textarea class="form-control" name="Comentarios" placeholder={comentario} aria-label="comentarios"  disabled="true" cols="10" rows="15
-                        " 
-                             />
+                        <textarea class="form-control" name="Comentarios" placeholder={comentario} aria-label="comentarios"  disabled="true" cols="8" rows="14" />
                     </div>
                 </div>
             </div>
-            <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-              <div class="align-text-bottom">
+            <div class='d-flex align-items-center flex-column mb-3'>
+              <div class="mt-auto p-2">
                 <Button class="btn btn-danger btn-lg position-relative" onClick={()=>cerrarPost()}>Volver</Button>
                 </div>
                 </div>

@@ -127,9 +127,11 @@ function Reuniones()  {
     },[])
 
   return (      
-    <div class=" CONTAINERALUMNO">   
-
-        <p class="HEADER-TEXT1">Reuniones</p>
+    <div>   
+        <div class=" CONTAINERASESOR">    
+          <p class="HEADER-TEXT1">Reuniones</p>
+        </div>
+        <div class=" CONTAINERASESOR2"> 
         <p class="HEADER-TEXT2">Búsqueda de reuniones</p>
 
         <div class="col-lg-7 FILTRO-LISTAR-BUSCAR" >
@@ -161,7 +163,7 @@ function Reuniones()  {
         <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
 
         <div class = "row LISTAR-TABLA">
-            <div class=" col-12 ">
+            <div class=" col-11 ">
               <table className='table fs-6 '>
                 <thead class >
                   <tr class>
@@ -170,7 +172,6 @@ function Reuniones()  {
                       <th style = {{width:175}}>Descripción</th>
                       <th style = {{width:100}}>Estado</th>
                       <th style = {{width:120}}>Cant. de part.</th>
-                      <th style = {{width:10}}></th>
                   </tr>
                 </thead>
                 <tbody >
@@ -193,13 +194,13 @@ function Reuniones()  {
                         </td>
 
                         <td class="text-center">{reunion.cantParticipantes}</td>
-                        <td>
-                        </td>
+                        
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+        </div>
         </div>
      
     </div>              
