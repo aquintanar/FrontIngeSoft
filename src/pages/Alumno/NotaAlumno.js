@@ -12,7 +12,8 @@ import * as BsIcons from 'react-icons/bs';
 import { useContext } from 'react';
 import { UserContext } from '../../UserContext'
 
-
+const urlNota= "http://34.195.33.246/api/Nota/";
+var form = "";
 
 function NotaAlumno()  {
     let url="-";
@@ -42,7 +43,7 @@ const [entregablesParciales , SetEntregablesParciales] = useState([]);
 const [avances , SetAvances] = useState([]);
 const [exposiciones , SetExposiciones] = useState([]);
 const peticionNotasEntregables = async() => {
-    const idAlumno = 1 
+    const idAlumno = localStorage.getItem('IDUSUARIO')
     const idEntregable = 4 
 var  parcial=0;
     //console.log(data)
@@ -126,8 +127,41 @@ var  parcial=0;
   };
 
 */
+
+  //Listar notas de un curso *falta curso
+  const peticionGetNota=async()=>{
+    await axios.get(urlNota+ "GetNotas")       
+    .then(response=>{
+        SetNotas(response.data);
+        obtFormula(response.data);
+    }).catch(error =>{
+        console.log(error.message);
+    })
+  }
+
+  const obtFormula = (datos) => {
+    var pesoSum=0;
+    if(datos.length == 0){
+        form = "NF = 1";
+    }
+    else{
+        datos.forEach((elem) =>{
+            if(pesoSum == 0){
+                form = "NF = (" + elem.peso + "*" + elem.codigo;
+                pesoSum = pesoSum + elem.peso;
+            }
+            else{
+                form = form + " + " + elem.peso + "*" + elem.codigo;
+                pesoSum = pesoSum + elem.peso;
+            }
+        })
+        form = form + ")/"+ pesoSum;
+    }
+  }
+
 useEffect(()=>{
     peticionNotasEntregables();
+    peticionGetNota();
  },[])
   return (      
     <div class=" CONTAINERALUMNO">   
@@ -135,51 +169,45 @@ useEffect(()=>{
         <p class="HEADER-TEXT1">Notas  </p>
 
         <div align="center">
-        <p class="HEADER-TEXT10">{formula}</p>
+          <p class="HEADER-TEXT10">{form}</p>
         </div>
         <p class="HEADER-TEXT11">{'Donde:'}</p>
-        <p class="HEADER-TEXT11">NF: Nota final del curso </p>
-        <p class="HEADER-TEXT11">{abreviacion}</p>
-        <p class="HEADER-TEXT11">{abreviacion1}</p>
-        
-        <p class="HEADER-TEXT11">{abreviacion2}</p>
-        
-        <p class="HEADER-TEXT11">{abreviacion3}</p>
-
-        <p class="HEADER-TEXT11">{abreviacion4}</p>
+        <p class="HEADER-TEXT11">NF: <a class ='fw-normal'>Nota final del curso </a></p>
+        <p>
+          {notas.map(element => 
+              <td class="HEADER-TEXT11">{element.codigo}: <a class ='fw-normal'>{element.nombre}</a></td>
+          )}
+        </p>
 
         <u><p class="HEADER-TEXT11">Entregas Parciales</p></u>
         {entregablesParciales.map(entregable => (
-                <tr key={entregable.idVersion}>
-                    <td><p class="BTN-CUADRADO-NOTA">{entregable.nombre}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {((entregable.notaVersion >= 0) ? entregable.notaVersion : "-" )}</p></td>                    
+                <tr class="BTN-CUADRADO-NOTA" key={entregable.idVersion}>
+                    <td style ={{width: 800, paddingLeft: '0.5%', paddingRight: '5%'}}>{entregable.nombre}</td>                    
+                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {((entregable.notaVersion >= 0) ? entregable.notaVersion : "-" )}</td>
                 </tr>
          ))}
 
-       <u><p class="HEADER-TEXT11">Documento Final</p></u>
+        <u><p class="HEADER-TEXT11">Documento Final</p></u>
         {avances.map(entregable => (
-                <tr key={entregable.idVersion}>
-                    <td><p class="BTN-CUADRADO-NOTA">{entregable.nombre}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {((entregable.notaVersion >= 0) ? entregable.notaVersion : "-" )} </p></td>                    
+                <tr class="BTN-CUADRADO-NOTA" key={entregable.idVersion}>
+                    <td style ={{width: 800, paddingLeft: '0.5%', paddingRight: '5%'}}>{entregable.nombre}</td>                    
+                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {((entregable.notaVersion >= 0) ? entregable.notaVersion : "-" )} </td>
                 </tr>
               ))}
 
-<u><p class="HEADER-TEXT11">Entregas</p></u>
+        <u><p class="HEADER-TEXT11">Entregas</p></u>
         {entregables.map(entregable => (
-                <tr key={entregable.idVersion}>
-                    <td><p class="BTN-CUADRADO-NOTA">{entregable.nombre} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {((entregable.notaVersion >= 0) ? entregable.notaVersion : "-" )}   </p></td>                    
+                <tr class="BTN-CUADRADO-NOTA" key={entregable.idVersion}>
+                    <td style ={{width: 800, paddingLeft: '0.5%', paddingRight: '5%'}}>{entregable.nombre} </td>    
+                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {((entregable.notaVersion >= 0) ? entregable.notaVersion : "-" )} </td>                  
                 </tr>
               ))}
 
-   <u><p class="HEADER-TEXT11">Exposicion Final</p></u>
+        <u><p class="HEADER-TEXT11">Exposición Final</p></u>
         {exposiciones.map(entregable => (
-                <tr key={entregable.idVersion}>
-                    <td><p class="BTN-CUADRADO-NOTA">{entregable.nombre}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {((entregable.notaVersion >= 0) ? entregable.notaVersion : "-" )} </p></td>                    
+                <tr class="BTN-CUADRADO-NOTA" key={entregable.idVersion}>
+                    <td style ={{width: 800, paddingLeft: '0.5%', paddingRight: '5%'}}>{entregable.nombre} </td>    
+                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {((entregable.notaVersion >= 0) ? entregable.notaVersion : "-" )} </td>              
                 </tr>
               ))}
         <p class="HEADER-TEXT5">Nota Final:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 

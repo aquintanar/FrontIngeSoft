@@ -90,6 +90,10 @@ function ListaReunion(alumno, setAlumno)  {
               });
           }
         }
+        else if(fil && fol){
+          filtrado=filtrado.filter((dato)=>dato.estadoReunion===fil) ;
+          filtrado=filtrado.filter((dato)=>dato.idAlumno===fol) ;
+        }
         else if(fol && fechas){       
           filtrado = data.filter(element => {
             let ok =false;
@@ -115,12 +119,36 @@ function ListaReunion(alumno, setAlumno)  {
             return ok;
           });
           filtrado=filtrado.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
-        }
+        } 
         else{   
-          if(fil)//filtro por estado
+          if(fil){//filtro por estado
            filtrado=data.filter((dato)=>dato.estadoReunion===fil) ;
-          if(search)//filtro por nombre
+            if(fol)
+              filtrado=data.filter((dato)=>dato.idAlumno===fol) ;
+            else if(fechas)
+              filtrado = data.filter(element => {
+                let ok =false;
+                const fec = Date.parse(element.fechaHoraInicio);
+                if(fechas[1]>=fec && fec>=fechas[0]){
+                  ok = true;
+                }
+                return ok;
+              });
+          }
+          if(search){//filtro por nombre
             filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+            if(fol)
+              filtrado=data.filter((dato)=>dato.idAlumno===fol) ;
+            else if(fechas)
+              filtrado = data.filter(element => {
+                let ok =false;
+                const fec = Date.parse(element.fechaHoraInicio);
+                if(fechas[1]>=fec && fec>=fechas[0]){
+                  ok = true;
+                }
+                return ok;
+              });
+          }
           if(fol)//filtro por alumno
             filtrado=data.filter((dato)=>dato.idAlumno===fol) ;
           if(fechas)
@@ -154,7 +182,7 @@ function ListaReunion(alumno, setAlumno)  {
 
     filtrado = filtrado.slice(currentPage,currentPage+5);
     const nextPage = () =>{
-        if(filtrado.length>=currentPage) //VER CODIGO
+        if(filtrado.length>=5) //VER CODIGO
         SetCurrentPage(currentPage+5);
     }
     const previousPage =() =>{
@@ -168,10 +196,9 @@ function ListaReunion(alumno, setAlumno)  {
         openDeleteModal();
     }
 
-    //Listar reuniones tabla del asesor--'ReunionAlumnoAsesor/BuscarReunionesXIdAsesorYIdCurso?idAsesor=2&idCurso=1'
+    //Listar reuniones tabla del asesor--'ReunionAlumnoAsesor/BuscarReunionesXIdAsesorYIdCurso?idAsesor=2&idCurso=1' 
     const peticionGet=async()=>{
-        await axios.get(url+ "BuscarReunionesXIdAsesorYIdCurso?idAsesor=2&idCurso=1")       //cambiae
-        //await axios.get(url+ "BuscarReunionesXIdAsesorYIdCurso?idAsesor="+reunionSeleccionada.idAsesor+ "&idCurso=" +reunionSeleccionada.idCurso)       //cambiae
+        await axios.get(url+ "BuscarReunionesXIdAsesorYIdCurso?idAsesor=" + localStorage.getItem('IDUSUARIO') + "&idCurso=" +localStorage.getItem('idCurso'))     
         .then(response=>{
           setData(response.data);
           console.log("response.data");
@@ -193,7 +220,7 @@ function ListaReunion(alumno, setAlumno)  {
 
     //lista de alumnos asesorados
     const peticionListAlumAs=async()=>{
-        await axios.get(urlAlxAs+ "ListAlumnosXIdAsesor?idAsesor=2").         //cambiar
+        await axios.get(urlAlxAs+ "ListAlumnosXIdAsesor?idAsesor=" + localStorage.getItem('IDUSUARIO')).         //cambiar
         then(response=>{
             setAlumnos(response.data);
             asesor.alumnos = response.data;
@@ -225,8 +252,11 @@ function ListaReunion(alumno, setAlumno)  {
 
 
   return (      
-    <div class=" CONTAINERALUMNO">   
-        <p class="HEADER-TEXT1">Reuniones</p>
+    <div>   
+        <div class=" CONTAINERASESOR">    
+          <p class="HEADER-TEXT1">Reuniones</p>
+        </div>
+        <div class=" CONTAINERASESOR2"> 
         <p class="HEADER-TEXT2">Búsqueda de reuniones</p>
 
         <div class="row">
@@ -260,8 +290,8 @@ function ListaReunion(alumno, setAlumno)  {
                 <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelect}>
                     <option key="0" selected value = "0">Todos</option>
                     <option key="1" value="1">Asitió</option>
-                    <option key="2" value="2">No asistió</option>
-                    <option key="3" value="3">Tardanza</option>
+                    <option key="2" value="2">Tardanza</option>
+                    <option key="3" value="3">No asistió</option>
                     <option key="4" value="4">Pendiente</option>
                 </select>
               </div>
@@ -273,7 +303,7 @@ function ListaReunion(alumno, setAlumno)  {
         <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
 
         <div class = "row LISTAR-TABLA">
-            <div class=" col-12 ">
+            <div class=" col-11 ">
               <table className='table fs-6 '>
                 <thead class >
                   <tr class>
@@ -343,7 +373,7 @@ function ListaReunion(alumno, setAlumno)  {
               <Button class="btn btn-success btn-lg" onClick={closeConfirmModal}>Entendido</Button>
             </div>
           </ModalConfirmación>
-     
+          </div>
     </div>              
   )
 }

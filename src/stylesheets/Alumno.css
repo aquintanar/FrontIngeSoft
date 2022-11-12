@@ -116,10 +116,10 @@
     text-align: center;
 
 }
-.HEADER-TEXT11:hover{
+.HEADER-TEXT11:hover, a:hover{
    text-decoration: none;
+   color: #000;
 }
-
 
 .HEADER-TEXT2-INF{
     font-size: 2vw;
@@ -127,6 +127,20 @@
     font-weight: bold;
 }
 
+.HEADER-TEXT2-INF p{
+    font-size: 27px;
+    font-weight: bold;
+    height: 50px;
+    text-align: left;
+    margin-bottom: 0px;
+}
+
+.HEADER-TEXT2-INF a{
+    font-size: 19px;
+    font-family: roboto;
+    padding: 15px;
+
+} 
 
 .INSERTAR-BOTONES button{
     border-radius: 4px;
@@ -217,7 +231,7 @@
 .BTN-CUADRADO-NOTA{
     border: 1px solid #042354;
     box-shadow: 3.5px 2.5px 2.5px rgba(4, 35, 84, 0.25);
-    width: 1000px;
+    width: 100%;
     min-width: 25%;
     padding: 0.20em 0.5em 0.20em;
     border-collapse: collapse;
