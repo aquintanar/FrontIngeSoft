@@ -319,9 +319,12 @@ function EntregableSeleccionado(){
         <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
           tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}})} >
             {location.state.estado==5?"Modificar ":(location.state.estado==4?"Modificar ":(location.state.estado==3?"Modificar ":(location.state.estado==2?"Modificar ":"Agregar ")))} {location.state.nombreEntregable}</p>
-        <p class="HEADER-TEXT5">Rúbrica de Evaluación</p>
+     
+        
+            <p class="HEADER-TEXT5">{location.state.idRubrica>0?"Rúbrica de Evaluación":" "} </p>
         <div class = "row LISTAR-TABLA">
-        <div class=" col-12  ">
+        <div class=" col-10  ">
+         { location.state.idRubrica>0?
           <table className='table fs-6 '>
             <thead class >
               <tr class>
@@ -344,7 +347,7 @@ function EntregableSeleccionado(){
                     
                     <td> {((aux = 1) ? (rubricaNota.puntaje-rubricaNota.puntaje*rubricaNota.descuento) : "" )}</td>
                     <td>
-                    <button title='Comentario'  class="btn BTN-COMENTAR" onClick={()=>abrirPost(setComentario(rubricaNota.comentario), setTitulo(rubricaNota.rubro))}> <FaIcons.FaCommentAlt /></button>
+                    <button class="btn BTN-COMENTAR" onClick={()=>abrirPost(setComentario(rubricaNota.comentario), setTitulo(rubricaNota.rubro))}> <FaIcons.FaCommentAlt /></button>
                  
                     </td>
                 </tr>
@@ -352,14 +355,15 @@ function EntregableSeleccionado(){
            
             </tbody>
           </table>
+          :""}
         </div>
-        <p class="HEADER-TEXT8">Calificación: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+        <p class="HEADER-TEXT8">{location.state.idRubrica>0? "Calificación": ""} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      
-        {notaFinal}</p>
-
+        {location.state.idRubrica>0? notaFinal: ""}
+     </p>
+       
       </div>
       <div class = "DATOS">
                 <div class = "col-12">

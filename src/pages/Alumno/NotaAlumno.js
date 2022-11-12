@@ -43,7 +43,7 @@ const [entregablesParciales , SetEntregablesParciales] = useState([]);
 const [avances , SetAvances] = useState([]);
 const [exposiciones , SetExposiciones] = useState([]);
 const peticionNotasEntregables = async() => {
-    const idAlumno = 1 
+    const idAlumno = localStorage.getItem('IDUSUARIO')
     const idEntregable = 4 
 var  parcial=0;
     //console.log(data)

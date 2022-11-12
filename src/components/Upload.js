@@ -172,12 +172,12 @@ const handleChange=e=>{
 const cerrarPost=()=>{
   handleUpload();
   closeGuardadoModal();
-  navigate("/alumno/gestion/gesPortafolio/EntregablesParciales");
+  navigate("/alumno/gestion/gesPortafolio");
 }
 const cerrarPut=()=>{
   handleUpload();
   closeEditadoModal();
-  navigate("/alumno/gestion/gesPortafolio/EntregablesParciales");
+  navigate("/alumno/gestion/gesPortafolio");
 }
 const peticionSelecter =async()=>{
 if(idVersion>0){
@@ -288,11 +288,15 @@ const peticionPost=async()=>{
   .then(response=>{
     idVersionPrueba = response.data.idVersion;
     console.log(response.data.idVersion);
-    if(idVersion==null){
-    setDocumentoVersionNuevo({
-      idVersion : idVersionPrueba, //LLAMAR CON RESPONSE AL IDVERSION Y LUEGO LLAMAR A LA FUNCION PARA CREAR DOCUMENTO
-  });
-  documentoVersionNuevo.idVersion = idVersionPrueba;
+    
+    if(idVersion>0){
+}
+else {
+  setDocumentoVersionNuevo({
+    idVersion : idVersionPrueba, //LLAMAR CON RESPONSE AL IDVERSION Y LUEGO LLAMAR A LA FUNCION PARA CREAR DOCUMENTO
+});
+console.log(response.data.idVersion)
+documentoVersionNuevo.idVersion = idVersionPrueba;
 }
   guarda();
     closePostModal();
@@ -372,7 +376,7 @@ const seleccionarDocumentoVersion=(documentos)=>{
         <img width="140px" float= "left" top="1000px"  src={require('../imagenes/subida.png')} alt="archivo"></img>
          
         <center>
-        <p class="HEADER-TEXT2" >Seleccione o suelte un archivo</p></center>
+        <p class="HEADER-TEXT2" >Seleccione o suelte un archivo{idVersion}</p></center>
         <p class="HEADER-TEXT4">Los archivos JPG, PNG O PDF, no pueden superar las 100 MB de tamaño</p>
          <p class="HEADER-TEXT9">{idAlumno}</p></div> )}
         <FormField
