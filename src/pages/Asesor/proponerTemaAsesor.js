@@ -12,31 +12,26 @@ const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
     const [show, setShow] = useState(false);
     const [active, setActive] = useState(false);
     const handleShow = () => setShow(true);
+    let idAsesorRef = 0;
+    let idTemaGlo = 0;
     const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
     const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
     const [asesorTesis, setAsesor] = useState({
-        idUsuario: '',
+        idUsuario: 0,
         nombres: '',
         apeMat: '',
     })
 
     const [asesorTesisXTema, setAsesorXTema] = useState({
-        idTemaTesisXAsesor: '',
-        idAsesor: '',
-        idTemaTesis: '',
-        esPrincipal: ''
+        idTemaTesisXAsesor: 0,
+        idAsesor: 0,
+        idTemaTesis: 0,
+        esPrincipal: 0
     })
 
     const subirCoasesor=async()=>{
-        setAsesorXTema({
-            idTemaTesisXAsesor: 0,
-            idAsesor: asesorTesis.idUsuario,
-            idTemaTesis: temaTesis.idTema,
-            esPrincipal: 0
-        });
-        await axios.post(urlCoAsesor+"PostTemaTesisXAsesor/",asesorTesisXTema,{
-            _method: 'POST'
-        })
+        console.log(asesorTesisXTema);        
+        await axios.post(urlCoAsesor+"PostTemaTesisXAsesor/",asesorTesisXTema)
         .then(response=>{
             openEditadoModal();
           }).catch(error =>{
@@ -45,12 +40,20 @@ const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
     }
 
     const subirTemaTesis=async()=>{
-        await axios.post(urlTemaTesis+"PostTemaTesis/",temaTesis,{
-            _method: 'POST'
-        })
+        await axios.post(urlTemaTesis+"PostTemaTesisSimple",temaTesis)
         .then(response=>{
-            temaTesis.idTema = response.data.idTemaTesis;
-            subirCoasesor();            
+            temaTesis.idTemaTesis = response.data.idTemaTesis;
+            idTemaGlo = response.data.idTemaTesis;
+            idAsesorRef = asesorTesis.idUsuario;
+            if(asesorTesis.idUsuario!==0){
+                setAsesorXTema({
+                    idTemaTesisXAsesor: 0,
+                    idAsesor: idAsesorRef,
+                    idTemaTesis: idTemaGlo,
+                    esPrincipal: 0
+                });
+                subirCoasesor();
+            }                           
           }).catch(error =>{
           console.log(error.message);
           })
@@ -60,53 +63,6 @@ const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
         setTemaTesis({
             ...temaTesis,
             [e.target.name]: e.target.value
-        })
-    }
-
-    const handleSubmmit = () =>{
-        //validacion
-        //if(temaTesis.tituloTesis === '' || temaTesis.descripcion === '' ){
-        //    alert('Campo titulo o descripcion vacios')
-        //    return
-        //}
-        //consulta query
-        const requestInit = {
-            method: 'POST',
-            headers: {'Content-type': 'application/json'},
-            body: JSON.stringify(temaTesis)
-        }
-        //local
-        //http://34.195.33.246/
-        //EC2
-        // http://44.210.195.91/
-        fetch('http://44.210.195.91/api/TemaTesis/PostTemaTesis', requestInit)
-        //.then(res => res.json())
-        //.then(res => console.log(res))
-        .then(response=>{
-            closePostModal();
-            openEditadoModal();
-          }).catch(error =>{
-            console.log(error.message);
-          })
-
-        setTemaTesis({
-            idTema: 0,
-            idAsesor:2,
-            idAlumno: 1,
-            idEstadoTemaTesis: 3,
-            idArea: 1,
-            idProponente: 2,
-            tituloTesis:'',
-            descripcion:'',
-            palabraClave1:'',
-            palabraClave2:'',
-            feedback:'',
-        })
-
-        setAsesor({
-            idUsuario: '',
-            nombres: '',
-            apeMat: '',
         })
     }
 
@@ -146,7 +102,7 @@ const ProponerTemaAsesor = ({temaTesis, setTemaTesis}) => {
             <div className="form-group  DATOS row mt-3">
                 <p for="descripcionTema" className="col-md-6 col-form-label"> Descripción del tema:</p>
                 <div className = "col-md-12">
-                    <textarea onChange={handleChange} class="form-control" id="desciripcionTema" name="descripcion" rows={6}></textarea>
+                    <textarea onChange={handleChange} class="form-control" id="descripcion" name="descripcion" rows={6}></textarea>
                 </div>                
             </div>
 

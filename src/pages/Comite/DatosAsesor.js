@@ -18,7 +18,7 @@ let idEs = 0;
 
 function DatosAsesor() {
   let navigate = useNavigate();
-  let {id} = useParams();    
+  let {id} = useParams();
   const [max, setMax] = useState(0);
   const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
   const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();

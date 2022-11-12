@@ -14,7 +14,8 @@ const urlEsp= "http://34.195.33.246/api/Especialidad/";
 const urlAsXCurso="http://34.195.33.246/api/AsesorXCurso/";
 
 function ListarAsesores()  {
-  let idCursoGlobal = localStorage.getItem("idCurso");
+  let idCursoGlobal = localStorage.getItem("idCurso");    
+  let idAsesorRef = 0;
   let navigate = useNavigate();
   const [currentPage,SetCurrentPage] = useState(0);
   const [data, setData]=useState([]);
@@ -76,15 +77,16 @@ function ListarAsesores()  {
   filtrado = filtrado.slice(currentPage,currentPage+5);
 
   const [asesorSeleccionado, setAsesorSeleccionado]=useState({
-      idUsuario: 0,
+      idAsesor: 0,
+      maxAsesorados: 0,
+      cantAsesorados: 0,
+      estaObservado: 0,
       nombres: '',
+      apePat: '',
       apeMat: '',
       correo: '',
-      codigoPUCP: '',
-      imagen: '',
-      maxAsesorados: 0,
-      estaObservado: 0,
-      estado: 1
+      codigoPucp: '',
+      imagen: ''
   })
 
   const petitionAs=async()=>{
@@ -107,11 +109,14 @@ function ListarAsesores()  {
 
   
     const peticionDelete=async()=>{
-      await axios.delete(urlAsXCurso+ "DeleteAsesorXCurso?idAsesor="+ asesorSeleccionado.idUsuario + "idCurso=" + idCursoGlobal).then(response=>{
-          petitionAs();
+      console.log(asesorSeleccionado);
+      console.log(idCursoGlobal);
+      await axios.delete(urlAsXCurso+ "DeleteAsesorXCurso?idAsesor="+ asesorSeleccionado.idAsesor + "&idCurso=" + idCursoGlobal).then(response=>{
+        petitionAs();
         closeDeleteModal();
         openConfirmModal();
       })
+      
     }
 
   

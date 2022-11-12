@@ -11,18 +11,14 @@ function TemaTesis() {
     const[formato, setFormato] = useState("botonActivo1");
     const [show, setShow] = useState(false);
     const[temaTesis, setTemaTesis] = useState({
-        idTema: 0,
-        idAsesor: 2,
-        idAlumno: 1,
-        idEstadoTemaTesis: 3,
-        idArea: 1,
-        idProponente: 2,
-        estadoTema: '',
+        idTemaTesis: 0,
+        idProponente: parseInt(localStorage.getItem("IDUSUARIO")),
         tituloTesis:'',
         descripcion:'',
         palabraClave1:'',
         palabraClave2:'',
-        feedback:'',
+        motivoRechazo:'',
+        fidCurso: parseInt(localStorage.getItem("idCurso")),
     })
 
     return (

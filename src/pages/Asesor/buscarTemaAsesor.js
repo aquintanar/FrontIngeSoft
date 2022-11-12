@@ -11,9 +11,9 @@ const BuscarTemaAsesor = ({temaTesis, setTemaTesis}) => {
         idAsesor: '',
         maxAsesorados: 0,
         estaObservado: 0,
-        nombres: 'asesorrrr',
+        nombres: '',
         correo: '',
-        apePat: 'asdads',
+        apePat: '',
         codigoPucp: '',
         imagen : '',
         contrasena: ''
