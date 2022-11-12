@@ -12,8 +12,10 @@ import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
 import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
-import DatePicker from "react-datepicker"
-import "react-datepicker/dist/react-datepicker.css";
+import '../../stylesheets/Calendar.css'
+import '../../stylesheets/DateTimePicker.css';
+import '../../stylesheets/Clock.css';
+import DateTimePicker from 'react-datetime-picker';
 /*
 import '../../stylesheets/Calendar.css'
 import '../../stylesheets/DatePicker.css';
@@ -99,7 +101,6 @@ function DatoReunion()  {
 
     //Selección entre modificar o insertar
     const peticionSelecter =()=>{
-        startDate = subtractTimeFromDate(startDate, 5)
         //console.log(startDate)
         reunion.fechaHoraInicio = startDate;
         reunion.fechaHoraFin = startDate;
@@ -113,13 +114,6 @@ function DatoReunion()  {
             console.log(reunion);
             openEditModal();  
         }
-    }
-/**/
-    function subtractTimeFromDate(objDate, intHours) {
-        var numberOfMlSeconds = objDate.getTime();
-        var addMlSeconds = (intHours * 60) * 60000;
-        var newDateObj = new Date(numberOfMlSeconds - addMlSeconds);
-        return newDateObj;
     }
 
     //Registrar reunion--
@@ -170,7 +164,7 @@ function DatoReunion()  {
         <div class=" CONTAINERALUMNO"> 
 
 
-            <p class="HEADER-TEXT1">{asesor.tipo ? "Registrar reunión" : "Modifcar reunión"}</p>
+            <p class="HEADER-TEXT1">{asesor.tipo ? "Registrar reunión" : "Modificar reunión"}</p>
 
             <div class="row">
                 <div class="col-6 DATOS" >
@@ -238,13 +232,7 @@ function DatoReunion()  {
             
                 <div class="col-4 DATOS" >
                     <div class="text-start fs-6  mb-1 fw-normal "><p>Fecha de la reunión</p></div>
-                    <DatePicker
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        timeInputLabel="Time:"
-                        dateFormat="MM/dd/yyyy h:mm aa"
-                        showTimeInput
-                    />
+                    <DateTimePicker onChange={setStartDate} value={startDate} />
                 </div>
 
             </div>

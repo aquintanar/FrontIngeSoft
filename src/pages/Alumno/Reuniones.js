@@ -99,7 +99,7 @@ function Reuniones()  {
 
     filtrado = filtrado.slice(currentPage,currentPage+5);
     const nextPage = () =>{
-      if(filtrado.length>=currentPage) //VER CODIGO
+      if(filtrado.length>=5) //VER CODIGO
       SetCurrentPage(currentPage+5);
     }
     const previousPage =() =>{
@@ -109,8 +109,7 @@ function Reuniones()  {
 
     //Listar reuniones tabla del alumno -
     const peticionGet=async()=>{
-      await axios.get(url+ "BuscarReunionesXIdAlumnoYIdCurso?idAlumno=8&idCurso=1")       //cambiae
-      //await axios.get(url+ "BuscarReunionesXIdAsesorYIdCurso?idAsesor="+reunionSeleccionada.idAsesor+ "&idCurso=" +reunionSeleccionada.idCurso)       //cambiae
+      await axios.get(url+ "BuscarReunionesXIdAlumnoYIdCurso?idAlumno="+ localStorage.getItem('IDUSUARIO')+ "&idCurso=" + localStorage.getItem('idCurso'))
       .then(response=>{
         setData(response.data);
         console.log("response.data");
