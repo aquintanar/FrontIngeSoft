@@ -2,6 +2,7 @@
   "name": "proyecto-front",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@auth0/auth0-react": "^1.12.0",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
