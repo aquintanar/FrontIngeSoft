@@ -35,7 +35,7 @@ export const SidebarData = [
             },
             {
                 title: 'Gestión de Alumnos',
-                path: '',
+                path: 'alumno',
                 icon: <MdIcons.MdOutlineEditCalendar />
             },
             {
