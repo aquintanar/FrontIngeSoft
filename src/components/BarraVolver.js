@@ -16,7 +16,7 @@ export function BarraVolver() {
   const InfoArribaDinamica = async () => {
     const response = await axios
       .get(
-        "https://localhost:7012/api/Curso/BuscarCursoXId",
+        "http://34.195.33.246/api/Curso/BuscarCursoXId",
         { params: { idCurso: localStorage.getItem("idCurso") } },
         {
           _method: "GET",
@@ -37,11 +37,11 @@ export function BarraVolver() {
     <div className="barra2 ">
       <div className="tituloSistema">
         <img
-          className="imagen__barra2"
+          className="imagen__barra2 mt-1"
           src={require("../imagenes/casa.png")}
           alt="casa"
         ></img>
-        <h4><a href="/cursos">Volver a mis cursos</a></h4>
+        <h4 className="volver"><a href="/cursos">Volver a mis cursos</a></h4>
       </div>
       <div>
         <h4 className="titulo-info">{anhio + "-" + sem + " " + nom + " " + esp}</h4>

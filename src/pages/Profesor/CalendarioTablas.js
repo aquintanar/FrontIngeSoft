@@ -27,7 +27,7 @@ export const CalendarioTablas = ({ ind, inicio,fecha,ini}) =>{
                     </tr>
                 </thead>
                 <tbody >
-                    {ind.filter((elem)=> elem.sem ===inicio+ini && elem.fidTipoEntregable !== 1).map(entregable => (
+                    {ind.filter((elem)=> elem.sem ===inicio+ini && elem.responsableEvaluar === 'Docente').map(entregable => (
                         <tr key={entregable.idEntregable}>
                             <td >{entregable.tipoEntregable}</td>    
                             <td>{entregable.nombre}</td>                

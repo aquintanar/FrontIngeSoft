@@ -18,6 +18,12 @@ import EncuestaPreguntas from "./pages/Comite/EncuestaPreguntas";
 import DatosEncuesta from "./pages/Comite/DatosEncuesta";
 import ListarAsesores from "./pages/Comite/ListarAsesores";
 import DatosAsesor from "./pages/Comite/DatosAsesor";
+import ListSistEvaluacion from './pages/Comite/ListSistEvaluacion';
+import DatoSistEvaluación from './pages/Comite/DatoSistEvaluacion';
+import ListarAsesoresNoEstan from "./pages/Comite/AgregarAsesor";
+import ListarAlumnos from "./pages/Comite/ListarAlumnos";
+import DatosAlumno from "./pages/Comite/DatosAlumno";
+import ListarAlumnosNoEstan from "./pages/Comite/AgregarAlumno";
 function Comite() {
 
     return (
@@ -31,6 +37,10 @@ function Comite() {
                   <Route path='temaTesis/temaSeleccionado/:id' exact element= {<TemaSeleccionado/>}/>
                   <Route path='asesor' exact element= {<ListarAsesores/>}/>
                   <Route path='asesor/DatosAsesor/:id' exact element= {<DatosAsesor/>}/>
+                  <Route path='asesor/AgregarAsesor' exact element= {<ListarAsesoresNoEstan/>}/>
+                  <Route path='alumno' exact element= {<ListarAlumnos/>}/>
+                  <Route path='alumno/DatosAlumno/:id' exact element= {<DatosAlumno/>}/>
+                  <Route path='alumno/AgregarAlumno' exact element= {<ListarAlumnosNoEstan/>}/>
                   <Route path='preparacion/entregables' exact element= {<ListaEntregables/>}/>
                   <Route path='preparacion/entregables/menu/:id' exact element= {<Entregable/>}/>
                   <Route path='preparacion/entregables/menu/:id/datosEntregable' exact element= {<DatosEntregable/>}/>
@@ -41,6 +51,8 @@ function Comite() {
                   <Route path='reportealumnos' exact element={<ReporteAlumnos/>}/>
                   <Route path='tesis' exact element={<Tesis/>}/>
                   <Route path='reporteciclo' exact element={<ReporteCiclo/>} />
+                  <Route path='sistEvaluacion' exact element={<ListSistEvaluacion/>} />
+                  <Route path='sistEvaluacion/datoSistEvalución/:id' exact element= {<DatoSistEvaluación/>}/>
               </Routes>
 
         </div>

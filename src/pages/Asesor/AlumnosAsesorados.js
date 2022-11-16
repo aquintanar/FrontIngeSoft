@@ -22,7 +22,7 @@ function AlumnosAsesorados() {
  
     async function getDataI() {
       (async () => {
-        const result = await axios("https://localhost:7012/api/Alumno/ListAlumnosXIdAsesor?idAsesor=2");
+        const result = await axios("http://34.195.33.246/api/Alumno/ListAlumnosXIdAsesor?idAsesor=2");
         //const result = await axios("http://44.210.195.91/api/Alumno/ListAlumnosXIdAsesor?idAsesor=2");
         setDataI(result.data);
       })();

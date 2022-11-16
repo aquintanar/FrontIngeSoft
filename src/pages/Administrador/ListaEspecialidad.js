@@ -10,8 +10,8 @@ import useModal from '../../hooks/useModals';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 import * as BsIcons from 'react-icons/bs';
 
-const url= "https://localhost:7012/api/Especialidad/";
-const urlFacu= "https://localhost:7012/api/Facultad/";
+const url= "http://34.195.33.246/api/Especialidad/";
+const urlFacu= "http://34.195.33.246/api/Facultad/";
 /*
 const url= "http://44.210.195.91/api/Especialidad/";
 const urlFacu= "http://44.210.195.91/api/Facultad/";
@@ -63,7 +63,7 @@ function ListaEspecialidad()  {
   filtrado = filtrado.slice(currentPage,currentPage+5);
 
   const nextPage = () =>{
-    if(filtrado.length>=currentPage) //VER CODIGO
+    if(filtrado.length>=5) //VER CODIGO
       SetCurrentPage(currentPage+5);
   }
   const previousPage =() =>{
@@ -138,10 +138,10 @@ function ListaEspecialidad()  {
 
           <div class="col col-5 FILTRO-LISTAR" >
               <p>Facultad</p>
-              <select select class="form-select Cursor" aria-label="Default select example"  onChange= {cambioSelect} >  
+              <select select class="form-select" aria-label="Default select example"  onChange= {cambioSelect} >  
                    <option selected value = "0">Todos</option>
                   {facus.map(elemento=>(
-                    <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.descripcion}</option>  
+                    <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.nombre}</option>  
                   ))}
               </select>
           </div>
@@ -157,10 +157,10 @@ function ListaEspecialidad()  {
             <thead class >
               <tr class>
                   <th style={{width: 50}}>ID</th>
-                  <th style ={{width: 275}}>Nombre</th>
-                  <th style = {{width:100}}>Clave</th>
-                  <th style = {{width:100}}>Facultad</th>
-                  <th style = {{width:100}}>Acciones</th>
+                  <th style ={{width: 240}}>Nombre</th>
+                  <th style = {{width:60}}>Clave</th>
+                  <th style = {{width:180}}>Facultad</th>
+                  <th style = {{width:80}}>Acciones</th>
               </tr>
             </thead>
             <tbody >

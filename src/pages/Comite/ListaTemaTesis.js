@@ -59,7 +59,7 @@ function ListaTemaTesis()  {
     }
     const publicarTemas=()=>{
       data.forEach(function(tema, index) {
-        axios.put("https://localhost:7012/api/TemaTesis/PublicarTemaTesis?idTemaTesis="+tema.idTemaTesis)
+        axios.put("http://34.195.33.246/api/TemaTesis/PublicarTemaTesis?idTemaTesis="+tema.idTemaTesis)
        //axios.put("http://44.210.195.91/api/TemaTesis/PublicarTemaTesis?idTemaTesis="+tema.idTemaTesis)
       .then(response=>{
         console.log("Publicado");
@@ -87,7 +87,7 @@ function ListaTemaTesis()  {
     }, []);
    
     async function getData() {
-      const response = await fetch("https://localhost:7012/api/TemaTesis/GetTemaTesis")
+      const response = await fetch("http://34.195.33.246/api/TemaTesis/GetTemaTesis")
       //const response = await fetch("http://44.210.195.91/api/TemaTesis/GetTemaTesis");
       const data = await response.json();
       setData(data);

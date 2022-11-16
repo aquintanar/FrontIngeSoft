@@ -16,6 +16,8 @@ import EntregablesParciales from './pages/Asesor/EntregablesParciales';
 import HistorialVersiones from './pages/Asesor/HistorialVersiones';
 import Calendario from './pages/Asesor/Calendario';
 import SubirArchivos from './pages/Asesor/SubirArchivos';
+import ListaReunion from './pages/Asesor/ListaReunion';
+import DatoReunion from './pages/Asesor/DatoReunion';
 function Asesor() {
     const[active, setActive] = useState("proponerTema");
     const[formato, setFormato] = useState("botonActivo1");
@@ -55,6 +57,8 @@ function Asesor() {
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales/entregableParcialSeleccionado/SubirArchivos' exact element= {<SubirArchivos/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales/entregableSeleccionado/SubirArchivos' exact element= {<SubirArchivos/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales/avanceSemanalSeleccionado/SubirArchivos' exact element= {<SubirArchivos/>}/>
+                  <Route path='reunion' exact element= {<ListaReunion/>}/>
+                  <Route path='reunion/datoReunion' exact element= {<DatoReunion/>}/>
               </Routes>
         </div>
     )

@@ -14,7 +14,7 @@ import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 Buffer.from("anything", "base64");
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
-const url= "https://localhost:7012/api/Version/";
+const url= "http://34.195.33.246/api/Version/";
 
 function NotaAlumno()  {
  /*  
@@ -46,7 +46,7 @@ const [versionSeleccionada, setVersionSeleccionada]=useState({
 
 const cargarVersion=async()=>{
   if(location.state.idVersion!=null){
-    const response = await axios.get(`https://localhost:7012/api/Version/ListVersionXId?idVersion=${location.state.idVersion}`);
+    const response = await axios.get(`http://34.195.33.246/api/Version/ListVersionXId?idVersion=${location.state.idVersion}`);
     setVersionSeleccionada({
       idVersion: response.data[0].idVersion,
       linkDoc: response.data[0].linkDoc,

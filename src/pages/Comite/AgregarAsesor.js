@@ -13,10 +13,10 @@ const urlAs= "http://34.195.33.246/api/Asesor/";
 const urlEsp= "http://34.195.33.246/api/Especialidad/";
 const urlAsXCurso="http://34.195.33.246/api/AsesorXCurso/";
 
-function ListarAsesores()  {
-  let idCursoGlobal = localStorage.getItem("idCurso");    
-  let idAsesorRef = 0;
+function ListarAsesoresNoEstan()  {
   let navigate = useNavigate();
+  let idCursoGlobal = localStorage.getItem("idCurso");
+  let idAsesorRef = 0;
   const [currentPage,SetCurrentPage] = useState(0);
   const [data, setData]=useState([]);
   const [selEsp, setSelEsp] = useState(0);
@@ -27,6 +27,14 @@ function ListarAsesores()  {
   const [esp, setEsp] = useState([]);
   const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
   const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
+  const [isOpenRegistro, openRegistroModal ,closeRegistroModal ] = useModal();
+  const [isOpenRegistroConf, openRegistroConfModal ,closeRegistroConfModal ] = useModal();
+
+  const [asesorXcurso, setAsesorXCurso] =useState({
+    idCurso: 0,
+    idAsesor: 0,
+    cantAlumnos: 0
+})
 
   let filtrado =[];
   const buscador = e=>{
@@ -69,28 +77,51 @@ function ListarAsesores()  {
 
   const seleccionarAsesor=(asesor)=>{
       setAsesorSeleccionado(asesor);
-        openDeleteModal();
+      idAsesorRef = asesor.idAsesor;
+      console.log(asesorSeleccionado.idUsuario);
+      setAsesorXCurso({
+        idCurso: idCursoGlobal,
+        idAsesor: idAsesorRef,
+        cantAlumnos: 0
+        });
+        openRegistroModal();
+        
     }
-    
+
+    const peticionPost=async()=>{
+        console.log(idCursoGlobal);
+        console.log(asesorSeleccionado.idUsuario);        
+        console.log(asesorXcurso);
+        await axios.post(urlAsXCurso+"PostAsesorXCurso/",asesorXcurso)
+        .then(response=>{
+          console.log(asesorXcurso);
+          console.log(response.data);
+          closeRegistroModal();
+          openRegistroConfModal();
+        }).catch(error =>{
+          console.log(error.message);
+          console.log(asesorXcurso);
+        })
+        petitionAs();
+      }
   
 
   filtrado = filtrado.slice(currentPage,currentPage+5);
 
   const [asesorSeleccionado, setAsesorSeleccionado]=useState({
-      idAsesor: 0,
-      maxAsesorados: 0,
-      cantAsesorados: 0,
-      estaObservado: 0,
+      idUsuario: 0,
       nombres: '',
-      apePat: '',
       apeMat: '',
       correo: '',
-      codigoPucp: '',
-      imagen: ''
+      codigoPUCP: '',
+      imagen: '',
+      maxAsesorados: 0,
+      estaObservado: 0,
+      estado: 1
   })
 
   const petitionAs=async()=>{
-      await axios.get(urlAs+"ListAsesoresXIdCurso?idCurso="+idCursoGlobal)
+      await axios.get(urlAs+"ListAsesoresXIdCursoQueNoEstan?idCurso="+ idCursoGlobal)
       .then(response=>{
       setAs(response.data);
       }).catch(error =>{
@@ -109,15 +140,15 @@ function ListarAsesores()  {
 
   
     const peticionDelete=async()=>{
-      console.log(asesorSeleccionado);
-      console.log(idCursoGlobal);
-      await axios.delete(urlAsXCurso+ "DeleteAsesorXCurso?idAsesor="+ asesorSeleccionado.idAsesor + "&idCurso=" + idCursoGlobal).then(response=>{
-        petitionAs();
+      await axios.delete(urlAs+ "DeleteAsesor?idAsesor="+ asesorSeleccionado.idUsuario).then(response=>{
+          petitionAs();
         closeDeleteModal();
         openConfirmModal();
       })
-      
     }
+    const cerrarPost=()=>{
+        closeRegistroConfModal();
+      }
 
   
   useEffect(()=>{
@@ -127,7 +158,7 @@ function ListarAsesores()  {
 
   return(
       <div className="CONTAINERCOMITE">
-          <h1 className="HEADER-TEXT1">Asesores</h1>
+          <h1 className="HEADER-TEXT1">Agregar asesores</h1>
           <div class="row">
             <div class="col-12 FILTRO-LISTAR-BUSCAR" >
                 <p>Ingrese el nombre del asesor</p>
@@ -176,12 +207,13 @@ function ListarAsesores()  {
               </thead>
               <tbody >
                 {filtrado.map(asesor => (
-                  <tr key={asesor.idAsesor}>
+                  <tr key={asesor.idUsuario}>
                       <td >{asesor.nombres + " " + asesor.apeMat}</td>
                       <td >{asesor.correo}</td>
                       <td>
-                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosAsesor/"+asesor.idAsesor)}}> <FaIcons.FaEdit /></button>
-                      <button class=" btn BTN-ACCIONES" onClick={()=>seleccionarAsesor(asesor)}> <BootIcons.BsTrash /></button>
+                      <div class="LISTAR-ESPECIALIDADES-BOTON"> 
+                      <button class=" btn btn-primary fw-bold" onClick={()=>seleccionarAsesor(asesor)}> <span>Seleccionar</span></button>
+                      </div>                      
                       </td>
                   </tr>
                 ))}
@@ -192,8 +224,8 @@ function ListarAsesores()  {
         <ModalPregunta
       isOpen={isOpenDeleteModal} 
       closeModal={closeDeleteModal}
-      procedimiento = "retirar del curso"
-      objeto="a"
+      procedimiento = "eliminar"
+      objeto="la especialidad"
       elemento={asesorSeleccionado && asesorSeleccionado.nombres}
     >
       <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
@@ -212,11 +244,35 @@ function ListarAsesores()  {
       </div>
     </ModalConfirmación>
 
-          <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
-              <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("AgregarAsesor")}}> Agregar asesor</button>
+    <ModalPregunta
+            isOpen={isOpenRegistro} 
+            closeModal={closeRegistroModal}
+            procedimiento = ""
+            objeto="registrar a"
+            elemento={asesorSeleccionado && asesorSeleccionado.nombres}
+          >
+            <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+              <Button class="btn  btn-success btn-lg" onClick={()=>peticionPost()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <Button class="btn btn-danger btn-lg"  onClick={closeRegistroModal}>Cancelar</Button>
+            </div>
+          </ModalPregunta>
+          <ModalConfirmación
+            isOpen={isOpenRegistroConf} 
+            closeModal={closeRegistroConfModal}
+            procedimiento= "registrado"
+          >
+            <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+              <Button class="btn btn-success btn-lg" onClick={()=>{navigate("../asesor")}}>Entendido</Button>
+            </div>
+          </ModalConfirmación>
+
+            <div class="row INSERTAR-BOTONES">                            
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../asesor")}}><span>Cancelar</span></button>
+              </div>
           </div>
           
       </div>
   )
 }
-export default ListarAsesores;
+export default ListarAsesoresNoEstan;

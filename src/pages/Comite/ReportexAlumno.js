@@ -12,7 +12,7 @@ import '../../stylesheets/Administrador.css'
 import useModal from '../../hooks/useModals';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
-const url= "https://localhost:7012/api/Alumno/";
+const url= "http://34.195.33.246/api/Alumno/";
 
 /*
 const url= "http://44.210.195.91/api/Facultad/";
@@ -110,7 +110,7 @@ const ReportexAlumno = () => {
   //Listar Alumnos tabla--
  
   const peticionGet=async()=>{
-    const response = await axios.get('https://localhost:7012/api/Alumno/GetAlumnos',
+    const response = await axios.get('http://34.195.33.246/api/Alumno/GetAlumnos',
         {
             _method:'GET'
         })

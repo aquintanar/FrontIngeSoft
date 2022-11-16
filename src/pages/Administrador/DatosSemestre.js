@@ -16,12 +16,12 @@ import '../../stylesheets/Calendar.css'
 import '../../stylesheets/DatePicker.css';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
-const url= "https://localhost:7012/api/Semestre/";
-const urlFacu= "https://localhost:7012/api/Facultad/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
-const urlUser= "https://localhost:7012/api/Asesor/";
-const urlComi= "https://localhost:7012/api/ComiteTesis/";
-const urlSemComi= "https://localhost:7012/api/SemestreXComiteTesis/";
+const url= "http://34.195.33.246/api/Semestre/";
+const urlFacu= "http://34.195.33.246/api/Facultad/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
+const urlUser= "http://34.195.33.246/api/Asesor/";
+const urlComi= "http://34.195.33.246/api/ComiteTesis/";
+const urlSemComi= "http://34.195.33.246/api/SemestreXComiteTesis/";
 
 
 /*
@@ -69,6 +69,9 @@ function DatosSemestre() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [data, setData] = useState([]);   //para User
   const [fac, setFac] = useState(0);
+  const [nn, setnn] =useState({
+      imagen: null,
+  })
 
   //Objeto semestre
   const [semestreSeleccionada, setSemestreSeleccionada]=useState({
@@ -116,21 +119,30 @@ function DatosSemestre() {
 
     //Control de cambio en select de anio
     const cambioSelectAnio =e=>{
+        const {name, value}=e.target;
+        cargaNombre(semestreSeleccionada.idEspecialidad)
         setSemestreSeleccionada(prevState=>({
         ...prevState,
-          anho: e.target.value,
+          anho: value,
           nombre: semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre + "-"  + espDec
         }))
+        semestreSeleccionada.anho = value;
+        semestreSeleccionada.nombre= value + "-" + semestreSeleccionada.numSemestre + "-"  + espDec;
+        console.log("anio");
         console.log(semestreSeleccionada);
       }
 
       //Control de cambio en select de semestre
       const cambioSelectSem =e=>{
+        const {name, value}=e.target;
+        cargaNombre(semestreSeleccionada.idEspecialidad)
         setSemestreSeleccionada(prevState=>({
         ...prevState,
-          numSemestre: e.target.value,
+          numSemestre: value,
           nombre: semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre + "-"  + espDec
         }))
+        semestreSeleccionada.numSemestre = value;
+        semestreSeleccionada.nombre= semestreSeleccionada.anho + "-" + value + "-"  + espDec;
         console.log(semestreSeleccionada);
       }
 
@@ -143,7 +155,6 @@ function DatosSemestre() {
           nombre: semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre + "-"  + espDec
         }))
         console.log(semestreSeleccionada);
-        
       }
 
     //no hacer nada
@@ -226,9 +237,6 @@ function DatosSemestre() {
           .then(response=>{
           closePostModal();
           openGuardadoModal();
-          console.log("Fin");
-          console.log(semestreSeleccionada);
-          console.log(coordinadores);
         }).catch(error =>{
         console.log(error.message);
         })
@@ -243,12 +251,6 @@ function DatosSemestre() {
     const peticionPut=async()=>{
       console.log("Modificar coord regis");
       coordRegElim();
-     /* console.log("Modificar coord regis");
-      console.log(coordinadores);
-      console.log(coordReg);
-      console.log(coordAReg);
-      console.log(coordElim);
-      console.log("Modificar coord a regi a eliminar");*/
       
       if(coordElim.length== 0 & coordAReg.length  == 0){
         closePostModal();
@@ -266,7 +268,6 @@ function DatosSemestre() {
         }
       
       //son para los coordinadores que estaban registrados, pero seran eliminados
-      
         for(let i=0; i<coordElim.length; i++){
             await axios.delete(urlSemComi + "DeleteSemestreXComiteTesis?idSemestre="+ parseInt(id) + "&idComiteTesis=" + coordElim[i].idComiteTesis)
               .then(response=>{
@@ -274,29 +275,16 @@ function DatosSemestre() {
               openGuardadoModal();
           })  .catch(error =>{ console.log(error.message);  })
         }
-        docentes.imagen = null;
 
-        /*
-        await axios.put(url+"ModifySemestre", {
-          idSemestre: semestreSeleccionada.idSemestre,
-          nombre: semestreSeleccionada.nombre,
-          anho: semestreSeleccionada.anho,
-          enCurso: semestreSeleccionada.enCurso,
-          numSemestre: semestreSeleccionada.numSemestre,
-          fechaInicio: semestreSeleccionada.fechaInicio,
-          fechaFin: semestreSeleccionada.fechaFin,
-          idEspecialidad: semestreSeleccionada.idEspecialidad,
-          lista_coordinadores: docentes
-        }, {
-          headers: {
-            'Content-Type': "application/json",
-          },
-        }
-          )
-          .then(response=>{
-          closeEditModal();
-          openEditadoModal(); 
-        })  .catch(error =>{ console.log(error.message);  })*/
+        semestreSeleccionada.lista_coordinadores.push(nn);
+        semestreSeleccionada.enCurso = true;
+        semestreSeleccionada.idEspecialidad = parseInt(semestreSeleccionada.idEspecialidad);
+        await axios.put(url + "ModifySemestre", semestreSeleccionada)
+              .then(response=>{
+                closeEditModal();
+                openEditadoModal();
+          })  .catch(error =>{ console.log(error.message);  })
+        semestreSeleccionada.lista_coordinadores.push(nn);
       
     }
 
@@ -368,12 +356,14 @@ function DatosSemestre() {
 
   //Carga semestre a modificar
     const cargarSemestre=async()=>{
+        var ide;
         if(id!=='0'){
             petitionCoord();
             const response = await axios.get(url+"GetSemestreXId?idSemestre="+parseInt(id));
             setModificar(1);
             console.log("response inicios");
             console.log(response);
+            ide = response.data[0].idEspecialidad;
             setSemestreSeleccionada({
                 idSemestre: response.data[0].idSemestre,
                 nombre: response.data[0].nombre,
@@ -383,15 +373,17 @@ function DatosSemestre() {
                 fechaFin: new Date(response.data[0].fechaFin),
                 idEspecialidad: response.data[0].idEspecialidad,
                 enCurso: response.data[0].enCurso,
+                lista_coordinadores: [],
               }
                 
             );
             setSubtitulo("Modificar Semestre Académico");
-            cargaNombre(semestreSeleccionada.idEspecialidad)
-            console.log("response fin");
+            cargaNombre(response.data[0].idEspecialidad)
             console.log(semestreSeleccionada);
+            console.log("response fin");
             setFechaIni(new Date( response.data[0].fechaInicio));
             setFechaFin(new Date(response.data[0].fechaFin));
+            semestreSeleccionada.lista_coordinadores.push(nn)
         }
         else{
           setModificar(0);
@@ -425,6 +417,7 @@ function DatosSemestre() {
     }
 
     useEffect(()=>{
+      console.log(id)
         petitionFacu();
         petitionEsp();
         cargarSemestre();

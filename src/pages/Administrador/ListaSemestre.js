@@ -9,9 +9,9 @@ import {  useNavigate } from 'react-router-dom';
 import * as BsIcons from 'react-icons/bs';
 //import './DatosEspecilidad.css';
 
-const url= "https://localhost:7012/api/Semestre/";
-const urlFacu= "https://localhost:7012/api/Facultad/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
+const url= "http://34.195.33.246/api/Semestre/";
+const urlFacu= "http://34.195.33.246/api/Facultad/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
 
 /*
 
@@ -116,7 +116,7 @@ function ListaSemestre()  {
   filtrado = filtrado.slice(currentPage,currentPage+5);
 
   const nextPage = () =>{
-    if(filtrado.length>=currentPage) //VER CODIGO
+    if(filtrado.length>=5) //VER CODIGO
       SetCurrentPage(currentPage+5);
   }
   const previousPage =() =>{

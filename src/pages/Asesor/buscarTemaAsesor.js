@@ -2,8 +2,8 @@ import React from 'react'
 import './proponerTemaAsesor.css';
 import {useState , useEffect} from "react";
 import axios from 'axios';
-const urlCoAsesor= "https://localhost:7012/api/TemaTesisXAsesor/";
-const urlAsesor= "https://localhost:7012/api/Asesor/";
+const urlCoAsesor= "http://34.195.33.246/api/TemaTesisXAsesor/";
+const urlAsesor= "http://34.195.33.246/api/Asesor/";
 let id = 0;
 
 const BuscarTemaAsesor = ({temaTesis, setTemaTesis}) => {
@@ -11,9 +11,9 @@ const BuscarTemaAsesor = ({temaTesis, setTemaTesis}) => {
         idAsesor: '',
         maxAsesorados: 0,
         estaObservado: 0,
-        nombres: 'asesorrrr',
+        nombres: '',
         correo: '',
-        apePat: 'asdads',
+        apePat: '',
         codigoPucp: '',
         imagen : '',
         contrasena: ''

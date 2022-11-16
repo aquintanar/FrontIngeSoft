@@ -59,7 +59,7 @@ const Sidebar = () => {
   const showSidebar = () => setSidebar(sidebar);
   const peticionGet=async()=>{
     console.log("hola");
-    const response =await axios.get("https://localhost:7012/api/Alumno/GetAlumnos")
+    const response =await axios.get("http://34.195.33.246/api/Alumno/GetAlumnos")
     .then(response=>{
       console.log(response);
       console.log(response.data[0].idUsuario);

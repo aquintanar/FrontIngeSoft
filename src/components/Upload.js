@@ -172,12 +172,12 @@ const handleChange=e=>{
 const cerrarPost=()=>{
   handleUpload();
   closeGuardadoModal();
-  navigate("/alumno/gestion/gesPortafolio/EntregablesParciales");
+  navigate("/alumno/gestion/gesPortafolio");
 }
 const cerrarPut=()=>{
   handleUpload();
   closeEditadoModal();
-  navigate("/alumno/gestion/gesPortafolio/EntregablesParciales");
+  navigate("/alumno/gestion/gesPortafolio");
 }
 const peticionSelecter =async()=>{
 if(idVersion>0){
@@ -250,13 +250,13 @@ const cargarVersion=async()=>{
 
   if(idVersion!=null){
     (async () => {
-    const urlDocumentos  = `https://localhost:7012/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${idVersion}`
+    const urlDocumentos  = `http://34.195.33.246/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${idVersion}`
     const responseDocumentos  = await fetch(urlDocumentos)
     const dataDocumentos = await responseDocumentos.json()
     setDocumentosVersion(dataDocumentos)
     console.log(documentosVersion);
 
-    const response = await axios.get(`https://localhost:7012/api/Version/ListVersionXId?idVersion=${idVersion}`);
+    const response = await axios.get(`http://34.195.33.246/api/Version/ListVersionXId?idVersion=${idVersion}`);
     setVersionSeleccionada({
       idVersion: response.data[0].idVersion,
       linkDoc: response.data[0].linkDoc,
@@ -282,17 +282,21 @@ useEffect(() => {
 
 const peticionPost=async()=>{
   console.log(versionSeleccionada);
-  await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionada,{
+  await axios.post("http://34.195.33.246/api/Version/PostVersion",versionSeleccionada,{
       _method: 'POST'
     })
   .then(response=>{
     idVersionPrueba = response.data.idVersion;
     console.log(response.data.idVersion);
-    if(idVersion==null){
-    setDocumentoVersionNuevo({
-      idVersion : idVersionPrueba, //LLAMAR CON RESPONSE AL IDVERSION Y LUEGO LLAMAR A LA FUNCION PARA CREAR DOCUMENTO
-  });
-  documentoVersionNuevo.idVersion = idVersionPrueba;
+    
+    if(idVersion>0){
+}
+else {
+  setDocumentoVersionNuevo({
+    idVersion : idVersionPrueba, //LLAMAR CON RESPONSE AL IDVERSION Y LUEGO LLAMAR A LA FUNCION PARA CREAR DOCUMENTO
+});
+console.log(response.data.idVersion)
+documentoVersionNuevo.idVersion = idVersionPrueba;
 }
   guarda();
     closePostModal();
@@ -312,7 +316,7 @@ const peticionPost=async()=>{
 }
 
 const guarda=async()=>{
-  await axios.post("https://localhost:7012/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
+  await axios.post("http://34.195.33.246/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
       _method: 'POST'
     })
   .then(response=>{
@@ -324,7 +328,7 @@ const guarda=async()=>{
 
 
 const peticionPut=async()=>{
-  await axios.put("https://localhost:7012/api/Version/ModifyVersion",versionSeleccionada,{
+  await axios.put("http://34.195.33.246/api/Version/ModifyVersion",versionSeleccionada,{
     _method: 'PUT'
   })
   .then(response=>{
@@ -341,7 +345,7 @@ const peticionPut=async()=>{
 
   }
   console.log(documentoVersionNuevo);
-  await axios.post("https://localhost:7012/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
+  await axios.post("http://34.195.33.246/api/DocumentoVersion/InsertarDocumentoVersion",documentoVersionNuevo,{
       _method: 'POST'
     })
   .then(response=>{
@@ -351,7 +355,7 @@ const peticionPut=async()=>{
 
 }
 const peticionDelete=async()=>{
-  await axios.delete("https://localhost:7012/api/DocumentoVersion/EliminarDocumentoVersion?idDocumentoVersion="+ documentoVersion.idDocumentoVersion).then(response=>{
+  await axios.delete("http://34.195.33.246/api/DocumentoVersion/EliminarDocumentoVersion?idDocumentoVersion="+ documentoVersion.idDocumentoVersion).then(response=>{
     cargarVersion();
     closeDeleteModal();
     openConfirmModal();
@@ -372,7 +376,7 @@ const seleccionarDocumentoVersion=(documentos)=>{
         <img width="140px" float= "left" top="1000px"  src={require('../imagenes/subida.png')} alt="archivo"></img>
          
         <center>
-        <p class="HEADER-TEXT2" >Seleccione o suelte un archivo</p></center>
+        <p class="HEADER-TEXT2" >Seleccione o suelte un archivo{idVersion}</p></center>
         <p class="HEADER-TEXT4">Los archivos JPG, PNG O PDF, no pueden superar las 100 MB de tamaño</p>
          <p class="HEADER-TEXT9">{idAlumno}</p></div> )}
         <FormField

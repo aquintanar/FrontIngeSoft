@@ -6,8 +6,8 @@ import React, { useEffect, useState } from 'react';
 import {  Modal, Button} from '@material-ui/core';
 import {makeStyles, createTheme} from '@material-ui/core/styles';
 
-const urlArea = "https://localhost:7012/api/Area/";
-const urlTesis = "https://localhost:7012/api/TemaTesis/";
+const urlArea = "http://34.195.33.246/api/Area/";
+const urlTesis = "http://34.195.33.246/api/TemaTesis/";
 
 const themeX = createTheme({
     palette: {

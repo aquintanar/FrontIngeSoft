@@ -9,10 +9,10 @@ import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
-const urlSem= "https://localhost:7012/api/Semestre/";
-const urlFac= "https://localhost:7012/api/Facultad/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
-const urlCur= "https://localhost:7012/api/Curso/";
+const urlSem= "http://34.195.33.246/api/Semestre/";
+const urlFac= "http://34.195.33.246/api/Facultad/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
+const urlCur= "http://34.195.33.246/api/Curso/";
 
 function MisCursos()  {
     let navigate = useNavigate();

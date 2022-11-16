@@ -7,8 +7,8 @@ import useModal from '../../hooks/useModals';
 import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 
 
-const url= "https://localhost:7012/api/Especialidad/";
-const urlFacu= "https://localhost:7012/api/Facultad/";
+const url= "http://34.195.33.246/api/Especialidad/";
+const urlFacu= "http://34.195.33.246/api/Facultad/";
 /*
 const url= "http://44.210.195.91/api/Especialidad/";
 const urlFacu= "http://44.210.195.91/api/Facultad/";
@@ -145,7 +145,7 @@ function DatosEspecialidad() {
                     <div class="  fs-5 fw-normal  mb-1 "><p>Facultad</p></div>
                     <select select class="form-select Cursor"  onChange= {cambioSelect}  selected value = {especialidadSeleccionada.facultad.idFacultad} >
                       {facus.map(elemento=>
-                          <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.descripcion}</option>  
+                          <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.nombre}</option>  
                       )}
                     </select>
                 </div>

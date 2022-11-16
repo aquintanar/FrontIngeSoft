@@ -21,7 +21,7 @@ function Alumnos() {
  
     async function getDataI() {
       (async () => {
-        const result = await axios("https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=1");
+        const result = await axios("http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=1");
         //const result = await axios("http://44.210.195.91/api/Alumno/ListAlumnosXIdCurso?idCurso=1");
         setDataI(result.data);
       })();

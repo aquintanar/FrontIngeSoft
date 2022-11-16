@@ -14,9 +14,9 @@ import axios from 'axios';
 import {  Button} from '@material-ui/core';
 import { isCursorAtStart } from "@testing-library/user-event/dist/utils";
 
-const url1= "https://localhost:7012/api/Entregable/";
-const urlCurso = "https://localhost:7012/api/Curso/"
-const urlEncuesta = "https://localhost:7012/api/Encuesta/"
+const url1= "http://34.195.33.246/api/Entregable/";
+const urlCurso = "http://34.195.33.246/api/Curso/"
+const urlEncuesta = "http://34.195.33.246/api/Encuesta/"
 const AddEncuesta = () => {
     const [encuestaSeleccionada, setEncuestaSeleccionada]=useState({
         idEncuesta: 0 , 

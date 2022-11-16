@@ -12,7 +12,7 @@ export const ModalPregunta = ({ isOpen, closeModal, procedimiento,objeto, elemen
             <div className="modal__dialog" onClick={handleModalDialogClick}>
                 <div class="row">
                     <div align = "center">
-                        <p class= "text-white mt-2">¿Estás seguro que deseas {procedimiento} a {objeto} : <b>{elemento}</b> ? </p>
+                        <p class= "text-white mt-2">¿Estás seguro que deseas {procedimiento} {objeto} : <b>{elemento}</b> ? </p>
                     </div>
                     {children}
                 </div>

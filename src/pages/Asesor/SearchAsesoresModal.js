@@ -5,9 +5,9 @@ const SearchAsesoresModal = ( {show ,setShow, asesorTesis, setAsesor} ) =>{
     //setear los hooks useState
     const[Asesores , setAsesores] = useState([]);
     const[search , setSearch] = useState("");
-    const URL = "http://44.210.195.91/api/Asesor/GetAsesores";
+    const URL = "http://34.195.33.246/api/Asesor/GetAsesores";
     //local
-        //https://localhost:7012/
+        //http://34.195.33.246/
         //EC2
         // http://44.210.195.91/
     const showData = async() => {
@@ -82,7 +82,7 @@ const SearchAsesoresModal = ( {show ,setShow, asesorTesis, setAsesor} ) =>{
                                     <td>{asesores.nombres + " " + asesores.apeMat }</td>
                                     <td><button className = "btn BUTTON_TABLA" onClick={()=>{ 
                                         setAsesor({
-                                            idUsuario: asesores.idTemaTesis,
+                                            idUsuario: asesores.idUsuario,
                                             nombres: asesores.nombres,
                                             apeMat: asesores.apeMat,
                                         }); setShow(false)}}

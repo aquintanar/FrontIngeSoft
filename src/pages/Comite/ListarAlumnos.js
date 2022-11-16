@@ -9,18 +9,16 @@ import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
-const urlAs= "http://34.195.33.246/api/Asesor/";
+const urlAs= "http://34.195.33.246/api/Alumno/";
 const urlEsp= "http://34.195.33.246/api/Especialidad/";
-const urlAsXCurso="http://34.195.33.246/api/AsesorXCurso/";
+const urlAsXCurso="http://34.195.33.246/api/AlumnoXCurso/";
 
-function ListarAsesores()  {
+function ListarAlumnos()  {
   let idCursoGlobal = localStorage.getItem("idCurso");    
   let idAsesorRef = 0;
   let navigate = useNavigate();
   const [currentPage,SetCurrentPage] = useState(0);
-  const [data, setData]=useState([]);
   const [selEsp, setSelEsp] = useState(0);
-  const [tieneAlumn, setTieneAlum] = useState(0);
   const [observado, setObservado] = useState(0);
   const [search, setSearch] = useState("");
   const [as, setAs] = useState([]);
@@ -49,10 +47,6 @@ function ListarAsesores()  {
       const valor = parseInt(e.target.value)
       setSelEsp(valor)
     }
-  const cambioTieneAlum =e=>{
-      const valor = parseInt(e.target.value)
-      setTieneAlum(valor)
-  }
   const cambioEstaObservado =e=>{
       const valor = parseInt(e.target.value)
       setObservado(valor)
@@ -77,20 +71,25 @@ function ListarAsesores()  {
   filtrado = filtrado.slice(currentPage,currentPage+5);
 
   const [asesorSeleccionado, setAsesorSeleccionado]=useState({
-      idAsesor: 0,
-      maxAsesorados: 0,
-      cantAsesorados: 0,
-      estaObservado: 0,
+      idAlumno: 0,
+      linkCalendario: '',
+      tieneTema: 0,
       nombres: '',
       apePat: '',
       apeMat: '',
       correo: '',
       codigoPucp: '',
-      imagen: ''
+      contrasena:'',
+      imagen: '',
+      contrasena: '',
+      idEspecialidad: 0,
+      nombre: '',
+      descripcion: '',
+      idFacultad: 0
   })
 
   const petitionAs=async()=>{
-      await axios.get(urlAs+"ListAsesoresXIdCurso?idCurso="+idCursoGlobal)
+      await axios.get(urlAs+"ListAlumnosXIdCurso?idCurso="+idCursoGlobal)
       .then(response=>{
       setAs(response.data);
       }).catch(error =>{
@@ -111,12 +110,11 @@ function ListarAsesores()  {
     const peticionDelete=async()=>{
       console.log(asesorSeleccionado);
       console.log(idCursoGlobal);
-      await axios.delete(urlAsXCurso+ "DeleteAsesorXCurso?idAsesor="+ asesorSeleccionado.idAsesor + "&idCurso=" + idCursoGlobal).then(response=>{
+      await axios.delete(urlAsXCurso+ "DeleteAlumnoXCurso?idAlumno="+ asesorSeleccionado.idAlumno + "&idCurso=" + idCursoGlobal).then(response=>{
         petitionAs();
         closeDeleteModal();
         openConfirmModal();
-      })
-      
+      })      
     }
 
   
@@ -127,10 +125,10 @@ function ListarAsesores()  {
 
   return(
       <div className="CONTAINERCOMITE">
-          <h1 className="HEADER-TEXT1">Asesores</h1>
+          <h1 className="HEADER-TEXT1">Alumnos en el curso</h1>
           <div class="row">
             <div class="col-12 FILTRO-LISTAR-BUSCAR" >
-                <p>Ingrese el nombre del asesor</p>
+                <p>Ingrese el nombre del alumno</p>
                 <div class="input-group">
                     <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre del curso" aria-label="serach" onChange={buscador}/>
                 </div>
@@ -145,15 +143,7 @@ function ListarAsesores()  {
                 </select>
               </div>
               <div class="col-4 FILTRO-LISTAR" >
-                <p> ¿Tiene asesorado?</p>
-                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioTieneAlum} value ={tieneAlumn}>
-                      <option key={0} value = {0}>Todos</option>
-                      <option key={1} value = {1}>Si</option>
-                      <option key={2} value={2}>No</option>
-                </select>
-              </div>
-              <div class="col-4 FILTRO-LISTAR" >
-                <p> ¿Está observado?</p>
+                <p> ¿Tiene tema?</p>
                 <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioEstaObservado} value ={observado}>
                       <option key={0} value = {0}>Todos</option>
                       <option key={1} value = {1}>Si</option>
@@ -177,10 +167,10 @@ function ListarAsesores()  {
               <tbody >
                 {filtrado.map(asesor => (
                   <tr key={asesor.idAsesor}>
-                      <td >{asesor.nombres + " " + asesor.apeMat}</td>
+                      <td >{asesor.nombres + " " + asesor.apePat}</td>
                       <td >{asesor.correo}</td>
                       <td>
-                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosAsesor/"+asesor.idAsesor)}}> <FaIcons.FaEdit /></button>
+                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosAlumno/"+asesor.idAsesor)}}> <FaIcons.FaEdit /></button>
                       <button class=" btn BTN-ACCIONES" onClick={()=>seleccionarAsesor(asesor)}> <BootIcons.BsTrash /></button>
                       </td>
                   </tr>
@@ -213,10 +203,10 @@ function ListarAsesores()  {
     </ModalConfirmación>
 
           <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
-              <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("AgregarAsesor")}}> Agregar asesor</button>
+              <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("AgregarAlumno")}}> Agregar alumno</button>
           </div>
           
       </div>
   )
 }
-export default ListarAsesores;
+export default ListarAlumnos;

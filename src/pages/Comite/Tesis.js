@@ -16,7 +16,7 @@ import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
 import jsPDF from "jspdf";
 import ReactHtmlTableToExcel from "react-html-table-to-excel";
 import logo from "../../imagenes/logopucp.jpg";
-const url = "https://localhost:7012/api/Alumno/";
+const url = "http://34.195.33.246/api/Alumno/";
 
 /*
 const url= "http://44.210.195.91/api/Facultad/";
@@ -122,7 +122,7 @@ const Tesis = () => {
 
   const peticionGet = async () => {
     const response = await axios
-      .get("https://localhost:7012/api/TemaTesis/GetTemaTesis", {
+      .get("http://34.195.33.246/api/TemaTesis/GetTemaTesis", {
         _method: "GET",
       })
       .then((response) => {

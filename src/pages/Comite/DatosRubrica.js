@@ -10,8 +10,8 @@ import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 
-const url2= "https://localhost:7012/api/DetalleRubrica/";
-const url1= "https://localhost:7012/api/Entregable/";
+const url2= "http://34.195.33.246/api/DetalleRubrica/";
+const url1= "http://34.195.33.246/api/Entregable/";
 //const url2= "http://44.210.195.91/api/DetalleRubrica/";
 //const url1= "https://44.210.195.91/api/Entregable/";
 
@@ -51,7 +51,7 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
     
 
     const nextPage = () =>{
-        if(rubricas.length>=currentPage) //VER CODIGO
+        if(rubricas.length>=5) //VER CODIGO
         SetCurrentPage(currentPage+5);
     }
     const previousPage =() =>{
@@ -197,8 +197,8 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
     }
 
     const peticionDeleteRubs=async(element)=>{
-        await axios.delete(url2+ "DeleteDetalleRubrica?idDetalleRubrica="+element).
-        then(response=>{
+        await axios.delete(url2+ "DeleteDetalleRubrica?idDetalleRubrica="+element)
+        .then(response=>{
             console.log("eliminando " + {element});
       })
     }

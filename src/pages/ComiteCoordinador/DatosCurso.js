@@ -6,10 +6,10 @@ import { ModalConfirmación,ModalPregunta } from '../../components/Modals';
 import useModal from '../../hooks/useModals';
 import axios from 'axios';
 
-const urlEsp= "https://localhost:7012/api/Especialidad/";
-const urlSem= "https://localhost:7012/api/Semestre/";
-const urlFac= "https://localhost:7012/api/Facultad/";
-const urlPost= "https://localhost:7012/api/Curso/"
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
+const urlSem= "http://34.195.33.246/api/Semestre/";
+const urlFac= "http://34.195.33.246/api/Facultad/";
+const urlPost= "http://34.195.33.246/api/Curso/"
 
 var currentTime= new Date();
 var year = currentTime.getFullYear();

@@ -2,7 +2,7 @@ import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect } from 'react';
 import './Pagina.css'
-import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router ,HashRouter,Routes, Route, Link } from 'react-router-dom';
 import NavBar from "./NavBar";
 import Home  from "./Home";
 import Comite  from "./Comite";
@@ -22,7 +22,7 @@ function App() {
   const [value,setValue] = useState('Hello from context');
   return (
     <UserContext.Provider value={{value,setValue}}>
-    <Router>
+    <HashRouter >
             <Routes>
                 {/*Public Routes */ }
                 <Route path='/' exact element= {<Login/>} />
@@ -40,7 +40,7 @@ function App() {
                   <Route path='/confirmarRegistro/*' exact element={<ConfirmarRegistro/>}/>
             </Routes>
            
-    </Router>
+    </HashRouter>
     </UserContext.Provider>
   )
 }

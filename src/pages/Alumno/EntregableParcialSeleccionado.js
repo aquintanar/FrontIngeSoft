@@ -22,7 +22,7 @@ import {
   RemoveFileIcon,
   FilePreviewContainer
 } from "../../components/Upload.styles";
-//https://localhost:7012/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=1
+//http://34.195.33.246/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=1
 function EntregableSeleccionado(){
     var aux=0;
     let navigate = useNavigate();
@@ -78,7 +78,7 @@ function EntregableSeleccionado(){
     console.log(versionSeleccionada);
     if(location.state.idVersion!=null){
       (async () => {
-      const urlDocumentos  = `https://localhost:7012/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${location.state.idVersion}`
+      const urlDocumentos  = `http://34.195.33.246/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${location.state.idVersion}`
       const responseDocumentos  = await fetch(urlDocumentos)
       const dataDocumentos = await responseDocumentos.json()
       setDocumentosVersion(dataDocumentos)
@@ -88,7 +88,7 @@ function EntregableSeleccionado(){
       }
       
       else {
-        await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionada,{
+        await axios.post("http://34.195.33.246/api/Version/PostVersion",versionSeleccionada,{
           _method: 'POST'
         })
       .then(response=>{
@@ -101,7 +101,7 @@ function EntregableSeleccionado(){
 
   const getVersion = async() => {
     (async () => {
-        const result = await axios('https://localhost:7012/api/Version/ListVersionXId?idVersion='+location.state.idVersion);
+        const result = await axios('http://34.195.33.246/api/Version/ListVersionXId?idVersion='+location.state.idVersion);
         setVersion(result.data[0]);
       })();
     }
@@ -128,7 +128,7 @@ function EntregableSeleccionado(){
     }
     async function getData() {
       (async () => {
-        const result = await axios(`https://localhost:7012/api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
+        const result = await axios(`http://34.195.33.246/api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
         setDetalleNota(result.data);
         let i = 0  ; 
         for ( i = 0 ; i < result.data.length ; i++){
@@ -145,7 +145,7 @@ function EntregableSeleccionado(){
 
     async function getDetallesNotaRubrica() {
       (async () => {
-        const result = await axios(`https://localhost:7012/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
+        const result = await axios(`http://34.195.33.246/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
         setDetalleNota(result.data);
         let i = 0  ; 
         let index = 0 ; 
@@ -160,7 +160,7 @@ function EntregableSeleccionado(){
       })();
     };
     const getEntregable=async()=>{
-        const response = await axios.get(`https://localhost:7012/api/Entregable/BuscarEntregableXId?idEntregable=${location.state.idEntregable}`);
+        const response = await axios.get(`http://34.195.33.246/api/Entregable/BuscarEntregableXId?idEntregable=${location.state.idEntregable}`);
         setEntregable({
           idEntregable: response.data[0].idEntregable,
           responsableEvalua: response.data[0].responsableEvalua,
@@ -170,7 +170,7 @@ function EntregableSeleccionado(){
         
     }
     const getDetalleNotaRubrica=async()=>{
-        const response = await axios.get(`https://localhost:7012/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
+        const response = await axios.get(`http://34.195.33.246/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
         setNota({
           idDetalleNotaRubrica: response.data[0].idDetalleNotaRubrica,
           DetalleRubrica:{fidDetalleRubrica: response.data[0].fidDetalleRubrica},
@@ -235,7 +235,7 @@ function EntregableSeleccionado(){
           accessor: 'col3',
         },
         {
-          Header: 'Fecha de modifiación',
+          Header: 'Fecha de modificación',
           accessor: 'col4',
         },
         
@@ -252,7 +252,9 @@ function EntregableSeleccionado(){
 
     return(
         <div className='CONTAINERALUMNO'>
-        <a onClick={() =>navigate(-1)} className="btn btn-lg " role="button" aria-pressed="true"><RiIcons.RiArrowGoBackFill/> </a>
+            <span>
+              <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
+            </span>
         <h1 className='HEADER-TEXT1'>{location.state.nombreEntregable} - { location.state.tituloDoc }</h1>
 
         <div className='ContenidoPrincipal'>
@@ -317,9 +319,12 @@ function EntregableSeleccionado(){
         <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
           tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}})} >
             {location.state.estado==5?"Modificar ":(location.state.estado==4?"Modificar ":(location.state.estado==3?"Modificar ":(location.state.estado==2?"Modificar ":"Agregar ")))} {location.state.nombreEntregable}</p>
-        <p class="HEADER-TEXT5">Rúbrica de Evaluación</p>
+     
+        
+            <p class="HEADER-TEXT5">{location.state.idRubrica>0?"Rúbrica de Evaluación":" "} </p>
         <div class = "row LISTAR-TABLA">
         <div class=" col-10  ">
+         { location.state.idRubrica>0?
           <table className='table fs-6 '>
             <thead class >
               <tr class>
@@ -350,14 +355,15 @@ function EntregableSeleccionado(){
            
             </tbody>
           </table>
+          :""}
         </div>
-        <p class="HEADER-TEXT8">Calificación: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+        <p class="HEADER-TEXT8">{location.state.idRubrica>0? "Calificación": ""} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      
-        {notaFinal}</p>
-
+        {location.state.idRubrica>0? notaFinal: ""}
+     </p>
+       
       </div>
       <div class = "DATOS">
                 <div class = "col-12">
@@ -379,14 +385,12 @@ function EntregableSeleccionado(){
              <div class = "DATOS">
                 <div class = "col-12">
                     <div class="input-group input-group-lg mb-3">
-                        <textarea class="form-control" name="Comentarios" placeholder={comentario} aria-label="comentarios"  disabled="true" cols="10" rows="15
-                        " 
-                             />
+                        <textarea class="form-control" name="Comentarios" placeholder={comentario} aria-label="comentarios"  disabled="true" cols="8" rows="14" />
                     </div>
                 </div>
             </div>
-            <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-              <div class="align-text-bottom">
+            <div class='d-flex align-items-center flex-column mb-3'>
+              <div class="mt-auto p-2">
                 <Button class="btn btn-danger btn-lg position-relative" onClick={()=>cerrarPost()}>Volver</Button>
                 </div>
                 </div>

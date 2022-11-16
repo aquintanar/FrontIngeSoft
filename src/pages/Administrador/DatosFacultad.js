@@ -9,8 +9,8 @@ import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 import {  Button} from '@material-ui/core';
 import '../../stylesheets/Administrador.css'
 
-const url= "https://localhost:7012/api/Facultad/";
-const urlEspe= "https://localhost:7012/api/Especialidad/";
+const url= "http://34.195.33.246/api/Facultad/";
+const urlEspe= "http://34.195.33.246/api/Especialidad/";
 
 //const url= "http://44.210.195.91/api/Facultad/";
 //const urlEspe= "http://44.210.195.91/api/Especialidad/";
@@ -172,9 +172,9 @@ const handleChange=  (e)=>{
                       </div>
 
                       <div class=" text-start fs-5 fw-normal ">
-                          <p>Descripción</p>
+                          <p>Clave</p>
                           <div class="input-group input-group-lg mb-3">
-                              <textarea class="form-control" name="descripcion" placeholder="Descripción" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
+                            <input type="text" class="form-control" name="descripcion" placeholder="Clave"  
                                 onChange={handleChange} value={facultadSeleccionada && facultadSeleccionada.descripcion}  />
                           </div>
                       </div>

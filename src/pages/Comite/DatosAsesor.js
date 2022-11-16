@@ -9,16 +9,16 @@ import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
-const urlAs= "https://localhost:7012/api/Asesor/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
-const urlAsXCurso="https://localhost:7012/api/AsesorXCurso/";
+const urlAs= "http://34.195.33.246/api/Asesor/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
+const urlAsXCurso="http://34.195.33.246/api/AsesorXCurso/";
 let idCur = 0;
 let idAs = 0;
 let idEs = 0;
 
 function DatosAsesor() {
   let navigate = useNavigate();
-  let {id} = useParams();    
+  let {id} = useParams();
   const [max, setMax] = useState(0);
   const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
   const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
@@ -172,30 +172,32 @@ function DatosAsesor() {
       <div class="CONTAINERCOMITE">
           <p className="HEADER-TEXT1">{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat}</p>
           <div className='row'>
-              <div className='col-8'>
-                  <p> Correo: {asesorSeleccionado.correo} </p>
-                  <p> Áreas de interes y especialización: {especialidadAs.nombre} </p>
+              <div className='col-8 PERFIL'>
+                  <div class='BLOCK PERFIL-HEADER fw-bold'>{asesorSeleccionado.correo} </div>
+                  <div class = 'BLOCK PERFIL-TITLE fw-bold'> Áreas de interés y especialización: {especialidadAs.nombre} 
+                      <div class = "fw-normal text-black">
+                        {especialidadAs.nombre}
+                      </div>
+                    </div>
               </div>
           </div>
           <div className='row INSERTAR-BOTONES'>
-              <div className='col-4'>
-                  <p> Cantidad maxima asesorados:</p> <input onChange={cambioMax} type="number" id="maxAsesorados" name="maxAsesorados"
+              <div className='col-8'>
+                  <p> Cantidad máxima de asesorados:</p> <input onChange={cambioMax} type="number" id="maxAsesorados" name="maxAsesorados"
                   min="0" max="10" value={max}/>
                   <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>openEditModal()}><span>Guardar</span></button>
               </div>
+          </div>
+          <div className='row INSERTAR-BOTONES'>
               <div className='col-8'>
                   <p> Evaluaciones: </p>
               </div>
           </div>
 
           <div class="row INSERTAR-BOTONES">                            
-              <div class="col-6 d-grid gap-2 d-md-flex justify-content-md-begin">
+              <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
+              <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button"><span>Observar</span></button>
               <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../asesor")}}><span>Cancelar</span></button>
-              </div>
-              <div class="col-6 d-grid gap-2 d-md-flex justify-content-md-end">                    
-                  <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button"><span>Observar</span></button>
-                  <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>cargaDatos()}><span>Accion
-                  </span></button>
               </div>
           </div>
 

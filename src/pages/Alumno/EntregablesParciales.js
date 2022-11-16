@@ -9,15 +9,16 @@ import '../../stylesheets/Administrador.css'
 import useModal from '../../hooks/useModals';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 import * as BsIcons from 'react-icons/bs';
-
-const url= "https://localhost:7012/api/Especialidad/";
-const urlFacu= "https://localhost:7012/api/Facultad/";
-const urlEntregablesParciales = "https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable" ; 
+import { BrowserRouter as Router , Routes, Route, Link, useLocation } from 'react-router-dom';
+const url= "http://34.195.33.246/api/Especialidad/";
+const urlFacu= "http://34.195.33.246/api/Facultad/";
+const urlEntregablesParciales = "http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable" ; 
 /*
 const url= "http://44.210.195.91/api/Especialidad/";
 const urlFacu= "http://44.210.195.91/api/Facultad/";
 */
 function EntregablesParciales()  {
+  const location = useLocation();
     const [data, setData]=useState([]);
     const [curso,setCurso]=useState(0);
     const [entregables , SetEntregables] = useState([]);
@@ -51,18 +52,23 @@ function EntregablesParciales()  {
       fidAlumno:1 
     }
     })
+    
+  const [rubrica, setRubrica] = useState({
+    idRubrica: 0,
+  
+  });
   //Listar especialidades tabla--
 
   const getidCurso= async()=>{
     (async () => {
-      const result = await axios('https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=1');
+      const result = await axios('http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=1');
       //SetEntregablesParciales(result.data);
       let i = 0  ; 
       for ( i = 0 ; i < result.data.length ; i++){ 
             if(result.data[i].idAlumno == 1) setCurso(1);   
       }   
 
-      const result2 = await axios('https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=3');
+      const result2 = await axios('http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=3');
       //SetEntregablesParciales(result.data);
       let j = 0  ; 
       for ( j = 0 ; j < result2.data.length ; j++){ 
@@ -72,14 +78,14 @@ function EntregablesParciales()  {
   }
   const peticionEntregables = async() => {
     (async () => {
-      const result = await axios('https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=1');
+      const result = await axios('http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=1');
       //SetEntregablesParciales(result.data);
       let i = 0  ; 
       for ( i = 0 ; i < result.data.length ; i++){ 
             if(result.data[i].idAlumno == 1) setCurso(1);   
       }   
 
-      const result2 = await axios('https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=3');
+      const result2 = await axios('http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=3');
       //SetEntregablesParciales(result.data);
       let j = 0  ; 
       for ( j = 0 ; j < result2.data.length ; j++){ 
@@ -88,20 +94,20 @@ function EntregablesParciales()  {
     })();
     const idAlumno = 1 
     const idTipoEntregable = 2 
-    const urlEntregable  = 'https://localhost:7012/api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso='+1+'&idTipoEntregable='+2+'&idAlumno='+1;
-    const urlEntregable2  = 'https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+idTipoEntregable;
+    const urlEntregable  = 'http://34.195.33.246/api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso='+location.state.idCurso+'&idTipoEntregable='+location.state.idTipoEntregable+'&idAlumno='+location.state.idAlumno;
+    const urlEntregable2  = 'http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+idTipoEntregable;
     const response = await fetch(urlEntregable)
     const data = await response.json()
     console.log(data)
     SetEntregables(data)
     setData(data)
-    // const urlEntregableXid = 'https://localhost:7012/api/Entregable/BuscarEntregableXId?idEntregable='+data.fidEntregable
+    // const urlEntregableXid = 'http://34.195.33.246/api/Entregable/BuscarEntregableXId?idEntregable='+data.fidEntregable
     // const response2 = await fetch (urlEntregableXid)
     // const data2 = await response2.json()
     // console.log(data2)
 }
 const getEntregableID = async () => {
-  const urlEntregableXid = 'https://localhost:7012/api/Entregable/BuscarEntregableXId?idEntregable=4'
+  const urlEntregableXid = 'http://34.195.33.246/api/Entregable/BuscarEntregableXId?idEntregable=4'
   const response = await fetch(urlEntregableXid)
   const data = await response.json()
   console.log(data)
@@ -121,29 +127,37 @@ const getEntregableID = async () => {
   }
 
   //----------------
-  filtrado=filtrado.slice(currentPage,currentPage+6);
+  filtrado=filtrado.slice(currentPage,currentPage+5);
   const nextPage = () =>{
-    if(filtrado.length>=currentPage) //VER CODIGO
-      SetCurrentPage(currentPage+6);
+    if(filtrado.length>=5) //VER CODIGO
+      SetCurrentPage(currentPage+5);
   }
   const previousPage =() =>{
     if(currentPage>0)
-      SetCurrentPage(currentPage-6);
+      SetCurrentPage(currentPage-5);
   }
   useEffect(()=>{
     peticionEntregables();
     getEntregableID();
  },[])
  const crearVersion =async(idVersion,idEntregable,nombre,linkDoc,notaVersion,estadoMasReciente,fechaSubida,fechaLimite,tipoEntregable,comentarios)=>{
-
+  let idRubri = 0;
+  (async () => {
+    const result2 = await axios(`http://34.195.33.246/api/Rubrica/GetRubricaXIdEntregable?idEntregable=${idEntregable}`);
+    setRubrica(result2.data);
+    
+   
     setVersionSeleccionada({
       fidEntregable: idEntregable,
       fidEstadoEntregable:1,
       fidAlumno: 1
   });
 
-    navigate("entregableParcialSeleccionado",{state:{idVersion:idVersion,idAlumno:1,tituloDoc:nombre,linkDoc:linkDoc,notaVersion: notaVersion,
-      idEntregable: idEntregable,estado:estadoMasReciente,fechaE:fechaSubida,fechaL:fechaLimite, nombreEntregable:tipoEntregable,comentarios:comentarios,versionCreada: versionSeleccionada}})
+   if(result2.data[0]){
+     idRubri=result2.data[0].idRubrica;
+   }
+    navigate("entregableParcialSeleccionado",{state:{idVersion:idVersion,idAlumno: location.state.idAlumno,tituloDoc:nombre,linkDoc:linkDoc,notaVersion: notaVersion,
+      idEntregable: idEntregable,estado:estadoMasReciente,fechaE:fechaSubida,fechaL:fechaLimite, nombreEntregable:tipoEntregable,comentarios:comentarios,versionCreada: versionSeleccionada,idRubrica : idRubri}})  })();
  }
 
 
@@ -152,7 +166,7 @@ const getEntregableID = async () => {
     <span>
       <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
     </span>
-      <p class="HEADER-TEXT1">Entregables Parciales</p>
+      <p class="HEADER-TEXT1">{location.state.nombreEntregable}</p>
 
       
         
@@ -172,8 +186,8 @@ const getEntregableID = async () => {
             </thead>
             <tbody >
               {filtrado.map(entregables => (
-                <tr key={entregables.idEntregable}>
-                    <td type = 'Button' onClick={() =>crearVersion(entregables.idVersion,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersion,entregables.estadoMasReciente,entregables.fechaSubida,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)}>{entregables.nombre}</td>
+                <tr style={{cursor:'pointer'}} onClick={() =>crearVersion(entregables.idVersion,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersion,entregables.estadoMasReciente,entregables.fechaSubida,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)} key={entregables.idEntregable}>
+                    <td>{entregables.nombre}</td>
                     <td>{entregables.fechaLimite}</td>
                     <td>{entregables.fechaEntregaAsesor} </td>
                     <td>  
