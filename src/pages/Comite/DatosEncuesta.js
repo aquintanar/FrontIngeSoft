@@ -399,13 +399,7 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
                 <Button class="btn btn-success btn-lg" onClick={closeGuardadoModal}>Entendido</Button>
               </div>
             </ModalConfirmación>
-          
-            <div class="row INSERTAR-BOTONES">                            
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button"  onClick={()=>peticionSelecter()}><span>Guardar</span></button>
-                    <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button"  onClick={()=>{navigate("../preparacion/entregables")}}><span>Cancelar</span></button>
-                </div>
-            </div>           
+                   
         </div>              
     )
 }
