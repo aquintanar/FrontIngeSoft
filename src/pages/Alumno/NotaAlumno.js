@@ -24,30 +24,14 @@ const [detalleNota, setDetalleNota]=useState({
     puntajeTotal: 0,
 
 })
-const [valor , setValor] = useState(0);
-const [valorA , setValorA] = useState(0);
-const [valorE , setValorE] = useState(0);
-const [valorEx , setValorEx] = useState(0);
-const [notaEntregablesParciales , SetNotaEntregablesParciales] = useState(0);
 const [notaFinal , SetNotaFinal] = useState(0);
 const [notas , SetNotas] = useState([]);
-const [formula,setFormula] = useState("NF = (3*PE + 3*DF + 2*EF + 2*PE)/10");
-const [abreviacion,setAbreviacion] = useState("PE: Promedio de Entregas");
-const [abreviacion1,setAbreviacion1] = useState("DF: Nota de Documento Final. Incluye el ítem Entrega 4");
-const [abreviacion2,setAbreviacion2] = useState("EF: Nota de Exposición Final");
-const [abreviacion3,setAbreviacion3] = useState("PE: Promedio de Entregas Parciales");
-const [abreviacion4,setAbreviacion4] = useState("");
-const [abreviacion5,setAbreviacion5] = useState("");
 const [entregables , SetEntregables] = useState([]);
 const [entregablesParciales , SetEntregablesParciales] = useState([]);
 const [avances , SetAvances] = useState([]);
 const [exposiciones , SetExposiciones] = useState([]);
 const peticionNotasEntregables = async() => {
-    const idAlumno = localStorage.getItem('IDUSUARIO')
-    const idEntregable = 4 
-var  parcial=0;
-    //console.log(data)
-    
+const idAlumno = localStorage.getItem('IDUSUARIO');
     (async () => {
         const result = await axios('http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+2);
         //SetEntregablesParciales(result.data);
@@ -115,18 +99,7 @@ var  parcial=0;
 
 
 
-/*
-  function getDetallesNotaExposicion(idEntregable) {
-    (async () => {
-        const resultIndex = await axios('http://34.195.33.246/api/Entregable/CalcularPuntajeEntregableXAlumno?idEntregable='+idEntregable+'&idAlumno='+1);
-        if(resultIndex.data[0].puntajeTotal>=0) setValorEx(resultIndex.data[0].puntajeTotal); 
-        else setValorEx(0); 
-        console.log(resultIndex.data[0].puntajeTotal);
-        return resultIndex.data[0].puntajeTotal;
-    })();
-  };
 
-*/
 
   //Listar notas de un curso *falta curso
   const peticionGetNota=async()=>{

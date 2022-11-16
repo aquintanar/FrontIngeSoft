@@ -376,7 +376,7 @@ const seleccionarDocumentoVersion=(documentos)=>{
         <img width="140px" float= "left" top="1000px"  src={require('../imagenes/subida.png')} alt="archivo"></img>
          
         <center>
-        <p class="HEADER-TEXT2" >Seleccione o suelte un archivo{idVersion}</p></center>
+        <p class="HEADER-TEXT2" >Seleccione o suelte un archivo</p></center>
         <p class="HEADER-TEXT4">Los archivos JPG, PNG O PDF, no pueden superar las 100 MB de tamaño</p>
          <p class="HEADER-TEXT9">{idAlumno}</p></div> )}
         <FormField

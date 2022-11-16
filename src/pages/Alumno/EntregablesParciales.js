@@ -27,16 +27,6 @@ function EntregablesParciales()  {
     const [currentPage,SetCurrentPage] = useState(0);
     const [estado,setEstado]=useState("");
     let navigate = useNavigate();
-    const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
-    const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
-    //objeto Facultad--
-    const [facultadSeleccionada, setFacultadSeleccionada]=useState({
-      idFacultad: '',
-      nombre: '',
-      descripcion: '',
-      foto: null,
-      estado: ''
-    })
     const [versionSeleccionada, setVersionSeleccionada]=useState({
       idVersion: 0,
       linkDoc: '',
@@ -92,19 +82,12 @@ function EntregablesParciales()  {
             if(result2.data[j].idAlumno == 1) setCurso(3);   
       }   
     })();
-    const idAlumno = 1 
-    const idTipoEntregable = 2 
     const urlEntregable  = 'http://34.195.33.246/api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso='+location.state.idCurso+'&idTipoEntregable='+location.state.idTipoEntregable+'&idAlumno='+location.state.idAlumno;
-    const urlEntregable2  = 'http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+idTipoEntregable;
     const response = await fetch(urlEntregable)
     const data = await response.json()
     console.log(data)
     SetEntregables(data)
     setData(data)
-    // const urlEntregableXid = 'http://34.195.33.246/api/Entregable/BuscarEntregableXId?idEntregable='+data.fidEntregable
-    // const response2 = await fetch (urlEntregableXid)
-    // const data2 = await response2.json()
-    // console.log(data2)
 }
 const getEntregableID = async () => {
   const urlEntregableXid = 'http://34.195.33.246/api/Entregable/BuscarEntregableXId?idEntregable=4'
