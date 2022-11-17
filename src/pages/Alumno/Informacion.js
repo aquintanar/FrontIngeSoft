@@ -15,6 +15,42 @@ import * as BsIcons from 'react-icons/bs';
 function Informacion()  {
 
 let navigate = useNavigate();
+const getInformacion = async() => {
+
+
+  const urlTema  = 'https://localhost:7012/api/TemaTesis/GetTemaTesisXIdCursoXIdAlumno?idCurso='+localStorage.getItem('idCurso')+'&idAlumno='+localStorage.getItem('IDUSUARIO');
+  const responseTema = await fetch(urlTema);
+  const dataTema= await responseTema.json();
+  console.log(dataTema);
+  setTema(dataTema);
+
+
+  const urlAsesor  = 'https://localhost:7012/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno='+localStorage.getItem('IDUSUARIO')+'&idCurso='+localStorage.getItem('idCurso');
+  const responseAsesor = await fetch(urlAsesor);
+  const dataAsesor = await responseAsesor.json();
+  console.log(dataAsesor);
+  setAsesor(dataAsesor);
+
+  const urlDocente  = 'https://localhost:7012/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
+  const responseDocente  = await fetch(urlDocente);
+  const dataDocente  = await responseDocente .json();
+  console.log(dataDocente );
+  setDocente(dataDocente );
+
+  const urlAlumno  = 'https://localhost:7012/api/Alumno/GetAlumnoXId?idAlumno='+localStorage.getItem('IDUSUARIO');
+  const responseAlumno  = await fetch(urlAlumno );
+  const dataAlumno   = await responseAlumno  .json();
+  console.log(dataAlumno  );
+  setAlumno(dataAlumno );
+
+}
+ const [asesor, setAsesor]=useState([]);
+ const [docente, setDocente]=useState([]);
+ const [alumno, setAlumno]=useState([]);
+ const [tema, setTema]=useState([]);
+useEffect(()=>{
+  getInformacion();
+},[])
   return (      
     <div class=" CONTAINERALUMNO">   
 
@@ -22,22 +58,49 @@ let navigate = useNavigate();
 
 
         <p class="HEADER-TEXT2-INF">Curso actual</p>
-
+        {docente.map(docente => (    
+       <td>      
+       <p class="HEADER-TEXT11"> {docente.nombreEspecialidad} - {docente.nombre}  </p>
+</td>
+       
+       
+ ))}
 
         <p class="HEADER-TEXT2-INF">Tema de Tesis</p>
-        
+        {tema.map(tema => (    
+       <td>      
+       <p class="HEADER-TEXT11">{tema.tituloTesis}  </p></td>
+       
+       
+ ))}          
 
         <p class="HEADER-TEXT2-INF">Asesor</p>
 
-        
+        {asesor.map(asesor => (    
+       <td>      
+       <p class="HEADER-TEXT11">{asesor.nombres}, {asesor.apePat} {asesor.apeMat}  </p>
+       <p class="HEADER-TEXT11">{asesor.correo}  </p></td>
+       
+       
+ ))}
         <p class="HEADER-TEXT2-INF">Docente</p>
-
+        {docente.map(docente => (    
+       <td>      
+       <p class="HEADER-TEXT11"> {docente.nombresDocente}  {docente.apePatDocente} {docente.apeMatDocente}</p>
+       <p class="HEADER-TEXT11">{docente.correoDocente}  </p>
+</td>
+       
+       
+ ))}
         
-        <p class="HEADER-TEXT2-INF">Cronograma del Curso</p>
 
-
-        <p class="HEADER-TEXT2-INF">Calendario del Curso</p>
-     
+        <p class="HEADER-TEXT2-INF">Calendario del Alumno</p>
+        {alumno.map(alumno => (    
+       <td>      
+       <p class="HEADER-TEXT11">{alumno.linkCalendario}  </p></td>
+       
+       
+ ))}   
     </div>              
   )
 }
