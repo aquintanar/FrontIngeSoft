@@ -30,18 +30,17 @@ const getInformacion = async() => {
   const dataAsesor = await responseAsesor.json();
   console.log(dataAsesor);
   setAsesor(dataAsesor);
-
+  const urlAlumno  = 'https://localhost:7012/api/Alumno/GetAlumnoXId?idAlumno='+localStorage.getItem('IDUSUARIO');
+  const responseAlumno  = await fetch(urlAlumno);
+  const dataAlumno   = await responseAlumno  .json();
+  console.log(dataAlumno);
+  setAlumno(dataAlumno);
   const urlDocente  = 'https://localhost:7012/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
   const responseDocente  = await fetch(urlDocente);
   const dataDocente  = await responseDocente .json();
-  console.log(dataDocente );
-  setDocente(dataDocente );
+  console.log(dataDocente);
+  setDocente(dataDocente);
 
-  const urlAlumno  = 'https://localhost:7012/api/Alumno/GetAlumnoXId?idAlumno='+localStorage.getItem('IDUSUARIO');
-  const responseAlumno  = await fetch(urlAlumno );
-  const dataAlumno   = await responseAlumno  .json();
-  console.log(dataAlumno  );
-  setAlumno(dataAlumno );
 
 }
  const [asesor, setAsesor]=useState([]);
@@ -60,7 +59,7 @@ useEffect(()=>{
         <p class="HEADER-TEXT2-INF">Curso actual</p>
         {docente.map(docente => (    
        <td>      
-       <p class="HEADER-TEXT11"> {docente.nombreEspecialidad} - {docente.nombre}  </p>
+       <p class="HEADER-TEXT11"> {docente.anhoSemestre}-{docente.numSemestre}  {docente.nombre}  </p>
 </td>
        
        

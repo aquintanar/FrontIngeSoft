@@ -138,7 +138,7 @@ useEffect(() => {
 
       
         <Upload
-         accept=".pdf,.docx"
+         accept=".pdf,.docx,.zip"
           files={files}
           linkDoc={location.state.linkDoc}
           tituloDoc={location.state.tituloDoc}
