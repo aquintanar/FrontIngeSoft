@@ -54,8 +54,8 @@ function Login() {
     userRef.current.focus();
   }, []);
 
+  /*Si es de comite, analizaremos si es coordinador */
   const validarCoordinador = async (e) => {
-    console.log("SE LLEGA A VALIDAR COORDINADOR");
     try {
       const response3 = await axios
         .get(
@@ -117,8 +117,8 @@ function Login() {
     } catch (err) {}
   };
 
+  /*BUSCAMOS SU ROL */
   const searchId = async (e) => {
-    console.log("SE LLEGA A BUSCAR SU ID"); 
     try {
       console.log(e);
       setValue(e);
@@ -161,12 +161,9 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("SE LLEGA A BUSCARhandlesubmit"); 
     try {
       cuentaSeleccionada.correo = user1;
       cuentaSeleccionada.contrasena = pwd;
-      console.log(cuentaSeleccionada);
-
       const response = await axios
         .get(
           LOGIN_URL,
@@ -176,9 +173,7 @@ function Login() {
           }
         )
         .then((response) => {
-          console.log("SE PASO EL SUBMIT");
           const idUs = response.data.id;
-          console.log("SI FUNCIONA");
           setValue(idUs);
           searchId(idUs);
         })

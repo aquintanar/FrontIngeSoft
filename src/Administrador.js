@@ -12,6 +12,7 @@ import ListaFacultad  from './pages/Administrador/ListaFacultad';
 import DatosFacultad from './pages/Administrador/DatosFacultad';
 import AsignarCoordinador from "./pages/Administrador/AsignarCoordinador";
 
+
 function Administrador() {
     return (
         <div>    

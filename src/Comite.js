@@ -24,6 +24,11 @@ import ListarAsesoresNoEstan from "./pages/Comite/AgregarAsesor";
 import ListarAlumnos from "./pages/Comite/ListarAlumnos";
 import DatosAlumno from "./pages/Comite/DatosAlumno";
 import ListarAlumnosNoEstan from "./pages/Comite/AgregarAlumno";
+import CrearCuentaAlumno from'./pages/Comite/CrearCuenta';
+
+
+
+
 function Comite() {
 
     return (
@@ -41,6 +46,7 @@ function Comite() {
                   <Route path='alumno' exact element= {<ListarAlumnos/>}/>
                   <Route path='alumno/DatosAlumno/:id' exact element= {<DatosAlumno/>}/>
                   <Route path='alumno/AgregarAlumno' exact element= {<ListarAlumnosNoEstan/>}/>
+                  <Route path='crearCuenta' exact element= {<CrearCuentaAlumno/>}/>
                   <Route path='preparacion/entregables' exact element= {<ListaEntregables/>}/>
                   <Route path='preparacion/entregables/menu/:id' exact element= {<Entregable/>}/>
                   <Route path='preparacion/entregables/menu/:id/datosEntregable' exact element= {<DatosEntregable/>}/>
@@ -53,6 +59,7 @@ function Comite() {
                   <Route path='reporteciclo' exact element={<ReporteCiclo/>} />
                   <Route path='sistEvaluacion' exact element={<ListSistEvaluacion/>} />
                   <Route path='sistEvaluacion/datoSistEvalución/:id' exact element= {<DatoSistEvaluación/>}/>
+                  
               </Routes>
 
         </div>
