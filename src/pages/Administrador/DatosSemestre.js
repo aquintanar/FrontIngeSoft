@@ -144,6 +144,15 @@ function DatosSemestre() {
       semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre;
     console.log(semestreSeleccionada);
   };
+  //Control de cambio en select esta en curso
+  const cambioSelectCurso = (e) => {
+    const { name, value } = e.target;
+    console.log(value);
+    semestreSeleccionada.enCurso = value;
+    setSemestreSeleccionada((prevState) => ({
+      ...prevState,
+    }));
+  };
   //Control de cambio en select de especialidad
   const cambioSelectEsp = (e) => {
     cargaNombre(e.target.value);
@@ -212,15 +221,14 @@ function DatosSemestre() {
 
   //Insertar nuevo semestre--
   const peticionPost = async () => {
-    //carga();
-    console.log("Entro post");
     cargaDatosFechas();
     semestreSeleccionada.idSemestre = 0;
     console.log(semestreSeleccionada);
+    if(semestreSeleccionada.enCurso=="true")semestreSeleccionada.enCurso=true;
+    else if(semestreSeleccionada.enCurso=="false")semestreSeleccionada.enCurso=false;
     await axios
       .post(url + "PostSemestre", semestreSeleccionada)
       .then((response) => {
-        console.log("SE GUARDO");
         closePostModal();
         openGuardadoModal();
       })
@@ -236,13 +244,12 @@ function DatosSemestre() {
 
   //Modificar semestre--
   const peticionPut = async () => {
-    console.log("Modificar coord regis");
-    semestreSeleccionada.enCurso = true;
     semestreSeleccionada.idEspecialidad = parseInt(
       semestreSeleccionada.idEspecialidad
     );
     console.log(semestreSeleccionada);
-
+    if(semestreSeleccionada.enCurso=="true")semestreSeleccionada.enCurso=true;
+    else if(semestreSeleccionada.enCurso=="false")semestreSeleccionada.enCurso=false;
     await axios
       .put(url + "ModifySemestre", semestreSeleccionada)
       .then((response) => {
@@ -287,7 +294,7 @@ function DatosSemestre() {
         fechaInicio: new Date(response.data[0].fechaInicio),
         fechaFin: new Date(response.data[0].fechaFin),
         idEspecialidad: response.data[0].idEspecialidad,
-        enCurso: response.data[0].enCurso,
+        enCurso: Boolean(response.data[0].enCurso),
         lista_coordinadores: [],
       });
       setSubtitulo("Modificar Semestre Académico");
@@ -296,6 +303,7 @@ function DatosSemestre() {
       console.log("response fin");
       setFechaIni(new Date(response.data[0].fechaInicio));
       setFechaFin(new Date(response.data[0].fechaFin));
+      
       semestreSeleccionada.lista_coordinadores.push(nn);
     } else {
       setModificar(0);
@@ -498,8 +506,23 @@ function DatosSemestre() {
             />
           </div>
         </div>
+        <div class="col-4">
+          <div class="  fs-5 fw-normal  mb-1 ">¿Está en curso?</div>
+          <select
+            select
+            class="form-select Cursor"
+            aria-label="Default select example"
+            onChange={cambioSelectCurso}
+            selected
+            value={semestreSeleccionada.enCurso}
+          >
+            <option value={true}>Sí</option>
+            <option value={false}>No</option>
+          </select>
+        </div>
         <p></p>
       </div>
+      
 
       <ModalPregunta
         isOpen={isOpenEditModal}

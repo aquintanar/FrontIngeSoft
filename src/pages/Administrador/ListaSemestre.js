@@ -193,7 +193,7 @@ function ListaSemestre()  {
         auxi.push(element.anho);
       }
     });
-    console.log(auxi);
+    
     setAnhos(auxi);
 
   }
