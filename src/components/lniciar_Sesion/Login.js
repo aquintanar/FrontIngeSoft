@@ -8,12 +8,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useContext } from "react";
 import { UserContext } from "../../UserContext";
 
-const LOGIN_URL = "http://34.195.33.246/api/login/GetLogin";
-const LOGIN_URL2 = "http://34.195.33.246/api/Rol";
+const LOGIN_URL = "https://localhost:7012/api/login/GetLogin";
+const LOGIN_URL2 = "https://localhost:7012/api/Rol";
 const LOGIN_URL_GOOGLE =
-  "http://34.195.33.246/api/Usuario/BuscarUsuarioXCorreo";
+  "https://localhost:7012/api/Usuario/BuscarUsuarioXCorreo";
 const COORDINADOR =
-  "http://34.195.33.246/api/Semestre/ListSemestresXIdComiteTesis";
+  "https://localhost:7012/api/Semestre/ListSemestresXIdComiteTesis";
 function Login() {
   const { user, loginWithRedirect, isAuthenticated } = useAuth0();
 

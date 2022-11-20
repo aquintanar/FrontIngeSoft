@@ -16,7 +16,7 @@ import '../../stylesheets/Calendar.css'
 import '../../stylesheets/DatePicker.css';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
-const url= "http://34.195.33.246/api/Semestre/";
+const url= "https://localhost:7012/api/Semestre/";
 const urlFacu= "http://34.195.33.246/api/Facultad/";
 const urlEsp= "http://34.195.33.246/api/Especialidad/";
 const urlUser= "http://34.195.33.246/api/Asesor/";
@@ -77,13 +77,11 @@ function DatosSemestre() {
   const [semestreSeleccionada, setSemestreSeleccionada]=useState({
       idSemestre: 0,
       nombre: "",
-      anho: year,
-      enCurso: true,
+      anho: 0,
       numSemestre: 1,
-      idEspecialidad: 0,
       fechaInicio: new Date(),
       fechaFin: new Date(),
-      lista_coordinadores: selectedRows
+      enCurso:true
   });
 
   const [fechaIni, setFechaIni] = useState(semestreSeleccionada.fechaInicio);
@@ -119,33 +117,25 @@ function DatosSemestre() {
 
     //Control de cambio en select de anio
     const cambioSelectAnio =e=>{
-        const {name, value}=e.target;
-        cargaNombre(semestreSeleccionada.idEspecialidad)
-        setSemestreSeleccionada(prevState=>({
+      const {name, value}=e.target;
+      semestreSeleccionada.anho=value;
+      //cargaNombre(semestreSeleccionada.idEspecialidad)
+      setSemestreSeleccionada(prevState=>({
         ...prevState,
-          anho: value,
-          nombre: semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre + "-"  + espDec
         }))
-        semestreSeleccionada.anho = value;
-        semestreSeleccionada.nombre= value + "-" + semestreSeleccionada.numSemestre + "-"  + espDec;
-        console.log("anio");
-        console.log(semestreSeleccionada);
+        semestreSeleccionada.nombre= semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre;
       }
 
       //Control de cambio en select de semestre
       const cambioSelectSem =e=>{
         const {name, value}=e.target;
-        cargaNombre(semestreSeleccionada.idEspecialidad)
+        semestreSeleccionada.numSemestre=value;
         setSemestreSeleccionada(prevState=>({
         ...prevState,
-          numSemestre: value,
-          nombre: semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre + "-"  + espDec
         }))
-        semestreSeleccionada.numSemestre = value;
-        semestreSeleccionada.nombre= semestreSeleccionada.anho + "-" + value + "-"  + espDec;
+        semestreSeleccionada.nombre= semestreSeleccionada.anho + "-" + semestreSeleccionada.numSemestre;
         console.log(semestreSeleccionada);
       }
-
     //Control de cambio en select de especialidad
     const cambioSelectEsp =e=>{
         cargaNombre(e.target.value);
@@ -184,25 +174,9 @@ function DatosSemestre() {
       })
     }
 
-    //Lista facultades combo box--
-    const petitionFacu=async()=>{
-        await axios.get(urlFacu+"GetFacultades/")
-        .then(response=>{
-            setFacus(response.data);
-        }).catch(error =>{
-            console.log(error.message);
-        })
-    }
+    
 
-    //Lista especialidades combo box--
-    const petitionEsp=async()=>{
-        await axios.get(urlEsp+"GetEspecialidades/")
-        .then(response=>{
-        setEsp(response.data);
-        }).catch(error =>{
-        console.log(error.message);
-        })
-    }
+    
 
     //Busca la descripcion de la especialidad por un id
     const petitionEspBusc=async()=>{
@@ -214,27 +188,19 @@ function DatosSemestre() {
       })
     }
 
-    //Lista de asesores
-    const petitionUser=async()=>{
-        await axios.get(urlUser+"GetAsesores/")
-        .then(response=>{
-          console.log(response);
-          setData(response.data);
-        }).catch(error =>{
-          console.log(error.message);
-        })
-    }
+    
 
     //Insertar nuevo semestre--
     const peticionPost=async()=>{
         //carga();
         console.log("Entro post")
-        carga2Bus();
         cargaDatosFechas();
-        console.log(semestreSeleccionada)
-        console.log("Entro 2 post")
+        semestreSeleccionada.idSemestre=0;
+        console.log(semestreSeleccionada);
+        console.log("HOLAXD");
         await axios.post(url+"PostSemestre",semestreSeleccionada)
           .then(response=>{
+           console.log("SE GUARDO")
           closePostModal();
           openGuardadoModal();
         }).catch(error =>{
@@ -390,11 +356,7 @@ function DatosSemestre() {
         }
     }
 
-    const COlumns = useMemo(() => [     //para user
-      { Header: "ID",        accessor: "idUsuario", },
-      { Header: "Nombres",          accessor: "nombres", },
-      { Header: "Apellido Materno", accessor: "apeMat", },
-    ], [data]);
+    
 
     const handleListPress = () => {
         setListar((isVisible) => !isVisible);
@@ -418,10 +380,8 @@ function DatosSemestre() {
 
     useEffect(()=>{
       console.log(id)
-        petitionFacu();
-        petitionEsp();
+
         cargarSemestre();
-        petitionUser();
     },[])
 
     useEffect(() => {  //para user
@@ -507,21 +467,7 @@ function DatosSemestre() {
       console.log("fin agregar datos");
     }
 
-    const carga2Bus =()=>{
-      console.log("llegue")
-      console.log(coordinadores)
-      coordinadores.forEach(element => {
-          semestreSeleccionada.lista_coordinadores.push({idComiteTesis:element.idComiteTesis})
-        })
-
-        setSemestreSeleccionada(prevState=>({
-        ...prevState,
-          lista_coordinadores: prevState.lista_coordinadores,
-        }))
-      
-      console.log(lista)
-      console.log(semestreSeleccionada)
-    }
+    
 
     const cargaDatosFechas=()=>{
       semestreSeleccionada.fechaInicio = fechaIni;
@@ -551,23 +497,15 @@ function DatosSemestre() {
 
             <div class="row DATOS">
 
-                <div class="col-4" >
-                    <div class="text-start fs-5 fw-normal  mb-1">Seleccione Facultad</div>
-                    <div class="input-group mb-3 ">
-                        <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelect} >
-                        <option selected value = "0">Todos</option>
-                            {facus.map(elemento=>(
-                              <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.nombre}</option>  
-                            ))} 
-                        </select>
-                    </div>
-                </div>
 
                 <div class="col-4" >
                   <div class="  fs-5 fw-normal  mb-1 ">Seleccione año</div>
                   <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelectAnio} selected value = {semestreSeleccionada.anho}>
                     <option value={year}>{year}</option> 
-                    <option value={year+1}>{year+1}</option>     
+                    <option value={year+1}>{year+1}</option> 
+                    <option value={year+2}>{year+2}</option>  
+                    <option value={year+3}>{year+3}</option>   
+                       
                   </select>
                 </div>
 
@@ -579,15 +517,7 @@ function DatosSemestre() {
                   </select>
                 </div>
 
-                <div class= "col-4">
-                  <div class="fs-5 fw-normal  mb-1 ">Seleccione especialidad</div>
-                  <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelectEsp} selected value = {semestreSeleccionada.idEspecialidad}>
-                      <option selected value = "0">Todos</option>
-                      {esp.map(elemento=>(
-                        <option key={elemento.idEspecialidad} value={elemento.idEspecialidad}>{elemento.nombre}</option>  
-                      ))} 
-                    </select>
-                </div>
+                
 
                 <div class= "col-4">
                     <div class="fs-5 fw-normal  mb-1 ">Fecha de inicio</div>
@@ -603,72 +533,8 @@ function DatosSemestre() {
                     </div>
                 </div>
                 <p></p>
-                <hr></hr>
-                <div className="col">
-                    <div class="fs-5 fw-normal  mb-1 ">Nombre docente</div>
-                    <div class = "row DATOS3">
-                        <div className = "col-11 mb-2">
-                            <input type='text' onChange={handleChangeCoord}  className="form-control" id="nombreCoordinador" name="nombreCoordinador"  disabled
-                             value={docentes && (docentes.nombres + " " + docentes.apeMat)}/>
-                        </div> 
-                        <div class="INSERTAR-BOTONES col-1">
-                            <button type="button" onClick={() => {setShow(true)}} class=" btn btn-primary fs-4 fw-bold BUSCAR" >
-                                ...
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        {<ModalBuscarUsuario  show={show} setShow={setShow} 
-                                              docentes={docentes} setDocentes={setDocentes}
-                                              coordinadores={coordinadores} setCoord={setCoord}
-                        />}
-                    </div>  
-                    <div class="row INSERTAR-BOTONES">                            
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>agregarDatos(docentes)}  ><span>Añadir</span></button>
-                        </div>
-                    </div>   
-                </div>
-
+                
             </div>
-
-            <p class="HEADER-TEXT2 mt-3" >Coordinadores</p>
-            <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
-            <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
-            <div class = "row LISTAR-TABLA-EV">
-              <div class=" col-12  ">
-                <table className='table fs-6 '>
-                  <thead class >
-                    <tr class>
-                        <th style ={{width: 100}}>ID</th>
-                        <th style = {{width:300}} >Nombre</th>
-                        <th style = {{width:300}} >Correo</th>
-                        <th style = {{width:50}} >Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody >
-                    {coordinadores.map(elemento => (
-                      <tr key={elemento.idComiteTesis}>
-                          <td >{elemento.idComiteTesis}</td>    
-                          <td >{elemento.nombres} {elemento.apeMat}</td>      
-                          <td >{elemento.correo}</td> 
-                          <td>
-                          <button  class=" btn BTN-ACCIONES" onClick={()=>quitaCoord(elemento)}> <BootIcons.BsTrash /></button>
-                          </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-
-
-
-
-
-            <p>   </p>
-
             <ModalPregunta
                 isOpen={isOpenDeleteModal} 
                 closeModal={closeDeleteModal}
