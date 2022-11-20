@@ -13,7 +13,7 @@ const LOGIN_URL2 = "https://localhost:7012/api/Rol";
 const LOGIN_URL_GOOGLE =
   "https://localhost:7012/api/Usuario/BuscarUsuarioXCorreo";
 const COORDINADOR =
-  "https://localhost:7012/api/Semestre/ListSemestresXIdComiteTesis";
+  "https://localhost:7012/api/ComiteXEspecialidad/ListarComitexEspecialidad_x_idComite";
 function Login() {
   const { user, loginWithRedirect, isAuthenticated } = useAuth0();
 
@@ -22,16 +22,7 @@ function Login() {
     contrasena: "",
   });
   
-  let infoSemestre ={
-    numEsp:0,
-    esp:[],
-    numFac:0,
-    fac:[],
-    numAnio:0,
-    anio:[],
-    sem:[],
-    numSemestres:0
-  }
+  let especialidades =[];
 
   const { setAuth } = useAuth();
   const navigate = useNavigate();
@@ -60,7 +51,7 @@ function Login() {
       const response3 = await axios
         .get(
           COORDINADOR,
-          { params: { idComiteTesis: e } },
+          { params: { idComite: e } },
           {
             _method: "GET",
           }
@@ -68,47 +59,13 @@ function Login() {
         .then((response3) => {
           console.log(response3.data);
           if (Object.keys(response3.data).length ===0) {
-            
-            //console.log("NO SOY COORDINADOR");
+            //No es coordinador
             navigate("/cursos");
           } else {
             for(let i in response3.data){
-                var j1=0,k1=0,p1=0,n1=0;
-                for(let j in infoSemestre.esp){
-                    if(infoSemestre.esp[j]==response3.data[i].nombreEspecialidad){
-                        j1=1;
-                    }
-                }
-                if(j1===0)infoSemestre.numEsp++;infoSemestre.esp.push(response3.data[i].nombreEspecialidad);
-                j1=0;
-                for(let k in infoSemestre.anio){
-                    if(infoSemestre.anio[k]==response3.data[i].anho){
-                        k1=1;
-                    }
-                }
-                if(k1===0)infoSemestre.numAnio++; infoSemestre.anio.push(response3.data[i].anho);
-                k1=0;
-                for(let p in infoSemestre.fac){
-                    if(infoSemestre.fac[p]==response3.data[i].nombreFacultad){
-                        p1=1;
-                    }
-                }
-                if(p1===0)infoSemestre.numFac++;infoSemestre.fac.push(response3.data[i].nombreFacultad);
-                p1=0;
-
-                for(let n in infoSemestre.sem){
-                    if(infoSemestre.sem[n]==response3.data[i].idSemestre){
-                        n1=1;
-                    }
-                }
-                if(n1===0)infoSemestre.numSemestres++;infoSemestre.sem.push(response3.data[i].idSemestre);
-                n1=0;
-                
-                
-                
+              especialidades.push(response3.data[i].fidEspecialidad);
             }
-            console.log(infoSemestre);
-            localStorage.setItem("infoEspecialidad",JSON.stringify(infoSemestre));
+            localStorage.setItem("infoEspecialidades",JSON.stringify(especialidades));
             localStorage.setItem("IDUSUARIO",value);
             navigate("/comiteCoordinador");
           }

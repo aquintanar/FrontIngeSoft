@@ -21,13 +21,13 @@ const PWD_REGEX = /^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const NAME_REGEX = /^[a-zA-ZÑñà-úÀ-Ú]{1,50}$/;
 const CODIGO_REGEX = /^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/;
 
-const REGISTERALUMNO_URL = "http://34.195.33.246/api/Alumno/PostAlumno";
+const REGISTERALUMNO_URL = "https://localhost:7012/api/Alumno/PostAlumno";
 const REGISTERADMIN_URL =
-  "http://34.195.33.246/api/Administrador/PostAdministrador";
-const REGISTERASESOR_URL = "http://34.195.33.246/api/Asesor/PostAsesor";
-const REGISTERDOCENTE_URL = "http://34.195.33.246/api/Docente/PostDocente";
+  "https://localhost:7012/api/Administrador/PostAdministrador";
+const REGISTERASESOR_URL = "https://localhost:7012/api/Asesor/PostAsesor";
+const REGISTERDOCENTE_URL = "https://localhost:7012/api/Docente/PostDocente";
 const REGISTERCOMITE_URL =
-  "http://34.195.33.246/api/ComiteTesis/PostComiteTesis";
+  "https://localhost:7012/api/ComiteTesis/PostComiteTesis";
 
 const Register = () => {
   const userRef = useRef();
@@ -200,7 +200,7 @@ const Register = () => {
     credenciales.codigo=random_string;
     try {
       let response = await axios
-        .post('http://34.195.33.246/api/Directorio/PostDirectorio', credenciales, {
+        .post('https://localhost:7012/api/Directorio/PostDirectorio', credenciales, {
           _method: "POST",
         })
         .then((response) => {
@@ -227,93 +227,12 @@ const Register = () => {
           console.log(error.message);
         });
     } catch (err) {}
-
-    /*try {
-      
-      UsuarioSeleccionado.correo = user;
-      UsuarioSeleccionado.nombres = name;
-      UsuarioSeleccionado.apePat = apellidoP;
-      UsuarioSeleccionado.apeMat = apellidoM;
-      UsuarioSeleccionado.contrasena = pwd;
-      UsuarioSeleccionado.codigoPucp = codigoPUCP;
-      UsuarioSeleccionado.fidEspecialidad = value2;
-      console.log(UsuarioSeleccionado);
-      console.log(value.value);
-
-      if (value.value === "Administrador") {
-        await axios
-          .post(REGISTERADMIN_URL, UsuarioSeleccionado, {
-            _method: "POST",
-          })
-          .then((response) => {
-            navigate("/");
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-      } else if (value.value === "Asesor") {
-        await axios
-          .post(REGISTERASESOR_URL, UsuarioSeleccionado, {
-            _method: "POST",
-          })
-          .then((response) => {
-            navigate("/");
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-      } else if (value.value === "Docente") {
-        await axios
-          .post(REGISTERDOCENTE_URL, UsuarioSeleccionado, {
-            _method: "POST",
-          })
-          .then((response) => {
-            navigate("/");
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-      } else if (value.value === "Alumno") {
-        await axios
-          .post(REGISTERALUMNO_URL, UsuarioSeleccionado, {
-            _method: "POST",
-          })
-          .then((response) => {
-            navigate("/");
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-      } else if (value.value === "Comite") {
-        console.log("Se ha ingresado en comite");
-        await axios
-          .post(REGISTERCOMITE_URL, UsuarioSeleccionado, {
-            _method: "POST",
-          })
-          .then((response) => {
-            console.log("Se llego a registrar");
-            navigate("/");
-          })
-          .catch((error) => {
-            console.log(error.message);
-          });
-      }
-    } catch (err) {
-      if (!err?.response) {
-        setErrMsg("No server Response");
-      } else if (err.response?.status === 409) {
-        setErrMsg("Username Taken");
-      } else {
-        setErrMsg("Registration Failed");
-      }
-      errRef.current.focus();
-    }*/
   };
 
   const ListarEsp = async (e) => {
     try {
       let response = await axios
-        .get("http://34.195.33.246/api/Especialidad/GetEspecialidades", {
+        .get("https://localhost:7012/api/Especialidad/GetEspecialidades", {
           _method: "POST",
         })
         .then((response) => {

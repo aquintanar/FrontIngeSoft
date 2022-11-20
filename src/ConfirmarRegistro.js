@@ -15,13 +15,13 @@ import AsyncSelect from "react-select/async";
 import { EmailJSResponseStatus } from "emailjs-com";
 import emailjs from "emailjs-com";
 
-const REGISTERALUMNO_URL = "http://34.195.33.246/api/Alumno/PostAlumno";
+const REGISTERALUMNO_URL = "https://localhost:7012/api/Alumno/PostAlumno";
 const REGISTERADMIN_URL =
-  "http://34.195.33.246/api/Administrador/PostAdministrador";
-const REGISTERASESOR_URL = "http://34.195.33.246/api/Asesor/PostAsesor";
-const REGISTERDOCENTE_URL = "http://34.195.33.246/api/Docente/PostDocente";
+  "https://localhost:7012/api/Administrador/PostAdministrador";
+const REGISTERASESOR_URL = "https://localhost:7012/api/Asesor/PostAsesor";
+const REGISTERDOCENTE_URL = "https://localhost:7012/api/Docente/PostDocente";
 const REGISTERCOMITE_URL =
-  "http://34.195.33.246/api/ComiteTesis/PostComiteTesis";
+  "https://localhost:7012/api/ComiteTesis/PostComiteTesis";
 
 const ConfirmarRegistro = () => {
 
@@ -97,7 +97,7 @@ const ConfirmarRegistro = () => {
 
   const verificar = async (e) =>{
     let informacion = JSON.parse(localStorage.getItem("INFOREGISTRO"));
-    let response = await axios.get("http://34.195.33.246/api/Directorio/GetDirectorioXCorreo",
+    let response = await axios.get("https://localhost:7012/api/Directorio/GetDirectorioXCorreo",
     { params: { correo: informacion.correo } },
     {
       _method: "GET",
