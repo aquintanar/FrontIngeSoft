@@ -23,7 +23,7 @@ function Login() {
   });
   
   let especialidades =[];
-
+  let facultades =[];
   const { setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -64,8 +64,10 @@ function Login() {
           } else {
             for(let i in response3.data){
               especialidades.push(response3.data[i].fidEspecialidad);
+              facultades.push(response3.data[i].idFacultad);
             }
             localStorage.setItem("infoEspecialidades",JSON.stringify(especialidades));
+            localStorage.setItem("infoFacultad",JSON.stringify(facultades));
             localStorage.setItem("IDUSUARIO",value);
             navigate("/comiteCoordinador");
           }

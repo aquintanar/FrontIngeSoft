@@ -65,14 +65,15 @@ function DatosCurso() {
   };
 
   const petitionFac = async () => {
-    console.log("hola");
-    console.log(esp[0].facultad);
+    let idesFacultades = JSON.parse(
+      window.localStorage.getItem("infoFacultad")
+    );
     await axios
       .get(urlFac + "GetFacultades/")
       .then((response) => {
         const filtradoFac = response.data.filter((Facultad) => {
-          for (let k in esp) {
-            if (esp[k].facultad.idFacultad === Facultad.idFacultad)
+          for (let k in idesFacultades) {
+            if (Facultad.idFacultad=== idesFacultades[k])
               return Facultad;
           }
         });
@@ -91,6 +92,7 @@ function DatosCurso() {
       .then((response) => {
         closePostModal();
         openGuardadoModal();
+        navigate("..");
       })
       .catch((error) => {
         console.log(error.message);
