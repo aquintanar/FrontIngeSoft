@@ -54,6 +54,7 @@ function ListaTemaTesis() {
   const [search, setSearch] = useState("");
   const [fil, setFil] = useState(0);
   const [currentPage, SetCurrentPage] = useState(0);
+  const [toggleButton, setToggleButton] = useState(false);
 
   const abrirCerrarModalGuardar = () => {
     setModalGuardar(!modalGuardar);
@@ -271,12 +272,13 @@ function ListaTemaTesis() {
       },
     },
   ];
-
+  const handeToogleClick = () => {
+    setToggleButton(!toggleButton);
+  };
   return (
     <div className="CONTAINERCOMITE">
       <div>
         <h2 className="HEADER-TEXT1">Temas de Tesis</h2>
-
         <h2 className="HEADER-TEXT2"> Lista de Propuestas </h2>
         <div className="LISTAR-TABLA-ELEMENTOS">
           <ToolkitProvider
@@ -308,8 +310,19 @@ function ListaTemaTesis() {
               </div>
             )}
           </ToolkitProvider>
-          <h1> </h1>
+
           <div className="LISTAR-BOTON">
+            <div className="PERIODO_RECEPCION">
+              <p>Periodo de recepción de propuestas</p>
+              <div onClick={handeToogleClick} className="toggle ">
+                {toggleButton ? (
+                  <div className="toggle_left"></div>
+                ) : (
+                  <div className="toggle_right"></div>
+                )}
+              </div>
+              <p>{toggleButton?(<b>Abierto</b>):(<b>Cerrado</b>)}</p>
+            </div>
             <button
               onClick={() => abrirCerrarModalGuardar()}
               className="btn btn-primary fs-4 fw-bold mb-3"

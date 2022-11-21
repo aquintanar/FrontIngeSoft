@@ -351,3 +351,38 @@ REPORTE DE TESIS SUSTENTADAS
     padding: 0.20em 1em 0.20em;
     align-self: center;
 }
+
+
+
+.toggle{
+    background-color: #042354;
+    height:30px;
+    width:60px;
+    border-radius: 30px;
+    display:flex;
+
+}
+.toggle_left{
+    height:20px;
+    width:20px;
+    background-color: white;
+    border-radius: 20px;
+    margin: 5px;
+}
+.toggle_right{
+    height:20px;
+    width:20px;
+    background-color: white;
+    border-radius: 20px;
+    margin: 5px 2px 5px 33px;
+}
+.PERIODO_RECEPCION{
+    display: flex;
+    margin-right: 37vw;
+}
+.PERIODO_RECEPCION p {
+    font-size: 0.7vw;
+}
+.PERIODO_RECEPCION .toggle{
+    margin-left: 1.2vw;
+}
