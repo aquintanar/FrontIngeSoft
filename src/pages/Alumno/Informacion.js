@@ -55,15 +55,16 @@ useEffect(()=>{
 
         <p class="HEADER-TEXT1">Información General</p>
 
+        <p class="HEADER-TEXT2-INF">Datos del Alumno</p>
+        {alumno.map(alumno => (    
+       <td>    
+         <p class="HEADER-TEXT11">{alumno.nombres}  {alumno.apePat} {alumno.apeMat}</p>
+         <p class="HEADER-TEXT11">{alumno.correo} </p>  
+       <p class="HEADER-TEXT12"> <a href={alumno.linkCalendario}> Calendario del Alumno</a> </p>
+      
+       </td>
+ ))}   
 
-        <p class="HEADER-TEXT2-INF">Curso actual</p>
-        {docente.map(docente => (    
-       <td>      
-       <p class="HEADER-TEXT11"> {docente.anhoSemestre}-{docente.numSemestre}  {docente.nombre}  </p>
-</td>
-       
-       
- ))}
 
         <p class="HEADER-TEXT2-INF">Tema de Tesis</p>
         {tema.map(tema => (    
@@ -78,7 +79,8 @@ useEffect(()=>{
         {asesor.map(asesor => (    
        <td>      
        <p class="HEADER-TEXT11">{asesor.nombres}, {asesor.apePat} {asesor.apeMat}  </p>
-       <p class="HEADER-TEXT11">{asesor.correo}  </p></td>
+       <p class="HEADER-TEXT11">{asesor.correo}  </p>
+       </td>
        
        
  ))}
@@ -93,13 +95,8 @@ useEffect(()=>{
  ))}
         
 
-        <p class="HEADER-TEXT2-INF">Calendario del Alumno</p>
-        {alumno.map(alumno => (    
-       <td>      
-       <p class="HEADER-TEXT11">{alumno.linkCalendario}  </p></td>
-       
-       
- ))}   
+
+
     </div>              
   )
 }

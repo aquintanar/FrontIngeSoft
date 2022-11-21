@@ -11,11 +11,12 @@ import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 import * as BsIcons from 'react-icons/bs';
 import { useContext } from 'react';
 import { UserContext } from '../../UserContext'
+const urlNota= "https://localhost:7012/api/Nota/";
+function NotaAlumno()  {
+  const urlCodigo = "https://localhost:7012/";
 
-const urlNota= "http://34.195.33.246/api/Nota/";
 var form = "";
 
-function NotaAlumno()  {
     let url="-";
     const {value,setValue} = useContext(UserContext);
 let navigate = useNavigate();
@@ -33,7 +34,7 @@ const [exposiciones , SetExposiciones] = useState([]);
 const peticionNotasEntregables = async() => {
 const idAlumno = localStorage.getItem('IDUSUARIO');
     (async () => {
-        const result = await axios('http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+2);
+        const result = await axios(urlCodigo+'api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+2);
         //SetEntregablesParciales(result.data);
         let i = 0  ; 
         let index = 0 ; 
@@ -44,7 +45,7 @@ const idAlumno = localStorage.getItem('IDUSUARIO');
         }   
         if(result.data.length==0) result.data.length=1;
         
-        const resultAvance = await axios('http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+1);
+        const resultAvance = await axios(urlCodigo+'api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+1);
         //SetEntregablesParciales(result.data);
         let j = 0  ; 
         let indexAvance = 0 ; 
@@ -53,7 +54,7 @@ const idAlumno = localStorage.getItem('IDUSUARIO');
             else indexAvance=0;
         }   
         if(resultAvance.data.length==0) resultAvance.data.length=1;
-        const resultEntregable = await axios('http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+3);
+        const resultEntregable = await axios(urlCodigo+'api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+3);
         //SetEntregablesParciales(result.data);
         let k = 0  ; 
         let indexEntregable = 0 ; 
@@ -62,7 +63,7 @@ const idAlumno = localStorage.getItem('IDUSUARIO');
             else indexEntregable=0;      
         }   
         if(resultEntregable.data.length==0) resultEntregable.data.length=1;
-        const resultExposicion = await axios('http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+4);
+        const resultExposicion = await axios(urlCodigo+'api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+4);
         //SetEntregablesParciales(result.data);
         let l = 0  ; 
         let indexExposicion = 0 ; 
@@ -74,23 +75,23 @@ const idAlumno = localStorage.getItem('IDUSUARIO');
         SetNotaFinal(((2*(index/result.data.length))+(3*(indexAvance/resultAvance.data.length))+(3*(indexEntregable/resultEntregable.data.length))+(2*(indexExposicion/resultExposicion.data.length)))/10)
         console.log(notaFinal);
       })();
-    const urlAvances  = 'http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+1
+    const urlAvances  = urlCodigo+'api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+1
     const responseAvances = await fetch(urlAvances)
     const dataAvances = await responseAvances.json()
  //   console.log(dataAvances)
     SetAvances(dataAvances)
 
-    const urlEntregablesParciales  = 'http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+2
+    const urlEntregablesParciales  = urlCodigo+'api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+2
     const responseEntregablesParciales = await fetch(urlEntregablesParciales)
     const dataEntregablesParciales = await responseEntregablesParciales.json()
     SetEntregablesParciales(dataEntregablesParciales);
 
-    const urlEntregables  = 'http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+3
+    const urlEntregables  = urlCodigo+'api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+3
     const responseEntregables = await fetch(urlEntregables)
     const dataEntregables = await responseEntregables.json()
   //  console.log(dataEntregables)
     SetEntregables(dataEntregables)
-    const urlExposiciones = 'http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+4
+    const urlExposiciones = urlCodigo+'api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno='+idAlumno+'&idTipoEntregable='+4
     const responseExposiciones = await fetch(urlExposiciones)
     const dataExposiciones = await responseExposiciones.json()
    // console.log(dataExposiciones)

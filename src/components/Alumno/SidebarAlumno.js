@@ -52,6 +52,7 @@ const SidebarWrap = styled.div`
 `;
 
 const Sidebar = () => {
+  const url = "https://localhost:7012/";
   const {logout, isAuthenticated}=useAuth0();
   const [sidebar, setSidebar] = useState(true);
   const {value,setValue} = useContext(UserContext);
@@ -59,7 +60,7 @@ const Sidebar = () => {
   const showSidebar = () => setSidebar(sidebar);
   const peticionGet=async()=>{
     console.log("hola");
-    const response =await axios.get("http://34.195.33.246/api/Alumno/GetAlumnos")
+    const response =await axios.get(url+"api/Alumno/GetAlumnos")
     .then(response=>{
       console.log(response);
       console.log(response.data[0].idUsuario);

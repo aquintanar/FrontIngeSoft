@@ -19,6 +19,7 @@ const urlFacu= "http://44.210.195.91/api/Facultad/";
 */
 function EntregablesParciales()  {
   const location = useLocation();
+    const url = "https://localhost:7012/";
     const [data, setData]=useState([]);
     const [curso,setCurso]=useState(0);
     const [entregables , SetEntregables] = useState([]);
@@ -51,14 +52,14 @@ function EntregablesParciales()  {
 
   const getidCurso= async()=>{
     (async () => {
-      const result = await axios('http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=1');
+      const result = await axios(url+'api/Alumno/ListAlumnosXIdCurso?idCurso=1');
       //SetEntregablesParciales(result.data);
       let i = 0  ; 
       for ( i = 0 ; i < result.data.length ; i++){ 
             if(result.data[i].idAlumno == 1) setCurso(1);   
       }   
 
-      const result2 = await axios('http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=3');
+      const result2 = await axios(url+'api/Alumno/ListAlumnosXIdCurso?idCurso=3');
       //SetEntregablesParciales(result.data);
       let j = 0  ; 
       for ( j = 0 ; j < result2.data.length ; j++){ 
@@ -68,21 +69,21 @@ function EntregablesParciales()  {
   }
   const peticionEntregables = async() => {
     (async () => {
-      const result = await axios('http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=1');
+      const result = await axios(url+'api/Alumno/ListAlumnosXIdCurso?idCurso=1');
       //SetEntregablesParciales(result.data);
       let i = 0  ; 
       for ( i = 0 ; i < result.data.length ; i++){ 
             if(result.data[i].idAlumno == 1) setCurso(1);   
       }   
 
-      const result2 = await axios('http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=3');
+      const result2 = await axios(url+'api/Alumno/ListAlumnosXIdCurso?idCurso=3');
       //SetEntregablesParciales(result.data);
       let j = 0  ; 
       for ( j = 0 ; j < result2.data.length ; j++){ 
             if(result2.data[j].idAlumno == 1) setCurso(3);   
       }   
     })();
-    const urlEntregable  = 'http://34.195.33.246/api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso='+location.state.idCurso+'&idTipoEntregable='+location.state.idTipoEntregable+'&idAlumno='+location.state.idAlumno;
+    const urlEntregable  = url+'api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso='+location.state.idCurso+'&idTipoEntregable='+location.state.idTipoEntregable+'&idAlumno='+location.state.idAlumno;
     const response = await fetch(urlEntregable)
     const data = await response.json()
     console.log(data)
@@ -90,7 +91,7 @@ function EntregablesParciales()  {
     setData(data)
 }
 const getEntregableID = async () => {
-  const urlEntregableXid = 'http://34.195.33.246/api/Entregable/BuscarEntregableXId?idEntregable=4'
+  const urlEntregableXid = url+ 'api/Entregable/BuscarEntregableXId?idEntregable=4'
   const response = await fetch(urlEntregableXid)
   const data = await response.json()
   console.log(data)
@@ -126,7 +127,7 @@ const getEntregableID = async () => {
  const crearVersion =async(idVersion,idEntregable,nombre,linkDoc,notaVersion,estadoMasReciente,fechaSubida,fechaLimite,tipoEntregable,comentarios)=>{
   let idRubri = 0;
   (async () => {
-    const result2 = await axios(`http://34.195.33.246/api/Rubrica/GetRubricaXIdEntregable?idEntregable=${idEntregable}`);
+    const result2 = await axios(url+`api/Rubrica/GetRubricaXIdEntregable?idEntregable=${idEntregable}`);
     setRubrica(result2.data);
     
    
@@ -169,7 +170,7 @@ const getEntregableID = async () => {
             </thead>
             <tbody >
               {filtrado.map(entregables => (
-                <tr style={{cursor:'pointer'}} onClick={() =>crearVersion(entregables.idVersion,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersion,entregables.estadoMasReciente,entregables.fechaSubida,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)} key={entregables.idEntregable}>
+                <tr style={{cursor:'pointer'}} onClick={() =>crearVersion(entregables.idVersionAntigua,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersionMasReciente,entregables.estadoMasReciente,entregables.fechaModificacionMasReciente,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)} key={entregables.idEntregable}>
                     <td>{entregables.nombre}</td>
                     <td>{entregables.fechaLimite}</td>
                     <td>{entregables.fechaEntregaAsesor} </td>

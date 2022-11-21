@@ -34,6 +34,34 @@
     justify-content: center;
 }
 
+.modal__dialog_archivo {
+    background: #042354;
+    padding: 10px;
+    width: 400px;
+    height: 150px;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    justify-content: center;
+    border-radius:  2%;
+}
+
+.modal__dialog_archivo_tamanho {
+    background: #042354;
+    padding: 10px;
+    width: 400px;
+    height: 180px;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    justify-content: center;
+    border-radius:  2%;
+}
+
 .modal-open  {
     display:grid;
 }
