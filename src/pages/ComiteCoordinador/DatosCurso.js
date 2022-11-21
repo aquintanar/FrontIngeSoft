@@ -90,9 +90,9 @@ function DatosCurso() {
         _method: "POST",
       })
       .then((response) => {
+        console.log("Se logro guardar");
         closePostModal();
         openGuardadoModal();
-        navigate("..");
       })
       .catch((error) => {
         console.log(error.message);
