@@ -59,7 +59,7 @@ const Sidebar = () => {
   const showSidebar = () => setSidebar(sidebar);
   const peticionGet=async()=>{
     console.log("hola");
-    const response =await axios.get("http://34.195.33.246/api/Asesor/GetAsesores")
+    const response =await axios.get("https://localhost:7012/api/Asesor/GetAsesores")
     .then(response=>{
       console.log("HOLA SE LLEGO A HACER EL REQUEST");
       console.log("El valor de value es" + value);

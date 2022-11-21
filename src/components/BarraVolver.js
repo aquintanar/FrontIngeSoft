@@ -45,7 +45,7 @@ export function BarraVolver() {
         <h4 className="volver"><a href="/cursos">Volver a mis cursos</a></h4>
       </div>
       <div>
-        <h4 className="titulo-info">{anhio + "-" + sem + " " + nom + " " + esp}</h4>
+        <h4 className="titulo-info">{anhio + "-" + sem + " " + nom }</h4>
       </div>
     </div>
   );
