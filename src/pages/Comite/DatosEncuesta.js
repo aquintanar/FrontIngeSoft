@@ -260,6 +260,7 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
         .then(response=>{
           closePostModal();
           openGuardadoModal();
+          window.location.reload(false);
           console.log(response)
         }).catch(error =>{
           console.log(error.message);

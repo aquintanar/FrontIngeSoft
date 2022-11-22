@@ -94,6 +94,7 @@ const AddEncuesta = () => {
         .then(response=>{
           closePostModal();
           openGuardadoModal();
+          window.location.reload(false);
         }).catch(error =>{
           console.log(error.message);
         })
@@ -183,7 +184,7 @@ const AddEncuesta = () => {
           >
             <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
               <Button class="btn  btn-success btn-lg" onClick = {()=>peticionPost()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <Button class="btn btn-danger btn-lg"  onClick={closeDeleteModal}>Cancelar</Button>
+              <Button class="btn btn-danger btn-lg"  onClick={closePostModal}>Cancelar</Button>
             </div>
           </ModalInsertar>
     

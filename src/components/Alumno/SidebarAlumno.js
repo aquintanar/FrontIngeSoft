@@ -57,36 +57,27 @@ const Sidebar = () => {
   const {value,setValue} = useContext(UserContext);
   const [nombre , setNombre] = useState([]);
   const showSidebar = () => setSidebar(sidebar);
+
   const peticionGet=async()=>{
     console.log("hola");
     const response =await axios.get("http://34.195.33.246/api/Alumno/GetAlumnos")
     .then(response=>{
-      console.log(response);
-      console.log(response.data[0].idUsuario);
       for(let i in response.data){
-        console.log(response.data[i].idUsuario);
         if(value!=0 && value!=undefined && value!=null && value!='' && value!='Hello from context'){
           if(response.data[i].idUsuario===value){
-            console.log("PASE POR VALUE");
             setNombre(response.data[i].nombres +" "+ response.data[i].apeMat);
-            console.log(nombre);
             break;
           }  
         }
         else{
           var valorGuardado = localStorage.getItem("IDUSUARIO");
-          console.log("El valor de ID es " + response.data[i].idUsuario);
-          console.log("El valor guardado es " + localStorage.getItem("IDUSUARIO"));
           if(response.data[i].idUsuario==valorGuardado){
-            console.log("PASE POR EL LOCAL STORAGE");
             setNombre(response.data[i].nombres +" "+ response.data[i].apeMat);
-            console.log(nombre);
             break;
           }  
         }
         
       }
-      console.log("El nombre actual es : " + nombre)
     }).catch(error =>{
       console.log(error.message);
     })
@@ -100,7 +91,6 @@ const Sidebar = () => {
   function obtenerLocalStorage(){
     let variable = localStorage.getItem("IDUSUARIO");
     setValue(variable);
-    console.log("SOY VALUE ACTUALMENTE"+value);
   }
 
   guardarLocalStorage();

@@ -20,7 +20,7 @@ function Alumno() {
             <SidebarAlumno/>
               <BarraVolver/>
               <Routes>
-              
+              <Route path='encuesta' exact element = {<Encuesta/>}/>
               <Route path='gestion/gesPortafolio' exact element= {<PortafolioEntregables/>}/>
               <Route path='gestion/gesPortafolio/AvancesSemanales' exact element= {<AvancesSemanales/>}/>
               <Route path='gestion/gesPortafolio/EntregablesParciales' exact element= {<EntregablesParciales/>}/>
@@ -32,7 +32,6 @@ function Alumno() {
               <Route path='gestion/Informacion' exact element= {<Informacion/>}/>
               <Route path='gestion/EvaluaAsesor' exact element= {<EvaluaAsesor/>}/>
               <Route path='calendario' exact element= {<Calendario/>}/>
-              <Route path='encuesta' exact element = {<Encuesta/>}/>
               </Routes>
         </div>
     )
