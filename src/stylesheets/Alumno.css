@@ -103,10 +103,19 @@
 }
 
 .HEADER-TEXT11{
-    font-size: 20px;
+    font-size: 17px;
     color: black;
-    font-weight: bold;
-    height: 30px;
+    font-weight: bolder;
+    height: 25px;
+    text-align: left;
+}
+
+.HEADER-TEXT12{
+    font-size: 17px;
+    color: red;
+    font-weight: bolder;
+    text-decoration: underline;
+    height: 25px;
     text-align: left;
 }
 .HEADER-TEXT13-DOCUMENTO{
@@ -116,6 +125,35 @@
     text-align: center;
 
 }
+
+.HEADER-TEXT14-DOCUMENTO{
+    font-size: 10px;
+    color: white;
+    height: 20px;
+    font-weight: bolder;
+    text-align: left;
+
+}
+
+.HEADER-TEXT1-DOCUMENTO {
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+    color: #042354;
+    font-weight: bold;
+    display: flex;
+    height: 35px;
+}
+
+.HEADER-TEXT2-DOCUMENTO {
+    font-size: 27px;
+    font-family: 'Montserrat', sans-serif;
+    color: #042354;
+    font-weight: bold;
+    display: flex;
+    height: 20px;
+}
+
+
 .HEADER-TEXT11:hover, a:hover{
    text-decoration: none;
    color: #000;

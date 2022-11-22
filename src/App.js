@@ -22,7 +22,7 @@ function App() {
   const [value,setValue] = useState('Hello from context');
   return (
     <UserContext.Provider value={{value,setValue}}>
-    <HashRouter >
+    <Router >
             <Routes>
                 {/*Public Routes */ }
                 <Route path='/' exact element= {<Login/>} />
@@ -40,7 +40,7 @@ function App() {
                   <Route path='/confirmarRegistro/*' exact element={<ConfirmarRegistro/>}/>
             </Routes>
            
-    </HashRouter>
+    </Router>
     </UserContext.Provider>
   )
 }

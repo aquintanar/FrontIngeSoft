@@ -3,6 +3,7 @@ import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
+import * as AiIcons from 'react-icons/ai';
 import {  Button} from '@material-ui/core';
 import {  useNavigate } from 'react-router-dom';
 import '../../stylesheets/Administrador.css'
@@ -10,8 +11,8 @@ import useModal from '../../hooks/useModals';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 import * as BsIcons from 'react-icons/bs';
 
-const url= "http://34.195.33.246/api/Especialidad/";
-const urlFacu= "http://34.195.33.246/api/Facultad/";
+const url= "https://localhost:7012/api/Especialidad/";
+const urlFacu= "https://localhost:7012/api/Facultad/";
 /*
 const url= "http://44.210.195.91/api/Especialidad/";
 const urlFacu= "http://44.210.195.91/api/Facultad/";
@@ -171,6 +172,7 @@ function ListaEspecialidad()  {
                     <td>{especialidad.descripcion}</td>
                     <td>{especialidad.facultad.nombre}</td>
                     <td>
+                    <button  class=" btn BTN-ACCIONES" onClick={()=>{navigate("asignarCoordinador/"+especialidad.idEspecialidad)}}> <AiIcons.AiOutlineUserAdd /></button>
                     <button class="btn BTN-ACCIONES" onClick={()=>{navigate("datosEspecialidad/"+especialidad.idEspecialidad)}}> <FaIcons.FaEdit /></button>
                     <button  class=" btn BTN-ACCIONES" onClick={()=>seleccionarEspecialidad(especialidad)}> <BootIcons.BsTrash /></button>
                     </td>

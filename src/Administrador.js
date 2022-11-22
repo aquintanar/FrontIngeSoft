@@ -10,6 +10,8 @@ import DatosSemestre from './pages/Administrador/DatosSemestre';
 import Gestion from './pages/Administrador/Gestion';
 import ListaFacultad  from './pages/Administrador/ListaFacultad';
 import DatosFacultad from './pages/Administrador/DatosFacultad';
+import AsignarCoordinador from "./pages/Administrador/AsignarCoordinador";
+
 
 function Administrador() {
     return (
@@ -21,6 +23,7 @@ function Administrador() {
                   <Route path='gestion/gesFacultad/datosFacultad/:id' exact  element= {<DatosFacultad/>}/>
                   <Route path='gestion/gesEspecialidad' exact element= {<ListaEspecialidad/>}/>
                   <Route path='gestion/gesEspecialidad/datosEspecialidad/:id' exact  element= {<DatosEspecialidad/>}/>
+                  <Route path='gestion/gesEspecialidad/asignarCoordinador/:id' exact  element= {<AsignarCoordinador/>}/>
                   <Route path='gestion/gesSemestre' exact element= {<ListaSemestre/>}/>
                   <Route path='gestion/gesSemestre/datosSemestre/:id'  exact element= {<DatosSemestre/>}/>
               </Routes>

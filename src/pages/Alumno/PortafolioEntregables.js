@@ -1,16 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
-import * as FaIcons from 'react-icons/fa';
-import * as BootIcons  from "react-icons/bs";
-import {  Button} from '@material-ui/core';
 import {  useNavigate } from 'react-router-dom';
 import '../../stylesheets/Administrador.css'
-import useModal from '../../hooks/useModals';
-import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
-import * as BsIcons from 'react-icons/bs';
-import { useContext } from 'react';
-import { UserContext } from '../../UserContext'
 import { BrowserRouter as Router , Routes, Route, Link, useLocation } from 'react-router-dom';
 const url= "http://34.195.33.246/api/Especialidad/";
 const urlFacu= "http://34.195.33.246/api/Facultad/";
@@ -22,14 +14,31 @@ function PortafolioEntregables()  {
 
   let navigate = useNavigate();
   const location = useLocation();
-  const {value,setValue} = useContext(UserContext);
+
+  const getAsesor = async() => {
+    const urlAsesor  = 'https://localhost:7012/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno='+localStorage.getItem('IDUSUARIO')+'&idCurso='+localStorage.getItem('idCurso');
+    const response = await fetch(urlAsesor);
+    const data = await response.json();
+    console.log(data);
+    console.log(data[0].nombres);
+    setAsesor(data);
+}
+   const [asesor, setAsesor]=useState([]);
+  useEffect(()=>{
+    getAsesor();
+ },[])
     return (      
-      <div class=" CONTAINERADMIN">   
-  
+      <div class=" CONTAINERADMIN">
         <p class="HEADER-TEXT1">Portafolio de Entregables </p>
-        <br></br>
-        <h3 class = "NOMB-ASESOR">Asesor Peter, Fortaleza Monserrat</h3>
-        <br></br>
+       <br></br>   
+           {asesor.map(asesor => (
+       
+       <td>      
+       <h3 class = "NOMB-ASESOR">Asesor {asesor.nombres}, {asesor.apePat} {asesor.apeMat}  </h3>
+       <br></br></td>
+
+              ))}
+
   
         <a class="BTN-CUADRADO" onClick={()=>{navigate("EntregablesParciales",{state:{idAlumno:localStorage.getItem('IDUSUARIO'),nombres:"Peter",apellidoPat:"Gonzales",apellidoMaterno: "Monserrat", idCurso: localStorage.getItem('idCurso'),idTipoEntregable: 1,nombreEntregable: "Avances Semanales"}})}}>Avances Semanales</a>
   

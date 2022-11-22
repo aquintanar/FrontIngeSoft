@@ -97,8 +97,7 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
     }
     
     const verificaTipo =()=>{
-        if(entregable.fidTipoEntregable ===1 && (entregable.fechaEntregaAsesor === null 
-            || entregable.fechaEntregaAsesor===0)){
+        if(entregable.responsableSubir ===0 ){
             entregable.fechaEntregaAsesor = new Date();
             entregable.responsableSubir = 1;
             peticionPostEntregable2();
@@ -138,7 +137,25 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
         })
     }
 
+    const peticionPutEntregable2=async()=>{
+        await axios.put(url1+"PutEntregableMarcel",entregable)
+        .then(response=>{
+            editaRubricas();
+        }).catch(error =>{
+            console.log(error.message);
+        })
+    }
     
+    const verificaTipo2 =()=>{
+        if(entregable.responsableSubir ===0 ){
+            entregable.fechaEntregaAsesor = new Date();
+            entregable.responsableSubir = 1;
+            peticionPutEntregable2();
+        }
+        else{
+            peticionPutEntregable();
+        }
+    }
 
     const compara =(obj1,obj2)=>{
         if(obj1.rubro===obj2.rubro && 
@@ -293,7 +310,7 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
             </div>
             <div class="col-3">
                 <div class="input-group mb-3 ">
-                    <input type="text"  class="form-control" name="puntajeMaximo" placeholder="Puntaje"  
+                    <input type="number"  class="form-control" name="puntajeMaximo" placeholder="Puntaje"  
                           onChange={handleChange} value={rubricaSeleccionada && rubricaSeleccionada.puntajeMaximo} />
                 </div>
             </div>
@@ -340,11 +357,11 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
               isOpen={isOpenEditModal} 
               closeModal={closeEditModal}
               procedimiento = "modificar"
-              objeto="la evaluación"
+              objeto={entregable.fidTipoEntregable===4? "la exposición":"la entrega" }
               elemento={entregable && entregable.nombre}
             >
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-                <Button class="btn  btn-success btn-lg" onClick={()=>peticionPutEntregable()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Button class="btn  btn-success btn-lg" onClick={verificaTipo2} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <Button class="btn btn-danger btn-lg"  onClick={closeEditModal}>Cancelar</Button>
               </div>
             </ModalPregunta>             
@@ -363,7 +380,7 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
               isOpen={isOpenPostModal} 
               closeModal={closePostModal}
               procedimiento = "guardar"
-              objeto="la evaluación"
+              objeto={entregable.fidTipoEntregable===4? "la presentación":"la entrega" }
               elemento={entregable && entregable.nombre}
             >
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>

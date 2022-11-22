@@ -1,6 +1,6 @@
 import React from 'react'
 import {useState , useEffect} from "react";
-import {ModalConfirmación, ModalComentario} from '../../components/Modals';
+import {ModalConfirmación, ModalComentario,ModalArchivoTamanho} from '../../components/Modals';
 import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import { BrowserRouter as Router , Routes, Route, Link, useLocation } from 'react-router-dom';
@@ -26,7 +26,10 @@ import {
 function EntregableSeleccionado(){
     var aux=0;
     let navigate = useNavigate();
+    const url = "https://localhost:7012/";
     const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
+
+const [isOpenGuardadoModalArchivo, openGuardadoModalArchivo ,closeGuardadoModalArchivo ] = useModal();
     const location = useLocation();
     const [subTitulo,setSubtitulo] = useState("Agregar ");
     const [calificado,setCalificado] = useState("No Calificado");
@@ -37,6 +40,9 @@ function EntregableSeleccionado(){
     const [version, setVersion] = useState([]);
     const [detalleNota, setDetalleNota] = useState([]);
     const [documentosVersion , setDocumentosVersion] = useState([]);
+    const [documentosVersionAlumno , setDocumentosVersionAlumno ] = useState([]);
+    const [documentosVersionAsesor , setDocumentosVersionAsesor ] = useState([]);
+    const [documentosVersionDocente , setDocumentosVersionDocente ] = useState([]);
     const [nota, setNota] = useState({
       idDetalleNotaRubrica: 0,
       DetalleRubrica: {
@@ -68,6 +74,15 @@ function EntregableSeleccionado(){
     fidAlumno:1 
   }
   })
+
+  const cerrarPostArchivo=()=>{
+    closeGuardadoModalArchivo();
+   // navigate("../gestion");
+  }
+  const abrirPostArchivo=()=>{
+    openGuardadoModalArchivo();
+   // navigate("../gestion");     
+  }
   const cargarVersion=async()=>{
     setVersionSeleccionada({
       fidEntregable: location.state.idEntregable,
@@ -78,17 +93,40 @@ function EntregableSeleccionado(){
     console.log(versionSeleccionada);
     if(location.state.idVersion!=null){
       (async () => {
-      const urlDocumentos  = `http://34.195.33.246/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${location.state.idVersion}`
+      const urlDocumentos  = url+`api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${location.state.idVersion}`
       const responseDocumentos  = await fetch(urlDocumentos)
       const dataDocumentos = await responseDocumentos.json()
       setDocumentosVersion(dataDocumentos)
       console.log(documentosVersion);
-    })();
-      //  setSubtitulo("Modificar Entrega");
+      console.log(dataDocumentos[0]);
+var i=0;
+      for(i=0;i<dataDocumentos.length;i++){
+        if(dataDocumentos[i].esTarea==1){
+        documentosVersionAlumno[i] = dataDocumentos[i];
+           }
       }
+      for(i=0;i<dataDocumentos.length;i++){
+        if(location.state.estado==5){
+        if(dataDocumentos[i].esRetroalimentacionDocente==1){
+          documentosVersionAsesor[i] = dataDocumentos[i];
+           }
+          }
+        else{
+          if(dataDocumentos[i].esRetroalimentacion==1){
+            documentosVersionAsesor[i] = dataDocumentos[i];
+             }
+
+
+        }
+      }
+      setDocumentosVersionAlumno(documentosVersionAlumno);
+      setDocumentosVersionAsesor(documentosVersionAsesor);
+    })();
+    
+  }
       
       else {
-        await axios.post("http://34.195.33.246/api/Version/PostVersion",versionSeleccionada,{
+        await axios.post(url+"api/Version/PostVersion",versionSeleccionada,{
           _method: 'POST'
         })
       .then(response=>{
@@ -101,7 +139,7 @@ function EntregableSeleccionado(){
 
   const getVersion = async() => {
     (async () => {
-        const result = await axios('http://34.195.33.246/api/Version/ListVersionXId?idVersion='+location.state.idVersion);
+        const result = await axios(url+'api/Version/ListVersionXId?idVersion='+location.state.idVersion);
         setVersion(result.data[0]);
       })();
     }
@@ -128,7 +166,7 @@ function EntregableSeleccionado(){
     }
     async function getData() {
       (async () => {
-        const result = await axios(`http://34.195.33.246/api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
+        const result = await axios(url+`api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
         setDetalleNota(result.data);
         let i = 0  ; 
         for ( i = 0 ; i < result.data.length ; i++){
@@ -145,7 +183,7 @@ function EntregableSeleccionado(){
 
     async function getDetallesNotaRubrica() {
       (async () => {
-        const result = await axios(`http://34.195.33.246/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
+        const result = await axios(url+`api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
         setDetalleNota(result.data);
         let i = 0  ; 
         let index = 0 ; 
@@ -160,7 +198,7 @@ function EntregableSeleccionado(){
       })();
     };
     const getEntregable=async()=>{
-        const response = await axios.get(`http://34.195.33.246/api/Entregable/BuscarEntregableXId?idEntregable=${location.state.idEntregable}`);
+        const response = await axios.get(url+`api/Entregable/BuscarEntregableXId?idEntregable=${location.state.idEntregable}`);
         setEntregable({
           idEntregable: response.data[0].idEntregable,
           responsableEvalua: response.data[0].responsableEvalua,
@@ -170,7 +208,7 @@ function EntregableSeleccionado(){
         
     }
     const getDetalleNotaRubrica=async()=>{
-        const response = await axios.get(`http://34.195.33.246/api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
+        const response = await axios.get(url+`api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
         setNota({
           idDetalleNotaRubrica: response.data[0].idDetalleNotaRubrica,
           DetalleRubrica:{fidDetalleRubrica: response.data[0].fidDetalleRubrica},
@@ -188,6 +226,23 @@ function EntregableSeleccionado(){
         }
 
     }
+
+
+    const crearDocumento =async()=>{
+      let idRubri = 0;
+      (async () => {
+
+if(location.state.estado==4){
+  abrirPostArchivo();
+} 
+else if(location.state.estado==5){
+  abrirPostArchivo();
+}     
+  else{navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
+        tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}}) }     })();
+     }
+    
+
 
     const seleccionarTipodeEntrega =()=>{
       if(location.state.linkDoc !=null){
@@ -255,7 +310,7 @@ function EntregableSeleccionado(){
             <span>
               <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
             </span>
-        <h1 className='HEADER-TEXT1'>{location.state.nombreEntregable} - { location.state.tituloDoc }</h1>
+        <h1 className='HEADER-TEXT2-DOCUMENTO'>{location.state.nombreEntregable} - { location.state.tituloDoc } </h1>
 
         <div className='ContenidoPrincipal'>
         <table   {...getTableProps()} style={{minWidth: 650, borderCollapse: 'separate',
@@ -307,7 +362,7 @@ function EntregableSeleccionado(){
 
 
  <PreviewList>
-{((location.state.idVersion >= 0) ? documentosVersion.map((documentos) => {
+{((location.state.idVersion >= 0) ? documentosVersionAlumno.map((documentos) => {
                    return (
               
                     <a href={documentos.linkDoc}>
@@ -316,10 +371,9 @@ function EntregableSeleccionado(){
               
             );
                 }): " ")} </PreviewList>
-        <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
-          tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}})} >
-            {location.state.estado==5?"Modificar ":(location.state.estado==4?"Modificar ":(location.state.estado==3?"Modificar ":(location.state.estado==2?"Modificar ":"Agregar ")))} {location.state.nombreEntregable}</p>
-     
+        <p class="HEADER-TEXT6"  type='button' onClick={() =>crearDocumento()} >
+            {documentosVersion.length==0?"Agregar "+location.state.nombreEntregable:"Modificar "+location.state.nombreEntregable}</p>
+          
         
             <p class="HEADER-TEXT5">{location.state.idRubrica>0?"Rúbrica de Evaluación":" "} </p>
         <div class = "row LISTAR-TABLA">
@@ -341,9 +395,9 @@ function EntregableSeleccionado(){
          
               {detalleNota.map(rubricaNota => (
                 <tr key={rubricaNota.idDetalleNotaRubrica}>
-                   <td  >{rubricaNota.rubro }</td>
+                   <td  >{rubricaNota.rubro } </td>
                     <td >{rubricaNota.nivelDeseado}</td>                    
-                    <td >{rubricaNota.puntajeMaximo}</td>
+                    <td >{rubricaNota.puntajeMaximo} </td>
                     
                     <td> {((aux = 1) ? (rubricaNota.puntaje-rubricaNota.puntaje*rubricaNota.descuento) : "" )}</td>
                     <td>
@@ -367,7 +421,7 @@ function EntregableSeleccionado(){
       </div>
       <div class = "DATOS">
                 <div class = "col-12">
-                    <div class="text-start fs-5 fw-normal "><p>Comentarios del {entregable.responsableEvalua}</p></div>
+                    <div class="text-start fs-5 fw-normal "><p>Comentarios del {location.state.estado==5?entregable.responsableEvalua:"Asesor"} </p></div>
                     <div class="input-group input-group-lg mb-3">
                         <textarea class="form-control" name="Comentarios" placeholder={version.comentarios} aria-label="comentarios"  disabled="true" cols="10" rows="5
                         " 
@@ -375,6 +429,28 @@ function EntregableSeleccionado(){
                     </div>
                 </div>
             </div>
+
+            <div class = "DATOS">
+                <div class = "col-12">
+                    <div><p>Retroalimentación Adjunta: </p></div>
+                    <PreviewList>
+{((location.state.idVersion >= 0) ? 
+
+
+documentosVersionAsesor.map((documentos) => {
+                   return (
+              
+                    <a href={documentos.linkDoc}>
+               <button><BsIcons.BsFileEarmarkPdf/>   {documentos.nombreDocumento} </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                  </a>    
+              
+            );
+                }): " ")} </PreviewList>
+                </div>
+            </div>
+
+
+
             <ModalComentario
               isOpen={isOpenGuardadoModal} 
               closeModal={closeGuardadoModal}
@@ -395,6 +471,19 @@ function EntregableSeleccionado(){
                 </div>
                 </div>
             </ModalComentario>
+
+            <ModalArchivoTamanho
+              isOpen={isOpenGuardadoModalArchivo} 
+              closeModal={closeGuardadoModalArchivo}
+              procedimiento= "No puede modificar los archivos enviados al docente"
+            >
+
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+              <div class="align-text-bottom">
+              <Button class="btn btn-success btn-lg"  onClick={()=>cerrarPostArchivo()}><span>Entendido</span></Button>
+                </div>
+              </div>
+            </ModalArchivoTamanho>
         </div>
         </div>
     );

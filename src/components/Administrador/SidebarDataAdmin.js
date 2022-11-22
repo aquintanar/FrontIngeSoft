@@ -3,6 +3,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as BsIcons from 'react-icons/bs';
 import * as MdIcons from 'react-icons/md';
 import * as IonIcons4 from "react-icons/io";
+import * as AiIcons from 'react-icons/ai';
 
 export const SidebarData = [
     {

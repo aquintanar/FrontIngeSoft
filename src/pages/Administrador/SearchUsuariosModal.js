@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 //import './proponerTemaAsesor.css';
 import '../Asesor/proponerTemaAsesor.css';
 
-const URL= "http://34.195.33.246/api/ComiteTesis/GetComiteTesis";
+const URL= "https://localhost:7012/api/ComiteTesis/GetComiteTesis";
 //const URL= "http//44.210.195.91/api/ComiteTesis/GetComiteTesis";
 
 const SearchUsuariosModal = ( {show ,setShow, docentes, setDocentes, coordinadores, setCoord} ) =>{
@@ -40,7 +40,7 @@ const SearchUsuariosModal = ( {show ,setShow, docentes, setDocentes, coordinador
     }
 
     const fetchData = () =>{
-        fetch('http://44.210.195.91/api/TemaTesis/GetTemaTesis')
+        fetch('https://localhost:7012/api/TemaTesis/GetTemaTesis')
         .then(response => {
             return response.json()
         })

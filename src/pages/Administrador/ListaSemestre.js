@@ -9,9 +9,9 @@ import {  useNavigate } from 'react-router-dom';
 import * as BsIcons from 'react-icons/bs';
 //import './DatosEspecilidad.css';
 
-const url= "http://34.195.33.246/api/Semestre/";
-const urlFacu= "http://34.195.33.246/api/Facultad/";
-const urlEsp= "http://34.195.33.246/api/Especialidad/";
+const url= "https://localhost:7012/api/Semestre/";
+const urlFacu= "https://localhost:7012/api/Facultad/";
+const urlEsp= "https://localhost:7012/api/Especialidad/";
 
 /*
 
@@ -73,7 +73,9 @@ function ListaSemestre()  {
     numSemestre: 0,
     enCurso: '',
     idEspecialidad: 0,
-    estado: true
+    estado: true,
+    fechaInicio: '',
+    fechaFin: ''
   })
 
   //Filtro de tabla--
@@ -191,7 +193,7 @@ function ListaSemestre()  {
         auxi.push(element.anho);
       }
     });
-    console.log(auxi);
+    
     setAnhos(auxi);
 
   }
@@ -238,15 +240,7 @@ function ListaSemestre()  {
       <p class="HEADER-TEXT2">Búsqueda de semestres académicos</p>
 
       <div class="row ">
-          <div class="col-lg-6 FILTRO-LISTAR" >
-              <div class="text-start fs-5  mb-1 fw-normal "><p>Especialidad</p></div>
-              <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioEsp}>
-                <option selected value = "0">Todos</option>
-                    {especialidades.map(elemento=>
-                      <option key={elemento.idEspecialidad} value={elemento.idEspecialidad}>{elemento.nombre}</option>  
-                    )} 
-               </select>
-          </div>
+          
 
           <div class="col-lg-3 FILTRO-LISTAR" >
             <div class=" fs-5 fw-normal  mb-1 "><p>Año</p></div>
@@ -270,15 +264,7 @@ function ListaSemestre()  {
 
       <div class="row ">
         
-          <div class = "col-lg-3 FILTRO-LISTAR">
-          <div class="col text-start fs-5  mb-1 fw-normal"><p>Facultad</p></div>
-            <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioFacu}>
-                <option selected value = "0">Todos</option>
-                {facus.map(elemento=>(
-                <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.nombre}</option>  
-              ))}
-            </select>
-          </div>
+         
 
           <div class = "col-lg-6 " align = 'right' >
             <div class="col text-start fs-5  mb-1 fw-normal text-white"> " "</div>
@@ -302,8 +288,9 @@ function ListaSemestre()  {
                   <th>Nombre</th>
                   <th>Año</th>
                   <th>Semestre</th>
-                  <th>Especialidad</th>
                   <th>En curso</th>
+                  <th>Fecha Inicio</th>
+                  <th>Fecha Fin</th>
                   <th>Acciones</th>
               </tr>
             </thead>
@@ -314,12 +301,10 @@ function ListaSemestre()  {
                     <td>{semestre.nombre}</td>                    
                     <td>{semestre.anho}</td>
                     <td>{semestre.numSemestre}</td>
-                    {esp.map(element => {      
-                      if (element.idEspecialidad === semestre.idEspecialidad) {
-                        return <td>{element.nombre}</td>;
-                      }
-                    })}
+                    
                     <td>{semestre.enCurso ? "Si" : "No"}</td>
+                    <td>{semestre.fechaInicio.slice(0,10)}</td>
+                    <td>{semestre.fechaFin.slice(0,10)}</td>
                     <td>
                       <button class="btn BTN-ACCIONES" onClick={()=>{navigate("datosSemestre/" + semestre.idSemestre)}}> <FaIcons.FaEdit/></button>
                       <button  class=" btn BTN-ACCIONES" onClick={()=>seleccionarSemestre(semestre, 'Eliminar')}> <BootIcons.BsTrash/></button>

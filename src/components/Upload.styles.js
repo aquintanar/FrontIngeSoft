@@ -105,7 +105,12 @@ export const ImagePreview = styled.img`
   height: 100%;
 `;
 
+export const ImagePreviewGuardado = styled.img`
+  border-radius: 6px;
+  width: 100%;
+  height: 100%;
 
+`;
 
 export const FilePreviewContainer = styled.article`
   margin-bottom: 35px;

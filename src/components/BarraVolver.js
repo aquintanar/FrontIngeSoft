@@ -3,6 +3,7 @@ import "../Pagina.css";
 import "../stylesheets/BarraVolver.css";
 import axios from "axios";
 export function BarraVolver() {
+  const url = "https://localhost:7012/";
   const [clicked, setClicked] = useState(false);
   const [anhio, setAnhio] = useState([]);
   const [sem, setSem] = useState([]);
@@ -16,7 +17,7 @@ export function BarraVolver() {
   const InfoArribaDinamica = async () => {
     const response = await axios
       .get(
-        "http://34.195.33.246/api/Curso/BuscarCursoXId",
+        url+"api/Curso/BuscarCursoXId",
         { params: { idCurso: localStorage.getItem("idCurso") } },
         {
           _method: "GET",
@@ -44,7 +45,7 @@ export function BarraVolver() {
         <h4 className="volver"><a href="/cursos">Volver a mis cursos</a></h4>
       </div>
       <div>
-        <h4 className="titulo-info">{anhio + "-" + sem + " " + nom + " " + esp}</h4>
+        <h4 className="titulo-info">{anhio + "-" + sem + " " + nom }</h4>
       </div>
     </div>
   );

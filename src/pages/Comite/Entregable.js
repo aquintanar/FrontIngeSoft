@@ -24,8 +24,8 @@ function Entregable() {
         fechaLimite: new Date(),
         fechaPresentacionAlumno: new Date(),
         responsableSubir: 1,
-        responsableEvaluar: 4,
-        fidTipoEntregable: 1,
+        responsableEvaluar: 2,
+        fidTipoEntregable: 2,
         fidCurso: localStorage.getItem('idCurso'),
         fidNota: 0,
     })

@@ -122,7 +122,7 @@ const Tesis = () => {
 
   const peticionGet = async () => {
     const response = await axios
-      .get("http://34.195.33.246/api/TemaTesis/GetTemaTesis", {
+      .get("https://localhost:7012/api/TemaTesis/GetTemaTesis", {
         _method: "GET",
       })
       .then((response) => {

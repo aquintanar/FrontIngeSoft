@@ -386,3 +386,36 @@ ESTILO DE INICIAR SESION
  .google-btn:active{
     background: #1669F2;
  }
+/*
+ESTILOS PARA REGISTRAR DESDE COMITE
+
+*/
+
+
+.INPUTNOMBRE{
+    margin-left: 10vw;
+}
+.INPUTAPEP{
+    margin-left: 6.3vw;
+}
+.INPUTAPEM{
+    margin-left: 6.1vw;
+}
+.INPUTCORR{
+    margin-left: 10.6vw;
+}
+.INPUTCONTR{
+    margin-left: 8.6vw;
+}
+.INPUTCONTR2{
+    margin-left: 4vw;
+}
+.INPUTCOD{
+    margin-left: 3vw;
+}
+.INFOTEXT{
+    font-size: 0.7vw;
+}
+.BOTONREGISTRAR{
+    margin-left: 60vw;
+}

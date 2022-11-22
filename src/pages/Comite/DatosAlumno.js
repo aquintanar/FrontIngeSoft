@@ -102,7 +102,7 @@ function DatosAlumno() {
                   <p> Evaluaciones: </p>
               </div>
           </div>
-
+          
           <div class="row INSERTAR-BOTONES">                            
               <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
               <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../asesor")}}><span>Cancelar</span></button>

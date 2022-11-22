@@ -224,7 +224,7 @@ function ListaEntregables()  {
             isOpen={isOpenDeleteModal} 
             closeModal={closeDeleteModal}
             procedimiento = "eliminar"
-            objeto="el entregable"
+            objeto={entregableSeleccionado.fidTipoEntregable===4? "la exposición":"la entrega" }
             elemento={entregableSeleccionado && entregableSeleccionado.nombre}
           >
             <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
