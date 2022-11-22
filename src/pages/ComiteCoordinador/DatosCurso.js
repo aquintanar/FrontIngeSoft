@@ -131,6 +131,9 @@ function DatosCurso() {
         temaAsignado: response.data[0].temaAsignado,
       });
       setSubtitulo("Modificar Curso");
+      setCheckedAs(response.data[0].asesorPropone);
+      setCheckedAl(response.data[0].alumnoPropone);
+      setCheckedTemaAs(response.data[0].temaAsignado);
     }
   };
 
