@@ -161,6 +161,9 @@ function DatosCurso() {
     idDocente: 1,
     idFacultad: 1,
     idEspecialidad: "",
+    asesorPropone: false,
+    alumnoPropone: false,
+    temaAsignado: false
   });
 
   const cambioSelectEsp = (e) => {
