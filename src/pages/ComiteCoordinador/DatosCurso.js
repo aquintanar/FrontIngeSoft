@@ -87,22 +87,9 @@ function DatosCurso() {
     let idCoordinador = window.localStorage.getItem("IDUSUARIO");
     console.log(idCoordinador);
     console.log(cursoNuevo);
+    cursoNuevo.idComiteTesis= idCoordinador;
     await axios
-      .post(urlPost + "PostCursoConComite",{
-        params:{
-          idComiteTesis:idCoordinador,
-          nombre: cursoNuevo.nombre,
-          cant_alumnos:cursoNuevo.cant_alumnos ,
-          cant_temas_prop :cursoNuevo.cant_temas_prop ,
-          activo  : cursoNuevo.activo ,
-          idSemestre: cursoNuevo.idSemestre,
-          idDocente: cursoNuevo.idDocente,
-          idEspecialidad : cursoNuevo.idEspecialidad,
-          asesorPropone :cursoNuevo.asesorPropone ,
-          alumnoPropone: cursoNuevo.alumnoPropone,
-          temaAsignado : cursoNuevo.temaAsignado,
-          aceptandoTemas: cursoNuevo.aceptandoTemas,
-        }}, {
+      .post("https://localhost:7012/api/Curso/PostCursoConComite",cursoNuevo, {
         _method: "POST",
       })
       .then((response) => {
@@ -183,7 +170,8 @@ function DatosCurso() {
     aceptandoTemas: true,
     asesorPropone: false,
     alumnoPropone: false,
-    temaAsignado: false
+    temaAsignado: false,
+    idComiteTesis:0
   });
 
   const cambioSelectEsp = (e) => {
