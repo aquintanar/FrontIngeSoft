@@ -1,7 +1,7 @@
 import React from 'react';
 import * as BsIcons from 'react-icons/bs';
 import * as IonIcons4 from "react-icons/io";
-
+import  * as AiIcons from 'react-icons/ai';
 export const SidebarData = [
     {
         title: 'Alumnos',
@@ -33,5 +33,12 @@ export const SidebarData = [
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
     },
+    {
+        title:'Recordatorio',
+        path:'recordatorio',
+        icon: <AiIcons.AiOutlineInfoCircle/>,
+        iconClosed:<IonIcons4.IoIosArrowDown />,
+        iconOpened: <IonIcons4.IoIosArrowUp />,
+    }
 ];
 

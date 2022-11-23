@@ -111,6 +111,7 @@ function Login() {
           } else if (response2.data[0].nombre === "COMITE DE TESIS") {
             localStorage.setItem("TIPOUSUARIO","COMITE");
             localStorage.setItem("IDUSUARIO",value);
+           
             validarCoordinador(e);
           }
         })

@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Tesis = () => {
   const styles = useStyles();
+  const [alumnos,setAlumnos]=useState([]);
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [modalEliminar, setModalEliminar] = useState(false);
@@ -114,18 +115,21 @@ const Tesis = () => {
   const previousPage = () => {
     if (currentPage > 0) SetCurrentPage(currentPage - 6);
   };
-  //----------------
-  //Listar Alumnos tabla--
-
+  
+  /*PRIMERO LISTAMOS A TODOS LOS ALUMNOS DEL CURSO */
   const peticionGet = async () => {
+    var idCurso =window.localStorage.getItem("idCurso");
     const response = await axios
-      .get("http://34.195.33.246/api/Alumno/GetAlumnos", {
+      .get("https://localhost:7012/api/Curso/BuscarCursoXId",{
+        params:{
+          idCurso:idCurso
+        }
+      }, {
         _method: "GET",
       })
       .then((response) => {
-        console.log("AQUI ESTOY GAAAA");
         console.log(response.data);
-        setData(response.data);
+        setAlumnos(response.data);
       })
       .catch((error) => {
         console.log(error.message);

@@ -97,7 +97,9 @@ function GestionarCurso()  {
         idEspecialidad: 0,
         asesorPropone: false,
         alumnoPropone: false,
-        temaAsignado: false
+        temaAsignado: false,
+        aceptandoTemas:true,
+        
     })
 
     const petitionSem=async()=>{

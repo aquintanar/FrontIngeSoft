@@ -73,8 +73,7 @@ function DatosCurso() {
       .then((response) => {
         const filtradoFac = response.data.filter((Facultad) => {
           for (let k in idesFacultades) {
-            if (Facultad.idFacultad=== idesFacultades[k])
-              return Facultad;
+            if (Facultad.idFacultad === idesFacultades[k]) return Facultad;
           }
         });
         setFac(filtradoFac);
@@ -85,8 +84,25 @@ function DatosCurso() {
   };
 
   const peticionPost = async () => {
+    let idCoordinador = window.localStorage.getItem("IDUSUARIO");
+    console.log(idCoordinador);
+    console.log(cursoNuevo);
     await axios
-      .post(urlPost + "PostCurso", cursoNuevo, {
+      .post(urlPost + "PostCursoConComite",{
+        params:{
+          idComiteTesis:idCoordinador,
+          nombre: cursoNuevo.nombre,
+          cant_alumnos:cursoNuevo.cant_alumnos ,
+          cant_temas_prop :cursoNuevo.cant_temas_prop ,
+          activo  : cursoNuevo.activo ,
+          idSemestre: cursoNuevo.idSemestre,
+          idDocente: cursoNuevo.idDocente,
+          idEspecialidad : cursoNuevo.idEspecialidad,
+          asesorPropone :cursoNuevo.asesorPropone ,
+          alumnoPropone: cursoNuevo.alumnoPropone,
+          temaAsignado : cursoNuevo.temaAsignado,
+          aceptandoTemas: cursoNuevo.aceptandoTemas,
+        }}, {
         _method: "POST",
       })
       .then((response) => {
@@ -155,12 +171,16 @@ function DatosCurso() {
     idCurso: 0,
     nombre: "",
     cant_alumnos: 0,
-    cant_temas_propuestos: 0,
-    activo: 1,
-    idSemestre: "",
-    idDocente: 1,
-    idFacultad: 1,
-    idEspecialidad: "",
+    cant_temas_prop: 0,
+    activo: 0,
+    idSemestre: 0,
+    idDocente: 0,
+    idFacultad: 0,
+    idEspecialidad: 0,
+    asesorPropone: false,
+    alumnoPropone: false,
+    temaAsignado: false,
+    aceptandoTemas: true,
     asesorPropone: false,
     alumnoPropone: false,
     temaAsignado: false
