@@ -120,7 +120,7 @@ const Tesis = () => {
   const peticionGet = async () => {
     var idCurso =window.localStorage.getItem("idCurso");
     const response = await axios
-      .get("https://localhost:7012/api/Curso/BuscarCursoXId",{
+      .get("https://localhost:7012/api/Alumno/GetAlumnosxCurso",{
         params:{
           idCurso:idCurso
         }

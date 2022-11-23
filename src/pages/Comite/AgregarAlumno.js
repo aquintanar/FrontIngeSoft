@@ -9,9 +9,9 @@ import useModal from "../../hooks/useModals";
 import { Button } from "@material-ui/core";
 import { ModalPregunta, ModalConfirmación } from "../../components/Modals";
 
-const urlAs = "http://34.195.33.246/api/Alumno/";
-const urlEsp = "http://34.195.33.246/api/Especialidad/";
-const urlAsXCurso = "http://34.195.33.246/api/AlumnoXCurso/";
+const urlAs = "https://localhost:7012/api/Alumno/";
+const urlEsp = "https://localhost:7012/api/Especialidad/";
+const urlAsXCurso = "https://localhost:7012/api/AlumnoXCurso/";
 //https://localhost:7012/api/Alumno/
 
 function ListarAlumnosNoEstan() {
@@ -70,19 +70,25 @@ function ListarAlumnosNoEstan() {
   };
 
   const seleccionarAsesor = (asesor) => {
+    console.log("SOY EL ALUMNO SELECCIONADO");
+    console.log(asesor);
     setAsesorSeleccionado(asesor);
-    idAsesorRef = asesor.idAlumno;
-    openRegistroModal();
+    idAsesorRef = asesorSeleccionado.idAlumno;
+    //console.log("SOY EL ASESOR SELECCIONADO");
+    //console.log(asesorSeleccionado);
+    //console.log("ESTE ES MI ID" + idAsesorRef);
+    openRegistroModal(idAsesorRef);
   };
 
   const peticionPost = async () => {
     console.log(idCursoGlobal);
+
     console.log(asesorSeleccionado.idUsuario);
     await axios
       .post(
         urlAsXCurso +
           "PostAlumnoXCurso?idAlumno=" +
-          idAsesorRef +
+          asesorSeleccionado.idAlumno +"&"+
           "idCurso=" +
           idCursoGlobal
       )
