@@ -17,6 +17,7 @@
     "axios": "^0.27.2",
     "bootstrap": "^5.2.2",
     "emailjs-com": "^3.2.0",
+    "file-saver": "^2.0.5",
     "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
@@ -41,6 +42,7 @@
     "reactstrap": "^9.1.5",
     "rechart": "^0.0.1",
     "recharts": "^2.1.16",
+    "sheetjs-style": "^0.15.8",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
