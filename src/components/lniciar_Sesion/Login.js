@@ -70,9 +70,42 @@ function Login() {
               JSON.stringify(especialidades)
             );
             localStorage.setItem("infoFacultad", JSON.stringify(facultades));
-            //localStorage.setItem("IDUSUARIO", value);
             window.localStorage.setItem("ESCOORDINADOR","SI");
             //navigate("/comiteCoordinador");
+          }
+        })
+        .catch((error) => {});
+    } catch (err) {}
+  };
+  /*validarCoordinador antiguo */
+  const validarCoordinadorAntiguo = async (e) => {
+    try {
+      const response3 = await axios
+        .get(
+          COORDINADOR,
+          { params: { idComite: e } },
+          {
+            _method: "GET",
+          }
+        )
+        .then((response3) => {
+          console.log(response3.data);
+          if (Object.keys(response3.data).length === 0) {
+            //No es coordinador
+            window.localStorage.setItem("ESCOORDINADOR","NO");
+            navigate("/cursos");
+          } else {
+            for (let i in response3.data) {
+              especialidades.push(response3.data[i].fidEspecialidad);
+              facultades.push(response3.data[i].idFacultad);
+            }
+            localStorage.setItem(
+              "infoEspecialidades",
+              JSON.stringify(especialidades)
+            );
+            localStorage.setItem("infoFacultad", JSON.stringify(facultades));
+            window.localStorage.setItem("ESCOORDINADOR","SI");
+            navigate("/comiteCoordinador");
           }
         })
         .catch((error) => {});
@@ -115,7 +148,7 @@ function Login() {
             localStorage.setItem("TIPOUSUARIO", "COMITE");
             localStorage.setItem("IDUSUARIO", value);
             console.log(value);
-            validarCoordinador(e);
+            validarCoordinadorAntiguo(e);
           }
         })
         .catch((error) => {});
