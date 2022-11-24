@@ -272,8 +272,17 @@ function ListaTemaTesis() {
       },
     },
   ];
-  const handeToogleClick = () => {
+  const handeToogleClick = async() => {
     setToggleButton(!toggleButton);
+    let idCur = window.localStorage.getItem("idCurso");
+    await axios.put("https://localhost:7012/api/Curso/modificarAceptandoTemas?idCurso="+idCur+"&asignandoTemas="+!toggleButton)
+    .then(()=>{
+      console.log("Cambio");
+    }).catch((error)=>{
+      console.log(error);
+    })
+
+
   };
   return (
     <div className="CONTAINERCOMITE">

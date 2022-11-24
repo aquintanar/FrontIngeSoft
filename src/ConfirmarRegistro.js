@@ -34,64 +34,63 @@ const ConfirmarRegistro = () => {
   const registroReal=async ()=>{
     let UsuarioSeleccionado = JSON.parse(localStorage.getItem("INFOREGISTRO"));
     let value = localStorage.getItem("TIPOUSUARIO");
-    if (value === "Administrador") {
-      await axios
+    if (value === "Profesor") {
+      /*await axios
         .post(REGISTERADMIN_URL, UsuarioSeleccionado, {
           _method: "POST",
         })
         .then((response) => {
-          navigate("/");
+          
         })
         .catch((error) => {
           console.log(error.message);
-        });
-    } else if (value === "Asesor") {
+        });*/
+    }if (value === "Profesor") {
       await axios
         .post(REGISTERASESOR_URL, UsuarioSeleccionado, {
           _method: "POST",
         })
         .then((response) => {
-          navigate("/");
+        
         })
         .catch((error) => {
           console.log(error.message);
         });
-    } else if (value === "Docente") {
+    } if (value === "Profesor") {
       await axios
         .post(REGISTERDOCENTE_URL, UsuarioSeleccionado, {
           _method: "POST",
         })
         .then((response) => {
-          navigate("/");
+       
         })
         .catch((error) => {
           console.log(error.message);
         });
-    } else if (value === "Alumno") {
+    } if (value === "Alumno") {
       await axios
         .post(REGISTERALUMNO_URL, UsuarioSeleccionado, {
           _method: "POST",
         })
         .then((response) => {
-          navigate("/");
+      
         })
         .catch((error) => {
           console.log(error.message);
         });
-    } else if (value === "Comite") {
+    } if (value === "Profesor") {
       console.log("Se ha ingresado en comite");
       await axios
         .post(REGISTERCOMITE_URL, UsuarioSeleccionado, {
           _method: "POST",
         })
         .then((response) => {
-          console.log("Se llego a registrar");
-          navigate("/");
         })
         .catch((error) => {
           console.log(error.message);
         });
     }
+    navigate("/");
   }
 
 

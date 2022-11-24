@@ -29,7 +29,7 @@ const REGISTERDOCENTE_URL = "https://localhost:7012/api/Docente/PostDocente";
 const REGISTERCOMITE_URL =
   "https://localhost:7012/api/ComiteTesis/PostComiteTesis";
 
-const Register = () => {
+const Opciones = () => {
   const userRef = useRef();
   const errRef = useRef();
   const [value, setValues] = useState(null);
@@ -281,212 +281,11 @@ const Register = () => {
 
             <div className="GrupoInfo">
               <div className="seccion-izq seccion">
-                <form>
-                  <label htmlFor="name">
-                    Nombre:
-                    <span className={validNa ? "valid" : "hide"}>
-                      <FontAwesomeIcon icon={faCheck} />
-                    </span>
-                    <span className={validNa || !name ? "hide" : "invalid"}>
-                      <FontAwesomeIcon icon={faTimes} />
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    autoComplete="off"
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    aria-invalid={validNa ? "false" : "true"}
-                    aria-describedby="namenote"
-                    onFocus={() => setNameFocus(true)}
-                    onBlur={() => setNameFocus(false)}
-                  />
-                  <p
-                    id="namenote"
-                    className={
-                      nameFocus && name && !validNa
-                        ? "instructions"
-                        : "offscreen"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    Solo se permiten letras.
-                  </p>
-                  <label htmlFor="apellidoP">
-                    Apellido Paterno:
-                    <span className={validApellidoP ? "valid" : "hide"}>
-                      <FontAwesomeIcon icon={faCheck} />
-                    </span>
-                    <span
-                      className={
-                        validApellidoP || !apellidoP ? "hide" : "invalid"
-                      }
-                    >
-                      <FontAwesomeIcon icon={faTimes} />
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    id="apellidoP"
-                    autoComplete="off"
-                    onChange={(e) => setApellidoP(e.target.value)}
-                    required
-                    aria-invalid={validApellidoP ? "false" : "true"}
-                    aria-describedby="apePnote"
-                    onFocus={() => setApellidoPFocus(true)}
-                    onBlur={() => setApellidoPFocus(false)}
-                  />
-                  <p
-                    id="apePnote"
-                    className={
-                      apellidoPFocus && apellidoP && !validApellidoP
-                        ? "instructions"
-                        : "offscreen"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    Solo se permiten letras.
-                  </p>
-                  <label htmlFor="apellidoM">
-                    Apellido Materno:
-                    <span className={validApellidoM ? "valid" : "hide"}>
-                      <FontAwesomeIcon icon={faCheck} />
-                    </span>
-                    <span
-                      className={
-                        validApellidoM || !apellidoM ? "hide" : "invalid"
-                      }
-                    >
-                      <FontAwesomeIcon icon={faTimes} />
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    id="apellidoM"
-                    autoComplete="off"
-                    onChange={(e) => setApellidoM(e.target.value)}
-                    required
-                    aria-invalid={validApellidoM ? "false" : "true"}
-                    aria-describedby="apeMnote"
-                    onFocus={() => setApellidoMFocus(true)}
-                    onBlur={() => setApellidoMFocus(false)}
-                  />
-                  <p
-                    id="apeMnote"
-                    className={
-                      apellidoMFocus && apellidoM && !validApellidoM
-                        ? "instructions"
-                        : "offscreen"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    Solo se permiten letras.
-                  </p>
-                  <label htmlFor="username">
-                    Correo:
-                    <span className={validName ? "valid" : "hide"}>
-                      <FontAwesomeIcon icon={faCheck} />
-                    </span>
-                    <span className={validName || !user ? "hide" : "invalid"}>
-                      <FontAwesomeIcon icon={faTimes} />
-                    </span>
-                  </label>
-                  <input
-                    type="text"
-                    id="username"
-                    ref={userRef}
-                    autoComplete="off"
-                    onChange={(e) => setUser(e.target.value)}
-                    required
-                    aria-invalid={validName ? "false" : "true"}
-                    aria-describedby="uidnote"
-                    onFocus={() => setUserFocus(true)}
-                    onBlur={() => setUserFocus(false)}
-                  />
-                  <p
-                    id="uidnote"
-                    className={
-                      userFocus && user && !validName
-                        ? "instructions"
-                        : "offscreen"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    Debe ser un correo electrónico
-                  </p>
-                  <label htmlFor="password">
-                    Contraseña:
-                    <span className={validPwd ? "valid" : "hide"}>
-                      <FontAwesomeIcon icon={faCheck} />
-                    </span>
-                    <span className={validPwd || !pwd ? "hide" : "invalid"}>
-                      <FontAwesomeIcon icon={faTimes} />
-                    </span>
-                  </label>
-                  <input
-                    type="password"
-                    id="password"
-                    onChange={(e) => SetPwd(e.target.value)}
-                    required
-                    aria-invalid={validPwd ? "false" : "true"}
-                    aria-describedby="pwdnote"
-                    onFocus={() => setPwdFocus(true)}
-                    onBlur={() => setPwdFocus(false)}
-                  />
-                  <p
-                    id="pwdnote"
-                    className={
-                      pwdFocus && !validPwd ? "instructions" : "offscreen"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    8 a 24 caracteres.
-                    <br />
-                    Debe incluir letras mayúsculas y minúsculas,
-                    <br />
-                    un número y un carácter especial.
-                    <br />
-                  </p>
-                  <label htmlFor="confirm_pwd">
-                    Confirmar Contraseña:
-                    <span className={validMatch && matchPwd ? "valid" : "hide"}>
-                      <FontAwesomeIcon icon={faCheck} />
-                    </span>
-                    <span
-                      className={validMatch || !matchPwd ? "hide" : "invalid"}
-                    >
-                      <FontAwesomeIcon icon={faTimes} />
-                    </span>
-                  </label>
-                  <input
-                    type="password"
-                    id="confirm_pwd"
-                    onChange={(e) => setMatchPwd(e.target.value)}
-                    required
-                    aria-invalid={validMatch ? "false" : "true"}
-                    aria-describedby="confirmnote"
-                    onFocus={() => setMatchFocus(true)}
-                    onBlur={() => setMatchFocus(false)}
-                  />
-                  <p
-                    id="confirmnote"
-                    className={
-                      matchFocus && !validMatch ? "instructions" : "offscreen"
-                    }
-                  >
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    Debe coincidir con la contraseña.
-                  </p>
-                  <label>Rol:</label>
-                  <Select
-                    value={value}
-                    options={options}
-                    onChange={onDropDownChange}
-                  />
-                </form>
-              </div>
+                <button></button>
+                <button></button>
+                </div>
               <div className="seccion-der seccion">
+                <button></button>
                 <form>
                   <label htmlFor="codigoPucp">
                     Codigo PUCP:
@@ -581,4 +380,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Opciones;
