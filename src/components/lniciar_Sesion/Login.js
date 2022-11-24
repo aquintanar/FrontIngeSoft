@@ -7,6 +7,7 @@ import "../../stylesheets/Iniciar_Sesion.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useContext } from "react";
 import { UserContext } from "../../UserContext";
+import { BsWindowSidebar } from "react-icons/bs";
 
 const LOGIN_URL = "https://localhost:7012/api/login/GetLogin";
 const LOGIN_URL2 = "https://localhost:7012/api/Rol";
@@ -21,13 +22,16 @@ function Login() {
     correo: "",
     contrasena: "",
   });
-  
-  let especialidades =[];
-  let facultades =[];
+
+  let especialidades = [];
+  let facultades = [];
   const { setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+
+  let IdUsuarios = [];
+  let TipoUsuario = [];
 
   const userRef = useRef();
   const errRef = useRef();
@@ -37,6 +41,10 @@ function Login() {
   const [errMsg, setErrMsg] = useState("");
 
   const { value, setValue } = useContext(UserContext);
+
+  const [cuenta1, setCuenta1] = useState([]);
+  const [cuenta2, setCuenta2] = useState([]);
+  const [cuenta3, setCuenta3] = useState([]);
   useEffect(() => {
     setErrMsg("");
   }, [user1, pwd]);
@@ -58,17 +66,20 @@ function Login() {
         )
         .then((response3) => {
           console.log(response3.data);
-          if (Object.keys(response3.data).length ===0) {
+          if (Object.keys(response3.data).length === 0) {
             //No es coordinador
             navigate("/cursos");
           } else {
-            for(let i in response3.data){
+            for (let i in response3.data) {
               especialidades.push(response3.data[i].fidEspecialidad);
               facultades.push(response3.data[i].idFacultad);
             }
-            localStorage.setItem("infoEspecialidades",JSON.stringify(especialidades));
-            localStorage.setItem("infoFacultad",JSON.stringify(facultades));
-            localStorage.setItem("IDUSUARIO",value);
+            localStorage.setItem(
+              "infoEspecialidades",
+              JSON.stringify(especialidades)
+            );
+            localStorage.setItem("infoFacultad", JSON.stringify(facultades));
+            localStorage.setItem("IDUSUARIO", value);
             navigate("/comiteCoordinador");
           }
         })
@@ -93,24 +104,25 @@ function Login() {
         .then((response2) => {
           console.log(response2.data[0].nombre);
           if (response2.data[0].nombre === "ADMINISTRADOR") {
-            localStorage.setItem("TIPOUSUARIO","ADMINISTRADOR");
-            localStorage.setItem("IDUSUARIO",value);
+            localStorage.setItem("TIPOUSUARIO", "ADMINISTRADOR");
+            localStorage.setItem("IDUSUARIO", value);
             navigate("/administrador");
           } else if (response2.data[0].nombre === "ALUMNO") {
-            localStorage.setItem("TIPOUSUARIO","ALUMNO");
-            localStorage.setItem("IDUSUARIO",value);
+            localStorage.setItem("TIPOUSUARIO", "ALUMNO");
+            localStorage.setItem("IDUSUARIO", value);
             navigate("/cursos");
           } else if (response2.data[0].nombre === "DOCENTE") {
-            localStorage.setItem("TIPOUSUARIO","DOCENTE");
-            localStorage.setItem("IDUSUARIO",value);
+            localStorage.setItem("TIPOUSUARIO", "DOCENTE");
+            localStorage.setItem("IDUSUARIO", value);
             navigate("/cursos");
           } else if (response2.data[0].nombre === "ASESOR") {
-            localStorage.setItem("TIPOUSUARIO","ASESOR");
-            localStorage.setItem("IDUSUARIO",value);
+            localStorage.setItem("TIPOUSUARIO", "ASESOR");
+            localStorage.setItem("IDUSUARIO", value);
             navigate("/cursos");
           } else if (response2.data[0].nombre === "COMITE DE TESIS") {
-            localStorage.setItem("TIPOUSUARIO","COMITE");
-            localStorage.setItem("IDUSUARIO",value);
+            localStorage.setItem("TIPOUSUARIO", "COMITE");
+            localStorage.setItem("IDUSUARIO", value);
+            console.log(value);
             validarCoordinador(e);
           }
         })
@@ -132,9 +144,14 @@ function Login() {
           }
         )
         .then((response) => {
-          const idUs = response.data.id;
-          setValue(idUs);
-          searchId(idUs);
+          console.log(response.data.usuarios);
+          if (response.data.cant === 1) {
+            const idUs = response.data.usuarios[0].idUsuario;
+            setValue(idUs);
+            searchId(idUs);
+          } else {
+            valor1(response.data.usuarios);
+          }
         })
         .catch((error) => {
           if (!error?.response) {
@@ -150,26 +167,96 @@ function Login() {
         });
 
       /*lOS ROLES SON UN ARREGLO DE NUMEROS */
-      /*setAuth({user1,pwd,roles,accessToken});
-
-            setUser('');
-            setPwd('');*/
-      //navigate(from,{replace:true});
-      //console.log(user1)
-      /*if(user1==="Administrador"){
-                navigate('/administrador');
-            }
-            else if(user1==="Alumno"){
-                navigate('/alumno');
-            }
-            else if(user1==="Comite"){
-                navigate('/comite');
-            }
-            else if(user1==="Asesor"){
-                navigate('/asesor');
-            }*/
     } catch (err) {}
   };
+  /*VEMOS DE QUE ROL ES CADA CUENTA */
+  const valor1 = async (e) => {
+    try {
+      const response2 = await axios
+        .get(
+          LOGIN_URL2,
+          { params: { idUsuario: e[0].idUsuario } },
+          {
+            _method: "GET",
+          }
+        )
+        .then((response2) => {
+          if (response2.data[0].nombre === "DOCENTE") {
+            TipoUsuario.push("DOCENTE");
+            IdUsuarios.push(e[0].idUsuario);
+          } else if (response2.data[0].nombre === "ASESOR") {
+            TipoUsuario.push("ASESOR");
+            IdUsuarios.push(e[0].idUsuario);
+          } else if (response2.data[0].nombre === "COMITE DE TESIS") {
+            TipoUsuario.push("COMITE DE TESIS");
+            IdUsuarios.push(e[0].idUsuario);
+            //validarCoordinador(e);
+          }
+          setCuenta1(e[0]);
+          valor2(e);
+        })
+        .catch((error) => {});
+    } catch (err) {}
+  };
+  const valor2 = async (e) => {
+    try {
+      const response2 = await axios
+        .get(
+          LOGIN_URL2,
+          { params: { idUsuario: e[1].idUsuario } },
+          {
+            _method: "GET",
+          }
+        )
+        .then((response2) => {
+          if (response2.data[0].nombre === "DOCENTE") {
+            TipoUsuario.push("DOCENTE");
+            IdUsuarios.push(e[1].idUsuario);
+          } else if (response2.data[0].nombre === "ASESOR") {
+            TipoUsuario.push("ASESOR");
+            IdUsuarios.push(e[1].idUsuario);
+          } else if (response2.data[0].nombre === "COMITE DE TESIS") {
+            TipoUsuario.push("COMITE DE TESIS");
+            IdUsuarios.push(e[1].idUsuario);
+            //validarCoordinador(e);
+          }
+          setCuenta2(e[1]);
+          valor3(e);
+        })
+        .catch((error) => {});
+    } catch (err) {}
+  };
+  const valor3 = async (e) => {
+    try {
+      const response2 = await axios
+        .get(
+          LOGIN_URL2,
+          { params: { idUsuario: e[2].idUsuario } },
+          {
+            _method: "GET",
+          }
+        )
+        .then((response2) => {
+          if (response2.data[0].nombre === "DOCENTE") {
+            TipoUsuario.push("DOCENTE");
+            IdUsuarios.push(e[2].idUsuario);
+          } else if (response2.data[0].nombre === "ASESOR") {
+            TipoUsuario.push("ASESOR");
+            IdUsuarios.push(e[2].idUsuario);
+          } else if (response2.data[0].nombre === "COMITE DE TESIS") {
+            TipoUsuario.push("COMITE DE TESIS");
+            IdUsuarios.push(e[2].idUsuario);
+            //validarCoordinador(e);
+          }
+          setCuenta3(e[2]);
+          window.localStorage.setItem("TIPOSUSUARIOS",JSON.stringify(TipoUsuario));
+          window.localStorage.setItem("IDUSUARIOS",JSON.stringify(IdUsuarios));
+          navigate('/Opciones')
+        })
+        .catch((error) => {});
+    } catch (err) {}
+  };
+
   const Autenticacion = async () => {
     if (isAuthenticated) {
       try {

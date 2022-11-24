@@ -25,7 +25,9 @@ import ListarAlumnos from "./pages/Comite/ListarAlumnos";
 import DatosAlumno from "./pages/Comite/DatosAlumno";
 import ListarAlumnosNoEstan from "./pages/Comite/AgregarAlumno";
 import CrearCuentaAlumno from'./pages/Comite/CrearCuenta';
-
+import ListarDocentes from "./pages/Comite/ListarDocentes";
+import DatosDocente from "./pages/Comite/DatosDocente";
+import ListarDocentesNoEstan from "./pages/Comite/AgregarDocente";
 
 
 
@@ -46,6 +48,9 @@ function Comite() {
                   <Route path='alumno' exact element= {<ListarAlumnos/>}/>
                   <Route path='alumno/DatosAlumno/:id' exact element= {<DatosAlumno/>}/>
                   <Route path='alumno/AgregarAlumno' exact element= {<ListarAlumnosNoEstan/>}/>
+                  <Route path='docente' exact element= {<ListarDocentes/>}/>
+                  <Route path='docente/DatosDocente/:id' exact element= {<DatosDocente/>}/>
+                  <Route path='docente/AgregarDocente' exact element= {<ListarDocentesNoEstan/>}/>
                   <Route path='crearCuenta' exact element= {<CrearCuentaAlumno/>}/>
                   <Route path='preparacion/entregables' exact element= {<ListaEntregables/>}/>
                   <Route path='preparacion/entregables/menu/:id' exact element= {<Entregable/>}/>

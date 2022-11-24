@@ -9,22 +9,26 @@ import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
-const urlAs= "https://localhost:7012/api/Alumno/";
+//https://localhost:7012/api/
+//http://34.195.33.246/
+const urlAs= "https://localhost:7012/api/Docente/";
 const urlEsp= "https://localhost:7012/api/Especialidad/";
-const urlAsXCurso="https://localhost:7012/api/AlumnoXCurso/";
+const urlAsXCurso="https://localhost:7012/api/DocenteXCurso/";
+//https://localhost:7012/api/Alumno/
 
-function ListarAlumnos()  {
-  let idCursoGlobal = localStorage.getItem("idCurso");    
-  let idAsesorRef = 0;
+function ListarDocentesNoEstan()  {
   let navigate = useNavigate();
+  let idCursoGlobal = localStorage.getItem("idCurso");
+  let idAsesorRef = 0;
+  const [idas, setIdAs] = useState(0);
   const [currentPage,SetCurrentPage] = useState(0);
   const [selEsp, setSelEsp] = useState(0);
-  const [observado, setObservado] = useState(0);
+  const [tieneAlumn, setTieneAlum] = useState(0);
   const [search, setSearch] = useState("");
   const [as, setAs] = useState([]);
   const [esp, setEsp] = useState([]);
-  const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
-  const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
+  const [isOpenRegistro, openRegistroModal ,closeRegistroModal ] = useModal();
+  const [isOpenRegistroConf, openRegistroConfModal ,closeRegistroConfModal ] = useModal();
 
   let filtrado =[];
   const buscador = e=>{
@@ -47,9 +51,9 @@ function ListarAlumnos()  {
       const valor = parseInt(e.target.value)
       setSelEsp(valor)
     }
-  const cambioEstaObservado =e=>{
+  const cambioTieneAlum =e=>{
       const valor = parseInt(e.target.value)
-      setObservado(valor)
+      setTieneAlum(valor)
   }
 
   const nextPage = () =>{
@@ -63,17 +67,31 @@ function ListarAlumnos()  {
 
   const seleccionarAsesor=(asesor)=>{
       setAsesorSeleccionado(asesor);
-        openDeleteModal();
+      idAsesorRef = asesor.idDocente;
+      setIdAs(asesor.idDocente);
+        openRegistroModal();
+        
     }
-    
+
+    const peticionPost=async()=>{
+        console.log(idCursoGlobal);
+        console.log(asesorSeleccionado.idUsuario);
+        await axios.post(urlAsXCurso+"PostDocenteXCurso?idDocente="+idas+"&idCurso="+idCursoGlobal)
+        .then(response=>{
+          console.log(response.data);
+          closeRegistroModal();
+          openRegistroConfModal();
+        }).catch(error =>{
+          console.log(error.message);
+        })
+        petitionAs();
+      }
   
 
   filtrado = filtrado.slice(currentPage,currentPage+5);
 
   const [asesorSeleccionado, setAsesorSeleccionado]=useState({
-      idAlumno: 0,
-      linkCalendario: '',
-      tieneTema: 0,
+    idDocente: 0,
       nombres: '',
       apePat: '',
       apeMat: '',
@@ -89,7 +107,7 @@ function ListarAlumnos()  {
   })
 
   const petitionAs=async()=>{
-      await axios.get(urlAs+"ListAlumnosXIdCurso?idCurso="+idCursoGlobal)
+      await axios.get(urlAs+"ListDocentesXIdCursoQueNoEstan?idCurso="+ idCursoGlobal)
       .then(response=>{
       setAs(response.data);
       }).catch(error =>{
@@ -106,16 +124,9 @@ function ListarAlumnos()  {
       })
     }
 
-  
-    const peticionDelete=async()=>{
-      console.log(asesorSeleccionado);
-      console.log(idCursoGlobal);
-      await axios.delete(urlAsXCurso+ "DeleteAlumnoXCurso?idAlumno="+ asesorSeleccionado.idAlumno + "&idCurso=" + idCursoGlobal).then(response=>{
-        petitionAs();
-        closeDeleteModal();
-        openConfirmModal();
-      })      
-    }
+    const cerrarPost=()=>{
+        closeRegistroConfModal();
+      }
 
   
   useEffect(()=>{
@@ -125,12 +136,12 @@ function ListarAlumnos()  {
 
   return(
       <div className="CONTAINERCOMITE">
-          <h1 className="HEADER-TEXT1">Alumnos en el curso</h1>
+          <h1 className="HEADER-TEXT1">Agregar docentes</h1>
           <div class="row">
             <div class="col-12 FILTRO-LISTAR-BUSCAR" >
-                <p>Ingrese el nombre del alumno</p>
+                <p>Ingrese el nombre del docente</p>
                 <div class="input-group">
-                    <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre del curso" aria-label="serach" onChange={buscador}/>
+                    <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre del docente" aria-label="serach" onChange={buscador}/>
                 </div>
             </div>
             <div class="col-4 FILTRO-LISTAR" >
@@ -140,14 +151,6 @@ function ListarAlumnos()  {
                     {esp.map(elemento=>(
                       <option key={elemento.idEspecialidad} value={elemento.idEspecialidad}>{elemento.nombre}</option>  
                     ))} 
-                </select>
-              </div>
-              <div class="col-4 FILTRO-LISTAR" >
-                <p> ¿Tiene tema?</p>
-                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioEstaObservado} value ={observado}>
-                      <option key={0} value = {0}>Todos</option>
-                      <option key={1} value = {1}>Si</option>
-                      <option key={2} value={2}>No</option>
                 </select>
               </div>
           </div>
@@ -166,12 +169,13 @@ function ListarAlumnos()  {
               </thead>
               <tbody >
                 {filtrado.map(asesor => (
-                  <tr key={asesor.idAsesor}>
+                  <tr key={asesor.idDocente}>
                       <td >{asesor.nombres + " " + asesor.apePat}</td>
                       <td >{asesor.correo}</td>
                       <td>
-                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosAlumno/"+asesor.idAsesor)}}> <FaIcons.FaEdit /></button>
-                      <button class=" btn BTN-ACCIONES" onClick={()=>seleccionarAsesor(asesor)}> <BootIcons.BsTrash /></button>
+                      <div class="LISTAR-ESPECIALIDADES-BOTON"> 
+                      <button class=" btn btn-primary fw-bold" onClick={()=>seleccionarAsesor(asesor)}> <span>Seleccionar</span></button>
+                      </div>                      
                       </td>
                   </tr>
                 ))}
@@ -179,34 +183,36 @@ function ListarAlumnos()  {
             </table>
           </div>
         </div>
-        <ModalPregunta
-      isOpen={isOpenDeleteModal} 
-      closeModal={closeDeleteModal}
-      procedimiento = "retirar del curso"
-      objeto="a"
-      elemento={asesorSeleccionado && asesorSeleccionado.nombres}
-    >
-      <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-        <Button class="btn  btn-success btn-lg" onClick={()=>peticionDelete()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Button class="btn btn-danger btn-lg"  onClick={closeDeleteModal}>Cancelar</Button>
-      </div>
-    </ModalPregunta>
 
-    <ModalConfirmación
-      isOpen={isOpenConfirmModal} 
-      closeModal={closeConfirmModal}
-      procedimiento= "eliminado"
-    >
-      <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-        <Button class="btn btn-success btn-lg" onClick={closeConfirmModal}>Entendido</Button>
-      </div>
-    </ModalConfirmación>
+    <ModalPregunta
+            isOpen={isOpenRegistro} 
+            closeModal={closeRegistroModal}
+            procedimiento = ""
+            objeto="registrar a"
+            elemento={asesorSeleccionado && asesorSeleccionado.nombres}
+          >
+            <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+              <Button class="btn  btn-success btn-lg" onClick={()=>peticionPost()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <Button class="btn btn-danger btn-lg"  onClick={closeRegistroModal}>Cancelar</Button>
+            </div>
+          </ModalPregunta>
+          <ModalConfirmación
+            isOpen={isOpenRegistroConf} 
+            closeModal={closeRegistroConfModal}
+            procedimiento= "registrado"
+          >
+            <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+              <Button class="btn btn-success btn-lg" onClick={()=>{navigate("../alumno")}}>Entendido</Button>
+            </div>
+          </ModalConfirmación>
 
-          <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
-              <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("AgregarAlumno")}}> Agregar alumno</button>
+            <div class="row INSERTAR-BOTONES">                            
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../docente")}}><span>Cancelar</span></button>
+              </div>
           </div>
           
       </div>
   )
 }
-export default ListarAlumnos;
+export default ListarDocentesNoEstan;

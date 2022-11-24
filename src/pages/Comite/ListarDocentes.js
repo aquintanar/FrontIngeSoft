@@ -9,11 +9,13 @@ import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
-const urlAs= "https://localhost:7012/api/Alumno/";
+//https://localhost:7012/api/
+//http://34.195.33.246/
+const urlAs= "https://localhost:7012/api/Docente/";
 const urlEsp= "https://localhost:7012/api/Especialidad/";
-const urlAsXCurso="https://localhost:7012/api/AlumnoXCurso/";
+const urlAsXCurso="https://localhost:7012/api/DocenteXCurso/";
 
-function ListarAlumnos()  {
+function ListarDocentes()  {
   let idCursoGlobal = localStorage.getItem("idCurso");    
   let idAsesorRef = 0;
   let navigate = useNavigate();
@@ -71,25 +73,22 @@ function ListarAlumnos()  {
   filtrado = filtrado.slice(currentPage,currentPage+5);
 
   const [asesorSeleccionado, setAsesorSeleccionado]=useState({
-      idAlumno: 0,
-      linkCalendario: '',
-      tieneTema: 0,
+      idDocente: 0,
       nombres: '',
       apePat: '',
       apeMat: '',
       correo: '',
-      codigoPucp: '',
-      contrasena:'',
+      codigoPUCP: '',
       imagen: '',
       contrasena: '',
-      idEspecialidad: 0,
+      idEspecialidad: '',
       nombre: '',
       descripcion: '',
-      idFacultad: 0
+      idFacultad: ''
   })
 
   const petitionAs=async()=>{
-      await axios.get(urlAs+"ListAlumnosXIdCurso?idCurso="+idCursoGlobal)
+      await axios.get(urlAs+"ListDocentesXIdCurso?idCurso="+idCursoGlobal)
       .then(response=>{
       setAs(response.data);
       }).catch(error =>{
@@ -110,7 +109,7 @@ function ListarAlumnos()  {
     const peticionDelete=async()=>{
       console.log(asesorSeleccionado);
       console.log(idCursoGlobal);
-      await axios.delete(urlAsXCurso+ "DeleteAlumnoXCurso?idAlumno="+ asesorSeleccionado.idAlumno + "&idCurso=" + idCursoGlobal).then(response=>{
+      await axios.delete(urlAsXCurso+ "DeleteDocenteXCurso?idDocente="+ asesorSeleccionado.idDocente + "&idCurso=" + idCursoGlobal).then(response=>{
         petitionAs();
         closeDeleteModal();
         openConfirmModal();
@@ -125,10 +124,10 @@ function ListarAlumnos()  {
 
   return(
       <div className="CONTAINERCOMITE">
-          <h1 className="HEADER-TEXT1">Alumnos en el curso</h1>
+          <h1 className="HEADER-TEXT1">Docentes en el curso</h1>
           <div class="row">
             <div class="col-12 FILTRO-LISTAR-BUSCAR" >
-                <p>Ingrese el nombre del alumno</p>
+                <p>Ingrese el nombre del docente</p>
                 <div class="input-group">
                     <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre del curso" aria-label="serach" onChange={buscador}/>
                 </div>
@@ -140,14 +139,6 @@ function ListarAlumnos()  {
                     {esp.map(elemento=>(
                       <option key={elemento.idEspecialidad} value={elemento.idEspecialidad}>{elemento.nombre}</option>  
                     ))} 
-                </select>
-              </div>
-              <div class="col-4 FILTRO-LISTAR" >
-                <p> ¿Tiene tema?</p>
-                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioEstaObservado} value ={observado}>
-                      <option key={0} value = {0}>Todos</option>
-                      <option key={1} value = {1}>Si</option>
-                      <option key={2} value={2}>No</option>
                 </select>
               </div>
           </div>
@@ -166,11 +157,11 @@ function ListarAlumnos()  {
               </thead>
               <tbody >
                 {filtrado.map(asesor => (
-                  <tr key={asesor.idAsesor}>
-                      <td >{asesor.nombres + " " + asesor.apePat}</td>
+                  <tr key={asesor.idDocente}>
+                      <td >{asesor.nombres + " " + asesor.apeMat}</td>
                       <td >{asesor.correo}</td>
                       <td>
-                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosAlumno/"+asesor.idAsesor)}}> <FaIcons.FaEdit /></button>
+                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosDocente/"+asesor.idDocente)}}> <FaIcons.FaEdit /></button>
                       <button class=" btn BTN-ACCIONES" onClick={()=>seleccionarAsesor(asesor)}> <BootIcons.BsTrash /></button>
                       </td>
                   </tr>
@@ -203,10 +194,10 @@ function ListarAlumnos()  {
     </ModalConfirmación>
 
           <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
-              <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("AgregarAlumno")}}> Agregar alumno</button>
+              <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("AgregarDocente")}}> Agregar docente</button>
           </div>
           
       </div>
   )
 }
-export default ListarAlumnos;
+export default ListarDocentes;

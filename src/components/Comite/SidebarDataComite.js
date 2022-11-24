@@ -30,7 +30,7 @@ export const SidebarData = [
             },
             {
                 title: 'Gestión de Docentes',
-                path: '',
+                path: 'docente',
                 icon: <FaIcons.FaUserGraduate />
             },
             {
@@ -86,7 +86,7 @@ export const SidebarData = [
                 icon: <FaIcons.FaUserGraduate />
             },
             {
-                title: 'Reporte del ciclo',
+                title: 'Reporte semestral de notas',
                 path: 'reporteciclo',
                 icon: <MdIcons.MdOutlineEditCalendar />
             }

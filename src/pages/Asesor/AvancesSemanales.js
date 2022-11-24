@@ -30,7 +30,7 @@ function AvancesSemanales(){
  
     async function getData() {
       (async () => {
-        const result = await axios(`http://34.195.33.246/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=1`);
+        const result = await axios(`https://localhost:7012/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=1`);
         //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=1`);
         setData(result.data);
         console.log(data)

@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Tesis = () => {
   const styles = useStyles();
+  const [alumnos,setAlumnos]=useState([]);
+  const [entregables,setEntregables]=useState([]);
+
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [modalEliminar, setModalEliminar] = useState(false);
@@ -84,10 +87,7 @@ const Tesis = () => {
     { name: "Telegram", value: 100 },
   ];
 
-  //Controla buscador--
-  const buscador = (e) => {
-    setSearch(e.target.value);
-  };
+  
 
   //Filtro de tabla--
   let filtrado = [];
@@ -114,82 +114,53 @@ const Tesis = () => {
   const previousPage = () => {
     if (currentPage > 0) SetCurrentPage(currentPage - 6);
   };
-  //----------------
-  //Listar Alumnos tabla--
-
+  
+  /*PRIMERO LISTAMOS A TODOS LOS ALUMNOS DEL CURSO */
   const peticionGet = async () => {
+    var idCurso =window.localStorage.getItem("idCurso");
     const response = await axios
-      .get("http://34.195.33.246/api/Alumno/GetAlumnos", {
+      .get("https://localhost:7012/api/Alumno/GetAlumnosxCurso",{
+        params:{
+          idCurso:idCurso
+        }
+      }, {
         _method: "GET",
       })
       .then((response) => {
-        console.log("AQUI ESTOY GAAAA");
         console.log(response.data);
-        setData(response.data);
+        setAlumnos(response.data);
+        peticionGetEntregables();
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
-  //Eliminar una facultad--
-  const peticionDelete = async () => {
-    await axios
-      .delete(url + "DeleteFacultad", {
-        data: facultadSeleccionada,
+  const peticionGetEntregables = async()=>{
+    var idCurso =window.localStorage.getItem("idCurso");
+    const response = await axios
+      .get("https://localhost:7012/api/Entregable/ListEntregablesXIdCurso",{
+        params:{
+          idCurso:idCurso
+        }
+      }, {
+        _method: "GET",
       })
       .then((response) => {
-        setData(
-          data.filter(
-            (facultad) =>
-              facultad.idFacultad !== facultadSeleccionada.idFacultad
-          )
-        );
-        closeDeleteModal();
-        openConfirmModal();
+        console.log("Entregables owo");
+        console.log(response.data);
+        setEntregables(response.data);
+        
+      })
+      .catch((error) => {
+        console.log(error.message);
       });
-  };
-
-  //Control mensaje de eliminar--
-  const abrirCerrarModalEliminar = () => {
-    setModalEliminar(!modalEliminar);
-  };
-
-  //Selecciona facultad a eliminar--
-  const seleccionarFacultad = (facultad) => {
-    setFacultadSeleccionada(facultad);
-    openDeleteModal();
-  };
+  }
 
   useEffect(() => {
     peticionGet();
   }, []);
 
-  //Mensaje de confirmación para eliminar --
-  const bodyEliminar = (
-    <div className={styles.modal}>
-      <div align="center">
-        <p class="text-white">
-          ¿Estás seguro que deseas eliminar la facultad{" "}
-          <b>{facultadSeleccionada && facultadSeleccionada.nombre}</b> ?{" "}
-        </p>
-      </div>
-      <div
-        align="center"
-        class="d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom"
-      >
-        <Button class="btn  btn-success" onClick={() => peticionDelete()}>
-          Confirmar
-        </Button>{" "}
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <Button
-          class="btn btn-danger"
-          onClick={() => abrirCerrarModalEliminar()}
-        >
-          Cancelar
-        </Button>
-      </div>
-    </div>
-  );
+  
 
   return (
     <div className="CONTAINERADMIN">

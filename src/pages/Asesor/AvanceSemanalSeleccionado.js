@@ -61,7 +61,7 @@ const [versionSeleccionada, setVersionSeleccionada]=useState([{
 }]);
 
 const  getDataV = async() => {
-    const response= await axios(`http://34.195.33.246/api/Version/ListVersionXId?idVersion=${location.state.idVersion}`);
+    const response= await axios(`https://localhost:7012/api/Version/ListVersionXId?idVersion=${location.state.idVersion}`);
     setDataV(response.data);
     console.log(response.data);
     setVersionSeleccionada({

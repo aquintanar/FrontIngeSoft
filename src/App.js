@@ -18,6 +18,7 @@ import ErrorPage from './ErrorPage'
 import { UserContext } from './UserContext';
 import Cursos from './Cursos';
 import ConfirmarRegistro from './ConfirmarRegistro';
+import Opciones from './components/lniciar_Sesion/Opciones';
 function App() {
   const [value,setValue] = useState('Hello from context');
   return (
@@ -27,6 +28,7 @@ function App() {
                 {/*Public Routes */ }
                 <Route path='/' exact element= {<Login/>} />
                 <Route path='/Register' exact element= {<Register/>} />
+                <Route path='/Opciones' exact element={<Opciones/>}/>
                 <Route path="*" element={<ErrorPage/>}/>
                 
                 {/*Private Routes */}  
