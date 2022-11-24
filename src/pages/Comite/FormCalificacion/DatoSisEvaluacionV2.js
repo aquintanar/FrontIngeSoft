@@ -1,0 +1,333 @@
+import React from 'react'
+import {useState , useEffect} from "react";
+import useModal from '../../../hooks/useModals';
+import {  Button} from '@material-ui/core';
+import {  useNavigate ,useParams} from 'react-router-dom';
+import axios from 'axios';
+import * as BsIcons from 'react-icons/bs';
+import '../../../stylesheets/Asesor.css'
+import * as BootIcons  from "react-icons/bs";
+import * as RiIcons  from "react-icons/ri";
+import {ModalConfirmación, ModalPregunta} from '../../../components/Modals';
+import ModalBuscarEvaluacion from './ModalBuscarEvaluacion';
+
+const url = "https://localhost:7012/"
+// const url = "http://34.195.33.246/"
+
+const urlNota = url + "api/Nota/";
+const urlTipoEnt = url + "api/TipoEntregable/"
+const urlEnt= url + "api/Entregable/";
+
+function DatoSistEvaluacionV2()  {
+    let navigate = useNavigate();
+    let {id} = useParams();
+    const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
+    const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
+    const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
+    const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
+    const [subTitulo,setSubtitulo] = useState("Registrar nota");
+
+    const [selectedRows, setSelectedRows] = useState([]);
+    const [currentPage,SetCurrentPage] = useState(0);
+    const [edit, SetEdit] = useState(0);
+    const [show, setShow] = useState(false);
+    const [listaEvaluaciones, setListaEvaluaciones] = useState([]);
+    const [listEvaluacionesModal, setListEvaluacionesModal] = useState([]);
+
+    const [notaSeleccionada, setNotaSeleccionada] = useState({
+      idNota: 0,
+      codigo: '',
+      nombre: '',
+      peso: 1,
+      fidTipoEntregable: 1,
+      estado: 1,
+      entregables: selectedRows,
+    })
+
+    const [evaluacion, setEvaluacion] = useState({
+      idEntregable: 0,
+      nombre: '',
+      descripcion: '',
+      fechaEntregaAsesor: new Date(),
+      fechaLimite: new Date(),
+
+      fechaPresentacionAlumno: new Date(),
+      fidCurso: 0,
+      tipoEntregable: '',
+      fidNota: 0,
+      fidTipoEntregable: 0,
+      responsableSubir: '',
+      responsableEvaluar: '',
+    })
+
+    //-----------------------------------------------------------------------------------------------------------------
+    const handleChange=e=>{               // Control cambio en inputs de titulo--
+      const {name, value}=e.target;
+      setNotaSeleccionada(prevState=>({
+          ...prevState,
+          [name]: value
+      }))
+      console.log(notaSeleccionada);
+    }
+
+    const peticionSelecter =()=>{         // Selección entre modificar o insertar
+      if(id==='0')  openPostModal();
+      else          openEditModal();  
+    }
+
+    const cerrarPost=()=>{                // Cierra modal de registro
+      closeGuardadoModal();   navigate("../sistEvaluacion");
+    }
+
+    const cerrarPut=()=>{                 // Cierra modal de modificación
+      closeEditadoModal();    navigate("../sistEvaluacion");
+    }
+
+    const nextPage = () =>{               // Para paginar siguiente
+      if(listaEvaluaciones.length>=currentPage) //VER CODIGO
+        SetCurrentPage(currentPage+5);
+    }
+    
+    const cargarNota=async()=>{           // Carga la nota si es para modificar
+      if(id!=='0'){
+        setSubtitulo("Modificar nota");
+        const response = await axios.get(urlNota+"GetNotaXId?idNota="+parseInt(id));
+        setNotaSeleccionada({
+            idNota: response.data[0].idNota,
+            codigo: response.data[0].codigo,
+            nombre: response.data[0].nombre,
+            estado: response.data[0].estado,
+            fidTipoEntregable: response.data[0].fidTipoEntregable,
+            peso: response.data[0].peso,
+        });
+      }
+    }
+
+    const previousPage =() =>{            // Para paginar anterior
+        if(currentPage>0)
+          SetCurrentPage(currentPage-5);
+    }
+
+    const quitaEvaluacion=(elemento)=>{   // Elimina elemento de la lista de 
+      var indexmodal = listEvaluacionesModal.indexOf(elemento);
+      if(indexmodal == -1){
+          listEvaluacionesModal.push(elemento)
+          listEvaluacionesModal.sort((a,b) => (a.idEntregable > b.idEntregable) ? 1 : ((b.idEntregable > a.idEntregable) ? -1 : 0) )
+      }
+      let hash = {};
+      setListEvaluacionesModal(listEvaluacionesModal.filter(o => hash[o.idEntregable] ? false : hash[o.idEntregable] = true));
+      var index = listaEvaluaciones.indexOf(elemento);
+        listaEvaluaciones.splice(index,1);
+        SetEdit(!edit);
+    }
+
+    const agregarDatos=(ev)=>{            // Agrega dato a la lista de evaluaciones
+      console.log(listEvaluacionesModal)
+      if(ev.idEntregable == 0) return;
+      let variable  = false;
+      //busca si ya está ingresado
+      listaEvaluaciones.forEach((element) =>{
+        if(element.idComiteTesis === ev.idComiteTesis){
+            variable = element.idEntregable === ev.idEntregable;
+            console.log(variable);
+        }
+      })
+      if(!variable){
+        listaEvaluaciones.push(ev);
+      }       
+      setEvaluacion({
+        idEntregable: 0,
+        nombre: '',
+        descripcion: '',
+        fechaEntregaAsesor: new Date(),
+        fechaLimite: new Date(),
+
+        fechaPresentacionAlumno: new Date(),
+        fidCurso: 0,
+        tipoEntregable: '',
+        fidNota: 0,
+        fidTipoEntregable: 0,
+        responsableSubir: '',
+        responsableEvaluar: '',
+      })
+    }
+    
+    const peticionGetEntregablesModal = async() => {
+      await axios.get(urlEnt + "ListEntregablesXIdCurso?idCurso=" +localStorage.getItem('idCurso'))       
+      .then(response=>{
+          const datos = response.data.filter(dato=> dato.fidNota === 1);
+          setListEvaluacionesModal(datos);
+          //let hash = {};
+          //listEvaluacionesModal = listEvaluacionesModal.filter(o => hash[o.idEntregable] ? false : hash[o.idEntregable] = true);
+      }).catch(error =>{
+          console.log(error.message);
+      })
+    }
+    
+    //===============================================POST=======================================================================  
+    const peticionPost=async()=>{         // Insertar nota
+      carga();
+      await axios.post(urlNota+"PostNota",notaSeleccionada)
+        .then(response=>{
+            closePostModal();
+            openGuardadoModal();
+        }).catch(error =>{
+            console.log(error.message);
+        })
+    }
+
+    const carga = async () => {
+        listaEvaluaciones.forEach(element => {
+            notaSeleccionada.entregables.push({idEntregable : element.idEntregable})
+        })
+        setNotaSeleccionada(prevState=>({
+            ...prevState,
+            entregables: prevState.entregables,
+        }))
+    }
+
+    //=================================================PUT======================================================================
+
+    const peticionPut=async()=>{          // Modificar nota--
+      await axios.put(urlNota+"ModifyNota", notaSeleccionada)
+        .then(response=>{
+            closeEditModal();
+            openEditadoModal();
+        }).catch(error =>{
+            console.log(error.message);
+        })
+    }
+    //-----------------------------------------------------------------------------------------------------------------
+
+    useEffect(()=>{
+      cargarNota();           //Si es para modificar o registrar
+      peticionGetEntregablesModal();   //Es para el modal
+    },[])
+
+    return(
+        <div class=" CONTAINERALUMNO">   
+            <p class="HEADER-TEXT1">{subTitulo}</p>
+
+            <div class="row">
+                <div class="col-4 DATOS" >
+                    <div class="text-start fs-6  mb-1 fw-normal "><p>Código</p></div>
+                        <div class="input-group mb-2 ">
+                            <input type="text"  class="form-control" name="codigo" placeholder="Código" aria-label="codigo"  
+                                onChange={handleChange} value={notaSeleccionada.codigo}/>
+                        </div>
+                </div>
+                
+                <div class="col-8 DATOS1" >
+                    <p>Nombre</p>
+                    <div class="input-group mb-2 ">
+                        <textarea class="form-control TEXTAREA2" name="nombre" placeholder="Nombre" aria-label="nombre"  
+                            onChange={handleChange} value={notaSeleccionada && notaSeleccionada.nombre}/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class = "col-3 DATOS" >
+                    <p>Peso</p>
+                    <input type="number" min="1" class="form-control" name="peso" placeholder="Peso" aria-label="peso"  
+                        onChange={handleChange} value={notaSeleccionada && notaSeleccionada.peso}/>
+                </div>
+            </div>
+
+            <div className="col">
+                    <div class="fs-5 fw-normal  mb-1 ">Nombre de la evaluación seleccionada</div>
+                    <div class = "row DATOS3">
+                        <div className = "col-11 mb-2">
+                            <input type='text'  className="form-control" id="nombreEvaluacion" name="nombreEvaluacion"  disabled
+                             value={evaluacion && evaluacion.nombre}/>
+                        </div> 
+                        <div class="INSERTAR-BOTONES col-1">
+                            <button title="Buscar" type="button" onClick={() => {setShow(true)}} class=" btn btn-primary fs-4 fw-bold BUSCAR" >
+                                <RiIcons.RiSearch2Line />
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        {<ModalBuscarEvaluacion   show={show} setShow={setShow} listEvaluacionesModal={listEvaluacionesModal}
+                                                  evaluacion={evaluacion} setEvaluacion={setEvaluacion}
+                                                  listaEvaluaciones = {listaEvaluaciones}  
+                        />}
+                    </div>  
+                    <div class="row INSERTAR-BOTONES">                            
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end" >
+                            <button title="Buscar" class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>agregarDatos(evaluacion)}  ><span>Añadir</span></button>
+                        </div>
+                    </div>   
+                </div>
+
+            <p class="HEADER-TEXT2 mt-3" >Evaluaciones</p>
+            <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
+            <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
+            <div class = "row LISTAR-TABLA-EV">
+              <div class=" col-12  ">
+                <table className='table fs-6 '>
+                  <thead class >
+                    <tr class>
+                        <th style = {{width:300}} >Nombre</th>
+                        <th style = {{width:200}} >Tipo Entregable</th>
+                        <th style = {{width:100}} >Fecha Límite</th>
+                        <th style = {{width:50}} >Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody >
+                    {listaEvaluaciones.map(elemento => (
+                      <tr key={elemento.idComiteTesis}>   
+                          <td style ={{width: 250}}>{elemento.nombre}</td>      
+                          <td style ={{width: 200}}>{elemento.tipoEntregable}</td> 
+                          <td style ={{width: 100, alignSelf: "start"}}>{elemento.fechaLimite.substr(0,10)}</td> 
+                          <td style ={{width: 50}}>
+                            <button title="Eliminar" class=" btn BTN-ACCIONES" onClick={()=>quitaEvaluacion(elemento)}> <BootIcons.BsTrash /></button>
+                          </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+
+            <div class="row INSERTAR-BOTONES">                            
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()} ><span>Guardar</span></button>
+                    <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button" onClick={()=>{navigate("../sistEvaluacion")}}><span>Cancelar</span></button>
+                </div>
+            </div>
+
+            <ModalPregunta      isOpen={isOpenPostModal}        closeModal={closePostModal}         procedimiento = "guardar"   
+                                objeto = "la nota"              elemento = {notaSeleccionada && notaSeleccionada.codigo}        >
+                    <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                            <Button class="btn  btn-success btn-lg" onClick = { ()=> peticionPost() } >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <Button class="btn btn-danger btn-lg"   onClick = {closePostModal}>Cancelar</Button>
+                    </div>
+            </ModalPregunta>
+
+            <ModalConfirmación  isOpen={isOpenGuardadoModal}    closeModal={closeGuardadoModal}     procedimiento = "guardado"  >
+                    <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                            <Button class="btn btn-success btn-lg" onClick = { ()=> cerrarPost() }>Entendido</Button>
+                    </div>
+            </ModalConfirmación>
+
+            <ModalPregunta      isOpen={isOpenEditModal}        closeModal={closeEditModal}         procedimiento = "modificar"     
+                                objeto = "la nota"              elemento = {notaSeleccionada && notaSeleccionada.codigo}        >
+                    <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                            <Button class="btn  btn-success btn-lg" onClick = { ()=> peticionPut() } >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <Button class="btn btn-danger btn-lg"  onClick = {closeEditModal}>Cancelar</Button>
+                    </div>
+            </ModalPregunta>
+
+            <ModalConfirmación  isOpen={isOpenEditadoModal}     closeModal={closeEditadoModal}      procedimiento = "modificado">
+                    <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                            <Button class="btn btn-success btn-lg" onClick = { ()=> cerrarPut() }>Entendido</Button>
+                    </div>
+            </ModalConfirmación>
+
+        </div> 
+    )
+}
+
+export default DatoSistEvaluacionV2;

@@ -24,6 +24,11 @@ export const SidebarData = [
 
         subNav: [
             {
+                title: 'Gestión de Áreas',
+                path: 'areas',
+                icon: <FaIcons.FaUniversity />
+            },
+            {
                 title: 'Gestión de Asesores',
                 path: 'asesor',
                 icon: <FaIcons.FaUniversity />
