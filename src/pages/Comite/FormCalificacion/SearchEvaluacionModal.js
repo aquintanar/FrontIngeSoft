@@ -73,7 +73,8 @@ const SearchEvaluacionModal = ({show, setShow, listEvaluacionesModal, evaluacion
                                     <td>{arr.idEntregable}</td>
                                     <td>{arr.nombre}</td>
                                     <td>{arr.tipoEntregable}</td>
-                                    <td>{arr.fechaLimite}</td>
+                                    <td>{arr.fechaLimite==="null" ? "No tiene" : arr.fechaLimite.substr(0,10)}
+                                    </td>
                                     <td><button className = "BUTTON_TABLA" onClick={()=>{ 
                                         setEvaluacion({
                                             idEntregable:  arr.idEntregable,

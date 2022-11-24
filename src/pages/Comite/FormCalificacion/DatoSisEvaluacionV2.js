@@ -31,8 +31,12 @@ function DatoSistEvaluacionV2()  {
     const [currentPage,SetCurrentPage] = useState(0);
     const [edit, SetEdit] = useState(0);
     const [show, setShow] = useState(false);
+    const [evaluacionesLista, setEvaluacionesLista] = useState([]);
     const [listaEvaluaciones, setListaEvaluaciones] = useState([]);
+    const [listaEvaluacionesRegistradas, setListaEvaluacionesRegistradas] = useState([]);
     const [listEvaluacionesModal, setListEvaluacionesModal] = useState([]);
+    const [listaEliminar, setListaEliminar] = useState([]);
+    let filtrado=[];
 
     const [notaSeleccionada, setNotaSeleccionada] = useState({
       idNota: 0,
@@ -70,9 +74,19 @@ function DatoSistEvaluacionV2()  {
       console.log(notaSeleccionada);
     }
 
+    filtrado = evaluacionesLista;
+    filtrado = filtrado.slice(currentPage,currentPage+5);
+
     const peticionSelecter =()=>{         // Selección entre modificar o insertar
-      if(id==='0')  openPostModal();
-      else          openEditModal();  
+      if(id==='0'){
+        //no permite registro de nota sin que se registre al menos una evaluacion
+        if(evaluacionesLista.length == 0) return;
+        openPostModal();
+      }  
+      else{
+        listarEliminarRegistrar();
+        openEditModal();
+      }            
     }
 
     const cerrarPost=()=>{                // Cierra modal de registro
@@ -113,6 +127,9 @@ function DatoSistEvaluacionV2()  {
       if(indexmodal == -1){
           listEvaluacionesModal.push(elemento)
           listEvaluacionesModal.sort((a,b) => (a.idEntregable > b.idEntregable) ? 1 : ((b.idEntregable > a.idEntregable) ? -1 : 0) )
+          if(elemento.fidNota > 0){
+            evaluacionesLista.splice(evaluacionesLista.indexOf(elemento), 1)
+          }
       }
       let hash = {};
       setListEvaluacionesModal(listEvaluacionesModal.filter(o => hash[o.idEntregable] ? false : hash[o.idEntregable] = true));
@@ -122,19 +139,28 @@ function DatoSistEvaluacionV2()  {
     }
 
     const agregarDatos=(ev)=>{            // Agrega dato a la lista de evaluaciones
-      console.log(listEvaluacionesModal)
+      console.log("agregar datos inicio",listEvaluacionesModal, ev)
       if(ev.idEntregable == 0) return;
       let variable  = false;
+      let index = listEvaluacionesModal.indexOf(ev)
+      console.log("index", index)
       //busca si ya está ingresado
-      listaEvaluaciones.forEach((element) =>{
-        if(element.idComiteTesis === ev.idComiteTesis){
+      evaluacionesLista.forEach((element) =>{
+        if(element.idEntregable === ev.idEntregable){
             variable = element.idEntregable === ev.idEntregable;
             console.log(variable);
         }
       })
       if(!variable){
-        listaEvaluaciones.push(ev);
+        evaluacionesLista.push(ev);
+        for(let i=0; i<listEvaluacionesModal.length; i++){
+          if(listEvaluacionesModal[i].idEntregable == ev.idEntregable){
+            console.log(listEvaluacionesModal, ev, i);
+            listEvaluacionesModal.splice(i, 1)
+          }
+        }
       }       
+      console.log("agregar datos fin",listEvaluacionesModal)
       setEvaluacion({
         idEntregable: 0,
         nombre: '',
@@ -155,10 +181,8 @@ function DatoSistEvaluacionV2()  {
     const peticionGetEntregablesModal = async() => {
       await axios.get(urlEnt + "ListEntregablesXIdCurso?idCurso=" +localStorage.getItem('idCurso'))       
       .then(response=>{
-          const datos = response.data.filter(dato=> dato.fidNota === 1);
+          const datos = response.data.filter(dato=> dato.fidNota === "null");
           setListEvaluacionesModal(datos);
-          //let hash = {};
-          //listEvaluacionesModal = listEvaluacionesModal.filter(o => hash[o.idEntregable] ? false : hash[o.idEntregable] = true);
       }).catch(error =>{
           console.log(error.message);
       })
@@ -177,7 +201,7 @@ function DatoSistEvaluacionV2()  {
     }
 
     const carga = async () => {
-        listaEvaluaciones.forEach(element => {
+        evaluacionesLista.forEach(element => {
             notaSeleccionada.entregables.push({idEntregable : element.idEntregable})
         })
         setNotaSeleccionada(prevState=>({
@@ -189,6 +213,26 @@ function DatoSistEvaluacionV2()  {
     //=================================================PUT======================================================================
 
     const peticionPut=async()=>{          // Modificar nota--
+      for(let i=0; i<evaluacionesLista.length; i++){    //registras evaluaciones
+        if(evaluacionesLista[i].fidNota === "null"){
+          await axios.put(urlEnt + "InsertarNotaToEntregable?idNota=" + notaSeleccionada.idNota + "&idEntregable=" + evaluacionesLista[i].idEntregable)
+          .then(response=>{
+            
+          }).catch(error =>{
+              console.log(error.message);
+          })
+        }
+      }
+      for(let i=0; i<listEvaluacionesModal.length; i++){    //eliminas evaluaciones
+        if(listEvaluacionesModal[i].fidNota > 0){
+          await axios.put(urlEnt + "InsertarNotaToEntregable?idNota=0&idEntregable=" + listEvaluacionesModal[i].idEntregable)
+          .then(response=>{
+            
+          }).catch(error =>{
+              console.log(error.message);
+          })
+        }
+      }
       await axios.put(urlNota+"ModifyNota", notaSeleccionada)
         .then(response=>{
             closeEditModal();
@@ -197,10 +241,28 @@ function DatoSistEvaluacionV2()  {
             console.log(error.message);
         })
     }
+
+    const peticionGetEvaluacionReg =async()=>{          // Modificar nota-- setListaEvaluacionesRegistradas
+      if(id ==='0') return;
+      await axios.get(urlEnt+"ListEntregablesXIdNota?idNota=" + parseInt(id))
+        .then(response=>{
+            console.log("evaluacion registrada", response.data)
+            console.log("parseInt(id)", parseInt(id))
+            setListaEvaluacionesRegistradas(response.data);
+            setEvaluacionesLista(response.data);
+        }).catch(error =>{
+            console.log(error.message);
+        })
+    }
+
+    const listarEliminarRegistrar =async()=>{          // Modificar nota-- setListaEvaluacionesRegistradas
+      
+    }
     //-----------------------------------------------------------------------------------------------------------------
 
     useEffect(()=>{
       cargarNota();           //Si es para modificar o registrar
+      peticionGetEvaluacionReg();
       peticionGetEntregablesModal();   //Es para el modal
     },[])
 
@@ -255,7 +317,7 @@ function DatoSistEvaluacionV2()  {
                     </div>  
                     <div class="row INSERTAR-BOTONES">                            
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end" >
-                            <button title="Buscar" class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>agregarDatos(evaluacion)}  ><span>Añadir</span></button>
+                            <button title="Añadir evaluación" class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>agregarDatos(evaluacion)}  ><span>Añadir</span></button>
                         </div>
                     </div>   
                 </div>
@@ -268,20 +330,22 @@ function DatoSistEvaluacionV2()  {
                 <table className='table fs-6 '>
                   <thead class >
                     <tr class>
-                        <th style = {{width:300}} >Nombre</th>
+                        <th style = {{width:50}} >ID</th>
+                        <th style = {{width:250}} >Nombre</th>
                         <th style = {{width:200}} >Tipo Entregable</th>
                         <th style = {{width:100}} >Fecha Límite</th>
                         <th style = {{width:50}} >Acciones</th>
                     </tr>
                   </thead>
                   <tbody >
-                    {listaEvaluaciones.map(elemento => (
-                      <tr key={elemento.idComiteTesis}>   
-                          <td style ={{width: 250}}>{elemento.nombre}</td>      
-                          <td style ={{width: 200}}>{elemento.tipoEntregable}</td> 
-                          <td style ={{width: 100, alignSelf: "start"}}>{elemento.fechaLimite.substr(0,10)}</td> 
+                    {filtrado.map(elemento => (
+                      <tr key={elemento.idEntregable}>   
+                          <td style ={{width: 50}}>{elemento.idEntregable}</td> 
+                          <td style ={{width: 200}}>{elemento.nombre}</td>      
+                          <td style ={{width: 200}}>{elemento.tipoEntregable}</td>
+                          <td style ={{width: 100, alignSelf: "start"}}>{elemento.fechaLimite==="null" ? "No tiene" : elemento.fechaLimite.substr(0,10)}</td> 
                           <td style ={{width: 50}}>
-                            <button title="Eliminar" class=" btn BTN-ACCIONES" onClick={()=>quitaEvaluacion(elemento)}> <BootIcons.BsTrash /></button>
+                            <button title="Eliminar evaluación" class=" btn BTN-ACCIONES" onClick={()=>quitaEvaluacion(elemento)}> <BootIcons.BsTrash /></button>
                           </td>
                       </tr>
                     ))}
@@ -293,8 +357,8 @@ function DatoSistEvaluacionV2()  {
 
             <div class="row INSERTAR-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()} ><span>Guardar</span></button>
-                    <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button" onClick={()=>{navigate("../sistEvaluacion")}}><span>Cancelar</span></button>
+                    <button title="Guardar evaluación" class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()} ><span>Guardar</span></button>
+                    <button title="Cancelar " class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button" onClick={()=>{navigate("../sistEvaluacion")}}><span>Cancelar</span></button>
                 </div>
             </div>
 

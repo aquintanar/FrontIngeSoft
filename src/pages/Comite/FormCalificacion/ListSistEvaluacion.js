@@ -10,11 +10,11 @@ import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import {ModalConfirmación, ModalPregunta} from '../../../components/Modals';
 
-const url = "https://localhost:7012/"
-// const url = "http://34.195.33.246/"
+const url = "https://localhost:7012/api/"
+// const url = "http://34.195.33.246/api/"
 
-const urlNota= url + "api/Nota/";
-const urlEnt= url + "api/Entregable/";
+const urlNota= url + "Nota/";
+const urlEnt= url + "Entregable/";
 
 var form = "";
 
@@ -25,6 +25,7 @@ function ListSistEvaluacion()  {
     const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
     const [modalEliminar, setModalEliminar]=useState(false);
     const [notas, setNotas] = useState ([]);
+    const [evaluaciones, setEvaluaciones] = useState ([]);
     const [notaSeleccionada, setNotaSeleccionada]=useState({
         idNota: 0,
         nombre: '',
@@ -40,7 +41,6 @@ function ListSistEvaluacion()  {
         notaSeleccionada.codigo = not.codigo;
         notaSeleccionada.fidTipoEntregable = not.fidTipoEntregable;
         delete notaSeleccionada.estado;
-        console.log(notaSeleccionada)
         openDeleteModal();
       }
 
@@ -49,14 +49,13 @@ function ListSistEvaluacion()  {
         .then(response=>{
             setNotas(response.data);
             obtFormula(response.data, "")
-            console.log(response.data)
         }).catch(error =>{
             console.log(error.message);
         })
       }
     
     const peticionDelete=async()=>{                 //Eliminar una nota? de un curso-
-        //setear en 1 a las fid nota o en null
+        //setear en 0 a las fid nota o en null
         await axios.delete(urlNota+"DeleteSemestre", {data:{
             idNota: notaSeleccionada.idNota,
             nombre: notaSeleccionada.nombre,
@@ -65,10 +64,33 @@ function ListSistEvaluacion()  {
             fidTipoEntregable: notaSeleccionada.fidTipoEntregable, 
         }}
         ).then(response=>{
+            eliminarEv();
             closeDeleteModal();
             peticionGetNotas();
             openConfirmModal();
         })
+    }
+
+    const eliminarEv=async()=>{                 //Eliminar una nota? de un curso-
+        await axios.get(urlEnt+ "ListEntregablesXIdNota?idNota="+notaSeleccionada.idNota)       
+        .then(response=>{
+            eliminarEvPetcion(response.data)
+        }).catch(error =>{
+            console.log(error.message);
+        })
+    }
+
+    const eliminarEvPetcion=async(array)=>{                 //Eliminar una nota? de un curso-
+        //setear en 0 a las fid nota o en null
+        for(let i=0; i<array.length; i++){    //registras evaluaciones
+            await axios.put(urlEnt + "InsertarNotaToEntregable?idNota=0&idEntregable=" + array[i].idEntregable)
+            .then(response=>{
+                return;
+            }).catch(error =>{
+              console.log(error.message);
+            })
+            }
+        
     }
 
     const obtFormula = (datos, st) => {
@@ -93,7 +115,6 @@ function ListSistEvaluacion()  {
     }
 
     useEffect(()=>{
-        console.log("curso", localStorage.getItem('idCurso'))
         form = ""
         peticionGetNotas();
     },[])
@@ -105,8 +126,8 @@ function ListSistEvaluacion()  {
         <p class="BTN-CUADRADO-SISTEV NO-SQ"> {form}</p>
         {notas ? null : 
             <p class="HEADER-SISTEV">
-                    <td style ={{width: 220, paddingLeft: '0.95%', paddingRight: '2%'}}>Código</td>
-                    <td style ={{width: 380, paddingLeft: '0.95%', paddingRight: '5%'}}>Nombre </td>
+                    <td style ={{width: 300, paddingLeft: '0.95%', paddingRight: '2%'}}>Código</td>
+                    <td style ={{width: 350, paddingLeft: '0.95%', paddingRight: '5%'}}>Nombre </td>
                     <td style ={{width: 120}}>Peso </td>
                     <td style ={{width: 80}}>Acciones </td>
             </p>  
@@ -114,12 +135,12 @@ function ListSistEvaluacion()  {
         {notas.map(not => (
                 <tr key={not.idNota}>
                     <td><p class="BTN-CUADRADO-SISTEV">
-                        <td title= {not.codigo} style ={{width: 220, paddingLeft: '0.5%', paddingRight: '2%'}}>{not.codigo}</td>
+                        <td title= {not.codigo} style ={{width: 300, paddingLeft: '0.5%', paddingRight: '2%'}}>{not.codigo}</td>
                         <td title= {not.nombre} style ={{width: 380, paddingLeft: '0.5%', paddingRight: '5%'}}>{not.nombre}</td>
-                        <td style ={{width: 100}}>{not.peso} </td>
+                        <td title= "Peso" style ={{width: 100}}>{not.peso} </td>
                         <td class = "text-center" style ={{width: 70}}>
-                            <button title="Editar" class="btn BTN-ACCIONES" onClick={()=>{navigate("datoSistEvalucion/" + not.idNota)}}> <FaIcons.FaEdit/></button>
-                            <button title="Eliminar" class=" btn BTN-ACCIONES" onClick={()=>seleccionarNota(not, 'Eliminar')}> <BootIcons.BsTrash/></button>   
+                            <button title="Editar nota" class="btn BTN-ACCIONES" onClick={()=>{navigate("datoSistEvalucion/" + not.idNota)}}> <FaIcons.FaEdit/></button>
+                            <button title="Eliminar nota" class=" btn BTN-ACCIONES" onClick={()=>seleccionarNota(not, 'Eliminar')}> <BootIcons.BsTrash/></button>   
                         </td>
                     </p></td>                    
                 </tr>
@@ -127,7 +148,7 @@ function ListSistEvaluacion()  {
          <p>   NF: <m> Nota Final </m> </p>
 
         <div className='LISTAR-ESPECIALIDADES-BOTON'>
-            <button className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{ navigate("datoSistEvalucion/0")}} ><span>Registrar</span></button>
+            <button title="Registrar nota" className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{ navigate("datoSistEvalucion/0")}} ><span>Registrar</span></button>
         </div> 
 
         <ModalPregunta      isOpen={isOpenDeleteModal}      closeModal={closeDeleteModal}   procedimiento = "eliminar"

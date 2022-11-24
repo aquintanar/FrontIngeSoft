@@ -8,6 +8,7 @@ import '../../../stylesheets/Alumno.css'
 import '../../../stylesheets/Comite.css'
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
+import * as AntIcons from "react-icons/ai";
 import {ModalConfirmación, ModalPregunta} from '../../../components/Modals';
 
 const url = "https://localhost:7012/"
@@ -22,6 +23,7 @@ function ListaAreas()  {
     const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
     const infoEspecialidad = JSON.parse(localStorage.getItem('infoEspecialidad'))
     const [areas, setAreas] = useState ([]);
+    const [search, setSearch] = useState("");
 
     const [areaSeleccionada, setAreaSeleccionada]=useState({
         idArea: 0,
@@ -33,6 +35,19 @@ function ListaAreas()  {
         areaSeleccionada.idArea = not.idArea;
         areaSeleccionada.nombre = not.nombre;
         openDeleteModal();
+    }
+
+    const buscador = e=>{                           //Controla buscador--
+        setSearch(e.target.value);
+    }
+
+    let filtrado =[];
+    if(!search){//sin filtro
+        filtrado=areas;
+    }
+    else{
+        if(search)
+            filtrado=areas.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
     }
 
     const peticionDelete=async()=>{                 //Eliminar una nota? de un curso--
@@ -61,15 +76,24 @@ function ListaAreas()  {
     return (
         <div class=" CONTAINERADMIN" style={{}} >
              <p class="HEADER-TEXT1">Gestión de Áreas</p>
+
+                <div class="row">
+                    <div class="col  FILTRO-LISTAR-BUSCAR" >
+                        <p>Ingresar nombre del área</p>
+                        <div class="input-group  ">
+                            <input type="text" value={search} class="form-control" size="5" name="search" placeholder="Nombre del área" aria-label="serach" onChange={buscador}/>
+                        </div>
+                    </div>
+                </div>
                 
-                {areas.map(not => (
+                {filtrado.map(not => (
                 <tr key={not.idArea}>
                     <td><p class="BTN-CUADRADO-SISTEV">
                         <td title= {not.idArea} style ={{width: 50, paddingLeft: '0.5%', paddingRight: '2%'}}>{not.idArea}</td>
                         <td title= {not.codigo} style ={{width: 50, paddingLeft: '0.5%', paddingRight: '2%'}}>{not.codigo}</td>
                         <td title= {not.nombre} style ={{width: 500, paddingLeft: '0.5%', paddingRight: '5%'}}>{not.nombre}</td>
                         <td class = "text-center" style ={{width: 80}}>
-                            <button title="Editar área" class="btn BTN-ACCIONES" onClick={()=>{navigate("datoArea/" + not.idArea)}}> <FaIcons.FaEdit/></button>
+                            <button title="Editar área"  class="btn BTN-ACCIONES" onClick={()=>{navigate("datoArea/" + not.idArea)}}> <FaIcons.FaEdit/></button>
                             <button title="Eliminar área" class=" btn BTN-ACCIONES" onClick={()=>seleccionarArea(not, 'Eliminar')}> <BootIcons.BsTrash/></button>   
                         </td>
                     </p></td>                    
@@ -77,7 +101,7 @@ function ListaAreas()  {
                 ))}
 
             <div className='LISTAR-ESPECIALIDADES-BOTON'>
-                <button className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{ navigate("datoArea/0")}} ><span>Registrar</span></button>
+                <button title="Registrar área" className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{ navigate("datoArea/0")}} ><span>Registrar</span></button>
             </div> 
 
             <ModalPregunta      isOpen={isOpenDeleteModal}      closeModal={closeDeleteModal}   procedimiento = "eliminar"  
