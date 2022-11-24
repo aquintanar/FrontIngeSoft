@@ -30,7 +30,7 @@ export const SidebarData = [
             },
             {
                 title: 'Gestión de Docentes',
-                path: '',
+                path: 'docente',
                 icon: <FaIcons.FaUserGraduate />
             },
             {
