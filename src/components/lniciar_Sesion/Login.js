@@ -1,14 +1,12 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "../../stylesheets/Iniciar_Sesion.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useContext } from "react";
 import { UserContext } from "../../UserContext";
-import { BsWindowSidebar } from "react-icons/bs";
-
 const LOGIN_URL = "https://localhost:7012/api/login/GetLogin";
 const LOGIN_URL2 = "https://localhost:7012/api/Rol";
 const LOGIN_URL_GOOGLE =
@@ -17,18 +15,14 @@ const COORDINADOR =
   "https://localhost:7012/api/ComiteXEspecialidad/ListarComitexEspecialidad_x_idComite";
 function Login() {
   const { user, loginWithRedirect, isAuthenticated } = useAuth0();
-
   const [cuentaSeleccionada, setCuentaSeleccionada] = useState({
     correo: "",
     contrasena: "",
   });
-
   let especialidades = [];
   let facultades = [];
-  const { setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
 
   let IdUsuarios = [];
   let TipoUsuario = [];
@@ -41,10 +35,6 @@ function Login() {
   const [errMsg, setErrMsg] = useState("");
 
   const { value, setValue } = useContext(UserContext);
-
-  const [cuenta1, setCuenta1] = useState([]);
-  const [cuenta2, setCuenta2] = useState([]);
-  const [cuenta3, setCuenta3] = useState([]);
   useEffect(() => {
     setErrMsg("");
   }, [user1, pwd]);
@@ -68,7 +58,8 @@ function Login() {
           console.log(response3.data);
           if (Object.keys(response3.data).length === 0) {
             //No es coordinador
-            navigate("/cursos");
+            window.localStorage.setItem("ESCOORDINADOR","NO");
+            //navigate("/cursos");
           } else {
             for (let i in response3.data) {
               especialidades.push(response3.data[i].fidEspecialidad);
@@ -79,8 +70,9 @@ function Login() {
               JSON.stringify(especialidades)
             );
             localStorage.setItem("infoFacultad", JSON.stringify(facultades));
-            localStorage.setItem("IDUSUARIO", value);
-            navigate("/comiteCoordinador");
+            //localStorage.setItem("IDUSUARIO", value);
+            window.localStorage.setItem("ESCOORDINADOR","SI");
+            //navigate("/comiteCoordinador");
           }
         })
         .catch((error) => {});
@@ -190,9 +182,9 @@ function Login() {
           } else if (response2.data[0].nombre === "COMITE DE TESIS") {
             TipoUsuario.push("COMITE DE TESIS");
             IdUsuarios.push(e[0].idUsuario);
-            //validarCoordinador(e);
+            validarCoordinador(e[0].idUsuario);
           }
-          setCuenta1(e[0]);
+         
           valor2(e);
         })
         .catch((error) => {});
@@ -218,9 +210,9 @@ function Login() {
           } else if (response2.data[0].nombre === "COMITE DE TESIS") {
             TipoUsuario.push("COMITE DE TESIS");
             IdUsuarios.push(e[1].idUsuario);
-            //validarCoordinador(e);
+            validarCoordinador(e[1].idUsuario);
           }
-          setCuenta2(e[1]);
+         
           valor3(e);
         })
         .catch((error) => {});
@@ -246,12 +238,15 @@ function Login() {
           } else if (response2.data[0].nombre === "COMITE DE TESIS") {
             TipoUsuario.push("COMITE DE TESIS");
             IdUsuarios.push(e[2].idUsuario);
-            //validarCoordinador(e);
+            validarCoordinador(e[2].idUsuario);
           }
-          setCuenta3(e[2]);
-          window.localStorage.setItem("TIPOSUSUARIOS",JSON.stringify(TipoUsuario));
-          window.localStorage.setItem("IDUSUARIOS",JSON.stringify(IdUsuarios));
-          navigate('/Opciones')
+        
+          window.localStorage.setItem(
+            "TIPOSUSUARIOS",
+            JSON.stringify(TipoUsuario)
+          );
+          window.localStorage.setItem("IDUSUARIOS", JSON.stringify(IdUsuarios));
+          navigate("/Opciones");
         })
         .catch((error) => {});
     } catch (err) {}

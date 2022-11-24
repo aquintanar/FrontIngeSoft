@@ -419,3 +419,16 @@ ESTILOS PARA REGISTRAR DESDE COMITE
 .BOTONREGISTRAR{
     margin-left: 60vw;
 }
+.seccion-opciones{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;;
+    height:30vh;
+    text-align: center;
+}
+.BOTON-OPCIONES{
+    width:15vw;
+}
+.GrupoInfo{
+    
+}
