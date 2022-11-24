@@ -140,11 +140,11 @@ function Login() {
           if (!error?.response) {
             setErrMsg("No Server Response");
           } else if (error.response?.status === 400) {
-            setErrMsg("Missing Username or Password");
+            setErrMsg("Ingrese correctamente el usuario o contraseña");
           } else if (error.response?.status === 401) {
-            setErrMsg("Unauthorized");
+            setErrMsg("Ingrese correctamente el usuario o contraseña");
           } else {
-            setErrMsg("Login Failed");
+            setErrMsg("Ingrese correctamente el usuario o contraseña");
           }
           errRef.current.focus();
         });

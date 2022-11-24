@@ -28,7 +28,7 @@ export const SidebarData = [
     },
     {
         title: 'Temas',
-        path: '',
+        path: 'listarTemas',
         icon: <BsIcons.BsJournalBookmark />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,

@@ -14,13 +14,16 @@ import EvaluaAsesor  from './pages/Alumno/EvaluaAsesor';
 import NotaAlumno  from './pages/Alumno/NotaAlumno';
 import Calendario from './pages/Alumno/Calendario';
 import Encuesta from './pages/Alumno/Encuesta';
+import ListaTemaTesis from './pages/Alumno/ListaTemaTesis'
 function Alumno() {
     return (
         <div>    
             <SidebarAlumno/>
               <BarraVolver/>
               <Routes>
+                listarTemas
               <Route path='encuesta' exact element = {<Encuesta/>}/>
+              <Route path='listarTemas' exact element = {<ListaTemaTesis/>}/>
               <Route path='gestion/gesPortafolio' exact element= {<PortafolioEntregables/>}/>
               <Route path='gestion/gesPortafolio/AvancesSemanales' exact element= {<AvancesSemanales/>}/>
               <Route path='gestion/gesPortafolio/EntregablesParciales' exact element= {<EntregablesParciales/>}/>

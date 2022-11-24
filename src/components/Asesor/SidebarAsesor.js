@@ -111,7 +111,7 @@ const Sidebar = () => {
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <Nav>
-          <h1 className='nombreUsuario'>{nombre}</h1>
+          <h1 className='nombreUsuario'>{nombre + localStorage.getItem("IDUSUARIO")}</h1>
             <NavIcon to='#'>
               {showSidebar}
             </NavIcon> 
