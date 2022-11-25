@@ -173,7 +173,6 @@ const CrearCuentaAlumno = () => {
     UsuarioSeleccionado.apeMat = apellidoM;
     UsuarioSeleccionado.contrasena = pwd;
     UsuarioSeleccionado.codigoPucp = codigoPUCP;
-    UsuarioSeleccionado.fidEspecialidad = value2;
     console.log("HOLA");
     try {
       let response = await axios
@@ -187,6 +186,25 @@ const CrearCuentaAlumno = () => {
         .then((response) => {
           closePostModal();
           openGuardadoModal();
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    } catch (err) {}
+  };
+  const handleSubmit1 = async (e) => {
+    let idCu = window.localStorage.getItem("idCurso");
+    try {
+      let response = await axios
+        .get(
+          "https://localhost:7012/api/Curso/BuscarCursoXId?idCurso="+idCu,
+          {
+            _method: "GET",
+          }
+        )
+        .then((response) => {
+          UsuarioSeleccionado.fidEspecialidad = response.data[0].idEspecialidad;
+          handleSubmit();
         })
         .catch((error) => {
           console.log(error.message);
@@ -312,7 +330,12 @@ const CrearCuentaAlumno = () => {
               <FontAwesomeIcon icon={faInfoCircle} />
               Debe ser un correo electrónico
             </p>
-            <label htmlFor="password">Contraseña:</label>
+            
+          </form>
+        </div>
+        <div className="seccion-der seccion">
+          <form>
+          <label htmlFor="password">Contraseña:</label>
             <input
               type="password"
               id="password"
@@ -333,10 +356,6 @@ const CrearCuentaAlumno = () => {
               un número y un carácter especial.
               <br />
             </p>
-          </form>
-        </div>
-        <div className="seccion-der seccion">
-          <form>
             <label htmlFor="confirm_pwd">Confirmar Contraseña:</label>
             <input
               type="password"
@@ -372,26 +391,7 @@ const CrearCuentaAlumno = () => {
               <br />
               Debe tener 8 digitos
             </p>
-            <label>Especialidad:</label>
-            <select
-              value={value2}
-              select
-              class="form-select Cursor ESPECIALIDADES-CREAR-CUENTA"
-              aria-label="Default select example"
-              onChange={(e) => setValues2(e.target.value)}
-            >
-              <option selected value="0">
-                Todos
-              </option>
-              {especialidad.map((elemento) => (
-                <option
-                  key={elemento.idEspecialidad}
-                  value={elemento.idEspecialidad}
-                >
-                  {elemento.nombre}
-                </option>
-              ))}
-            </select>
+            
           </form>
         </div>
       </div>
@@ -407,7 +407,7 @@ const CrearCuentaAlumno = () => {
         >
           <button
             class="btn  btn-success btn-lg"
-            onClick={() => handleSubmit()}
+            onClick={() => handleSubmit1()}
           >
             Confirmar
           </button>{" "}
