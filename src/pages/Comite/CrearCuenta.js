@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import axios from "axios";
+import { ModalConfirmación, ModalPregunta } from "../../components/Modals";
 import "../../stylesheets/Iniciar_Sesion.css";
 import "../../stylesheets/Iniciar_Sesion.css";
 import Select from "react-select";
@@ -154,7 +155,7 @@ const CrearCuentaAlumno = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    console.log("HOLA");
     console.log("Si llega a handle summit");
     const v1 = USER_REGEX.test(user);
     const v2 = PWD_REGEX.test(pwd);
@@ -173,6 +174,7 @@ const CrearCuentaAlumno = () => {
     UsuarioSeleccionado.contrasena = pwd;
     UsuarioSeleccionado.codigoPucp = codigoPUCP;
     UsuarioSeleccionado.fidEspecialidad = value2;
+    console.log("HOLA");
     try {
       let response = await axios
         .post(
@@ -183,14 +185,18 @@ const CrearCuentaAlumno = () => {
           }
         )
         .then((response) => {
-          console.log("ya se posteo xD");
+          closePostModal();
+          openGuardadoModal();
         })
         .catch((error) => {
           console.log(error.message);
         });
     } catch (err) {}
   };
-
+  const cerrarPost = () => {
+    closeGuardadoModal();
+    navigate("../alumno/AgregarAlumno");
+  };
   const ListarEsp = async (e) => {
     try {
       let response = await axios
@@ -327,12 +333,11 @@ const CrearCuentaAlumno = () => {
               un número y un carácter especial.
               <br />
             </p>
-            
           </form>
         </div>
         <div className="seccion-der seccion">
           <form>
-          <label htmlFor="confirm_pwd">Confirmar Contraseña:</label>
+            <label htmlFor="confirm_pwd">Confirmar Contraseña:</label>
             <input
               type="password"
               id="confirm_pwd"
@@ -371,7 +376,7 @@ const CrearCuentaAlumno = () => {
             <select
               value={value2}
               select
-              class="form-select Cursor"
+              class="form-select Cursor ESPECIALIDADES-CREAR-CUENTA"
               aria-label="Default select example"
               onChange={(e) => setValues2(e.target.value)}
             >
@@ -390,9 +395,44 @@ const CrearCuentaAlumno = () => {
           </form>
         </div>
       </div>
-
+      <ModalPregunta
+        isOpen={isOpenPostModal}
+        closeModal={closePostModal}
+        procedimiento="guardar"
+        objeto="una cuenta"
+      >
+        <div
+          align="center"
+          class="d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom"
+        >
+          <button
+            class="btn  btn-success btn-lg"
+            onClick={() => handleSubmit()}
+          >
+            Confirmar
+          </button>{" "}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button class="btn btn-danger btn-lg" onClick={closePostModal}>
+            Cancelar
+          </button>
+        </div>
+      </ModalPregunta>
+      <ModalConfirmación
+        isOpen={isOpenGuardadoModal}
+        closeModal={closeGuardadoModal}
+        procedimiento="guardado"
+      >
+        <div
+          align="center"
+          class="d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom"
+        >
+          <button class="btn btn-success btn-lg" onClick={() => cerrarPost()}>
+            Entendido
+          </button>
+        </div>
+      </ModalConfirmación>
       <button
-        onClick={handleSubmit}
+        onClick={openPostModal}
         disabled={
           !validName ||
           !validPwd ||
