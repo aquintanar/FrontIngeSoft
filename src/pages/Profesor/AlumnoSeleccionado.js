@@ -18,21 +18,21 @@ function AlumnoSeleccionado(){
        <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container-fluid">
-                <a class="BTN-CUADRADO" type='button' onClick={() =>navigate("entregables",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat}})}>Entregables</a>
+                <a class="BTN-CUADRADO" type='button' onClick={() =>navigate("entregables",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat,idCurso: localStorage.getItem('idCurso')}})}>Entregables</a>
                 </div>
             </nav>
        </div>
        <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container-fluid">
-                <a  class="BTN-CUADRADO" type='button' onClick={() =>navigate("entregablesParciales",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat}})}>Entregables Parciales</a>
+                <a  class="BTN-CUADRADO" type='button' onClick={() =>navigate("entregablesParciales",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat,idCurso: localStorage.getItem('idCurso')}})}>Entregables Parciales</a>
                 </div>
             </nav>
        </div>
        <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container-fluid">
-                <a  class="BTN-CUADRADO" type='button' onClick={() =>navigate("exposiciones",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat}})}>Exposiciones</a>
+                <a  class="BTN-CUADRADO" type='button' onClick={() =>navigate("exposiciones",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat,idCurso: localStorage.getItem('idCurso')}})}>Exposiciones</a>
                 </div>
             </nav>
        </div>

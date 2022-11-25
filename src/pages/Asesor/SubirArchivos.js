@@ -6,7 +6,7 @@ import '../../stylesheets/Alumno.css'
 import useModal from '../../hooks/useModals';
 
 import axios from 'axios';
-import Upload from "../../components/Upload";
+import Upload_Asesor from "../../components/Upload_Asesor";
 import { Buffer } from "buffer";
 import AWS from "aws-sdk";
 import {  Button} from '@material-ui/core';
@@ -14,7 +14,7 @@ import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 Buffer.from("anything", "base64");
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
-const url= "http://34.195.33.246/api/Version/";
+const url= "https://localhost:7012/api/Version/";
 
 function NotaAlumno()  {
  /*  
@@ -46,7 +46,7 @@ const [versionSeleccionada, setVersionSeleccionada]=useState({
 
 const cargarVersion=async()=>{
   if(location.state.idVersion!=null){
-    const response = await axios.get(`http://34.195.33.246/api/Version/ListVersionXId?idVersion=${location.state.idVersion}`);
+    const response = await axios.get(`https://localhost:7012/api/Version/ListVersionXId?idVersion=${location.state.idVersion}`);
     setVersionSeleccionada({
       idVersion: response.data[0].idVersion,
       linkDoc: response.data[0].linkDoc,
@@ -132,12 +132,12 @@ useEffect(() => {
  return (   
     <div class="CONTAINERALUMNO">   
 
-   <p class="HEADER-TEXT1">{location.state.nombreEntregable} - {location.state.tituloDoc}</p>
-   <p class="HEADER-TEXT2">Archivos enviados</p>
+   <p class="HEADER-TEXT1-DOCUMENTO">{location.state.nombreEntregable} - {location.state.tituloDoc}</p>
+   <p class="HEADER-TEXT1-DOCUMENTO">Archivos enviados</p>
    <div class="row ">
 
       
-        <Upload
+        <Upload_Asesor
          accept=".pdf,.docx"
           files={files}
           linkDoc={location.state.linkDoc}

@@ -3,12 +3,13 @@ import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom'
 import  '../../stylesheets/Profesor.css';
 import { useTable ,useFilters,setFilter} from 'react-table';
 import axios from 'axios';
-import {  useNavigate } from 'react-router-dom';
+import {  useNavigate ,useLocation} from 'react-router-dom';
 import * as BsIcons from 'react-icons/bs';
 import { NonceProvider } from 'react-select';
 
 function Alumnos() {
     let navigate = useNavigate();
+    const location = useLocation();
     let [dataI, setDataI] = useState([]);
     const [currentPage,SetCurrentPage] = useState(0);
     const [search1, setSearch1] = useState("");
@@ -21,7 +22,7 @@ function Alumnos() {
  
     async function getDataI() {
       (async () => {
-        const result = await axios("http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=1");
+        const result = await axios(`https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=${localStorage.getItem('idCurso')}`);
         //const result = await axios("http://44.210.195.91/api/Alumno/ListAlumnosXIdCurso?idCurso=1");
         setDataI(result.data);
       })();

@@ -13,28 +13,48 @@ import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
 import {ModalConfirmación, ModalPregunta,ModalComentario} from '../../components/Modals';
-
+import {
+  FileUploadContainer,
+  FormField,
+  ImagePreview,
+  PreviewContainer,
+  PreviewList,
+  FileMetaData,
+  RemoveFileIcon,
+  FilePreviewContainer
+} from "../../components/Upload.styles";
 function EntregableParcialSeleccionado(){
+  var idDetalleRubricaSelec=0;
   let navigate = useNavigate();
   const location = useLocation();
+  const [buttonText, setButtonText] = useState(" ");
+  const changeText = (text) => setButtonText(text);
   const [data, setData] = useState([]);
   const [dataV, setDataV] = useState([]);
+  const [documentosVersion , setDocumentosVersion] = useState([]);    
+  const [documentosVersionAlumno , setDocumentosVersionAlumno ] = useState([]);
+  const [documentosVersionAsesor , setDocumentosVersionAsesor ] = useState([]);
+  const [documentosVersionDocente , setDocumentosVersionDocente ] = useState([]);
   useEffect(() => {
     getData();
+    {location.state.estado==2?changeText("Guardar"):changeText("Modificar")}
     getDataV();
+    cargarDocumentos();
   }, []);
   
 
   
   const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
   const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
+  const [isOpenAprobarModal, openAprobarModal ,closeAprobarModal ] = useModal();
   const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
   const [isOpenComentarioModal, openComentarioModal ,closeComentarioModal ] = useModal();
   const [titulo,setTitulo] = useState("");
   const [idDetalleRubrica,setIdDetalleRubrica] = useState("");
   const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
   const [comentario,setComentario] = useState("");
-  const [entSeleccionado, setEntSeleccionado]=useState({
+  
+  const [detNotaSeleccionado, setdetNotaSeleccionado]=useState({
     idDetalleNotaRubrica: 0,
     fidDetalleRubrica: 0,
     fidVersion: parseInt(`${location.state.idVersion}`),
@@ -42,10 +62,19 @@ function EntregableParcialSeleccionado(){
     puntaje: 0,
     comentario: '',
     estado:1,
-    fidCalificador:35,
+    fidCalificador:parseInt(localStorage.getItem('IDUSUARIO')),
 });
-
-const [versionSeleccionada, setVersionSeleccionada]=useState([{
+const [detNotaSeleccionadoModificar, setdetNotaSeleccionadoModificar]=useState({
+  idDetalleNotaRubrica: 0,
+  fidDetalleRubrica: 0,
+  fidVersion: parseInt(`${location.state.idVersion}`),
+  descuento: 0,
+  puntaje: 0,
+  comentario: '',
+  estado:1,
+  fidCalificador:parseInt(localStorage.getItem('IDUSUARIO')),
+});
+const [versionSeleccionadaA, setVersionSeleccionadaA]=useState([{
   idVersion: 0,
   fidEntregable: 0,
   linkDoc: " ",
@@ -59,17 +88,139 @@ const [versionSeleccionada, setVersionSeleccionada]=useState([{
   fechaModificacion: " ",
   notaVersion: 0,
 }]);
+const [versionSeleccionadaC, setVersionSeleccionadaC]=useState([{
+  idVersion: 0,
+  fidEntregable: 0,
+  linkDoc: " ",
+  fechaSubida: " ",
+  fidEstadoEntregable:0,
+  documentosAlumno:" ",
+  documentosRetroalimentacion:" ",
+  estado:0,
+  fidAlumno:0,
+  comentarios:' ',
+  fechaModificacion: " ",
+  notaVersion: 0,
+}]);
+const [versionSeleccionadaMod, setVersionSeleccionadaMod]=useState([{
+  idVersion: 0,
+  fidEntregable: 0,
+  linkDoc: " ",
+  fechaSubida: " ",
+  fidEstadoEntregable:0,
+  documentosAlumno:" ",
+  documentosRetroalimentacion:" ",
+  estado:0,
+  fidAlumno:0,
+  comentarios:' ',
+  fechaModificacion: " ",
+  notaVersion: 0,
+}]);
+const [versionSeleccionadaModA, setVersionSeleccionadaModA]=useState([{
+  idVersion: 0,
+  fidEntregable: 0,
+  linkDoc: " ",
+  fechaSubida: " ",
+  fidEstadoEntregable:0,
+  documentosAlumno:" ",
+  documentosRetroalimentacion:" ",
+  estado:0,
+  fidAlumno:0,
+  comentarios:' ',
+  fechaModificacion: " ",
+  notaVersion: 0,
+}]);
+//
+const cargarDocumentos=async()=>{
+ 
+  if(location.state.idVersion!=null){
+    (async () => {
+    const urlDocumentos  = `https://localhost:7012/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${location.state.idVersion}`
+    const responseDocumentos  = await fetch(urlDocumentos)
+    const dataDocumentos = await responseDocumentos.json()
+    setDocumentosVersion(dataDocumentos)
+    console.log(documentosVersion);
+    var i=0;
+      for(i=0;i<dataDocumentos.length;i++){
+        if(dataDocumentos[i].esTarea==1){
+        documentosVersionAlumno[i] = dataDocumentos[i];
+           }
+      }
+      for(i=0;i<dataDocumentos.length;i++){
+        if(location.state.estado==5){
+        if(dataDocumentos[i].esRetroalimentacionDocente==1){
+          documentosVersionAsesor[i] = dataDocumentos[i];
+           }
+          }
+        else{
+          if(dataDocumentos[i].esRetroalimentacion==1){
+            documentosVersionAsesor[i] = dataDocumentos[i];
+             }
 
+
+        }
+      }
+      setDocumentosVersionAlumno(documentosVersionAlumno);
+      setDocumentosVersionAsesor(documentosVersionAsesor);
+  })();
+    //  setSubtitulo("Modificar Entrega");
+    }
+    
+
+}
+//
 const  getDataV = async() => {
     const response= await axios(`https://localhost:7012/api/Version/ListVersionXId?idVersion=${location.state.idVersion}`);
     setDataV(response.data);
     console.log(response.data);
-    setVersionSeleccionada({
+    setVersionSeleccionadaC({
       idVersion: 0,
       fidEntregable: parseInt(response.data[0].fidEntregable),
       linkDoc: response.data[0].linkDoc,
       fechaSubida: new Date(response.data[0].fechaSubida).toISOString(),
-      fidEstadoEntregable:parseInt(response.data[0].fidEstadoEntregable),
+      fidEstadoEntregable:3,
+      documentosAlumno:response.data[0].documentosAlumno,
+      documentosRetroalimentacion:response.data[0].documentosRetroalimentacion,
+      estado:1,
+      fidAlumno:parseInt(response.data[0].fidAlumno),
+      comentarios:' ',
+      fechaModificacion:new Date(response.data[0].fechaModificacion).toISOString(),
+      notaVersion: parseInt(response.data[0].notaVersion),
+    });
+    setVersionSeleccionadaA({
+      idVersion: 0,
+      fidEntregable: parseInt(response.data[0].fidEntregable),
+      linkDoc: response.data[0].linkDoc,
+      fechaSubida: new Date(response.data[0].fechaSubida).toISOString(),
+      fidEstadoEntregable:4,
+      documentosAlumno:response.data[0].documentosAlumno,
+      documentosRetroalimentacion:response.data[0].documentosRetroalimentacion,
+      estado:1,
+      fidAlumno:parseInt(response.data[0].fidAlumno),
+      comentarios:' ',
+      fechaModificacion:new Date(response.data[0].fechaModificacion).toISOString(),
+      notaVersion: parseInt(response.data[0].notaVersion),
+    });
+    setVersionSeleccionadaMod({
+      idVersion: parseInt(response.data[0].idVersion),
+      fidEntregable: parseInt(response.data[0].fidEntregable),
+      linkDoc: response.data[0].linkDoc,
+      fechaSubida: new Date(response.data[0].fechaSubida).toISOString(),
+      fidEstadoEntregable:3,
+      documentosAlumno:response.data[0].documentosAlumno,
+      documentosRetroalimentacion:response.data[0].documentosRetroalimentacion,
+      estado:1,
+      fidAlumno:parseInt(response.data[0].fidAlumno),
+      comentarios:' ',
+      fechaModificacion:new Date(response.data[0].fechaModificacion).toISOString(),
+      notaVersion: parseInt(response.data[0].notaVersion),
+    });
+    setVersionSeleccionadaModA({
+      idVersion: parseInt(response.data[0].idVersion),
+      fidEntregable: parseInt(response.data[0].fidEntregable),
+      linkDoc: response.data[0].linkDoc,
+      fechaSubida: new Date(response.data[0].fechaSubida).toISOString(),
+      fidEstadoEntregable:4,
       documentosAlumno:response.data[0].documentosAlumno,
       documentosRetroalimentacion:response.data[0].documentosRetroalimentacion,
       estado:1,
@@ -85,14 +236,14 @@ const  getDataV = async() => {
 const handleChange= (nombre,e)=>{
     const {name, value}=e.target;
     if(/[0-9]/.test(value)){
-      setEntSeleccionado(prevState=>({
+      setdetNotaSeleccionado(prevState=>({
         ...prevState,
         [name]: parseFloat(value),
         [`fidDetalleRubrica`]: parseInt(nombre),
       }))
     }
     else{
-      setEntSeleccionado(prevState=>({
+      setdetNotaSeleccionado(prevState=>({
         ...prevState,
         [name]: value,
         [`fidDetalleRubrica`]: parseInt(nombre),
@@ -101,22 +252,57 @@ const handleChange= (nombre,e)=>{
     }
     setIdDetalleRubrica(parseInt(nombre));
     console.log(nombre);
-    console.log(entSeleccionado);
+    console.log(detNotaSeleccionado);
     
   }
   const handleChangeComentario= (e)=>{
     const {name, value}=e.target;
 
-    setVersionSeleccionada(prevState=>({
+    setVersionSeleccionadaA(prevState=>({
     ...prevState,
     [name]: value
   }))
-  console.log(versionSeleccionada);
+  setVersionSeleccionadaC(prevState=>({
+    ...prevState,
+    [name]: value
+  }))
+  setVersionSeleccionadaMod(prevState=>({
+    ...prevState,
+    [name]: value
+  }))
+  setVersionSeleccionadaModA(prevState=>({
+    ...prevState,
+    [name]: value
+  }))
+  console.log(versionSeleccionadaA);
+  console.log(versionSeleccionadaC);
+  console.log(versionSeleccionadaMod);
+  }
+  const selectPeticion=()=>{
+    if(buttonText=="Modificar"){
+      peticionEditDetalleNota();
+    }
+    else if(buttonText=="Guardar"){
+      peticionPost();
+    }
   }
   const peticionPost=async()=>{
-    await axios.post("http://34.195.33.246/api/DetalleNotaRubrica/PostDetalleNotaRubrica",entSeleccionado,{
+    await axios.post("https://localhost:7012/api/DetalleNotaRubrica/PostDetalleNotaRubrica",detNotaSeleccionado,{
         _method: 'POST'
       })
+    .then(response=>{
+      console.log(response);
+      idDetalleRubricaSelec=response.data.idDetalleNotaRubrica;
+      console.log(idDetalleRubricaSelec);
+      closePostModal();
+      openGuardadoModal();
+    }).catch(error =>{
+      console.log(error.message);
+    })
+
+  }
+  const peticionEditDetalleNota=async()=>{
+    await axios.put("https://localhost:7012/api/DetalleNotaRubrica/ModifyDetalleNotaRubrica",detNotaSeleccionado)
     .then(response=>{
       closePostModal();
       openGuardadoModal();
@@ -124,11 +310,15 @@ const handleChange= (nombre,e)=>{
       console.log(error.message);
     })
   }
-  
-  const peticionEdit=async()=>{
-    await axios.post("http://34.195.33.246/api/Version/PostVersion",versionSeleccionada,{
+  const peticionC=async()=>{
+    await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionadaC,{
       _method: 'POST'
     })
+    .then(response=>{  
+    }).catch(error =>{
+      console.log(error.message);
+    })
+    await axios.put("https://localhost:7012/api/Version/ModifyVersion",versionSeleccionadaMod)
     .then(response=>{
       closeEditModal();
       openGuardadoModal();
@@ -136,7 +326,34 @@ const handleChange= (nombre,e)=>{
       console.log(error.message);
     })
   }
-
+  const peticionA=async()=>{
+    await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionadaA,{
+      _method: 'POST'
+    })
+    .then(response=>{
+    }).catch(error =>{
+      console.log(error.message);
+    })
+    await axios.put("https://localhost:7012/api/Version/ModifyVersion",versionSeleccionadaModA)
+    .then(response=>{
+      closeEditModal();
+      openGuardadoModal();
+    }).catch(error =>{
+      console.log(error.message);
+    })
+  }
+  const peticionComentario=()=>{
+    console.log("comentarios");
+    console.log(versionSeleccionadaC);
+    peticionC();
+    navigate(-1);
+  }
+  const peticionAprobar=async()=>{
+    console.log("aprobar");
+    console.log(versionSeleccionadaA);
+    peticionA();
+    navigate(-1);
+  }
   const cerrarPost=()=>{
     closeGuardadoModal();
   }
@@ -145,7 +362,7 @@ const handleChange= (nombre,e)=>{
   }
   async function getData() {
     (async () => {
-      const result = await axios(`http://34.195.33.246/api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
+      const result = await axios(`https://localhost:7012/api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
       //const result = await axios(`http://44.210.195.91/api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
       setData(result.data);
       console.log(data)
@@ -160,9 +377,9 @@ const handleChange= (nombre,e)=>{
   const dataTablaIntermedia = React.useMemo(
     () => [
       {
-        col1: `${location.state.estado}`,
-        col2: `${location.state.estado}`,
-        col3: `${location.state.fechaE}`,
+        col1: `${location.state.estado==5?"Calificado por el docente":(location.state.estado==4?"Entregado a docente":(location.state.estado==3?"Con retroalimentacion":(location.state.estado==2?"Enviado para retroalimentacion":"Por Entregar")))}`,
+        col2: `${location.state.fechaL}`,
+        col3: `${location.state.idVersion>0?location.state.fechaE:"Sin Modificación"}`,
       },
     ],
     []
@@ -174,11 +391,11 @@ const handleChange= (nombre,e)=>{
         accessor: 'col1',
       },
       {
-        Header: 'Estado de Retroalimentación',
+        Header: 'Fecha Límite',
         accessor: 'col2',
       },
       {
-        Header: 'Fecha de Entrega',
+        Header: 'Fecha de Modificación',
         accessor: 'col3',
       },
       
@@ -198,6 +415,7 @@ const {
         <div className='CONTAINERASESOR'>
          <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
         <h1 className='HEADER-TEXT1'>Entregable Parcial-{ location.state.tituloDoc }</h1>
+        <br></br>
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
         <div className='ContenidoPrincipal'>
         <table   {...getTableProps()} style={{minWidth: 650, borderCollapse: 'separate',
@@ -242,12 +460,22 @@ const {
          })}
          </tbody>
        </table>
-
-        <form action={location.state.linkDoc}>
-          <BsIcons.BsFileEarmarkPdf/> <input type="submit" value={location.state.tituloDocPDF} /> 
-        </form>
-     
-        <h3 className='HEADER-TEXT3'>Rúbrica de Evaluación</h3>
+       <p class="HEADER-TEXT3">Documentos Enviados por el Alumno: </p>
+       <PreviewList>
+{((location.state.idVersion >= 0) ? documentosVersionAlumno.map((documentos) => {
+                   return (
+              
+                    <a href={documentos.linkDoc}>
+                    <button><BsIcons.BsFileEarmarkPdf/> {documentos.nombreDocumento} </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                  </a>    
+              
+            );
+                }): " ")} </PreviewList>
+    
+        <br></br>
+        <h4  className='HEADER-TEXT3'> Ingrese la nota y comentario por cada rubro , luego seleccione Guardar:</h4>
+        <br></br>
+        <h3 className='HEADER-TEXT5'>Rúbrica de Evaluación</h3>
         <div className = "row LISTAR-TABLA">
         <div className=" col-12  ">
           <table className='table fs-6 '>
@@ -273,7 +501,8 @@ const {
                     <button class="btn BTN-ACCIONES" onClick={()=>abrirPost(setTitulo(rubrica.rubro))}> <FaIcons.FaCommentAlt /></button>
                     </td>
                     <td>
-                    <button type="button" className='btn btn-light' onClick={()=>openPostModal()}>Guardar</button>
+                    
+                    <button type="button" className='btn btn-light' onClick={()=>{openPostModal(); location.state.estado==2?changeText("Guardar"):changeText("Modificar")}}>{buttonText}</button>
                     </td>
                 </tr>
               ))}
@@ -282,8 +511,23 @@ const {
         </div>
       </div>
       <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
-          tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios}})} >
+          tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}})} >
            Agregar Documentos de Retroalimentación</p>
+
+      <p className="HEADER-TEXT3">Documentos Enviados:</p>
+           <PreviewList>
+{((location.state.idVersion >= 0) ? 
+
+
+documentosVersionAsesor.map((documentos) => {
+                   return (
+              
+                    <a href={documentos.linkDoc}>
+               <button><BsIcons.BsFileEarmarkPdf/>   {documentos.nombreDocumento} </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                  </a>    
+              
+            );
+                }): " ")} </PreviewList>
       <div className = "DATOS">
                 <div className = "col-12">
                     <div className="text-start fs-5 fw-normal "><p>Comentarios Generales</p></div>
@@ -297,8 +541,8 @@ const {
       <div className="row">                            
               <div className="LISTAR-BOTON">
                
-                  <button className="btn btn-success fs-4 fw-bold mb-3 me-3 "  type="button">Aprobar</button>
-                  <button  onClick={()=>openEditModal()} class="btn btn-primary fs-4 fw-bold mb-3 me-3" type="button">Enviar comentarios</button>
+                  <button onClick={()=>openAprobarModal()} className="btn btn-success fs-4 fw-bold mb-3 me-3 "  type="button">Aprobar (Enviar al docente)</button>
+                  <button  onClick={()=>openEditModal()} className="btn btn-primary fs-4 fw-bold mb-3 me-3" type="button">Enviar comentarios al alumno (Falta mejorar)</button>
               </div>
         </div>
         </div>
@@ -307,25 +551,37 @@ const {
     closeModal={closePostModal}
     procedimiento = "guardar"
     objeto="el puntaje y comentario para este rubro"
-    elemento={entSeleccionado && entSeleccionado.nombre}
+    elemento={detNotaSeleccionado && detNotaSeleccionado.nombre}
   >
     <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-      <Button class="btn  btn-success btn-lg" onClick={()=>peticionPost()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <Button class="btn  btn-success btn-lg" onClick={()=>selectPeticion()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <Button class="btn btn-danger btn-lg"  onClick={closePostModal}>Cancelar</Button>
     </div>
   </ModalPregunta>
   <ModalPregunta
               isOpen={isOpenEditModal} 
               closeModal={closeEditModal}
-              procedimiento = "Guardar"
-              objeto="el comentario general"
-              elemento={versionSeleccionada && versionSeleccionada.comentario}
+              procedimiento = "enviar"
+              objeto="comentarios generales al alumno"
+              elemento={versionSeleccionadaC.comentario}
             >
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-                <Button class="btn  btn-success btn-lg" onClick={()=>peticionEdit()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Button class="btn  btn-success btn-lg" onClick={()=>peticionComentario()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <Button class="btn btn-danger btn-lg"  onClick={closeEditModal}>Cancelar</Button>
               </div>
             </ModalPregunta>
+<ModalPregunta
+              isOpen={isOpenAprobarModal} 
+              closeModal={closeAprobarModal}
+              procedimiento = "aprobar"
+              objeto="esta version del alumno"
+              
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn  btn-success btn-lg" onClick={()=>peticionAprobar()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Button class="btn btn-danger btn-lg"  onClick={closeAprobarModal}>Cancelar</Button>
+              </div>
+</ModalPregunta>           
   <ModalConfirmación
               isOpen={isOpenGuardadoModal} 
               closeModal={closeGuardadoModal}
@@ -335,6 +591,15 @@ const {
                 <Button class="btn btn-success btn-lg" onClick={()=>closeGuardadoModal()}>Entendido</Button>
               </div>
             </ModalConfirmación>
+  <ModalConfirmación
+              isOpen={isOpenEditadoModal} 
+              closeModal={closeEditadoModal}
+              procedimiento= "modifcado"
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn btn-success btn-lg" onClick={()=>closeEditadoModal()}>Entendido</Button>
+              </div>
+  </ModalConfirmación>                
   <ModalComentario
               isOpen={isOpenComentarioModal} 
               closeModal={closeComentarioModal}

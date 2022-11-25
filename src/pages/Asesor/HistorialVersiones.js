@@ -58,6 +58,7 @@ function HistorialVersiones(){
         <div className='CONTAINERASESOR'>
          <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
         <h1 className='HEADER-TEXT1'>Historial Versiones-{location.state.tituloDoc}</h1>
+        <br></br>
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
         <div class="col col-7 FILTRO-LISTAR-BUSCAR" >
               <p>Ingresar Estado de Entregable</p>
@@ -66,7 +67,7 @@ function HistorialVersiones(){
               </div>
             
           </div>
-        <div className='ContenidoPrincipal'>
+        <div >
         <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
         <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
 
