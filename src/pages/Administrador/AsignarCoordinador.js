@@ -10,6 +10,7 @@ import DataTable from "./DataTable";
 import * as Ionicons5 from "react-icons/io5";
 import * as BsIcons from "react-icons/bs";
 import * as BootIcons from "react-icons/bs";
+import * as RiIcons  from "react-icons/ri";
 import ModalBuscarUsuario from "./ModalBuscarUsuario";
 import DatePicker from "react-date-picker";
 import "../../stylesheets/Calendar.css";
@@ -141,7 +142,7 @@ const AsignarCoordinador = () => {
               }}
               class=" btn btn-primary fs-4 fw-bold BUSCAR"
             >
-              ...
+              <RiIcons.RiSearch2Line />
             </button>
           </div>
         </div>

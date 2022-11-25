@@ -1,25 +1,30 @@
 import React from 'react'
 import {useState , useEffect, useContext} from "react";
-import useModal from '../../hooks/useModals';
+import useModal from '../../../hooks/useModals';
 import {  Button, Collapse} from '@material-ui/core';
 import { BrowserRouter as Router , Routes, Route, Link, useLocation } from 'react-router-dom';
 import {  useNavigate ,useParams} from 'react-router-dom';
 import axios from 'axios';
 import { useTable } from 'react-table';
 import * as BsIcons from 'react-icons/bs';
-import '../../stylesheets/Asesor.css'
+import '../../../stylesheets/Asesor.css'
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
-import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
+import {ModalConfirmación, ModalPregunta} from '../../../components/Modals';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
 
-import { UserContext } from '../../UserContext';
+import { UserContext } from '../../../UserContext';
 import { AiTwotoneDollarCircle } from 'react-icons/ai';
 
-const urlNota= "http://34.195.33.246/api/Nota/";
-const urlTipoEnt= "http://34.195.33.246/api/TipoEntregable/"
-const urlEnt= "http://34.195.33.246/api/Entregable/";
+const url = "https://localhost:7012/"
+// const url = "http://34.195.33.246/"
+
+const urlNota = url + "api/Nota/";
+const urlTipoEnt= url + "api/TipoEntregable/"
+const urlEnt= url + "api/Entregable/";
+
+var dsots = [];
 
 function DatoSistEvaluacion()  {
 
@@ -32,8 +37,12 @@ function DatoSistEvaluacion()  {
     const [mostrar, setMostrar] = useState(1);
     const [subTitulo,setSubtitulo] = useState("Registrar nota");
 
-    const [listTipoEnt, setListTipoEnt] = useState ([]);
+    const [listEntCursoTipo, setListEntCursoTipo] = useState ([]);
+    const [data, setData] = useState ([]);
     const [listEnt, setListEnt] = useState ([]);
+    const [listEntCursoTipoModify, setListEntCursoTipoModify] = useState ([]);
+    const [idTipoIni, setIdTipoIni] = useState(1);
+    const [selectedRows, setSelectedRows] = useState([]);
 
     const [nota, setNota] = useState({
         idNota: 0,
@@ -41,7 +50,8 @@ function DatoSistEvaluacion()  {
         nombre: '',
         peso: 1,
         fidTipoEntregable: 0,
-        estado: 1
+        estado: 1,
+        entregables: selectedRows,
     })
 
     //Control cambio en inputs de titulo--
@@ -54,16 +64,20 @@ function DatoSistEvaluacion()  {
         console.log(nota);
     }
 
-/*
-    //Control cambio en inputs de titulo--
-    const handleChangeButton=e=>{
-        const {name, value}=e.target;
-        nota.tipoAplicarPeso = parseInt(value);
-        setMostrar(nota.tipoAplicarPeso);
-        console.log(nota);
+    //Listar notas de un curso 
+    const peticionGetNotas=async(arr)=>{
+      await axios.get(urlNota+ "GetNotas_x_idCurso?idCurso="+localStorage.getItem('idCurso'))       
+      .then(response=>{
+          setData(response.data);
+          console.log(response.data)
+          dsots = response.data
+          console.log("arr",arr)
+        }).catch(error =>{
+          console.log(error.message);
+      })
     }
-*/
-    //Controla cambio en combo box del alumno--
+
+    //Controla cambio en combo box del tipo Entregable--
     const cambioSelectTipoEnt =e=>{
         setNota(prevState => ({
             ...prevState,
@@ -79,99 +93,160 @@ function DatoSistEvaluacion()  {
 
     
     //Selección entre modificar o insertar
-    const peticionSelecter =()=>{
+    const peticionSelecter =async()=>{
         console.log("nota");
-        console.log(nota);
+        
         if(id==='0'){
             openPostModal();
+            await peticionGetEntCursoTipo(1, nota.fidTipoEntregable);
         }
         else{
             openEditModal();  
+            await peticionGetEntCursoTipo(2, nota.fidTipoEntregable);
+            if(idTipoIni !== nota.fidTipoEntregable){
+              console.log("anteerio")
+                //anterior
+                cambiarIdNota(listEntCursoTipo, 1);
+                console.log(listEntCursoTipo)
+                //actual
+                console.log("actual", nota.idNota, nota)
+                cambiarIdNota(listEntCursoTipoModify, nota.idNota);
+                console.log(listEntCursoTipoModify)
+                console.log("ergvoemdogvoiser")
+            }
         }
+    }
+
+
+    const carga =(arr)=>{
+      console.log("llegue")
+      console.log(arr)
+      if(arr.length === nota.entregables.length)  return;
+      arr.forEach(element => {
+        var i = nota.entregables.findIndex(e => e.idEntregable === element.idEntregable );
+          nota.entregables.push({idEntregable:element.idEntregable})
+          })
+        setNota(prevState=>({
+        ...prevState,
+        entregables: prevState.entregables,
+        }))
+      console.log(nota);
+      console.log(nota.entregables)
+      console.log("fint Llegue")
     }
 
     const cerrarPut=()=>{
         closeEditadoModal();
         navigate("../sistEvaluacion");
       }
-
-
-
-
-/*
-    const SelectAplPeso = (i) =>{
-        evaluacion.tipoAplicarPeso = i;
-        console.log(evaluacion);
-        if(i==1){   //por promedio
-
-        }
-        else{       //por evaluacion
-
-        }
-
-    }
-*/
-    //Listar tipos de esntregables en el curso
-    const peticionGetEnt=async()=>{
-        await axios.get(urlTipoEnt+ "ListTipoEntregable")      
-        .then(response=>{
-            setListTipoEnt(response.data);
-            console.log(response.data);
-        }).catch(error =>{
-            console.log(error.message);
-        })
-      }
-
-    //Insertar nueva nota--
-    const peticionPost=async()=>{
-        console.log(nota);
-        await axios.post(urlNota+"PostNota",nota)
-          .then(response=>{
-          closePostModal();
-          openGuardadoModal();
-        }).catch(error =>{
-        console.log(error.message);
-        })
-    }
-
-
-
+    
     //Listar entregables de un curso 
     const peticionGetEntreg=async()=>{
-        await axios.get(urlEnt+ "ListEntregablesXIdCurso?idCurso=1")       
-        .then(response=>{
-            removeDup(response.data);
-        }).catch(error =>{
-            console.log(error.message);
-        })
-      }
-
-
-    const removeDup =(array)=>{
+      await axios.get(urlEnt+ "ListEntregablesXIdCurso?idCurso="+localStorage.getItem('idCurso'))       
+      .then(response=>{
+          removeDup(response.data);
+      }).catch(error =>{
+          console.log(error.message);
+      })
+    }
+    //obtiene los tipos de entregables usados en el curso   setListEnt
+    const removeDup =async(array)=>{
         var hash = {};
         array = array.filter(function(current) {
             var exists = !hash[current.fidTipoEntregable];
             hash[current.fidTipoEntregable] = true;
             return exists;
           })
-          setListEnt(array) 
-    }
-/*
-    const cargaTipo=(a)=>{
-        const auxi=[];
-        a.forEach(element => {
-          if(!auxi.includes(element.anho)){
-            auxi.push(element.anho);
+          setListEnt(array)
+          if(id==='0'){
+            var aux2 =[];
+            await peticionGetNotas(aux2);
+            removeReg (array, aux2);
           }
-        });
-        console.log(auxi);
-        setAnhos(auxi);
-    
-      }*/
+          
+    }
+    //
+    const removeReg=(arr)=>{
+      console.log("data", dsots);
+      console.log("listEnt", arr);
+      dsots.forEach(element =>{
+        for(let x=0; x < arr.length; x++){
+          if(element.fidTipoEntregable === arr[x].fidTipoEntregable){
+            arr.splice(x, 1)
+          }
+        }
+      })
+      console.log("listEnt", arr);
+    }
+
+    //-----------------------------------------POST-----------------------------------------------------------
+    //Listar tipos de entregables por curso y por tipoEntregable     setListEntCursoTipo
+    const peticionGetEntCursoTipo=async(i, idTipoEnt)=>{
+        await axios.get(urlEnt+ "ListEntregablesXIdCursoYIdTipoEntregable?idCurso=" + localStorage.getItem('idCurso') + "&idTipoEntregable=" + idTipoEnt)  
+        .then(response=>{
+          console.log("response.data", response.data)
+          if(i == 1){
+            setListEntCursoTipo(response.data);
+            if(id==='0')
+              carga(response.data);
+          }
+          else if(i ==2){
+            setListEntCursoTipoModify(response.data);
+          }
+            console.log(response.data);
+        }).catch(error =>{
+            console.log(error.message);
+        })
+        
+      }
+
+    //--------------------------------------------PUT--------------------------------------------------------------
+    const cambiarIdNota=async(arr, id)=>{
+        arr.forEach((element) =>{
+          element.fidNota = id;
+        })
+    }
+
+    const modificarEnt = async(ent) => {
+      console.log(ent)
+      await axios.put(urlEnt+"PutEntregable",ent)
+            .then(response=>{
+            closeEditModal();
+            openEditadoModal();
+        }).catch(error =>{
+            console.log(error.message);
+        })
+    }
+
+    //--------------------------------------------------------------------------------------------------------------
+
+    //Insertar nueva nota--
+    const peticionPost=async()=>{
+      console.log("nota", nota);
+      await axios.post(urlNota+"PostNota",nota)
+        .then(response=>{
+        closePostModal();
+        openGuardadoModal();
+      }).catch(error =>{
+      console.log(error.message);
+      })
+    }
 
     //Modificar nota--
     const peticionPut=async()=>{
         nota.peso = parseInt(nota.peso)
+        peticionGetEntCursoTipo(2, nota.fidTipoEntregable);
+        if(idTipoIni !== nota.fidTipoEntregable){
+          //before
+          listEntCursoTipo.forEach(element => {
+            modificarEnt(element);
+          });
+
+          //after
+          listEntCursoTipoModify.forEach(element => {
+            modificarEnt(element);
+          });
+        }
         await axios.put(urlNota+"ModifyNota",nota)
             .then(response=>{
             closeEditModal();
@@ -183,7 +258,8 @@ function DatoSistEvaluacion()  {
 
     //Carga especialidad a modificar
     const cargarNota=async()=>{
-        if(id!=='0'){
+      
+        if(id!=='0'){console.log("ini carga de mod");
         const response = await axios.get(urlNota+"GetNotaXId?idNota="+parseInt(id));
         setNota({
             idNota: response.data[0].idNota,
@@ -194,6 +270,11 @@ function DatoSistEvaluacion()  {
         }
         );
             setSubtitulo("Modificar nota");
+            console.log(response.data[0]);
+            peticionGetEntCursoTipo(1, response.data[0].fidTipoEntregable);
+            setIdTipoIni(response.data[0].fidTipoEntregable);
+            console.log(nota);
+            console.log("fin carga de mod");
         }
     }
 
@@ -231,11 +312,8 @@ function DatoSistEvaluacion()  {
       }
 */
     useEffect(()=>{
-        
-        peticionGetEnt();
-        cargarNota();
-        console.log(nota);
-        peticionGetEntreg();
+        cargarNota();           //Si es para modiifcar o registrar
+        peticionGetEntreg();    //listar tipos de entregas activas en el curso
     },[])
 
 

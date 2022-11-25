@@ -18,8 +18,8 @@ import EncuestaPreguntas from "./pages/Comite/EncuestaPreguntas";
 import DatosEncuesta from "./pages/Comite/DatosEncuesta";
 import ListarAsesores from "./pages/Comite/ListarAsesores";
 import DatosAsesor from "./pages/Comite/DatosAsesor";
-import ListSistEvaluacion from './pages/Comite/ListSistEvaluacion';
-import DatoSistEvaluación from './pages/Comite/DatoSistEvaluacion';
+import ListSistEvaluacion from './pages/Comite/FormCalificacion/ListSistEvaluacion';
+import DatoSistEvaluacionV2 from './pages/Comite/FormCalificacion/DatoSisEvaluacionV2';
 import ListarAsesoresNoEstan from "./pages/Comite/AgregarAsesor";
 import ListarAlumnos from "./pages/Comite/ListarAlumnos";
 import DatosAlumno from "./pages/Comite/DatosAlumno";
@@ -28,7 +28,8 @@ import CrearCuentaAlumno from'./pages/Comite/CrearCuenta';
 import ListarDocentes from "./pages/Comite/ListarDocentes";
 import DatosDocente from "./pages/Comite/DatosDocente";
 import ListarDocentesNoEstan from "./pages/Comite/AgregarDocente";
-
+import ListaAreas from './pages/Comite/GestionArea/ListaAreas';
+import DatoArea from './pages/Comite/GestionArea/DatoArea';
 
 
 function Comite() {
@@ -63,8 +64,9 @@ function Comite() {
                   <Route path='tesis' exact element={<Tesis/>}/>
                   <Route path='reporteciclo' exact element={<ReporteCiclo/>} />
                   <Route path='sistEvaluacion' exact element={<ListSistEvaluacion/>} />
-                  <Route path='sistEvaluacion/datoSistEvalución/:id' exact element= {<DatoSistEvaluación/>}/>
-                  
+                  <Route path='sistEvaluacion/datoSistEvalucion/:id' exact element= {<DatoSistEvaluacionV2/>}/>
+                  <Route path='areas' exact element={<ListaAreas/>}/>
+                  <Route path='areas/datoArea/:id' exact element={<DatoArea/>}/>
               </Routes>
 
         </div>

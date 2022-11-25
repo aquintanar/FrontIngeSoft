@@ -172,9 +172,9 @@ function ListaEspecialidad()  {
                     <td>{especialidad.descripcion}</td>
                     <td>{especialidad.facultad.nombre}</td>
                     <td>
-                    <button  class=" btn BTN-ACCIONES" onClick={()=>{navigate("asignarCoordinador/"+especialidad.idEspecialidad)}}> <AiIcons.AiOutlineUserAdd /></button>
-                    <button class="btn BTN-ACCIONES" onClick={()=>{navigate("datosEspecialidad/"+especialidad.idEspecialidad)}}> <FaIcons.FaEdit /></button>
-                    <button  class=" btn BTN-ACCIONES" onClick={()=>seleccionarEspecialidad(especialidad)}> <BootIcons.BsTrash /></button>
+                    <button title="Asignar coordinadores" class=" btn BTN-ACCIONES" onClick={()=>{navigate("asignarCoordinador/"+especialidad.idEspecialidad)}}> <AiIcons.AiOutlineUserAdd /></button>
+                    <button title="Editar especialidad" class="btn BTN-ACCIONES" onClick={()=>{navigate("datosEspecialidad/"+especialidad.idEspecialidad)}}> <FaIcons.FaEdit /></button>
+                    <button title="Eliminar especialidad" class=" btn BTN-ACCIONES" onClick={()=>seleccionarEspecialidad(especialidad)}> <BootIcons.BsTrash /></button>
                     </td>
                 </tr>
               ))}
@@ -207,7 +207,7 @@ function ListaEspecialidad()  {
       </ModalConfirmación>
       
       <div className='LISTAR-ESPECIALIDADES-BOTON'>
-          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosEspecialidad/0")}}><span>Registrar</span></button>
+          <button title= "Registrar especialidad" className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosEspecialidad/0")}}><span>Registrar</span></button>
       </div>             
     </div>              
   )

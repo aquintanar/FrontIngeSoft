@@ -16,6 +16,8 @@ import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
 import jsPDF from "jspdf";
 import ReactHtmlTableToExcel from "react-html-table-to-excel";
 import logo from "../../imagenes/logopucp.jpg";
+import * as FileSaver from 'file-saver';
+import XLSX from 'sheetjs-style';
 const url = "http://34.195.33.246/api/Alumno/";
 
 /*
@@ -63,6 +65,8 @@ const Tesis = () => {
   const [search, setSearch] = useState("");
   const [modalEliminar, setModalEliminar] = useState(false);
   const [currentPage, SetCurrentPage] = useState(0);
+  const fileType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileExtension = ".xlsx";
   let navigate = useNavigate();
 
   const [isOpenDeleteModal, openDeleteModal, closeDeleteModal] = useModal();
@@ -80,6 +84,15 @@ const Tesis = () => {
     foto: null,
     estado: "",
   });
+  const exportToExcel = async() =>{
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = {Sheets:{'data':ws},SheetNames:['data']};
+    const excelBuffer = XLSX.write(wb,{bookType:'xlsx',type:'array'});
+    const  dat = new Blob([excelBuffer],{type:fileType});
+    FileSaver.saveAs(dat,"ReporteTemas"+fileExtension);
+  }
+
+
   const data2 = [
     { name: "Facebook", value: 200 },
     { name: "Instagram", value: 300 },
@@ -120,11 +133,17 @@ const Tesis = () => {
   //----------------
   //Listar Alumnos tabla--
 
+  /*LISTAR LOS TEMAS DE TESIS */
   const peticionGet = async () => {
+    let idCurso = window.localStorage.getItem("idCurso");
     const response = await axios
-      .get("https://localhost:7012/api/TemaTesis/GetTemaTesis", {
-        _method: "GET",
-      })
+      .get(
+        "https://localhost:7012/api/Curso/ReporteTemasAlumnoAsesorXCurso?idCurso=" +
+          1,/* cambiar esto por idCurso, se esta poniendo para la prueba*/
+        {
+          _method: "GET",
+        }
+      )
       .then((response) => {
         console.log("AQUI ESTOY GAAAA");
         console.log(response.data);
@@ -137,24 +156,42 @@ const Tesis = () => {
   const GeneratePDF = () => {
     console.log("SE CLICKEO");
     var doc = new jsPDF("landscape", "px", "a4", "false");
-    doc.text(190,70,"PONTIFICIA UNIVERSIDAD CATÓLICA DEL PERÚ");
+    doc.text(190, 70, "PONTIFICIA UNIVERSIDAD CATÓLICA DEL PERÚ");
     doc.addImage(logo, "PNG", 250, 105, 150, 150);
-    doc.text(240,350,"REPORTE DE TEMAS DE TESIS");
+    doc.text(240, 350, "REPORTE DE TEMAS DE TESIS");
     doc.addPage();
     var j = 60;
-    var k=0;
+    var k = 0;
     for (let i in data) {
-      doc.text(60,j,'_______________________________________________________________________________');
-      doc.text(60,j+20,"ASESOR          : "+data[i].nombresAsesor+" " + data[i].apePatAsesor);
-      doc.text(60,j+40,"ALUMNO          : "+data[i].nombresAlumno+" " + data[i].apePatAlumno);
-      doc.text(60,j+60,"TITULO             : "+data[i].tituloTesis);
-      doc.text(60,j+80,"DESCRIPCION : "+data[i].descripcion);
-      doc.text(60,j+100,"ESTADO           : "+data[i].estadoTema);
+      doc.text(
+        60,
+        j,
+        "_______________________________________________________________________________"
+      );
+      doc.text(
+        60,
+        j + 20,
+        "ASESOR          : " +
+          data[i].nombresAsesor +
+          " " +
+          data[i].apePatAsesor
+      );
+      doc.text(
+        60,
+        j + 40,
+        "ALUMNO          : " +
+          data[i].nombresAlumno +
+          " " +
+          data[i].apePatAlumno
+      );
+      doc.text(60, j + 60, "TITULO             : " + data[i].tituloTesis);
+      doc.text(60, j + 80, "DESCRIPCION : " + data[i].descripcion);
+      doc.text(60, j + 100, "ESTADO           : " + data[i].estadoTema);
       k++;
-      if(k==3){
+      if (k == 3) {
         doc.addPage();
-        j=-60
-        k=0;
+        j = -60;
+        k = 0;
       }
       j += 120;
     }
@@ -182,8 +219,6 @@ const Tesis = () => {
   const abrirCerrarModalEliminar = () => {
     setModalEliminar(!modalEliminar);
   };
-
-  
 
   useEffect(() => {
     peticionGet();
@@ -241,39 +276,40 @@ const Tesis = () => {
                 <tr class>
                   <th style={{ width: 200 }}>Titulo</th>
                   <th style={{ width: 200 }}>Descripcion</th>
-                  <th style={{ width: 100 }}>Estado</th>
+                  <th style={{ width: 150 }}>Estado</th>
+                  <th style={{ width: 200 }}> Alumno </th>
+                  <th style={{ width: 200 }}>Asesor</th>
                 </tr>
               </thead>
               <tbody>
                 {filtrado.map((tesis) => (
                   <tr key={tesis.idTemaTesis}>
-                    <td>{tesis.tituloTesis}</td>
-                    <td>{tesis.descripcion}</td>
+                    <td>{tesis.nombre}</td>
+                    <td>{tesis.TituloTesis}</td>
                     <td>{tesis.estadoTema}</td>
+                    <td>{tesis.nombresAlum +" "+ tesis.apePatAlum}</td>
+                    <td>{tesis.nombresAS +" "+ tesis.apePatAS}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            
           </div>
           <div className="d-grid gap-2 d-md-flex justify-content-md-end LISTAR-BOTON ">
             <button
               className="btn btn-primary fs-4 fw-bold mb-3 "
-              onClick={() => GeneratePDF()}
+              onClick={() => exportToExcel()}
             >
               <span>PDF</span>
             </button>
-            <ReactHtmlTableToExcel 
-            className="btn btn-primary fs-4 fw-bold mb-3"
-            table='excel-table'
-            filename="ReporteTesis"
-            sheet="Sheet"
-            buttonText="Excel"
-            
+            <ReactHtmlTableToExcel
+              className="btn btn-primary fs-4 fw-bold mb-3"
+              table="excel-table"
+              filename="ReporteTesis"
+              sheet="Sheet"
+              buttonText="Excel"
             />
           </div>
         </div>
-        
       </div>
     </div>
   );
