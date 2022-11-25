@@ -183,19 +183,21 @@ const AsignarCoordinador = () => {
             <thead class>
               <tr class>
                 <th style={{ width: 100 }}>ID</th>
-                <th style={{ width: 300 }}>Nombre</th>
-                <th style={{ width: 300 }}>Correo</th>
+                <th style={{ width: 200 }}>Nombre</th>
+                <th style={{ width: 50 }}></th>  
+                <th style={{ width: 200 }}>Correo</th>
                 <th style={{ width: 50 }}>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {coordinadores.map((elemento) => (
                 <tr key={elemento.idComiteTesis}>
-                  <td>{elemento.idComiteTesis}</td>
+                  <td >{elemento.idComiteTesis}</td>
+                  <td>{elemento.nombres+" "+elemento.apeMat}</td>
                   <td>
-                    {elemento.nombres} {elemento.apeMat}
                   </td>
                   <td>{elemento.correo}</td>
+                 
                   <td>
                     <button
                       class=" btn BTN-ACCIONES"

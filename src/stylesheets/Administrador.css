@@ -141,6 +141,7 @@
     text-indent: 0.4em;
 }
 
+
 .LISTAR-TABLA-EV td:nth-child(1){
     font-size: 12px;
     max-width: 100px;
@@ -460,7 +461,7 @@
     transition: 0.5s;
 }
 .LISTAR-BOTON button span:after{
-    content:'\2295';
+    content:'\002B';
     position:absolute;
     opacity: 0;
     top: 0;

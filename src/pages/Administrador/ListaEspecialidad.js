@@ -206,7 +206,7 @@ function ListaEspecialidad()  {
         </div>
       </ModalConfirmación>
       
-      <div className='LISTAR-ESPECIALIDADES-BOTON'>
+      <div className='LISTAR-BOTON'>
           <button title= "Registrar especialidad" className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosEspecialidad/0")}}><span>Registrar</span></button>
       </div>             
     </div>              

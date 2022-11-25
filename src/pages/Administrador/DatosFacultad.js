@@ -9,8 +9,8 @@ import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 import {  Button} from '@material-ui/core';
 import '../../stylesheets/Administrador.css'
 
-const url= "http://34.195.33.246/api/Facultad/";
-const urlEspe= "http://34.195.33.246/api/Especialidad/";
+const url= "https://localhost:7012/api/Facultad/";
+const urlEspe= "https://localhost:7012/api/Especialidad/";
 
 //const url= "http://44.210.195.91/api/Facultad/";
 //const urlEspe= "http://44.210.195.91/api/Especialidad/";
@@ -181,18 +181,17 @@ const handleChange=  (e)=>{
 
                       {!modificar ? null: 
                       <div class=" col-6  LISTAR-TABLA">
-                      <p>Lista de Especialidades</p>
                           <table className='table-responsive fs-6'>
                               <thead class ="bg-primary text-white">
                                 <tr class>
-                                    <th width="200">Nombre</th>
+                                    <th width="300">Especialidades</th>
                                 </tr>
                               </thead >
                               <tbody class="text-decoration-overline">
                                 <u>
                                 {espes.map(especialidad => (
                                     <tr key={especialidad.idEspecialidad}>
-                                        <td width="200">{especialidad.nombre}</td>
+                                        <td width="300">{especialidad.nombre}</td>
                                     </tr>
                                   ))}
                                   </u>
