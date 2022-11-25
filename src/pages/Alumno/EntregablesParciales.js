@@ -181,8 +181,9 @@ const getEntregableID = async () => {
                                           case 2 : return <td class = "text-primary">Enviado para retroalimentacion</td> ;
                                           case 3 : return <td class = "text-success">Con retroalimentacion</td> ;
                                           case 4 : return <td class = "text-primary">Entregado a docente</td> ;
-                                            case 5 : return <td class = "text-success">Calificado por el docente</td> ;
-                                            
+                                          case 5 : return <td class = "text-success">Calificado por el docente</td> ;
+                                          case 6 : return <td class = "text-success">Entregado a Jurado</td> ;
+                                          case 7 : return <td class = "text-success">Calificado por el jurado</td> ;  
                                             default: return <td class = "text-black">Por Entregar</td> ;
                                         }
                                     }) ()}

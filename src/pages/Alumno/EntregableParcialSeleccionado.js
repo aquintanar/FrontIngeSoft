@@ -238,6 +238,12 @@ if(location.state.estado==4){
 else if(location.state.estado==5){
   abrirPostArchivo();
 }     
+else if(location.state.estado==6){
+  abrirPostArchivo();
+}  
+else if(location.state.estado==7){
+  abrirPostArchivo();
+}  
   else{navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
         tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}}) }     })();
      }
@@ -266,7 +272,7 @@ else if(location.state.estado==5){
 
 
         {
-          col1: `${location.state.estado==5?"Calificado por el docente":(location.state.estado==4?"Entregado a docente":(location.state.estado==3?"Con retroalimentacion":(location.state.estado==2?"Enviado para retroalimentacion":"Por Entregar")))}`,
+          col1: `${location.state.estado==7?"Calificado por el jurado":(location.state.estado==6?"Entregado a jurado":(location.state.estado==5?"Calificado por el docente":(location.state.estado==4?"Entregado a docente":(location.state.estado==3?"Con retroalimentacion":(location.state.estado==2?"Enviado para retroalimentacion":"Por Entregar")))))}`,
    //       col1: `${location.state.estado==5?"Calificado":"Sin Calificar"}`,
        //   col2: `${calificado}`,
           col3: `${location.state.fechaL}`,
@@ -421,7 +427,7 @@ else if(location.state.estado==5){
       </div>
       <div class = "DATOS">
                 <div class = "col-12">
-                    <div class="text-start fs-5 fw-normal "><p>Comentarios del {location.state.estado==5?entregable.responsableEvalua:"Asesor"} </p></div>
+                    <div class="text-start fs-5 fw-normal "><p>Comentarios del {location.state.estado==7?"Jurado":(location.state.estado==6?"Docente":(location.state.estado==5?"Docente":"Asesor"))} </p></div>
                     <div class="input-group input-group-lg mb-3">
                         <textarea class="form-control" name="Comentarios" placeholder={version.comentarios} aria-label="comentarios"  disabled="true" cols="10" rows="5
                         " 
@@ -457,7 +463,7 @@ documentosVersionAsesor.map((documentos) => {
               procedimiento= {titulo}
             >
                 <div align = "left">
-                <p class= "text-white mt-5">Comentarios del {entregable.responsableEvalua}:</p></div>
+                <p class= "text-white mt-5">Comentarios del {location.state.estado==7?"Jurado":(location.state.estado==6?"Docente":(location.state.estado==5?"Docente":"Asesor"))}:</p></div>
              <div class = "DATOS">
                 <div class = "col-12">
                     <div class="input-group input-group-lg mb-3">
@@ -475,7 +481,7 @@ documentosVersionAsesor.map((documentos) => {
             <ModalArchivoTamanho
               isOpen={isOpenGuardadoModalArchivo} 
               closeModal={closeGuardadoModalArchivo}
-              procedimiento= "No puede modificar los archivos enviados al docente"
+              procedimiento= "No puede modificar los archivos enviados en esta etapa" 
             >
 
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
