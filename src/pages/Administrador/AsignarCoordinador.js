@@ -30,6 +30,7 @@ const URLESPECIALIDAD = "https://localhost:7012/api/Especialidad/GetEspecialidad
 const AsignarCoordinador = () => {
   const [selectCoord, setSelectCoord] = useState([]);
   const [selecEsp,setSelecEsp]= useState([]);
+  let navigate = useNavigate();
   const [edit, SetEdit] = useState(0);
   const [coordinadores, setCoord] = useState([]); /// los seleccionados
   const [show, setShow] = useState(false);
@@ -85,7 +86,7 @@ const AsignarCoordinador = () => {
     await axios.get(URLESPECIALIDAD,{params:{idEspecialidad:id}})
     .then(response=>{
       console.log(response.data)
-      setSelecEsp(response.data);
+      setSelecEsp(response.data[0].nombre);
     }).catch(error =>{
       console.log(error.message);
     })
@@ -131,11 +132,16 @@ const AsignarCoordinador = () => {
       [e.target.name]: e.target.value,
     });
   };
+  function atras(){
+    navigate("../gestion/gesEspecialidad/")
+  }
+
   const asignarCoordinadores = async (e) => {};
   return (
     <div class=" CONTAINERADMIN">
       <div className="col">
         <p class="HEADER-TEXT1">Asignación de Coordinadores</p>
+        <p class="HEADER-TEXT3">{selecEsp}</p>
         <div class="fs-5 fw-normal  mb-1 ">Nombre docente</div>
         <div class="row DATOS3">
           <div className="col-11 mb-2">
@@ -227,11 +233,11 @@ const AsignarCoordinador = () => {
             </tbody>
           </table>
           <button
-            class="btn btn-primary fs-4 fw-bold GUARDAR"
+            class="btn btn-primary fs-4 fw-bold BOTON-ATRAS"
             type="button"
-            onClick={asignarCoordinadores()}
+            onClick={()=>atras()}
           >
-            <span>Guardar</span>
+            <span>Cancelar</span>
           </button>
         </div>
       </div>
