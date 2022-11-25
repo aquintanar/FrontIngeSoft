@@ -23,10 +23,13 @@ const URLPOST =
   "https://localhost:7012/api/ComiteXEspecialidad/PostComiteXEspecialidad";
 const URLGET= "https://localhost:7012/api/ComiteTesis/GetComiteTesisXIdEspecialidad"
 
+
 const URLDELETE="https://localhost:7012/api/ComiteXEspecialidad/DeleteComiteXEspecialidad";;
 
+const URLESPECIALIDAD = "https://localhost:7012/api/Especialidad/GetEspecialidadXId";
 const AsignarCoordinador = () => {
   const [selectCoord, setSelectCoord] = useState([]);
+  const [selecEsp,setSelecEsp]= useState([]);
   const [edit, SetEdit] = useState(0);
   const [coordinadores, setCoord] = useState([]); /// los seleccionados
   const [show, setShow] = useState(false);
@@ -76,8 +79,20 @@ const AsignarCoordinador = () => {
       console.log(error.message);
     })
   };
+  const ListEspecialidad = async () => {
+    console.log(id);
+    console.log("HOLAAAAAAAAAA");
+    await axios.get(URLESPECIALIDAD,{params:{idEspecialidad:id}})
+    .then(response=>{
+      console.log(response.data)
+      setSelecEsp(response.data);
+    }).catch(error =>{
+      console.log(error.message);
+    })
+  };
   useEffect(()=>{
     ListDocentes();
+    ListEspecialidad();
  },[])
   const agregarDatos = (doc1) => {
     postDocente(doc1);
@@ -121,6 +136,7 @@ const AsignarCoordinador = () => {
     <div class=" CONTAINERADMIN">
       <div className="col">
         <p class="HEADER-TEXT1">Asignación de Coordinadores</p>
+        <p class="HEADER-TEXT2">{selecEsp[0].nombre }</p>
         <div class="fs-5 fw-normal  mb-1 ">Nombre docente</div>
         <div class="row DATOS3">
           <div className="col-11 mb-2">
