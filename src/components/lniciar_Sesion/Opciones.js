@@ -1,9 +1,6 @@
-import {
-  faCheck,
-  faTimes,
-  faInfoCircle,
-  faWindowRestore,
-} from "@fortawesome/free-solid-svg-icons";
+import * as BsIcons from 'react-icons/bs';
+import * as FaIcons from 'react-icons/fa'
+import * as GiIcons from 'react-icons/gi';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -78,13 +75,15 @@ const Opciones = () => {
                 className="BOTON-OPCIONES BOTON-PROFESOR"
                 onClick={handleSubmitProfesor}
               >
-                <b>PROFESOR</b>
+                <span><b>PROFESOR</b></span>
+                <GiIcons.GiTeacher/>
               </button>
               <button
                 className="BOTON-OPCIONES BOTON-ASESOR"
                 onClick={handleSubmitAsesor}
               >
-                <b>ASESOR</b>
+                <span><b>ASESOR</b></span>
+                <FaIcons.FaPeopleArrows/>
               </button>
             </div>
             <div className="seccion-der seccion">
@@ -92,7 +91,8 @@ const Opciones = () => {
                 className="BOTON-OPCIONES BOTON-COMITE"
                 onClick={handleSubmitComite}
               >
-                <b>COMITE</b>
+                <span><b>COMITE</b></span>
+                <FaIcons.FaUsers/>
               </button>
             </div>
           </div>

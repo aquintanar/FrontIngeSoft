@@ -315,8 +315,9 @@ function ListaSemestre()  {
           </table>
         </div>
       </div>
-      <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
-          <button className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{navigate("datosSemestre/0")}}>Registrar</button>
+      
+      <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-BOTON '>
+          <button className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{navigate("datosSemestre/0")}}><span>Registrar</span></button>
       </div>
       
       <Modal

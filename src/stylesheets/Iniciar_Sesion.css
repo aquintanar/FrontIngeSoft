@@ -428,6 +428,13 @@ ESTILOS PARA REGISTRAR DESDE COMITE
 }
 .BOTON-OPCIONES{
     width:15vw;
+    
+  
+}
+.BOTON-OPCIONES span{
+    margin-right: 0.5vw;
+    align-self: center;
+    justify-self: center;
 }
 .GrupoInfo{
     
