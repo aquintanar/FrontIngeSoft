@@ -392,3 +392,16 @@ REPORTE DE TESIS SUSTENTADAS
 .PERIODO_RECEPCION .toggle{
     margin-left: 1.2vw;
 }
+.BOTONES-AGREGAR-ALUMNOS{
+    display: flex;
+    flex-direction: row;
+    margin-left: 48vw;
+}
+#CREAR-CUENTA{
+    background-color: #042354;
+    width:9vw;
+    
+}
+#CREAR-CUENTA span:after{
+    content:'\002B';
+}

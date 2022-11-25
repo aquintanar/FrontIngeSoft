@@ -298,10 +298,11 @@ function ListarAlumnosNoEstan() {
         </div>
       </ModalConfirmación>
 
-      <div class="row INSERTAR-BOTONES">
+      <div class=" INSERTAR-BOTONES BOTONES-AGREGAR-ALUMNOS">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           <button
             class="btn btn-primary fs-4 fw-bold CANCELAR"
+            id="CREAR-CUENTA"
             type="button"
             onClick={() => {
               navigate("../crearCuenta");

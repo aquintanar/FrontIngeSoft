@@ -327,7 +327,12 @@ const CrearCuentaAlumno = () => {
               un número y un carácter especial.
               <br />
             </p>
-            <label htmlFor="confirm_pwd">Confirmar Contraseña:</label>
+            
+          </form>
+        </div>
+        <div className="seccion-der seccion">
+          <form>
+          <label htmlFor="confirm_pwd">Confirmar Contraseña:</label>
             <input
               type="password"
               id="confirm_pwd"
@@ -343,10 +348,6 @@ const CrearCuentaAlumno = () => {
               <FontAwesomeIcon icon={faInfoCircle} />
               Debe coincidir con la contraseña.
             </p>
-          </form>
-        </div>
-        <div className="seccion-der seccion">
-          <form>
             <label htmlFor="codigoPucp">Codigo PUCP:</label>
             <input
               type="text"
