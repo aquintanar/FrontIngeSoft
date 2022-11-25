@@ -136,7 +136,6 @@ const AsignarCoordinador = () => {
     <div class=" CONTAINERADMIN">
       <div className="col">
         <p class="HEADER-TEXT1">Asignación de Coordinadores</p>
-        <p class="HEADER-TEXT2">{selecEsp[0].nombre }</p>
         <div class="fs-5 fw-normal  mb-1 ">Nombre docente</div>
         <div class="row DATOS3">
           <div className="col-11 mb-2">
