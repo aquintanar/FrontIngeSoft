@@ -222,10 +222,11 @@ function DatosCurso() {
 
   const cerrarPost = () => {
     closeGuardadoModal();
+    navigate("../GestionarCurso");
   };
   const cerrarPut = () => {
     closeEditadoModal();
-    navigate("../");
+    navigate("../GestionarCurso");
   };
 
   //checkboxes
