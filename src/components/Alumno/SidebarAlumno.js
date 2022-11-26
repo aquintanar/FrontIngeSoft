@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import * as AiIcons from 'react-icons/ai';
 import * as FaIcons from 'react-icons/fa';
 import { SidebarData } from './SidebarDataAlumno';
+import { SidebarDataTesis2 } from './SidebarDataAlumnoTesis2';
 import SubMenu from './SubMenuAlumno';
 import { IconContext } from 'react-icons/lib';
 import '../../Pagina.css';
@@ -50,7 +51,7 @@ const SidebarNav = styled.nav`
 const SidebarWrap = styled.div`
   width: 100%;
 `;
-
+var numTesis = 0;
 const Sidebar = () => {
   const url = "https://localhost:7012/";
   const {logout, isAuthenticated}=useAuth0();
@@ -58,7 +59,7 @@ const Sidebar = () => {
   const {value,setValue} = useContext(UserContext);
   const [nombre , setNombre] = useState([]);
   const showSidebar = () => setSidebar(sidebar);
-
+  const [cursos , SetCursos] = useState([]);
   const peticionGet=async()=>{
     console.log("hola");
     const response =await axios.get(url+"api/Alumno/GetAlumnos")
@@ -84,6 +85,18 @@ const Sidebar = () => {
     })
   }
 
+  const getTipoEntregables = async() => {
+
+
+
+    const urlCurso = 'https://localhost:7012/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
+    const responseCurso = await fetch(urlCurso);
+    const dataCurso = await responseCurso.json();
+    console.log(dataCurso);
+    numTesis = dataCurso[0].numTesis;
+    SetCursos(dataCurso);
+  }
+
   function guardarLocalStorage(){
     if(value!="Hello from context"){
       localStorage.setItem("IDUSUARIO",value);
@@ -97,6 +110,9 @@ const Sidebar = () => {
   guardarLocalStorage();
   obtenerLocalStorage();
   peticionGet() 
+  useEffect(()=>{
+    getTipoEntregables();
+ },[])
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
@@ -111,9 +127,18 @@ const Sidebar = () => {
         </Nav>
         <SidebarNav sidebar={sidebar}>
           <SidebarWrap>
-            {SidebarData.map((item, index) => {
-              return <SubMenu item={item} key={index} />;
-            })}
+
+
+{cursos.map(curso => (
+       <p>
+       {curso.numTesis==1?SidebarData.map((item, index) => {
+        return <SubMenu item={item} key={index} />;
+      }):SidebarDataTesis2.map((item, index) => {
+        return <SubMenu item={item} key={index} />;
+      })}
+   
+   </p>  
+ ))}
              <button className='BOTON-EXIT' onClick={()=>logout()}><FaIcons.FaDoorOpen /> Cerrar sesión</button>
           </SidebarWrap>
         </SidebarNav>

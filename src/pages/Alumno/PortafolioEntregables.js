@@ -10,10 +10,13 @@ const urlFacu= "http://34.195.33.246/api/Facultad/";
 const url= "http://44.210.195.91/api/Especialidad/";
 const urlFacu= "http://44.210.195.91/api/Facultad/";
 */
+
+var numTesis = 0;
 function PortafolioEntregables()  {
 
   let navigate = useNavigate();
   const location = useLocation();
+  const [cursos , SetCursos] = useState([]);
   const [tipoEntregables, setTipoEntregables]=useState([]);
   const getAsesor = async() => {
     const urlAsesor  = 'https://localhost:7012/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno='+localStorage.getItem('IDUSUARIO')+'&idCurso='+localStorage.getItem('idCurso');
@@ -42,13 +45,13 @@ const getTipoEntregables = async() => {
   const dataCurso = await responseCurso.json();
   console.log(dataCurso);
   
-
+  SetCursos(dataCurso);
   const urlAsesor  = 'https://localhost:7012/api/TipoEntregable/ListTipoEntregableXNumTesis?numTesis='+dataCurso[0].numTesis;
   const response = await fetch(urlAsesor);
   const data = await response.json();
   console.log(data);
   setTipoEntregables(data);
-
+  numTesis=dataCurso[0].numTesis;
 
 }
 
@@ -77,8 +80,12 @@ const getTipoEntregables = async() => {
    
       
  ))}
-
-
+        {cursos.map(curso => (
+          <td class= {curso.numTesis==2?"BTN-CUADRADO":""}>
+           {curso.numTesis==2? <a  onClick={()=>{navigate("PortafolioEntregablesTesis1",{state:{idAlumno:localStorage.getItem('IDUSUARIO'), idCurso: localStorage.getItem('idCurso')}})}}>Tesis 1</a>: ""}   
+           </td>
+         ))}
+     
       
       </div>              
     )

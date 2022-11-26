@@ -15,6 +15,9 @@ import NotaAlumno  from './pages/Alumno/NotaAlumno';
 import Calendario from './pages/Alumno/Calendario';
 import Encuesta from './pages/Alumno/Encuesta';
 import ListaTemaTesis from './pages/Alumno/ListaTemaTesis'
+import PortafolioEntregablesTesis1 from './pages/Alumno/PortafolioEntregablesTesis1';
+import EntregablesParcialesTesis1 from './pages/Alumno/EntregablesParcialesTesis1';
+import EntregableParcialSeleccionadoTesis1 from './pages/Alumno/EntragableParcialSeleccionadoTesis1';
 function Alumno() {
     return (
         <div>    
@@ -28,6 +31,9 @@ function Alumno() {
               <Route path='gestion/gesPortafolio/AvancesSemanales' exact element= {<AvancesSemanales/>}/>
               <Route path='gestion/gesPortafolio/EntregablesParciales' exact element= {<EntregablesParciales/>}/>
               <Route path='gestion/gesPortafolio/EntregablesEvaluaciones' exact element= {<EntregablesParciales/>}/>
+              <Route path='gestion/gesPortafolio/PortafolioEntregablesTesis1' exact element= {<PortafolioEntregablesTesis1/>}/>
+              <Route path='gestion/gesPortafolio/PortafolioEntregablesTesis1/EntregablesParcialesTesis1' exact element= {<EntregablesParcialesTesis1/>}/>
+              <Route path='gestion/gesPortafolio/PortafolioEntregablesTesis1/EntregablesParcialesTesis1/EntregableParcialSeleccionadoTesis1' exact element= {<EntregableParcialSeleccionadoTesis1/>}/>
               <Route path='gestion/gesPortafolio/EntregablesParciales/entregableParcialSeleccionado' exact element= {<EntregableParcialSeleccionado/>}/>
               <Route path='gestion/gesPortafolio/EntregablesParciales/entregableParcialSeleccionado/SubirArchivos' exact element= {<SubirArchivos/>}/>
               <Route path='gestion/Reuniones' exact element= {<Reuniones/>}/>
