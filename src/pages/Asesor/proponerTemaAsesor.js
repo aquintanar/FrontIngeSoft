@@ -7,23 +7,34 @@ import useModal from "../../hooks/useModals";
 import axios from "axios";
 import {ToastContainer,toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-const urlCoAsesor = "http://34.195.33.246/api/TemaTesisXAsesor/";
-const urlTemaTesis = "http://34.195.33.246/api/TemaTesis/";
+//http://34.195.33.246/api/
+//https://localhost:7012/api/
+const urlCoAsesor= "https://localhost:7012/api/TemaTesisXAsesor/";
+const urlTemaTesis= "https://localhost:7012/api/TemaTesis/";
+const urlAs = "https://localhost:7012/api/Asesor/";
 
 const ProponerTemaAsesor = ({ temaTesis, setTemaTesis }) => {
   const [show, setShow] = useState(false);
   const [active, setActive] = useState(false);
   const handleShow = () => setShow(true);
-  let idAsesorRef = 0;
+  let idAsesorRef = window.localStorage.getItem("IDUSUARIO");
   let idTemaGlo = 0;
   const [isOpenPostModal, openPostModal, closePostModal] = useModal();
   const [isOpenEditadoModal, openEditadoModal, closeEditadoModal] = useModal();
   const [isOpenRechazoModal, openRechazoModal, closeRechazoModal] = useModal();
   const [asesorTesis, setAsesor] = useState({
     idUsuario: 0,
-    nombres: "",
-    apeMat: "",
-  });
+    nombres: '',
+    apeMat: '',
+    apePat: ''
+})
+
+const [coasesorTesis, setCoAsesor] = useState({
+    idUsuario: 0,
+    nombres: '',
+    apeMat: '',
+    apePat: ''
+})
 
   const [asesorTesisXTema, setAsesorXTema] = useState({
     idTemaTesisXAsesor: 0,
@@ -91,148 +102,89 @@ const ProponerTemaAsesor = ({ temaTesis, setTemaTesis }) => {
   function cerrarRechazo(){
     closeRechazoModal();
   }
+  const cargarAsesor = async () => {
+    const response = await axios.get(
+      urlAs + "GetAsesorXId?idAsesor=" + parseInt(idAsesorRef)
+    );
+    setAsesor({
+      idUsuario: parseInt(idAsesorRef),
+      nombres: response.data[0].nombres,
+      apeMat: response.data[0].apeMat,
+      apePat: response.data[0].apePat,
+    });
+};
+
+  useEffect(() => {
+  cargarAsesor();
+  }, []);
 
   return (
     <div className="CONTAINER-ASESOR">
       <form>
-        <h1 className="HEADER-TEXT1">Proponer tema de tesis</h1>
-        <div className="form-group DATOS row">
-          <p for="tituloTesis" className="col-md-2 col-form-label mt-2">
-            {" "}
-            Título de tesis:{" "}
-          </p>
-          <div className="col-md-10">
-            <input
-              onChange={handleChange}
-              type="text"
-              className="form-control"
-              id="tituloTesis"
-              name="tituloTesis"
-              style={{ display: "flex" }}
-            />
-          </div>
-        </div>
-        <div className="form-group DATOS row mt-3">
-          <p for="asesor" className="col-md-2 col-form-label">
-            {" "}
-            Nombre asesor:
-          </p>
-          <div className="col-md-10">
-            <p> Daniel Augusto Peirano </p>
-          </div>
-        </div>
-        <div className="form-group DATOS row mt-3">
-          <p for="coasesor" className="col-md-2 col-form-label">
-            {" "}
-            Nombre co-asesor:
-          </p>
-          <div className="col-md-9">
-            <input
-              onChange={handleChange}
-              type="text"
-              className="form-control"
-              id="nombreCoAsesor"
-              name="nombreCoAsesor"
-              disabled
-              style={{ display: "flex" }}
-              value={
-                asesorTesis && asesorTesis.nombres + " " + asesorTesis.apeMat
-              }
-            />
-          </div>
-          <div className="col-md-1">
-            <button
-              type="button"
-              onClick={() => {
-                setShow(true);
-              }}
-              className="btn botonForm"
-            >
-              Coasesor
-            </button>
-            <div>
-              {
-                <ModalBuscarAsesor
-                  show={show}
-                  setShow={setShow}
-                  asesorTesis={asesorTesis}
-                  setAsesor={setAsesor}
-                />
-              }
+      <h1 className='HEADER-TEXT1'>Proponer tema de tesis</h1>
+            <div className="form-group DATOS row">
+                <p for="tituloTesis" className="col-md-2 col-form-label mt-2"> Título de tesis: </p>
+                <div className = "col-md-10" >
+                    <input onChange={handleChange} type='text' className="form-control" id="tituloTesis" name="tituloTesis"
+                    style={{display: 'flex'}}/>
+                </div>
             </div>
-          </div>
-        </div>
 
-        <div className="form-group  DATOS row mt-3">
-          <p for="descripcionTema" className="col-md-6 col-form-label">
-            {" "}
-            Descripción del tema:
-          </p>
-          <div className="col-md-12">
-            <textarea
-              onChange={handleChange}
-              class="form-control"
-              id="descripcion"
-              name="descripcion"
-              rows={6}
-            ></textarea>
-          </div>
-        </div>
+            <div className="form-group  DATOS row mt-3">                
+                <div className = "col-md-6">
+                    <p for="descripcionTema" className="col-md-6 col-form-label"> Tema de tesis:</p>
+                    <textarea onChange={handleChange} class="form-control" id="descripcion" name="descripcion" rows={4}></textarea>
+                </div>
+                <div className = "col-md-6">
+                    <p for="descripcionTema" className="col-md-6 col-form-label"> Observaciones y entregables:</p>
+                    <textarea onChange={handleChange} class="form-control" id="descripcion" name="descripcion" rows={4}></textarea>
+                </div>              
+            </div>
 
-        <div className="form-group DATOS row mt-3">
-          <p for="palabraClave1" className="col-md-2 col-form-label ">
-            {" "}
-            Palabra clave 1:
-          </p>
-          <div className="col-md-4">
-            <input
-              onChange={handleChange}
-              type="text"
-              className="form-control"
-              id="palabraClave1"
-              name="palabraClave1"
-              style={{ display: "flex" }}
-            />
-          </div>
-          <ToastContainer/>
-          <label for="palabraClave2" className="col-md-2 col-form-label">
-            {" "}
-            Palabra clave 2:
-          </label>
-          <div className="col-md-4">
-            <input
-              onChange={handleChange}
-              type="text"
-              className="form-control"
-              id="palabraClave2"
-              name="palabraClave2"
-              style={{ display: "flex" }}
-            />
-          </div>
-        </div>
-
-        <div className="form-group DATOS row mt-3">
-          <p for="Estado" className="col-md-2 col-form-label ">
-            {" "}
-            Estado aprobación:
-          </p>
-          <div className="col-md-10">
-            <p className="fonnnts"> PENDIENTE </p>
-          </div>
-          <p for="Estado" className="col-md-2 col-form-label">
-            {" "}
-            Retroalimentación:
-          </p>
-          <div className="col-md-12">
-            <textarea
-              className="form-control"
-              id="motivoRechazo"
-              name="motivoRechazo"
-              rows={3}
-              disabled
-            ></textarea>
-          </div>
-        </div>
+            <div className="form-group DATOS row mt-3">                                
+                <div className = "col-md-6">
+                    <div className = "form-group row">
+                        <div className = "col-md-3"><p for="coasesor"> Estado:  </p></div>
+                        <div className = "col-md-6"><p for="asesor"> PENDIENTE </p></div> 
+                    </div>                 
+                    <div className = "form-group row">
+                        <div className = "col-md-3"><p for="coasesor"> Asesor:  </p></div>
+                        <div className = "col-md-6"><p for="asesor">{asesorTesis.nombres + " "+ asesorTesis.apePat}</p></div> 
+                    </div>
+                    <div className = "form-group row">
+                        <div className = "col-md-3"><p for="coasesor"> Alumno:  </p></div>
+                        <div className = "col-md-9"> <input onChange={handleChange} type='text' id="nombreCoAsesor" name="nombreCoAsesor"  disabled
+                        style={{display: 'flex'}}/></div> 
+                    </div>
+                    <div className = "form-group row">
+                        <div className = "col-md-3"><p for="coasesor"> Co-asesor:  </p></div>
+                        <div className = "col-md-6"> <input onChange={handleChange} type='text' id="nombreCoAsesor" name="nombreCoAsesor"  disabled
+                        style={{display: 'flex'}} value={coasesorTesis && (coasesorTesis.nombres + " " + coasesorTesis.apeMat)}/></div>
+                        <div className = "col-md-2"><button type="button" onClick={() => {setShow(true)}} className="btn botonForm" >
+                            ...
+                        </button></div>
+                        <div>
+                            {<ModalBuscarAsesor show={show} setShow={setShow} asesorTesis={asesorTesis} setAsesor={setAsesor}/>}
+                        </div>
+                    </div>
+                </div>
+                <div className = "col-md-6">
+                    <div className = "form-group row">
+                        <div className = "col-md-8"> <p for="Estado" className="col-md-6 col-form-label "> Palabras clave: </p> </div>
+                        <div className = "col-md-4"><button type="button" className="btn botonForm">Agregar</button></div>
+                    </div>
+                    <div className = "form-group row">
+                        <table className="table fs-6 ">
+                        <tbody>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div className = "form-group DATOS row mt-3">
+                <p for="Estado" className="col-md-2 col-form-label"> Retroalimentación:</p>
+                <textarea className="form-control" id="motivoRechazo" name="motivoRechazo" rows={2} disabled></textarea>
+            </div>
         <div className="form-group row mt-3">
           <ModalPregunta
             isOpen={isOpenPostModal}
