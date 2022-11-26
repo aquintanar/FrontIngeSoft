@@ -9,9 +9,9 @@ import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
-const urlAs= "http://34.195.33.246/api/Asesor/";
-const urlEsp= "http://34.195.33.246/api/Especialidad/";
-const urlAsXCurso="http://34.195.33.246/api/AsesorXCurso/";
+const urlAs= "https://localhost:7012/api/Asesor/";
+const urlEsp= "https://localhost:7012/api/Especialidad/";
+const urlAsXCurso="https://localhost:7012/api/AsesorXCurso/";
 
 function ListarAsesores()  {
   let idCursoGlobal = localStorage.getItem("idCurso");    
@@ -127,7 +127,7 @@ function ListarAsesores()  {
 
   return(
       <div className="CONTAINERCOMITE">
-          <h1 className="HEADER-TEXT1">Asesores</h1>
+          <h1 className="HEADER-TEXT1">Asesores en el curso</h1>
           <div class="row">
             <div class="col-12 FILTRO-LISTAR-BUSCAR" >
                 <p>Ingrese el nombre del asesor</p>
