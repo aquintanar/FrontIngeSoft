@@ -87,6 +87,16 @@ function DatosCurso() {
     let idCoordinador = window.localStorage.getItem("IDUSUARIO");
     console.log(idCoordinador);
     console.log(cursoNuevo);
+    
+    for(let i=0;i<cursoNuevo.nombre.length;i++){
+      if(cursoNuevo.nombre.charAt(i)=="1"){
+        cursoNuevo.numTesis=1;
+      }
+      if(cursoNuevo.nombre.charAt(i)=="2"){
+        cursoNuevo.numTesis=2;
+      }
+    }
+
     cursoNuevo.idComiteTesis= idCoordinador;
     await axios
       .post("https://localhost:7012/api/Curso/PostCursoConComite",cursoNuevo, {
@@ -132,6 +142,8 @@ function DatosCurso() {
         asesorPropone: response.data[0].asesorPropone,
         alumnoPropone: response.data[0].alumnoPropone,
         temaAsignado: response.data[0].temaAsignado,
+        numTesis:response.data[0].numTesis
+
       });
       setSubtitulo("Modificar Curso");
       setCheckedAs(response.data[0].asesorPropone);
@@ -171,6 +183,7 @@ function DatosCurso() {
     asesorPropone: false,
     alumnoPropone: false,
     temaAsignado: false,
+    numTesis:1,
     idComiteTesis:0
   });
 
@@ -212,6 +225,7 @@ function DatosCurso() {
   };
   const cerrarPut = () => {
     closeEditadoModal();
+    navigate("../");
   };
 
   //checkboxes
