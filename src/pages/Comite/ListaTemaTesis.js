@@ -105,7 +105,8 @@ function ListaTemaTesis() {
   );
 
   useEffect(() => {
-    getData();
+    //getData();
+    getData1();
   }, []);
 
   async function getData() {
@@ -116,6 +117,16 @@ function ListaTemaTesis() {
     const data = await response.json();
     setData(data);
     console.log(data);
+  }
+  const getData1 = async()=>{
+    let idCur = window.localStorage.getItem("idCurso");
+    let response = await axios.get("https://localhost:7012/api/TemaTesis/GetTemaTesisXIdCurso?idCurso="+idCur,{
+      _method: 'GET'
+    }).then((response)=>{
+      setData(response.data);
+    }).catch(()=>{
+
+    })
   }
 
   const selectRow = {
@@ -128,7 +139,6 @@ function ListaTemaTesis() {
   filtrado = filtrado.slice(currentPage, currentPage + 5);
 
   const nextPage = () => {
-    if (filtrado.length >= currentPage)
       //VER CODIGO
       SetCurrentPage(currentPage + 5);
   };

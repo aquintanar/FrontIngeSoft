@@ -34,6 +34,12 @@ function Login() {
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
+  const [espe, setEspe] = useState({
+    numEsp:0,
+    esp:'',
+    numFac:0,
+    fac:'',
+  });
   const { value, setValue } = useContext(UserContext);
   useEffect(() => {
     setErrMsg("");
@@ -169,7 +175,8 @@ function Login() {
           }
         )
         .then((response) => {
-          console.log(response.data.usuarios);
+          console.log(response.data);
+          buscarEspecialidad(response.data.usuarios[0].fidEspecialidad);
           if (response.data.cant === 1) {
             const idUs = response.data.usuarios[0].idUsuario;
             setValue(idUs);
@@ -194,6 +201,26 @@ function Login() {
       /*lOS ROLES SON UN ARREGLO DE NUMEROS */
     } catch (err) {}
   };
+
+  const buscarEspecialidad=async(e)=>{
+    try {
+      const response2 = await axios
+        .get(
+          "https://localhost:7012/api/Especialidad/GetEspecialidadXId?idEspecialidad="+e,{
+            _method: "GET",
+          }
+        )
+        .then((response2) => {
+            console.log(response2.data);
+            espe.numEsp = response2.data[0].idEspecialidad;
+            espe.numFac = response2.data[0].idFacultad;
+            espe.esp = response2.data[0].nombre;
+
+            window.localStorage.setItem("infoEspecialidad",JSON.stringify(espe));
+        })
+        .catch((error) => {});
+    } catch (err) {}
+  }
   /*VEMOS DE QUE ROL ES CADA CUENTA */
   const valor1 = async (e) => {
     try {

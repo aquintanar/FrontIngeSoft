@@ -20,6 +20,9 @@ const ProponerTemaAsesor = ({ temaTesis, setTemaTesis }) => {
   let idAsesorRef = window.localStorage.getItem("IDUSUARIO");
   let idTemaGlo = 0;
   const [isOpenPostModal, openPostModal, closePostModal] = useModal();
+  const [areasel,setAreasel]=useState([]);
+  const [areaSeleccionada,setAreaSeleccionada]=useState([]);
+  const [especialidadCurso,setEspecialidadCurso]=useState([]);
   const [isOpenEditadoModal, openEditadoModal, closeEditadoModal] = useModal();
   const [isOpenRechazoModal, openRechazoModal, closeRechazoModal] = useModal();
   const [asesorTesis, setAsesor] = useState({
@@ -56,6 +59,9 @@ const [coasesorTesis, setCoAsesor] = useState({
   };
 
   const subirTemaTesis = async () => {
+    temaTesis.area.idArea = areasel.area.idArea;
+    console.log("DEBAJO ESTA TEMA DE TESIS");
+    console.log(temaTesis);
     await axios
       .post(urlTemaTesis + "PostTemaTesisSimple", temaTesis)
       .then((response) => {
@@ -118,6 +124,39 @@ const [coasesorTesis, setCoAsesor] = useState({
   cargarAsesor();
   }, []);
 
+  const cambioSelect =e=>{
+    setAreasel(prevState=>({
+      ...prevState,
+      area:{idArea: e.target.value}}))
+    console.log(areasel);
+  }
+  const ListarAreas1 = async () => {
+    let idcur = window.localStorage.getItem("idCurso");
+    await axios
+      .get("https://localhost:7012/api/Curso/BuscarCursoXId?idCurso=" + idcur)
+      .then((response) => {
+        console.log(response.data);
+        console.log("SE HA SETEADO LA ESPECIALIDAD");
+        setEspecialidadCurso(response.data[0].idEspecialidad);
+        ListarAreas2(response.data[0].idEspecialidad);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+  const ListarAreas2 = async (e) => {
+    await axios
+      .get("https://localhost:7012/api/Area/GetAreaXEspecialidad?idEspecialidad=" + e)
+      .then((response) => {
+        setAreaSeleccionada(response.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };  
+  useEffect(()=>{
+    ListarAreas1();
+    },[])
   return (
     <div className="CONTAINER-ASESOR">
       <form>
@@ -166,6 +205,14 @@ const [coasesorTesis, setCoAsesor] = useState({
                         <div>
                             {<ModalBuscarAsesor show={show} setShow={setShow} asesorTesis={asesorTesis} setAsesor={setAsesor}/>}
                         </div>
+                        <div class="col-6  DATOS" >
+                    <div class="  fs-5 fw-normal  mb-1 "><p>Áreas</p></div>
+                    <select select class="form-select Cursor"  onChange= {cambioSelect}  selected value = {areaSeleccionada.idArea} >
+                      {areaSeleccionada.map(elemento=>
+                          <option key={elemento.idArea} value={elemento.idArea}>{elemento.nombre}</option>  
+                      )}
+                    </select>
+                </div>
                     </div>
                 </div>
                 <div className = "col-md-6">
