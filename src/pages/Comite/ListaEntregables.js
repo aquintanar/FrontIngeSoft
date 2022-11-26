@@ -182,9 +182,9 @@ function ListaEntregables()  {
                 <div class=" fs-5 fw-normal  mb-1 "><p>Tipo</p></div>
                 <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelect}>
                     <option key="0" selected value = "0">Todos</option>
-                    <option key="2" value="2">Entregable Parcial</option>
-                    <option key="3" value="3">Entregable</option>
-                    <option key="4" value="4">Exposición</option>
+                    <option key="1" value="1">Entregable Parcial</option>
+                    <option key="2" value="2">Entregable</option>
+                    <option key="3" value="3">Exposición</option>
                 </select>
               </div>
         </div>

@@ -11,10 +11,15 @@ import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
 //https://localhost:7012/api/
 //http://34.195.33.246/
+/*
 const urlAs= "https://localhost:7012/api/Docente/";
 const urlEsp= "https://localhost:7012/api/Especialidad/";
 const urlAsXCurso="https://localhost:7012/api/DocenteXCurso/";
+*/
 //https://localhost:7012/api/Alumno/
+const urlAs= "https://localhost:7012/api/Docente/";
+const urlEsp= "https://localhost:7012/api/Especialidad/";
+const urlAsXCurso="https://localhost:7012/api/DocenteXCurso/";
 
 function ListarDocentesNoEstan()  {
   let navigate = useNavigate();
@@ -22,11 +27,8 @@ function ListarDocentesNoEstan()  {
   let idAsesorRef = 0;
   const [idas, setIdAs] = useState(0);
   const [currentPage,SetCurrentPage] = useState(0);
-  const [selEsp, setSelEsp] = useState(0);
-  const [tieneAlumn, setTieneAlum] = useState(0);
   const [search, setSearch] = useState("");
   const [as, setAs] = useState([]);
-  const [esp, setEsp] = useState([]);
   const [isOpenRegistro, openRegistroModal ,closeRegistroModal ] = useModal();
   const [isOpenRegistroConf, openRegistroConfModal ,closeRegistroConfModal ] = useModal();
 
@@ -34,30 +36,15 @@ function ListarDocentesNoEstan()  {
   const buscador = e=>{
       setSearch(e.target.value);
   }
-  if(!search && !selEsp){//sin filtro
+  if(!search){//sin filtro
     filtrado=as;
   }
   else{
-    if(search && selEsp){//ambos filtros
       filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
-      filtrado=as.filter((dato)=>dato.fidEspecialidad===selEsp) ;
-    }
-    filtrado=as.filter((dato)=>dato.fidEspecialidad===selEsp) ;
-    if(search)//filtro por nombre
-      filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
-  }
-
-  const cambioSelectEspp =e=>{
-      const valor = parseInt(e.target.value)
-      setSelEsp(valor)
-    }
-  const cambioTieneAlum =e=>{
-      const valor = parseInt(e.target.value)
-      setTieneAlum(valor)
   }
 
   const nextPage = () =>{
-        if(filtrado.length>=currentPage) //VER CODIGO
+        if(filtrado.length>=5) //VER CODIGO
         SetCurrentPage(currentPage+5);
     }
   const previousPage =() =>{
@@ -115,14 +102,6 @@ function ListarDocentesNoEstan()  {
       })
   }
   
-    const petitionEsp=async()=>{
-      await axios.get(urlEsp+"GetEspecialidades/")
-      .then(response=>{
-        setEsp(response.data);
-      }).catch(error =>{
-        console.log(error.message);
-      })
-    }
 
     const cerrarPost=()=>{
         closeRegistroConfModal();
@@ -131,33 +110,25 @@ function ListarDocentesNoEstan()  {
   
   useEffect(()=>{
       petitionAs();
-      petitionEsp();
   },[])
 
   return(
       <div className="CONTAINERCOMITE">
-          <h1 className="HEADER-TEXT1">Agregar docentes</h1>
+          <p className="HEADER-TEXT1">Agregar docentes</p>
+          <p class="HEADER-TEXT2">Búsqueda de docentes </p>
           <div class="row">
             <div class="col-12 FILTRO-LISTAR-BUSCAR" >
                 <p>Ingrese el nombre del docente</p>
                 <div class="input-group">
-                    <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre del docente" aria-label="serach" onChange={buscador}/>
+                    <input size="12" type="text" value={search} class="form-control" name="search" placeholder="Nombre del docente" aria-label="serach" onChange={buscador}/>
                 </div>
             </div>
-            <div class="col-4 FILTRO-LISTAR" >
-                <p>Seleccione especialidad</p>
-                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelectEspp}>
-                    <option selected value = "0">Todos</option>
-                    {esp.map(elemento=>(
-                      <option key={elemento.idEspecialidad} value={elemento.idEspecialidad}>{elemento.nombre}</option>  
-                    ))} 
-                </select>
-              </div>
           </div>
 
+        <p class="HEADER-TEXT2 mt-5" >Lista de docentes no asignados</p>
         <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
         <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
-        <div class = "row LISTAR-TABLA">
+        <div class = "row LISTAR-TABLE">
           <div class=" col-12 ">
             <table className='table fs-6 '>
               <thead class >
@@ -170,10 +141,10 @@ function ListarDocentesNoEstan()  {
               <tbody >
                 {filtrado.map(asesor => (
                   <tr key={asesor.idDocente}>
-                      <td >{asesor.nombres + " " + asesor.apePat}</td>
+                      <td >{asesor.nombres + " " + asesor.apePat+ " " + asesor.apeMat}</td>
                       <td >{asesor.correo}</td>
                       <td>
-                      <div class="LISTAR-ESPECIALIDADES-BOTON"> 
+                      <div class="LISTAR-TABLE-BOTON"> 
                       <button class=" btn btn-primary fw-bold" onClick={()=>seleccionarAsesor(asesor)}> <span>Seleccionar</span></button>
                       </div>                      
                       </td>
@@ -202,7 +173,7 @@ function ListarDocentesNoEstan()  {
             procedimiento= "registrado"
           >
             <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-              <Button class="btn btn-success btn-lg" onClick={()=>{navigate("../alumno")}}>Entendido</Button>
+              <Button class="btn btn-success btn-lg" onClick={()=>{navigate("../docente")}}>Entendido</Button>
             </div>
           </ModalConfirmación>
 

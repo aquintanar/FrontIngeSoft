@@ -60,9 +60,9 @@ const DatosEntregable = ({entregable, setEntregable, active, setActive,cero}) =>
                     <p>Tipo de evaluación:</p>
                     <select select class="form-select  mb-3"  aria-label="Default select example" onChange={handleChange2} 
                     id="fidTipoEntregable" name="fidTipoEntregable" selected value ={entregable.fidTipoEntregable}>  
-                        <option key={2} value={2}>Entregable parcial</option>
-                        <option key={3} value={3}>Entregable</option>
-                        <option key={4} value={4}>Exposición</option>
+                        <option key={1} value={1}>Entregable parcial</option>
+                        <option key={2} value={2}>Entregable</option>
+                        <option key={3} value={3}>Exposición</option>
                     </select>
                     
                     <p>Encargado de aprobar:</p>
@@ -88,7 +88,7 @@ const DatosEntregable = ({entregable, setEntregable, active, setActive,cero}) =>
                         <DateTimePicker  onChange={onChangeFechaEntrega} value={fechaEntrega} />
                     </div>
 
-                    <p>Fecha de aprobación parcial:</p>
+                    <p>Fecha de límite aprobación:</p>
                     <div class="mb-2 FILTRO-FECHA">
                         <DateTimePicker onChange={onChangeFechaParcial} value={fechaParcial} />
                     </div>
@@ -104,7 +104,7 @@ const DatosEntregable = ({entregable, setEntregable, active, setActive,cero}) =>
             <div class="row DATOS">
                 <p>Descripción:</p>
                 <div className = "col-md-12 mb-5">
-                    <textarea onChange={handleChange} class="form-control" id="descripcion" name="descripcion" placeholder="Descripción" rows={7} value={entregable && entregable.descripcion} ></textarea>
+                    <textarea onChange={handleChange} class="form-control" id="descripcion" name="descripcion" placeholder="Descripción" rows={4} value={entregable && entregable.descripcion} ></textarea>
                 </div>
             </div>
             <div class="row INSERTAR-BOTONES">                            

@@ -84,14 +84,14 @@ function DatosDocente() {
 
   return(
       <div class="CONTAINERCOMITE">
-          <p className="HEADER-TEXT1">{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat}</p>
+          <p className="HEADER-TEXT1">{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat + " " +asesorSeleccionado.apeMat}</p>
           <div className='row'>
               <div className='col-8 PERFIL'>
                   <div class='BLOCK PERFIL-HEADER fw-bold'>{asesorSeleccionado.correo} </div>
-                  <div class = 'BLOCK PERFIL-TITLE fw-bold'> Áreas de interés y especialización: {especialidadAs.nombre} 
-                      <div class = "fw-normal text-black">
-                        {especialidadAs.nombre}
-                      </div>
+                  <div class='BLOCK' >
+                        <div class = 'PERFIL-TITLE fw-bold'> Áreas de interés y especialización:
+                            <div class = " PERFIL-SUBTITLE fw-normal text-black ms-3"> {asesorSeleccionado.nombre}</div>
+                        </div>
                     </div>
               </div>
           </div>

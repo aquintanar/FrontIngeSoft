@@ -8,7 +8,11 @@ import * as BsIcons from 'react-icons/bs';
 import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
-
+/*
+const urlAs= "http://34.195.33.246/api/Asesor/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
+const urlAsXCurso="http://34.195.33.246/api/AsesorXCurso/";
+*/
 const urlAs= "https://localhost:7012/api/Asesor/";
 const urlEsp= "https://localhost:7012/api/Especialidad/";
 const urlAsXCurso="https://localhost:7012/api/AsesorXCurso/";
@@ -32,17 +36,102 @@ function ListarAsesores()  {
   const buscador = e=>{
       setSearch(e.target.value);
   }
-  if(!search && !selEsp){//sin filtro
+  if(!search && !selEsp && !tieneAlumn && !observado){//sin filtro
     filtrado=as;
   }
   else{
-    if(search && selEsp){//ambos filtros
+    if(search && selEsp && tieneAlumn && observado){//ambos filtros
       filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
-      filtrado=as.filter((dato)=>dato.fidEspecialidad===selEsp) ;
+      filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ;
+      filtrado=filtrado.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
+      if(tieneAlumn===1)
+        filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
+      if(tieneAlumn===2)
+        filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
     }
-    filtrado=as.filter((dato)=>dato.fidEspecialidad===selEsp) ;
-    if(search)//filtro por nombre
-      filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+    else{
+      if(search && selEsp && tieneAlumn){
+        filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+        filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ;
+        if(tieneAlumn===1)
+          filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
+        if(tieneAlumn===2)
+          filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
+      }
+      else if(selEsp && tieneAlumn && observado){
+        filtrado=as.filter((dato)=>dato.idEspecialidad===selEsp) ;
+        filtrado=filtrado.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
+        if(tieneAlumn===1)
+          filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
+        if(tieneAlumn===2)
+          filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
+      }
+      else if(tieneAlumn && observado && search){
+        filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+        filtrado=filtrado.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
+        if(tieneAlumn===1)
+          filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
+        if(tieneAlumn===2)
+          filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
+      }
+      else if(observado && search && selEsp){
+        filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+        filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ;
+        filtrado=filtrado.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
+      }
+      else{
+        if(search && selEsp){
+          filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+          filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ;
+        }
+        else if(search  && tieneAlumn ){
+          filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+          if(tieneAlumn===1)
+            filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
+          if(tieneAlumn===2)
+            filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
+
+        }
+        else if(search  && observado){
+          filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+          filtrado=filtrado.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
+        }
+        else if(selEsp && tieneAlumn ){
+          filtrado=as.filter((dato)=>dato.idEspecialidad===selEsp) ;
+          if(tieneAlumn===1)
+            filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
+          if(tieneAlumn===2)
+            filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
+          
+        }
+        else if(selEsp  && observado){
+          filtrado=as.filter((dato)=>dato.idEspecialidad===selEsp) ;
+          filtrado=filtrado.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
+        }
+        else if(tieneAlumn && observado){
+          filtrado=as.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
+          if(tieneAlumn===1)
+            filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
+          if(tieneAlumn===2)
+            filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
+          
+        }
+        else{
+          if(selEsp)
+            filtrado=as.filter((dato)=>dato.idEspecialidad===selEsp) ;
+          if(search)//filtro por nombre
+            filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+          if(tieneAlumn){
+            if(tieneAlumn===1)
+             filtrado=as.filter((dato)=>dato.cantAsesorados>0) ;
+            if(tieneAlumn===2)
+              filtrado=as.filter((dato)=>dato.cantAsesorados===0) ;
+          }
+          if(observado)
+          filtrado=as.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
+        }
+      }
+    }
   }
 
   const cambioSelectEspp =e=>{
@@ -59,7 +148,7 @@ function ListarAsesores()  {
   }
 
   const nextPage = () =>{
-        if(filtrado.length>=currentPage) //VER CODIGO
+        if(filtrado.length>=5) //VER CODIGO
         SetCurrentPage(currentPage+5);
     }
   const previousPage =() =>{
@@ -127,15 +216,19 @@ function ListarAsesores()  {
 
   return(
       <div className="CONTAINERCOMITE">
-          <h1 className="HEADER-TEXT1">Asesores en el curso</h1>
+          <p className="HEADER-TEXT1"> Gestión de Asesores</p>
+          <p class="HEADER-TEXT2">Búsqueda de asesores </p>
+
           <div class="row">
-            <div class="col-12 FILTRO-LISTAR-BUSCAR" >
+
+            <div class="col-7 FILTRO-LISTAR-BUSCAR" >
                 <p>Ingrese el nombre del asesor</p>
                 <div class="input-group">
-                    <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre del curso" aria-label="serach" onChange={buscador}/>
+                    <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre del asesor" aria-label="serach" onChange={buscador}/>
                 </div>
             </div>
-            <div class="col-4 FILTRO-LISTAR" >
+
+            <div class="col-5 FILTRO-LISTAR" >
                 <p>Seleccione especialidad</p>
                 <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelectEspp}>
                     <option selected value = "0">Todos</option>
@@ -143,7 +236,10 @@ function ListarAsesores()  {
                       <option key={elemento.idEspecialidad} value={elemento.idEspecialidad}>{elemento.nombre}</option>  
                     ))} 
                 </select>
-              </div>
+            </div>
+          </div>   
+
+          <div class="row">           
               <div class="col-4 FILTRO-LISTAR" >
                 <p> ¿Tiene asesorado?</p>
                 <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioTieneAlum} value ={tieneAlumn}>
@@ -152,6 +248,7 @@ function ListarAsesores()  {
                       <option key={2} value={2}>No</option>
                 </select>
               </div>
+
               <div class="col-4 FILTRO-LISTAR" >
                 <p> ¿Está observado?</p>
                 <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioEstaObservado} value ={observado}>
@@ -162,6 +259,7 @@ function ListarAsesores()  {
               </div>
           </div>
 
+        <p class="HEADER-TEXT2 mt-5" >Lista de asesores en el curso</p>
         <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
         <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
         <div class = "row LISTAR-TABLA">
@@ -177,7 +275,7 @@ function ListarAsesores()  {
               <tbody >
                 {filtrado.map(asesor => (
                   <tr key={asesor.idAsesor}>
-                      <td >{asesor.nombres + " " + asesor.apeMat}</td>
+                      <td >{asesor.nombres + " " + asesor.apePat+ " " + asesor.apeMat}</td>
                       <td >{asesor.correo}</td>
                       <td>
                       <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosAsesor/"+asesor.idAsesor)}}> <FaIcons.FaEdit /></button>

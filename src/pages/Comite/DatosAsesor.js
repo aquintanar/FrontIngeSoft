@@ -9,9 +9,15 @@ import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
+const urlAs= "https://localhost:7012/api/Asesor/";
+const urlAl= "https://localhost:7012/api/Alumno/";
+const urlEsp= "https://localhost:7012/api/Especialidad/";
+const urlAsXCurso="https://localhost:7012/api/AsesorXCurso/";
+/*
 const urlAs= "http://34.195.33.246/api/Asesor/";
 const urlEsp= "http://34.195.33.246/api/Especialidad/";
 const urlAsXCurso="http://34.195.33.246/api/AsesorXCurso/";
+*/
 let idCur = 0;
 let idAs = 0;
 let idEs = 0;
@@ -26,6 +32,7 @@ function DatosAsesor() {
   const [isOpenRegistroConf, openRegistroConfModal ,closeRegistroConfModal ] = useModal();
   const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
   const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
+  const [alumnos,SetAlumnos] = useState([]);
   const [asesorXcurso, setAsesorXCurso] =useState({
       idCurso: 0,
       idAsesor: 0,
@@ -66,6 +73,9 @@ function DatosAsesor() {
           codigoPucp: response.data[0].codigoPucp,
           imagen: response.data[0].imagen,
           contrasena: response.data[0].contrasena,
+          idEspecialidad: response.data[0].idEspecialidad,
+          nombre: response.data[0].nombre,
+          descripcion: response.data[0].descripcion,
           maxAsesorados: response.data[0].maxAsesorados,
           estaObservado: false,
           cantAsesorados: response.data[0].cantAsesorados
@@ -78,19 +88,28 @@ function DatosAsesor() {
         )
         getTemaAsesorXCurso()
         cargarEspecialidad()
+        cargaAlumnos()
       }
   }
 
   const cargarEspecialidad=async()=>{
-      console.log(idEs);
       await axios.get(urlEsp+"GetEspecialidadXId?idEspecialidad="+idEs)
       .then(response=>{
           setespecialidadAs(response.data);
-          console.log(response.data);
       }).catch(error =>{
       console.log(error.message);
       })
   }
+
+  
+  const cargaAlumnos=async()=>{
+    await axios.get(urlAl+"ListAlumnosXIdAsesor?idAsesor="+id)
+    .then(response=>{
+        SetAlumnos(response.data);
+    }).catch(error =>{
+      console.log(error.message);
+    })
+}
 
   const getTemaAsesorXCurso=async()=>{
     console.log(idAs);
@@ -170,14 +189,14 @@ function DatosAsesor() {
 
   return(
       <div class="CONTAINERCOMITE">
-          <p className="HEADER-TEXT1">{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat}</p>
+          <p className="HEADER-TEXT1">{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat + " " + asesorSeleccionado.apeMat}</p>
           <div className='row'>
               <div className='col-8 PERFIL'>
                   <div class='BLOCK PERFIL-HEADER fw-bold'>{asesorSeleccionado.correo} </div>
-                  <div class = 'BLOCK PERFIL-TITLE fw-bold'> Áreas de interés y especialización: {especialidadAs.nombre} 
-                      <div class = "fw-normal text-black">
-                        {especialidadAs.nombre}
-                      </div>
+                  <div class='BLOCK' >
+                        <div class = 'PERFIL-TITLE fw-bold'> Áreas de interés y especialización:
+                            <div class = " PERFIL-SUBTITLE fw-normal text-black ms-3"> {asesorSeleccionado.nombre}</div>
+                        </div>
                     </div>
               </div>
           </div>
@@ -194,6 +213,21 @@ function DatosAsesor() {
               </div>
           </div>
 
+          <div className='col-12 PERFIL'>
+            <div class='BLOCK PERFIL-HEADER fw-bold'> Alumnos asesorados </div>
+            <div class='BLOCK' >
+                <div class = ' PERFIL-TITLE fw-bold'> Alumnos:
+                    {alumnos.length ===0
+                    ?<div class = " PERFIL-SUBTITLE fw-normal text-black ms-3"> No tiene alumnos asignados</div>
+                    :<div>
+                        {alumnos.map(element => (
+                        <div class = " PERFIL-SUBTITLE fw-normal text-black ms-3"> - {element.nombres + " "+ element.apePat+ " "+ element.apeMat}</div>
+                    ))}
+                    </div>
+                    }
+                </div>
+            </div>
+          </div>
           <div class="row INSERTAR-BOTONES">                            
               <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
               <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button"><span>Observar</span></button>
