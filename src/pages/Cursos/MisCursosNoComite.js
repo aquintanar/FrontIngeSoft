@@ -175,28 +175,47 @@ function GestionarCurso()  {
         petitionFacu();
         petitionEsp();
         petitionCurso()
-        /*let tipoUsuario = window.localStorage.getItem("TIPOUSUARIO");
+        let tipoUsuario = window.localStorage.getItem("TIPOUSUARIO");
         if(tipoUsuario=="DOCENTE"){
-          petitionCursoDocente(0)
+          petitionCursoDocente()
         }
         else if(tipoUsuario=="COMITE"){
-          petitionCursoDocente(1)
+          petitionCursoComite()
         }
         else if(tipoUsuario=="ASESOR"){
           petitionCursoAsesor();
-        }*/
+        }
     },[])
-    /*const petitionCursoDocente= async(e)=>{
+    const petitionCursoDocente= async()=>{
       let idUs = window.localStorage.getItem("IDUSUARIO");
-      idUs = idUs-e;
-        await axios.get(urlCur+"ListarCursosXIdComiteTesis?idComiteTesis="+idUs)
+        await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdDocente?idDocente="+idUs)
         .then(response=>{
           console.log(response.data);
           setData(response.data);
         }).catch(error =>{
           console.log(error.message);
         })
-    };*/
+    };
+    const petitionCursoComite = async()=>{
+      let idUs = window.localStorage.getItem("IDUSUARIO");
+        await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdComiteTesis?idComiteTesis="+idUs)
+        .then(response=>{
+          console.log(response.data);
+          setData(response.data);
+        }).catch(error =>{
+          console.log(error.message);
+        })
+    }
+    const petitionCursoAsesor = async()=>{
+      let idUs = window.localStorage.getItem("IDUSUARIO");
+        await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdAsesor?idAsesor="+idUs)
+        .then(response=>{
+          console.log(response.data);
+          setData(response.data);
+        }).catch(error =>{
+          console.log(error.message);
+        })
+    }
     function seleccionarFila() {
       const rows=document.querySelectorAll('tr');
       for(var i=1;i<rows.length;i++){
