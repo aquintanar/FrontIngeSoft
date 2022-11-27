@@ -342,7 +342,7 @@ const Tesis = () => {
               className="btn btn-primary fs-4 fw-bold mb-3 "
               onClick={() => exportToExcel()}
             >
-              <span>PDF</span>
+              <span>Excel</span>
             </button>
             <ReactHtmlTableToExcel
               className="btn btn-primary fs-4 fw-bold mb-3"

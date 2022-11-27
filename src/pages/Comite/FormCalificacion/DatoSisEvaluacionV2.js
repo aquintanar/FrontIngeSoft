@@ -182,7 +182,11 @@ function DatoSistEvaluacionV2()  {
     const peticionGetEntregablesModal = async() => {
       await axios.get(urlEnt + "ListEntregablesXIdCurso?idCurso=" +localStorage.getItem('idCurso'))       
       .then(response=>{
-          const datos = response.data.filter(dato=> dato.fidNota === "null");
+          console.log("SOY YO");
+          console.log(response.data);
+          //const datos = response.data.filter(dato=> dato.fidNota === "null");
+          const datos = response.data;
+          console.log(datos);
           setListEvaluacionesModal(datos);
       }).catch(error =>{
           console.log(error.message);

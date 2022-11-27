@@ -14,6 +14,8 @@ import "../../stylesheets/Comite.css";
 import * as BsIcons from "react-icons/bs";
 import useModal from "../../hooks/useModals";
 import { Ellipsis } from "react-bootstrap/esm/PageItem";
+import * as FileSaver from "file-saver";
+import XLSX from "sheetjs-style";
 
 const themeX = createTheme({
   palette: {
@@ -56,7 +58,35 @@ function ListaTemaTesis() {
   const [fil, setFil] = useState(0);
   const [currentPage, SetCurrentPage] = useState(0);
   const [toggleButton, setToggleButton] = useState(false);
-
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileExtension = ".xlsx";
+  var registro = function () {
+    this.Titulo = "";
+    this.Descripcion = "";
+    this.Estado = "";
+    this.Alumno = "";
+    this.Asesor = "";
+  };
+  const exportToExcel = async () => {
+    var dataRegistro = [];
+    console.log(data);
+    for (let i in data) {
+      if (data[i].estadoTema == "Por Revisar") {
+        var reg = new registro();
+        reg.Titulo = data[i].tituloTesis;
+        reg.Descripcion = data[i].descripcion;
+        reg.Estado = data[i].estadoTema;
+        dataRegistro.push(reg);
+      }
+    }
+    console.log(dataRegistro);
+    const ws = XLSX.utils.json_to_sheet(dataRegistro);
+    const wb = {Sheets:{'data':ws},SheetNames:['data']};
+    const excelBuffer = XLSX.write(wb,{bookType:'xlsx',type:'array'});
+    const  dat = new Blob([excelBuffer],{type:fileType});
+    FileSaver.saveAs(dat,"ReporteTemasPorRevisar"+fileExtension);
+  };
   const abrirCerrarModalGuardar = () => {
     setModalGuardar(!modalGuardar);
   };
@@ -119,16 +149,21 @@ function ListaTemaTesis() {
     setData(data);
     console.log(data);
   }
-  const getData1 = async()=>{
+  const getData1 = async () => {
     let idCur = window.localStorage.getItem("idCurso");
-    let response = await axios.get("https://localhost:7012/api/TemaTesis/GetTemaTesisXIdCurso?idCurso="+idCur,{
-      _method: 'GET'
-    }).then((response)=>{
-      setData(response.data);
-    }).catch(()=>{
-
-    })
-  }
+    let response = await axios
+      .get(
+        "https://localhost:7012/api/TemaTesis/GetTemaTesisXIdCurso?idCurso=" +
+          idCur,
+        {
+          _method: "GET",
+        }
+      )
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch(() => {});
+  };
 
   const selectRow = {
     mode: "checkbox",
@@ -140,8 +175,8 @@ function ListaTemaTesis() {
   filtrado = filtrado.slice(currentPage, currentPage + 5);
 
   const nextPage = () => {
-      //VER CODIGO
-      SetCurrentPage(currentPage + 5);
+    //VER CODIGO
+    SetCurrentPage(currentPage + 5);
   };
   const previousPage = () => {
     if (currentPage > 0) SetCurrentPage(currentPage - 5);
@@ -283,17 +318,22 @@ function ListaTemaTesis() {
       },
     },
   ];
-  const handeToogleClick = async() => {
+  const handeToogleClick = async () => {
     setToggleButton(!toggleButton);
     let idCur = window.localStorage.getItem("idCurso");
-    await axios.put("https://localhost:7012/api/Curso/modificarAceptandoTemas?idCurso="+idCur+"&asignandoTemas="+!toggleButton)
-    .then(()=>{
-      console.log("Cambio");
-    }).catch((error)=>{
-      console.log(error);
-    })
-
-
+    await axios
+      .put(
+        "https://localhost:7012/api/Curso/modificarAceptandoTemas?idCurso=" +
+          idCur +
+          "&asignandoTemas=" +
+          !toggleButton
+      )
+      .then(() => {
+        console.log("Cambio");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div className="CONTAINERCOMITE">
@@ -341,8 +381,14 @@ function ListaTemaTesis() {
                   <div className="toggle_right"></div>
                 )}
               </div>
-              <p>{toggleButton?(<b>Abierto</b>):(<b>Cerrado</b>)}</p>
+              <p>{toggleButton ? <b>Abierto</b> : <b>Cerrado</b>}</p>
             </div>
+            <button
+              className="btn btn-primary fs-4 fw-bold mb-3 "
+              onClick={() => exportToExcel()}
+            >
+              <span>Excel</span>
+            </button>
             <button
               onClick={() => abrirCerrarModalGuardar()}
               className="btn btn-primary fs-4 fw-bold mb-3"
@@ -350,6 +396,7 @@ function ListaTemaTesis() {
               Publicar
             </button>
           </div>
+
           <p> </p>
         </div>
       </div>

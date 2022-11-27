@@ -19,6 +19,8 @@ const TemaSeleccionado = () => {
   let {id} = useParams();
   let color;
   const location = useLocation();
+  
+  const [espec,setEspec]= useState([]);
   const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
   const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
   const [isOpenComentarioModal, openComentarioModal ,closeComentarioModal ] = useModal();
@@ -85,6 +87,20 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
   if(location.state.estado==="Aprobado"){
     color="text-success"
   }
+  const getAreas = async()=>{
+    let infoesp  = JSON.parse(window.localStorage.getItem("infoEspecialidad"));
+    let idEsp = infoesp.numEsp;
+    const response = await axios.get("https://localhost:7012/api/Area/GetAreaXEspecialidad?idEspecialidad="+idEsp,{
+      _method:'GET'
+    }).then((response)=>{
+      setEspec(response.data);
+    }).catch(()=>{
+
+    })
+  }
+  useEffect(() => {
+    getAreas();
+  }, []);
   const  getDataT = async() => {
     const response= await axios(`https://localhost:7012/api/TemaTesis/GetTemaTesisXId?idTemaTesis=${location.state.id}`);
     setDataT(response.data);
@@ -225,7 +241,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
               <div className="col-100%" >
                   <div className="text-start fs-7 fw-normal  mb-1">Título</div>
                   <div className="input-group mb-3 ">
-                      <input type="text" disabled="true"  className="form-control" name="titulo" placeholder="Titulo" 
+                      <input type="text" disabled={location.state.estado=="Por Revisar"?false:true}  className="form-control" name="titulo" placeholder="Titulo" 
                          value={ location.state.titulo } />
                   </div>
               </div>
@@ -241,10 +257,16 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
               <div className="col-6" >
               <div className="text-start fs-7 fw-normal  mb-1">Área</div>
                   <div className="input-group mb-3 ">
-                      <input type="text" disabled="true"  className="form-control" name="titulo" placeholder="Área" 
+                      <input type="text" disabled={location.state.estado=="Por Revisar"?false:true}  className="form-control" name="titulo" placeholder="Área" 
                          value={location.state.areaNombre} />
+                         <select>
+                         {espec.map(elemento=>
+                          <option key={elemento.idArea} value={elemento.idArea}>{elemento.nombre}</option>  
+                      )}
+                         </select>
                   </div>
               </div>
+              
             </div>         
 
           <div class = "row">
@@ -274,7 +296,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
           <div className = "col-lg-12">
                   <div class="text-start fs-7 fw-normal ">Descripción</div>
                   <div class="input-group input-group-lg mb-3">
-                      <input type="text" disabled="true"  class="form-control" name="descripcion" placeholder="Descripcion" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
+                      <input type="text" disabled={location.state.estado=="Por Revisar"?false:true}  class="form-control" name="descripcion" placeholder="Descripcion" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
                          value={location.state.descripcion}/>
                   </div>
               </div>       
