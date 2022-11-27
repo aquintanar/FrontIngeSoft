@@ -24,6 +24,7 @@ const ProponerTemaAsesor = () => {
   const handleShow = () => setShow(true);
   let idAsesorRef = window.localStorage.getItem("IDUSUARIO");
   let idTemaGlo = 0;
+  let idCoasesor = 0;
   const [isOpenPostModal, openPostModal, closePostModal] = useModal();
   const [areasel,setAreasel]=useState([]);
   const [areaSeleccionada,setAreaSeleccionada]=useState([]);
@@ -36,6 +37,7 @@ const ProponerTemaAsesor = () => {
   const[temaTesis, setTemaTesis] = useState({
     idTemaTesis: 0,
     idEstadoTemaTesis: 3,
+    idAlumno: 0,
     estadoTema: 'Por Revisar',
     idProponente: parseInt(localStorage.getItem("IDUSUARIO")),
     idAsesor: parseInt(localStorage.getItem("IDUSUARIO")),
@@ -47,10 +49,11 @@ const ProponerTemaAsesor = () => {
     idArea: 1,
     observacionesYEntregables: '',
     fidCurso: parseInt(localStorage.getItem("idCurso")),
+    feedback: ''
   })
 
   const [asesorTesis, setAsesor] = useState({
-    idUsuario: 0,
+    idUsuario: parseInt(localStorage.getItem("IDUSUARIO")),
     nombres: '',
     apeMat: '',
     apePat: ''
@@ -78,9 +81,10 @@ const [alumno, setAlumno] = useState({
   });
   const notify = ()=>toast.error("El periodo de recepcion de propuestas ha culminado");
   const subirCoasesor = async () => {
+    
     console.log(asesorTesisXTema);
     await axios
-      .post(urlCoAsesor + "PostTemaTesisXAsesor/", asesorTesisXTema)
+      .post(urlCoAsesor + "PostTemaTesisXAsesor", asesorTesisXTema)
       .then((response) => {
         openGuardadoModal();
       })
@@ -90,23 +94,31 @@ const [alumno, setAlumno] = useState({
   };
 
   const subirTemaTesis = async () => {
-    //temaTesis.area.idArea = areasel.area.idArea;
     console.log("DEBAJO ESTA TEMA DE TESIS");
     console.log(temaTesis);
     await axios
-      .post(urlTemaTesis + "PostTemaTesisSinAlumno", temaTesis)
-      .then((response) => {
+      .post(urlTemaTesis + "PostTemaTesisSinAlumno", temaTesis).catch((error) => {
+        console.log(error.message);
+      }).then((response) => {
+        console.log(response.data);
+        openGuardadoModal();
         temaTesis.idTemaTesis = response.data.idTemaTesis;
         idTemaGlo = response.data.idTemaTesis;
-        idAsesorRef = asesorTesis.idUsuario;
-        if (asesorTesis.idUsuario !== 0) {
+        idCoasesor = coasesorTesis.idUsuario;
+        console.log(response);
+        console.log(idTemaGlo);
+        console.log(idCoasesor);
+        //idAsesorRef = asesorTesis.idUsuario;
+        if (coasesorTesis.idUsuario !== 0) {
           setAsesorXTema({
             idTemaTesisXAsesor: 0,
-            idAsesor: idAsesorRef,
-            idTemaTesis: idTemaGlo,
-            esPrincipal: 0,
+            idAsesor: coasesorTesis.idUsuario,
+            idTemaTesis: response.data.idTemaTesis,
+            esPrincipal: 0
           });
           subirCoasesor();
+        }else{
+          openGuardadoModal();
         }
       })
       .catch((error) => {
@@ -114,15 +126,30 @@ const [alumno, setAlumno] = useState({
       });
   };
   const peticionPut = async () => {
-    await axios
-      .put(urlTemaTesis + "ModifyTemaTesis", temaTesis)
-      .then((response) => {
+    console.log(temaTesis);
+    if(temaTesis.idAlumno !== undefined ){
+      console.log('Modificando alumno');
+      const response = await axios.put(
+        urlTemaTesis + "ModifyTemaTesis", temaTesis
+      ).then((response) => {
         closeEditModal();
         openEditadoModal();
       })
       .catch((error) => {
         console.log(error.message);
       });
+    }else{
+      console.log('Modificando');
+      const response = await axios.put(
+        urlTemaTesis + "ModifyTemaTesisSinAlumno", temaTesis
+      ).then((response) => {
+        closeEditModal();
+        openEditadoModal();
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    }
   };
   const cerrarPut = () => {
     closeEditadoModal();
@@ -173,16 +200,19 @@ const cargarTema = async () => {
     );
     setTemaTesis({
       idTemaTesis: response.data[0].idTemaTesis,
-      idEstadoTemaTesis: response.data[0].idTemaTesis,
+      idEstadoTemaTesis: response.data[0].idEstadoTemaTesis,
       estadoTema: response.data[0].estadoTema,
-      idProponente: parseInt(localStorage.getItem("IDUSUARIO")), //ver
+      idProponente: response.data[0].idProponente, //ver
       idAsesor: response.data[0].idAsesor,
       tituloTesis: response.data[0].tituloTesis,
       descripcion: response.data[0].descripcion, //tema de tesis
       motivoRechazo: response.data[0].feedback,
+      palabraClave1: response.data[0].PalabraClave1,
+      palabraClave2: response.data[0].PalabraClave2,
       observacionesYEntregables: response.data[0].observacionesYEntregables,
       idArea: response.data[0].idArea,
       fidCurso: parseInt(localStorage.getItem("idCurso")),
+      feedback: response.data[0].feedback
     });
     setSubtitulo("Modificar tema");
     idAsesorRef = response.data[0].idAsesor;
@@ -191,10 +221,24 @@ const cargarTema = async () => {
 };
 
   const cambioSelect =e=>{
+    setTemaTesis((prevState) => ({
+      ...prevState,
+      idArea: parseInt(e.target.value),
+    }));
+    console.log(temaTesis);
+    /*
     setAreasel(prevState=>({
       ...prevState,
       area:{idArea: e.target.value}}))
     console.log(areasel);
+    */
+  }
+  const cambioCoasesor =e=>{
+    setAsesorXTema((prevState) => ({
+      ...prevState,
+      idAsesor: parseInt(e.target.value),
+    }));
+    console.log(asesorTesisXTema);
   }
   const ListarAreas1 = async () => {
     let idcur = window.localStorage.getItem("idCurso");
@@ -216,6 +260,12 @@ const cargarTema = async () => {
       .get("https://localhost:7012/api/Area/GetAreaXEspecialidad?idEspecialidad=" + e)
       .then((response) => {
         setAreaSeleccionada(response.data);
+        if(response.data[0] !== undefined){          
+          setTemaTesis((prevState) => ({
+          ...prevState,
+          idArea: parseInt(response.data[0].idArea),
+          }));
+        }
         console.log(response);
       })
       .catch((error) => {
@@ -243,40 +293,40 @@ const cargarTema = async () => {
                 <p for="tituloTesis" className="col-md-2 col-form-label mt-2"> Título de tesis: </p>
                 <div className = "col-md-10" >
                     <input onChange={handleChange} type='text' className="form-control" id="tituloTesis" name="tituloTesis"
-                    style={{display: 'flex'}} value={temaTesis && temaTesis.tituloTesis}/>
+                    style={{display: 'flex'}} value={temaTesis && temaTesis.tituloTesis} placeholder="Inserte el título de tesis"/>
                 </div>
             </div>
 
             <div className="form-group  DATOS row mt-3">                
                 <div className = "col-md-6">
                     <p for="descripcionTema" className="col-md-6 col-form-label"> Tema de tesis:</p>
-                    <textarea onChange={handleChange} class="form-control" id="descripcion" name="descripcion" rows={4} value={temaTesis && temaTesis.descripcion}></textarea>
+                    <textarea onChange={handleChange} class="form-control" id="descripcion" name="descripcion" rows={4} value={temaTesis && temaTesis.descripcion} placeholder="Inserte el tema de tesis"></textarea>
                 </div>
                 <div className = "col-md-6">
                     <p for="descripcionTema" className="col-md-6 col-form-label"> Observaciones y entregables:</p>
                     <textarea onChange={handleChange} class="form-control" id="observacionesYEntregables" name="observacionesYEntregables" rows={4}
-                    value={temaTesis && temaTesis.observacionesYEntregables}></textarea>
+                    value={temaTesis && temaTesis.observacionesYEntregables} placeholder="Inserte las observaciones y/o entregables"></textarea>
                 </div>              
             </div>
 
             <div className="form-group DATOS row mt-3">                                
                 <div className = "col-md-6">
                     <div className = "form-group row">
-                        <div className = "col-md-3"><p for="coasesor"> Estado:  </p></div>
-                        <div className = "col-md-6"><p for="asesor"> {temaTesis.estadoTema} </p></div> 
+                        <div className = "col-md-3"><p for="Estado"> Estado:  </p></div>
+                        <div className = "col-md-6"><p for="Estado"> {temaTesis.estadoTema} </p></div> 
                     </div>                 
                     <div className = "form-group row">
-                        <div className = "col-md-3"><p for="coasesor"> Asesor:  </p></div>
-                        <div className = "col-md-6"><p for="asesor">{asesorTesis.nombres + " "+ asesorTesis.apePat}</p></div> 
+                        <div className = "col-md-3"><p for="Asesor"> Asesor:  </p></div>
+                        <div className = "col-md-6"><p for="Asesor">{asesorTesis.nombres + " "+ asesorTesis.apePat}</p></div> 
                     </div>
                     <div className = "form-group row">
-                        <div className = "col-md-3"><p for="coasesor"> Alumno:  </p></div>
+                        <div className = "col-md-3"><p for="Alumno"> Alumno:  </p></div>
                         <div className = "col-md-9"> <input onChange={handleChange} type='text' id="nombreCoAsesor" name="nombreCoAsesor"  disabled
                         style={{display: 'flex'}} value={alumno && (alumno.nombres + " " + alumno.apePat)}/></div> 
                     </div>
                     <div className = "form-group row">
                         <div className = "col-md-3"><p for="coasesor"> Co-asesor:  </p></div>
-                        <div className = "col-md-7"> <input onChange={handleChange} type='text' id="nombreCoAsesor" name="nombreCoAsesor"  disabled
+                        <div className = "col-md-7"> <input onChange={cambioCoasesor} type='text' id="idAsesor" name="idAsesor"  disabled
                         style={{display: 'flex'}} value={coasesorTesis && (coasesorTesis.nombres + " " + coasesorTesis.apeMat)}/></div>
                         <div className = "col-md-1"><button type="button" onClick={() => {setShow(true)}} className="btn btn-primary fs-4 fw-bold BUSCAR" >
                         <RiIcons.RiSearch2Line />
@@ -301,7 +351,8 @@ const cargarTema = async () => {
                         <div className = "col-md-8"> <p for="Estado" className="col-md-6 col-form-label "> Palabras clave: </p> </div>
                     </div>
                     <div className = "form-group row">
-                        <div className = "col-md-9"> <input onChange={handleChange} className="form-control" type='text' style={{display: 'flex'}}/> </div>
+                        <div className = "col-md-9"> <input onChange={handleChange} className="form-control" type='text' style={{display: 'flex'}}
+                        placeholder="Agregue una palabra clave (opcional)"/> </div>
                         <div className = "col-md-3"><button type="button" className="btn botonForm">Agregar</button></div>
                     </div>
                     <div className = "form-group row LISTAR-TABLA mt-3" >
@@ -438,7 +489,7 @@ const cargarTema = async () => {
             <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
             <button
               type="button"
-              className="btn btn-primary fs-4 botonForm"
+              className="btn btn-primary fs-4 botonForm GUARDAR"
               onClick={() => peticionSelecter()}
             >
               Guardar

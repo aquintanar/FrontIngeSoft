@@ -110,15 +110,19 @@ const ListarTemasTesis = () =>{
         showData()
     },[])
     
-    return (
-        <div class = "CONTAINERCOMITE">
-            <div class = "row">
+    return (        
+        <div class = "CONTAINER-ASESOR">
+            <div class = "row">    
+                <p class="HEADER-TEXT1">Tema de tesis</p>
+            </div>
+            <p class = "cambiar-color HEADER-TEXT2">Buscar tema de tesis</p>
+            <div class = "row DATOS">
                 <div class = "col-9">
-                <h1 class = "cambiar-color HEADER-TEXT1">Buscar tema de tesis</h1>
+                
                 <div class="mb-3 row">
                     <label  class="col-form-label FUENTE-LABEL">Título de tesis</label>
                     <div class = "col-sm-12">
-                    <input value = {search} onChange = {searcher} type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder="Buscar por tema de tesis"></input>
+                    <input value = {search} onChange = {searcher} type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder="Buscar por título de tesis"></input>
                     </div>
                 </div>
 
@@ -130,6 +134,7 @@ const ListarTemasTesis = () =>{
                 </div>
                 </div>
             </div>
+            <p class="HEADER-TEXT2">Lista de tesis</p>
             <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
             <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
             <div class = "row LISTAR-TABLA">
