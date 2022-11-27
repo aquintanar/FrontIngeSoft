@@ -185,11 +185,15 @@ function GestionarCurso()  {
         else if(tipoUsuario=="ASESOR"){
           petitionCursoAsesor();
         }
+        else if(tipoUsuario=="ALUMNO"){
+          petitionCursoAlumno();
+        }
     },[])
     const petitionCursoDocente= async()=>{
       let idUs = window.localStorage.getItem("IDUSUARIO");
         await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdDocente?idDocente="+idUs)
         .then(response=>{
+          console.log("CURSOS DE DOCENTE");
           console.log(response.data);
           setData(response.data);
         }).catch(error =>{
@@ -209,6 +213,16 @@ function GestionarCurso()  {
     const petitionCursoAsesor = async()=>{
       let idUs = window.localStorage.getItem("IDUSUARIO");
         await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdAsesor?idAsesor="+idUs)
+        .then(response=>{
+          console.log(response.data);
+          setData(response.data);
+        }).catch(error =>{
+          console.log(error.message);
+        })
+    }
+    const petitionCursoAlumno= async()=>{
+      let idUs = window.localStorage.getItem("IDUSUARIO");
+        await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdAlumno?idAlumno="+idUs)
         .then(response=>{
           console.log(response.data);
           setData(response.data);
