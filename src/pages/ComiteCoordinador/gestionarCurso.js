@@ -163,13 +163,14 @@ function GestionarCurso() {
     let idUs = window.localStorage.getItem("IDUSUARIO");
     await axios
       .get(
-        "https://localhost:7012/api/ComiteTesis/BuscarComiteTesisXId?idComiteTesis=" +
+        "https://localhost:7012/api/ComiteXEspecialidad/ListarComitexEspecialidad_x_idComite?idComite=" +
           idUs
       )
       .then((response) => {
+        console.log("ESTO RECIBO");
         console.log(response.data[0]);
-        SetEspecialidadGestionada(response.data[0].nombre);
-        petitionCurso2(response.data[0].idEspecialidad);
+        SetEspecialidadGestionada(response.data[0].especialidad);
+        petitionCurso2(response.data[0].fidEspecialidad);
       })
       .catch((error) => {
         console.log(error.message);
