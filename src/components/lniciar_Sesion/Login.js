@@ -120,6 +120,9 @@ function Login() {
 
   /*BUSCAMOS SU ROL */
   const searchId = async (e) => {
+    console.log("ENTRE A SEARCH ID");
+    console.log("EL ID QUE ENTRA A SEARCH ID ES");
+    console.log(e);
     try {
       console.log(e);
       setValue(e);
@@ -136,23 +139,23 @@ function Login() {
           console.log(response2.data[0].nombre);
           if (response2.data[0].nombre === "ADMINISTRADOR") {
             localStorage.setItem("TIPOUSUARIO", "ADMINISTRADOR");
-            localStorage.setItem("IDUSUARIO", value);
+            localStorage.setItem("IDUSUARIO", e);
             navigate("/administrador");
           } else if (response2.data[0].nombre === "ALUMNO") {
             localStorage.setItem("TIPOUSUARIO", "ALUMNO");
-            localStorage.setItem("IDUSUARIO", value);
+            localStorage.setItem("IDUSUARIO", e);
             navigate("/cursos");
           } else if (response2.data[0].nombre === "DOCENTE") {
             localStorage.setItem("TIPOUSUARIO", "DOCENTE");
-            localStorage.setItem("IDUSUARIO", value);
+            localStorage.setItem("IDUSUARIO", e);
             navigate("/cursos");
           } else if (response2.data[0].nombre === "ASESOR") {
             localStorage.setItem("TIPOUSUARIO", "ASESOR");
-            localStorage.setItem("IDUSUARIO", value);
+            localStorage.setItem("IDUSUARIO", e);
             navigate("/cursos");
           } else if (response2.data[0].nombre === "COMITE DE TESIS") {
             localStorage.setItem("TIPOUSUARIO", "COMITE");
-            localStorage.setItem("IDUSUARIO", value);
+            localStorage.setItem("IDUSUARIO", e);
             console.log(value);
             validarCoordinadorAntiguo(e);
           }
@@ -178,9 +181,9 @@ function Login() {
           console.log(response.data);
           buscarEspecialidad(response.data.usuarios[0].fidEspecialidad);
           if (response.data.cant === 1) {
+            console.log("ESTOY PASANDO POR RESPONSE==1");
             const idUs = response.data.usuarios[0].idUsuario;
-            setValue(idUs);
-            searchId(idUs);
+            searchId(response.data.usuarios[0].idUsuario);
           } else {
             valor1(response.data.usuarios);
           }
