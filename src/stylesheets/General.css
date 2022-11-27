@@ -45,6 +45,9 @@ select, .form-select{
     cursor: pointer;
     margin-bottom: 15px;
 }
+option{
+    cursor: pointer;
+}
 
 /*ESTILOS PARA LA PAGINACION DE TABLAS*/
 .PAGINACION-BTN{
@@ -150,6 +153,9 @@ select, .form-select{
     content:'\1F5D9';
 }
 .INSERTAR-BOTONES .AÑADIR span:after{
+    content:'\002B';
+}
+.INSERTAR-BOTONES .descargar span:after{
     content:'\002B';
 }
 .INSERTAR-BOTONES button span:after{

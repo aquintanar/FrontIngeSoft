@@ -98,14 +98,14 @@ function ListaFacultad() {
   }
 
   //----------------
-  filtrado = filtrado.slice(currentPage, currentPage + 6);
+  filtrado = filtrado.slice(currentPage, currentPage + 5);
   const nextPage = () => {
-    if (filtrado.length >= 6)
+    if (filtrado.length >= 5)
       //VER CODIGO
-      SetCurrentPage(currentPage + 6);
+      SetCurrentPage(currentPage + 5);
   };
   const previousPage = () => {
-    if (currentPage > 0) SetCurrentPage(currentPage - 6);
+    if (currentPage > 0) SetCurrentPage(currentPage - 5);
   };
   //----------------
   //Listar facultades tabla--
@@ -190,9 +190,9 @@ function ListaFacultad() {
           <p>Ingresar nombre de la facultad</p>
           <div class="input-group">
             <input
-              type="text"
+              type="search"
               value={search}
-              class="form-control"
+              class="form-control icon-search"
               name="search"
               placeholder="Facultad"
               aria-label="serach"

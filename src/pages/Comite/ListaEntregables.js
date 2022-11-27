@@ -9,6 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import '../../stylesheets/Administrador.css'
 import '../../stylesheets/DateRangePicker.css'
 import '../../stylesheets/Calendar.css'
+import "../../stylesheets/General.css";
 import useModal from '../../hooks/useModals';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
@@ -160,14 +161,14 @@ function ListaEntregables()  {
     return (      
         <div class=" CONTAINERADMIN">   
     
-        <p class="HEADER-TEXT1">Gestión de entregas y presentaciones</p>
-        <p class="HEADER-TEXT2">Búsqueda de entregas o presentaciones</p>
+        <h1>Gestión de entregas y presentaciones</h1>
+        <h2>Búsqueda de entregas o presentaciones</h2>
    
         <div class="row">
-              <div class="col  FILTRO-LISTAR-BUSCAR" >
+              <div class="col " >
                   <p>Ingresar nombre de la entregas o presentación</p>
                   <div class="input-group  ">
-                      <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre de la entrega o presentación" aria-label="serach" onChange={buscador}/>
+                      <input size="10" type="search" value={search} class="form-control icon-search" name="search" placeholder="Nombre de la entrega o presentación" aria-label="serach" onChange={buscador}/>
                   </div>
               </div>
         </div>
@@ -178,9 +179,9 @@ function ListaEntregables()  {
                   <DateRangePicker onChange={setFechas} value={fechas} />
               </div>
 
-              <div class="col-lg-3 FILTRO-LISTAR" >
-                <div class=" fs-5 fw-normal  mb-1 "><p>Tipo</p></div>
-                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelect}>
+              <div class="col-lg-3 " >
+                <p>Tipo</p>
+                <select select class="form-select" aria-label="Default select example" onChange= {cambioSelect}>
                     <option key="0" selected value = "0">Todos</option>
                     <option key="1" value="1">Entregable Parcial</option>
                     <option key="2" value="2">Entregable</option>
@@ -189,7 +190,7 @@ function ListaEntregables()  {
               </div>
         </div>
   
-          <p class="HEADER-TEXT2 mt-5" >Lista de entregas y presentaciones</p>
+          <h2>Lista de entregas y presentaciones</h2>
           <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
           <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
           <div class = "row LISTAR-TABLA">
@@ -210,8 +211,8 @@ function ListaEntregables()  {
                         <td>{entregable.tipoEntregable}</td>                
                         <td>{entregable.fechaLimite.substr(0,10)}</td>
                         <td>
-                        <button class="btn BTN-ACCIONES" onClick={()=>{navigate("menu/"+entregable.idEntregable)}}> <FaIcons.FaEdit /></button>
-                        <button  class=" btn BTN-ACCIONES" onClick={()=>seleccionarEntregable(entregable)}> <BootIcons.BsTrash /></button>
+                        <button title='Modificar entrega o presentación' class="btn BTN-ACCIONES" onClick={()=>{navigate("menu/"+entregable.idEntregable)}}> <FaIcons.FaEdit /></button>
+                        <button  title='Eliminar entrega o presentación' class=" btn BTN-ACCIONES" onClick={()=>seleccionarEntregable(entregable)}> <BootIcons.BsTrash /></button>
                         </td>
                     </tr>
                   ))}
@@ -243,8 +244,8 @@ function ListaEntregables()  {
             </div>
           </ModalConfirmación>
           
-          <div className='LISTAR-ESPECIALIDADES-BOTON'>
-              <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("menu/0")}}><span>Registrar</span></button>
+          <div className='d-grid gap-2 d-md-flex justify-content-md-end INSERTAR-BOTONES'>
+              <button title="Registrar entrega o presentación" className='btn btn-primary fs-4 fw-bold mb-3 REGISTRAR' onClick={()=>{navigate("menu/0")}}><span>Registrar</span></button>
           </div>             
         </div>              
     )

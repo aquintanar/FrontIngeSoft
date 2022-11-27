@@ -134,14 +134,14 @@ function ListaEspecialidad()  {
           <div class="col col-7" >
               <p>Ingresar nombre de la especialidad</p>
               <div class="input-group ">
-                  <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Especialidad" aria-label="serach" onChange={buscador}/>
+                  <input size="10" type="search" value={search} class="form-control icon-search" name="search" placeholder="Especialidad" aria-label="serach" onChange={buscador}/>
               </div>
           </div>
 
           <div class="col col-4 " >
               <p>Facultad</p>
               <select select class="form-select" aria-label="Default select example"  onChange= {cambioSelect} >  
-                   <option selected value = "0">Todos</option>
+                   <option style={{cursor: PointerEvent}} selected value = "0">Todos</option>
                   {facus.map(elemento=>(
                     <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.nombre}</option>  
                   ))}
