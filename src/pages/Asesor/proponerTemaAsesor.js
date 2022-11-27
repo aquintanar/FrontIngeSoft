@@ -6,6 +6,7 @@ import { ModalConfirmación, ModalPregunta } from "../../components/Modals";
 import useModal from "../../hooks/useModals";
 import { Button } from "@material-ui/core";
 import * as RiIcons  from "react-icons/ri";
+import * as BootIcons  from "react-icons/bs";
 import axios from "axios";
 import {  useNavigate, useParams } from 'react-router-dom';
 import {ToastContainer,toast} from 'react-toastify';
@@ -15,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css'
 const urlCoAsesor= "https://localhost:7012/api/TemaTesisXAsesor/";
 const urlTemaTesis= "https://localhost:7012/api/TemaTesis/";
 const urlAs = "https://localhost:7012/api/Asesor/";
+const urlPalabra = "https://localhost:7012/api/PalabraClave/";
 
 const ProponerTemaAsesor = () => {
   let navigate = useNavigate();
@@ -23,8 +25,16 @@ const ProponerTemaAsesor = () => {
   const [active, setActive] = useState(false);
   const handleShow = () => setShow(true);
   let idAsesorRef = window.localStorage.getItem("IDUSUARIO");
+  let idCoasesorRef = 0;
   let idTemaGlo = 0;
   let idCoasesor = 0;
+  let idAlumnoEx = 0;
+  let confirm = 0;
+  let long = 0;
+  let idPal = 0;
+  let filtrado=[];
+  let aux=[];
+  const [edit, SetEdit] = useState(0);
   const [isOpenPostModal, openPostModal, closePostModal] = useModal();
   const [areasel,setAreasel]=useState([]);
   const [areaSeleccionada,setAreaSeleccionada]=useState([]);
@@ -34,6 +44,11 @@ const ProponerTemaAsesor = () => {
   const [isOpenEditModal, openEditModal, closeEditModal] = useModal();
   const [isOpenGuardadoModal, openGuardadoModal, closeGuardadoModal] = useModal();
   const [subTitulo, setSubtitulo] = useState("Nuevo tema");
+  const [palabraInputC, setpalabraInputC] = useState("");
+  const[palabrasClave, setPalabrasClave] = useState([]);
+  const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
+  const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
+
   const[temaTesis, setTemaTesis] = useState({
     idTemaTesis: 0,
     idEstadoTemaTesis: 3,
@@ -50,28 +65,28 @@ const ProponerTemaAsesor = () => {
     observacionesYEntregables: '',
     fidCurso: parseInt(localStorage.getItem("idCurso")),
     feedback: ''
-  })
+  });
 
   const [asesorTesis, setAsesor] = useState({
     idUsuario: parseInt(localStorage.getItem("IDUSUARIO")),
     nombres: '',
     apeMat: '',
     apePat: ''
-})
+});
 
 const [coasesorTesis, setCoAsesor] = useState({
     idUsuario: 0,
     nombres: 'Sin definir',
     apeMat: '',
     apePat: ''
-})
+});
 
 const [alumno, setAlumno] = useState({
   idAlumno: 0,
   nombres: 'Sin definir',
   apeMat: '',
   apePat: ''
-})
+});
 
   const [asesorTesisXTema, setAsesorXTema] = useState({
     idTemaTesisXAsesor: 0,
@@ -79,12 +94,24 @@ const [alumno, setAlumno] = useState({
     idTemaTesis: 0,
     esPrincipal: 0,
   });
+
+  const [palabraC, setPalabraC]=useState({
+    idPalabraClave: 0,
+    fidTemaTesis: 0,
+    descripcion: ''
+  });
+
+  const [palabraCSel, setPalabraCSel]=useState({
+    idPalabraClave: 0,
+    fidTemaTesis: 0,
+    descripcion: ''
+  });
   const notify = ()=>toast.error("El periodo de recepcion de propuestas ha culminado");
   const subirCoasesor = async () => {
     
     console.log(asesorTesisXTema);
     await axios
-      .post(urlCoAsesor + "PostTemaTesisXAsesor", asesorTesisXTema)
+      .post(urlCoAsesor + "PostTemaTesisXAsesorSimple?idTemaTesis="+idTemaGlo+"&idAsesor="+idCoasesor)
       .then((response) => {
         openGuardadoModal();
       })
@@ -92,6 +119,16 @@ const [alumno, setAlumno] = useState({
         console.log(error.message);
       });
   };
+
+  const agregaDatos=()=>{
+    palabrasClave.push(palabraC);
+    setPalabraC({
+      idPalabraClave: 0,
+      fidTemaTesis: 0,
+      descripcion: ''
+    })    
+    setpalabraInputC("");
+  }
 
   const subirTemaTesis = async () => {
     console.log("DEBAJO ESTA TEMA DE TESIS");
@@ -110,16 +147,19 @@ const [alumno, setAlumno] = useState({
         console.log(idCoasesor);
         //idAsesorRef = asesorTesis.idUsuario;
         if (coasesorTesis.idUsuario !== 0) {
+          /*
           setAsesorXTema({
             idTemaTesisXAsesor: 0,
             idAsesor: coasesorTesis.idUsuario,
             idTemaTesis: response.data.idTemaTesis,
             esPrincipal: 0
           });
+          */
           subirCoasesor();
         }else{
           openGuardadoModal();
         }
+        guarda();
       })
       .catch((error) => {
         console.log(error.message);
@@ -148,8 +188,9 @@ const [alumno, setAlumno] = useState({
       })
       .catch((error) => {
         console.log(error.message);
-      });
+      });      
     }
+    guarda();
   };
   const cerrarPut = () => {
     closeEditadoModal();
@@ -193,6 +234,29 @@ const [alumno, setAlumno] = useState({
     });
 };
 
+const cargarCoAsesor = async () => {
+  const response = await axios.get(
+    urlAs + "GetAsesorXId?idAsesor=" + parseInt(idCoasesorRef)
+  );
+  setCoAsesor({
+    idUsuario: parseInt(idCoasesorRef),
+    nombres: response.data[0].nombres,
+    apeMat: response.data[0].apeMat,
+    apePat: response.data[0].apePat,
+  });
+};
+const cargarAsesorXTema = async () => {
+  const response = await axios.get(
+    urlAs + "GetTemaTesisXAsesorXIdTemaTesis?idTemaTesis=" + parseInt(asesorTesisXTema.idAsesor)
+  );
+  setCoAsesor({
+    idUsuario: parseInt(idAsesorRef),
+    nombres: response.data[0].nombres,
+    apeMat: response.data[0].apeMat,
+    apePat: response.data[0].apePat,
+  });
+};
+
 const cargarTema = async () => {
   if (id !== "0") {
     const response = await axios.get(
@@ -216,9 +280,60 @@ const cargarTema = async () => {
     });
     setSubtitulo("Modificar tema");
     idAsesorRef = response.data[0].idAsesor;
+    idAlumnoEx = response.data[0].idAlumno;
+    idTemaGlo = response.data[0].idTemaTesis;
     if(response.data[0].idAsesor !== 'null') cargarAsesor();
+    const response2 = await axios.get(
+      urlCoAsesor + "GetTemaTesisXAsesorXIdTemaTesis?idTemaTesis=" + parseInt(idTemaGlo)
+    );
+    idCoasesorRef = response2.data[0].idAsesor;    
+    if(response2.data[0] !== undefined) cargarCoAsesor();
+    cargaPalabrasClave();
   }
 };
+
+const cargaPalabrasClave=async()=>{
+  if(id!=='0'){
+      const response = await axios.get(urlPalabra+"ListPalabraClaveXIdTemaTesis?idTemaTesis="+parseInt(id));
+      setPalabrasClave(response.data);
+      //aux = response.data;
+      //setRubs([].concat(aux));
+  }
+}
+const guarda=()=>{
+  long = palabrasClave.length;
+  if(long===0){
+      closePostModal();
+      openGuardadoModal();
+  }
+  else{
+    palabrasClave.forEach(async element => {
+          element.fidTemaTesis = temaTesis.idTemaTesis;
+          console.log(idTemaGlo);       
+          if(element.idPalabraClave === 0 ) {
+            console.log(element);
+            await guardarPalabra(element);
+          }
+      });
+  }
+}
+const guardarPalabra=async(element)=>{
+  await axios.post(urlPalabra+"PostPalabraClave",element,{
+      _method: 'POST'
+    })
+  .then(response=>{
+          if(id==='0'){
+              closePostModal();
+              openGuardadoModal();
+          }
+            else{
+              closeEditModal();
+              openEditadoModal(); 
+          }
+  }).catch(error =>{
+      console.log(error.message);
+  })
+  }
 
   const cambioSelect =e=>{
     setTemaTesis((prevState) => ({
@@ -233,6 +348,14 @@ const cargarTema = async () => {
     console.log(areasel);
     */
   }
+  const cambioPalabra = (e)=>{
+    setPalabraC({
+      ...palabraC,
+      descripcion: e.target.value,
+    });
+    console.log(palabraC);
+  }
+
   const cambioCoasesor =e=>{
     setAsesorXTema((prevState) => ({
       ...prevState,
@@ -240,6 +363,31 @@ const cargarTema = async () => {
     }));
     console.log(asesorTesisXTema);
   }
+
+  const quitaPalabra=(elemento)=>{
+    var index = palabrasClave.indexOf(elemento);
+    idPal = elemento.idPalabraClave;
+    console.log(idPal);
+    if (elemento.idPalabraClave !== 0){
+      setPalabraCSel({
+        idPalabraClave: elemento.idPalabraClave,
+        fidTemaTesis: 0,
+        descripcion: elemento.descripcion
+      });
+      openDeleteModal();
+    }
+    palabrasClave.splice(index,1);
+    SetEdit(!edit);
+  }
+
+  const peticionDelete=async()=>{
+    console.log(palabraCSel);
+    await axios.delete(urlPalabra+ "DeletePalabraClave?idPalabraClave="+ palabraCSel.idPalabraClave).then(response=>{
+      closeDeleteModal();
+      openConfirmModal();
+    })      
+  }
+
   const ListarAreas1 = async () => {
     let idcur = window.localStorage.getItem("idCurso");
     await axios
@@ -260,7 +408,7 @@ const cargarTema = async () => {
       .get("https://localhost:7012/api/Area/GetAreaXEspecialidad?idEspecialidad=" + e)
       .then((response) => {
         setAreaSeleccionada(response.data);
-        if(response.data[0] !== undefined){          
+        if(response.data[0] !== undefined && id===0){          
           setTemaTesis((prevState) => ({
           ...prevState,
           idArea: parseInt(response.data[0].idArea),
@@ -273,9 +421,9 @@ const cargarTema = async () => {
       });
   };  
   useEffect(()=>{
-    if (id === "0") cargarAsesor();
+    if (id === "0") cargarAsesor(idAsesorRef);
     ListarAreas1();
-    cargarTema();
+    if (id !== "0") cargarTema();
     },[])
 
     const peticionSelecter = () => {
@@ -287,7 +435,6 @@ const cargarTema = async () => {
     };
   return (
     <div className="CONTAINER-ASESOR">
-      <form>
       <h1 className='HEADER-TEXT1'>Proponer tema de tesis - {subTitulo}</h1>
             <div className="form-group DATOS row">
                 <p for="tituloTesis" className="col-md-2 col-form-label mt-2"> Título de tesis: </p>
@@ -337,13 +484,16 @@ const cargarTema = async () => {
                     </div>
                     <div className = "form-group row">
                       <div class="col-md-3"><p>Áreas</p></div>
+                      {areaSeleccionada.length !== 0 ? 
                       <div className = "col-md-9">
-                      <select select class="form-select Cursor"  onChange= {cambioSelect}  selected value = {areaSeleccionada.idArea} >
+                      <select select class="form-select Cursor"  onChange= {cambioSelect}  selected value = {temaTesis.idArea} >
                       {areaSeleccionada.map(elemento=>
                           <option key={elemento.idArea} value={elemento.idArea}>{elemento.nombre}</option>  
                       )}
                       </select>
                       </div>
+                      :<div className = "col-md-9"><p for="areas"> La especialidad no tiene áreas asignadas  </p></div>
+                      }
                     </div>
                 </div>
                 <div className = "col-md-6 ">
@@ -351,9 +501,9 @@ const cargarTema = async () => {
                         <div className = "col-md-8"> <p for="Estado" className="col-md-6 col-form-label "> Palabras clave: </p> </div>
                     </div>
                     <div className = "form-group row">
-                        <div className = "col-md-9"> <input onChange={handleChange} className="form-control" type='text' style={{display: 'flex'}}
-                        placeholder="Agregue una palabra clave (opcional)"/> </div>
-                        <div className = "col-md-3"><button type="button" className="btn botonForm">Agregar</button></div>
+                        <div className = "col-md-9"> <input onChange={cambioPalabra} className="form-control" type='text' style={{display: 'flex'}}
+                        placeholder="Agregue una palabra clave (opcional)" value={palabraC.descripcion}/> </div>
+                        <div className = "col-md-3"><button type="button" onClick={()=>agregaDatos()} className="btn botonForm">Agregar</button></div>
                     </div>
                     <div className = "form-group row LISTAR-TABLA mt-3" >
                         <div className = "col-md-12 LISTAR-TABLA">
@@ -365,6 +515,14 @@ const cargarTema = async () => {
                         </tr>
                         </thead>
                         <tbody>
+                        {palabrasClave.map(elemento => (
+                        <tr key={elemento.idPalabraClave}>
+                        <td >{elemento.descripcion}</td>   
+                        <td>
+                        <button  class=" btn BTN-ACCIONES" onClick={()=>quitaPalabra(elemento)}> <BootIcons.BsTrash /></button>
+                        </td>
+                        </tr>
+                        ))}
                         </tbody>
                         </table>
                         </div>
@@ -485,22 +643,48 @@ const cargarTema = async () => {
         </div>
       </ModalConfirmación>
 
+      <ModalPregunta
+      isOpen={isOpenDeleteModal} 
+      closeModal={closeDeleteModal}
+      procedimiento = "eliminar palabra clave"
+      objeto=""
+      elemento={palabraCSel && palabraCSel.descripcion}
+    >
+      <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+        <Button class="btn  btn-success btn-lg" onClick={()=>peticionDelete()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <Button class="btn btn-danger btn-lg"  onClick={closeDeleteModal}>Cancelar</Button>
+      </div>
+    </ModalPregunta>
+
+    <ModalConfirmación
+      isOpen={isOpenConfirmModal} 
+      closeModal={closeConfirmModal}
+      procedimiento= "eliminado"
+    >
+      <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+        <Button class="btn btn-success btn-lg" onClick={closeConfirmModal}>Entendido</Button>
+      </div>
+    </ModalConfirmación>
+
           <div className = "form-group INSERTAR-BOTONES row mt-3">
             <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
-            <button
+            {temaTesis.idEstadoTemaTesis === 3 || temaTesis.idEstadoTemaTesis === 5 ?
+              <button
               type="button"
               className="btn btn-primary fs-4 botonForm GUARDAR"
               onClick={() => peticionSelecter()}
             >
               Guardar
             </button>
+            :
+            <></>
+            }
             <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../temaTesis");}}>
               Cancelar
             </button>
             </div>
           </div>
         </div>
-      </form>
     </div>
   );
 };
