@@ -12,9 +12,13 @@ import "../../stylesheets/Administrador.css";
 import "../../stylesheets/Comite.css";
 import useModal from "../../hooks/useModals";
 import { ModalPregunta, ModalConfirmación } from "../../components/Modals";
-import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
+import * as FileSaver from "file-saver";
+import XLSX from "sheetjs-style";
 const url = "http://34.195.33.246/api/Alumno/";
-
+const fileType =
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+const fileExtension = ".xlsx";
 /*
 const url= "http://44.210.195.91/api/Facultad/";
 //-------
@@ -56,9 +60,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Tesis = () => {
   const styles = useStyles();
-  const [alumnos,setAlumnos]=useState([]);
-  const [entregables,setEntregables]=useState([]);
-
+  const [alumnos, setAlumnos] = useState([]);
+  const [entregables, setEntregables] = useState([]);
+  const [rawData, setRawData] = useState([]);
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   const [modalEliminar, setModalEliminar] = useState(false);
@@ -87,8 +91,6 @@ const Tesis = () => {
     { name: "Telegram", value: 100 },
   ];
 
-  
-
   //Filtro de tabla--
   let filtrado = [];
 
@@ -114,53 +116,60 @@ const Tesis = () => {
   const previousPage = () => {
     if (currentPage > 0) SetCurrentPage(currentPage - 6);
   };
-  
-  /*PRIMERO LISTAMOS A TODOS LOS ALUMNOS DEL CURSO */
+  var registro = function () {
+    this.Alumno = "";
+    this.Entregable = "";
+    this.Estado = "";
+    this.Comentarios = "";
+    this.Nota = "";
+  };
+  /*PRIMERO LISTAMOS LAS VERSIONES DEL ALUMNO */
   const peticionGet = async () => {
-    var idCurso =window.localStorage.getItem("idCurso");
-    const response = await axios
-      .get("https://localhost:7012/api/Alumno/GetAlumnosxCurso",{
-        params:{
-          idCurso:idCurso
+    var idCurso = window.localStorage.getItem("idCurso");
+    const response = await axios /* NO OLVIDAR CAMBIAR EL ID DEL CURSO */
+      .get(
+        "https://localhost:7012/api/Curso/ReporteNotasAlumnosXCurso?idCurso=" +
+          1,
+        {
+          _method: "GET",
         }
-      }, {
-        _method: "GET",
-      })
+      )
       .then((response) => {
         console.log(response.data);
-        setAlumnos(response.data);
-        peticionGetEntregables();
+        setRawData(response.data);
       })
       .catch((error) => {
         console.log(error.message);
       });
   };
-  const peticionGetEntregables = async()=>{
-    var idCurso =window.localStorage.getItem("idCurso");
-    const response = await axios
-      .get("https://localhost:7012/api/Entregable/ListEntregablesXIdCurso",{
-        params:{
-          idCurso:idCurso
-        }
-      }, {
-        _method: "GET",
-      })
-      .then((response) => {
-        console.log("Entregables owo");
-        console.log(response.data);
-        setEntregables(response.data);
-        
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  }
+  const exportToExcel = () => {
+    var dataRegistro = [];
+    for (let i in rawData) {
+      for (let j in rawData[i].versiones) {
+        var reg = new registro();
+        reg.Alumno =
+          rawData[i].versiones[j].nombres +
+          " " +
+          rawData[i].versiones[j].apePat;
+        reg.Entregable = rawData[i].versiones[j].nombre;
+        reg.Comentarios = rawData[i].versiones[j].comentarios;
+        reg.Estado = rawData[i].versiones[j].estadoEntregable;
+        reg.Nota = rawData[i].versiones[j].notaVersion;
+        dataRegistro.push(reg);
+      }
+    }
+    console.log("resultado");
+    
+    const ws = XLSX.utils.json_to_sheet(dataRegistro);
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const dat = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(dat, "ReporteNotasCiclo" + fileExtension);
+  };
 
   useEffect(() => {
     peticionGet();
   }, []);
-
-  
 
   return (
     <div className="CONTAINERADMIN">
@@ -170,8 +179,8 @@ const Tesis = () => {
       <div className="FONDO-TESIS">
         <h1 class="HEADER-TEXTCICLO">Ciclo 2022-1</h1>
         <div className="HEADER-TEXTO">
-        <h4 class="HEADER-TEXTALUMNOSI">Alumnos Inscritos :                   </h4>
-        <h4 class="HEADER-TEXTALUMNOSS">Alumnos que Sustentaron Tesis : </h4>
+          <h4 class="HEADER-TEXTALUMNOSI">Alumnos Inscritos : </h4>
+          <h4 class="HEADER-TEXTALUMNOSS">Alumnos que Sustentaron Tesis : </h4>
         </div>
         <p class="HEADER-TEXT2">Temas por Alumno : </p>
         <button onClick={previousPage} className="PAGINACION-BTN">
@@ -226,13 +235,11 @@ const Tesis = () => {
             </table>
           </div>
           <div className="d-grid gap-2 d-md-flex justify-content-md-end LISTAR-BOTON ">
-            <button
+          <button
               className="btn btn-primary fs-4 fw-bold mb-3 "
-              onClick={() => {
-                navigate("datosFacultad/0");
-              }}
+              onClick={() => exportToExcel()}
             >
-              <span>Descargar</span>
+              <span>Excel</span>
             </button>
           </div>
         </div>
