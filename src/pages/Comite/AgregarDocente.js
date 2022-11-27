@@ -66,12 +66,24 @@ function ListarDocentesNoEstan()  {
         await axios.post(urlAsXCurso+"PostDocenteXCurso?idDocente="+idas+"&idCurso="+idCursoGlobal)
         .then(response=>{
           console.log(response.data);
+          peticionPost2();
           closeRegistroModal();
           openRegistroConfModal();
         }).catch(error =>{
           console.log(error.message);
         })
         petitionAs();
+      }
+      const peticionPost2=async()=>{
+        console.log(idCursoGlobal);
+        console.log(asesorSeleccionado.idUsuario);
+        let idcom = idas+1;
+        await axios.post("https://localhost:7012/api/ComiteXCurso/PostComiteXCurso?idComiteTesis="+idcom+"&idCurso="+idCursoGlobal)
+        .then(response=>{
+          console.log(response.data);
+        }).catch(error =>{
+          console.log(error.message);
+        })
       }
   
 
