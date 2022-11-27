@@ -6,6 +6,7 @@ import {  useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../../../stylesheets/Alumno.css'
 import '../../../stylesheets/Comite.css'
+import "../../../stylesheets/General.css";
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import {ModalConfirmación, ModalPregunta} from '../../../components/Modals';
@@ -121,7 +122,7 @@ function ListSistEvaluacion()  {
 
   return (      
     <div class=" CONTAINERADMIN">   
-        <p class="HEADER-TEXT1">Fórmula de calificación de la nota final</p>
+        <h1>Fórmula de calificación de la nota final</h1>
 
         <p class="BTN-CUADRADO-SISTEV NO-SQ"> {form}</p>
         {notas ? null : 
@@ -147,8 +148,8 @@ function ListSistEvaluacion()  {
          ))}
          <p>   NF: <m> Nota Final </m> </p>
 
-        <div className='LISTAR-ESPECIALIDADES-BOTON'>
-            <button title="Registrar nota" className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{ navigate("datoSistEvalucion/0")}} ><span>Registrar</span></button>
+        <div className="d-grid gap-2 d-md-flex justify-content-md-end INSERTAR-BOTONES ">
+            <button title="Registrar nota" className='btn btn-primary fs-4 fw-bold mb-3 REGISTRAR' onClick={()=>{ navigate("datoSistEvalucion/0")}} ><span>Registrar</span></button>
         </div> 
 
         <ModalPregunta      isOpen={isOpenDeleteModal}      closeModal={closeDeleteModal}   procedimiento = "eliminar"

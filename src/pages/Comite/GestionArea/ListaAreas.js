@@ -6,6 +6,7 @@ import {  useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../../../stylesheets/Alumno.css'
 import '../../../stylesheets/Comite.css'
+import "../../../stylesheets/General.css";
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as AntIcons from "react-icons/ai";
@@ -75,13 +76,13 @@ function ListaAreas()  {
 
     return (
         <div class=" CONTAINERADMIN" style={{}} >
-             <p class="HEADER-TEXT1">Gestión de Áreas</p>
+             <h1>Gestión de Áreas</h1>
 
                 <div class="row">
-                    <div class="col  FILTRO-LISTAR-BUSCAR" >
+                    <div class="col-6" >
                         <p>Ingresar nombre del área</p>
                         <div class="input-group  ">
-                            <input type="text" value={search} class="form-control" size="5" name="search" placeholder="Nombre del área" aria-label="serach" onChange={buscador}/>
+                            <input type="search" value={search} class="form-control icon-search" size="5" name="search" placeholder="Nombre del área" aria-label="serach" onChange={buscador}/>
                         </div>
                     </div>
                 </div>
@@ -100,8 +101,8 @@ function ListaAreas()  {
                 </tr>
                 ))}
 
-            <div className='LISTAR-ESPECIALIDADES-BOTON'>
-                <button title="Registrar área" className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{ navigate("datoArea/0")}} ><span>Registrar</span></button>
+            <div className='d-grid gap-2 d-md-flex justify-content-md-end INSERTAR-BOTONES '>
+                <button title="Registrar área" className='btn btn-primary fs-4 fw-bold mb-3 REGISTRAR' onClick={()=>{ navigate("datoArea/0")}} ><span>Registrar</span></button>
             </div> 
 
             <ModalPregunta      isOpen={isOpenDeleteModal}      closeModal={closeDeleteModal}   procedimiento = "eliminar"  

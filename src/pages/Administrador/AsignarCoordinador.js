@@ -15,6 +15,7 @@ import ModalBuscarUsuario from "./ModalBuscarUsuario";
 import DatePicker from "react-date-picker";
 import "../../stylesheets/Calendar.css";
 import "../../stylesheets/DatePicker.css";
+import "../../stylesheets/General.css";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 var coordRegist;
 var datos;
@@ -140,10 +141,10 @@ const AsignarCoordinador = () => {
   return (
     <div class=" CONTAINERADMIN">
       <div className="col">
-        <p class="HEADER-TEXT1">Asignación de Coordinadores</p>
-        <p class="HEADER-TEXT3">{selecEsp}</p>
-        <div class="fs-5 fw-normal  mb-1 ">Nombre docente</div>
-        <div class="row DATOS3">
+        <h1>Asignación de Coordinadores</h1>
+        <h3>{selecEsp}</h3>
+        <p>Nombre docente</p>
+        <div class="row">
           <div className="col-11 mb-2">
             <input
               type="text"
@@ -191,7 +192,7 @@ const AsignarCoordinador = () => {
           </div>
         </div>
       </div>
-      <p class="HEADER-TEXT2 mt-3">Coordinadores</p>
+      <h2>Coordinadores</h2>
       <button onClick={previousPage} className="PAGINACION-BTN">
         <BsIcons.BsCaretLeftFill />
       </button>

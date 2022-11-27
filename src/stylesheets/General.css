@@ -1,0 +1,181 @@
+h1 {
+    font-size: 40px;
+    font-family: 'Montserrat', sans-serif;
+    color: #042354;
+    font-weight: bold;
+    padding-top: 17px;
+}
+
+h2{
+    font-size: 32px; 
+    color: #042354;
+    font-family: roboto;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 6px;
+}
+
+h3{
+    font-size: 27px; 
+    color: #042354;
+    font-family: roboto;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 6px;
+}
+
+
+.input-group, .form-control{
+    height: 35px;
+    font-size: 13px;
+    font-family: roboto;
+    margin-bottom: 15px;
+}
+
+p{
+    font-size: 14px;
+    font-family: roboto;
+    margin-bottom: 0rem;
+}
+
+select, .form-select{
+    height: 35px;
+    font-size: 13px;
+    font-family: roboto;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+/*ESTILOS PARA LA PAGINACION DE TABLAS*/
+.PAGINACION-BTN{
+    width: 35px;
+    height: 35px;
+    background-color: #042354;
+    color:white;
+    border-color: #fff;
+    border-radius: 2px;
+    align-items: center;
+    justify-content: center;
+    display: inline-block;
+}
+
+.PAGINACION-BTN svg{
+    width: 1em;
+    height: 1em;
+    background-color: #042354;
+    color:white;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.PAGINACION-BTN img{
+    width: 1em;
+    height: 1em;
+    background-color: #042354;
+    color:white;
+    align-items: top;
+    align-content: top;
+    
+}
+
+.PAGINACION-BTN:hover {
+    background-color: #2179D4;
+    transform: perspective(5);
+    transition: all .35s;
+}
+
+.PAGINACION-BTN:hover svg{
+    background-color: #2179D4;
+    width: 1.25em;
+    height: 1.5em;
+    stroke-dashoffset: -480;
+    transition: all .35s;
+}
+
+/*ESTILOS PARA ESPECIALIDAD/SEMESTRE REGISTRAR MODIFICAR*/
+.INSERTAR-BOTONES button{
+    border-radius: 4px;
+    font-family: roboto;
+    border:none;
+    transition:all 0.5s;
+    cursor:pointer;
+    width: 120px;
+}
+.INSERTAR-BOTONES .REGISTRAR{
+    background-color: #042354;
+}
+.INSERTAR-BOTONES .GUARDAR{
+    background-color: #042354;
+}
+.INSERTAR-BOTONES .BUSCAR{
+    background-color: #042354;
+    height: 30px;
+    width: 55px;
+}
+.INSERTAR-BOTONES .AÑADIR{
+    background-color: #042354;
+    height: 30px;
+}
+.INSERTAR-BOTONES .SIGUIENTE{
+    background-color: #042354;
+    height: 30px;
+}
+.INSERTAR-BOTONES .CANCELAR{
+    background-color: #B80000;
+}
+.INSERTAR-BOTONES .GUARDAR:hover{
+    background-color: #2179D4;
+}
+.INSERTAR-BOTONES .REGISTRAR:hover{
+    background-color: #2179D4;
+}
+.INSERTAR-BOTONES button span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+.INSERTAR-BOTONES .REGISTRAR span:after{
+    content:'\002B';
+}
+.INSERTAR-BOTONES .GUARDAR span:after{
+    content:'\1F4C1';
+}
+.INSERTAR-BOTONES .SIGUIENTE span:after{
+    content:'\2794';
+}
+.INSERTAR-BOTONES .CANCELAR span:after{
+    content:'\1F5D9';
+}
+.INSERTAR-BOTONES .AÑADIR span:after{
+    content:'\002B';
+}
+.INSERTAR-BOTONES button span:after{
+    position:absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.INSERTAR-BOTONES button:hover span{
+    padding-right:25px;
+}
+.INSERTAR-BOTONES button:hover span:after{
+    opacity: 1;
+    right: 0;
+}
+
+
+.icon-search {
+    background-image: url("https://cdn4.iconfinder.com/data/icons/evil-icons-user-interface/64/magnifier-256.png");
+    box-sizing: border-box;
+    width: 100px;
+    padding-left: 36px;
+    background-size: 20px;
+    background-position-x: 10px;
+    background-position-y: 50%;
+    background-repeat: no-repeat;
+    border-radius: 5px;
+}
