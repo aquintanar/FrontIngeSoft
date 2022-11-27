@@ -90,7 +90,7 @@ const DatosEntregable = ({entregable, setEntregable, active, setActive,cero}) =>
                     </div>
 
                     <p>Fecha de límite aprobación:</p>
-                    <div class="mb-2 FILTRO-FECHA">
+                    <div class="mb-4 FILTRO-FECHA">
                         <DateTimePicker onChange={onChangeFechaParcial} value={fechaParcial} />
                     </div>
                 

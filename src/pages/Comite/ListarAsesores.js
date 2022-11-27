@@ -279,7 +279,7 @@ function ListarAsesores()  {
                       <td >{asesor.nombres + " " + asesor.apePat+ " " + asesor.apeMat}</td>
                       <td >{asesor.correo}</td>
                       <td>
-                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosAsesor/"+asesor.idAsesor)}}> <FaIcons.FaEdit /></button>
+                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosAsesor/"+asesor.idAsesor)}}> <BsIcons.BsEye  /></button>
                       <button class=" btn BTN-ACCIONES" onClick={()=>seleccionarAsesor(asesor)}> <BootIcons.BsTrash /></button>
                       </td>
                   </tr>

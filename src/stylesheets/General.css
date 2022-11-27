@@ -9,7 +9,6 @@ h1 {
 h2{
     font-size: 32px; 
     color: #042354;
-    font-family: roboto;
     font-weight: bold;
     padding-top: 10px;
     padding-bottom: 6px;
@@ -18,7 +17,6 @@ h2{
 h3{
     font-size: 27px; 
     color: #042354;
-    font-family: roboto;
     font-weight: bold;
     padding-top: 10px;
     padding-bottom: 6px;
@@ -30,6 +28,11 @@ h3{
     font-size: 13px;
     font-family: roboto;
     margin-bottom: 15px;
+    min-height: fit-content;
+}
+
+.form-control2{
+    height: 70px;
 }
 
 p{
