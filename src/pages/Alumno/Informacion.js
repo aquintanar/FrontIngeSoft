@@ -65,30 +65,36 @@ useEffect(()=>{
        </td>
  ))}   
 
-
         <p class="HEADER-TEXT2-INF">Tema de Tesis</p>
-        {tema.map(tema => (    
+        {tema.length>0?tema.map(tema => (    
        <td>      
        <p class="HEADER-TEXT11">{tema.tituloTesis}  </p></td>
        
        
- ))}          
+ )):<p class="HEADER-TEXT11">Sin tema de tesis asignado  </p>
+}          
 
         <p class="HEADER-TEXT2-INF">Asesor</p>
 
-        {asesor.map(asesor => (    
+        {asesor.length>0?asesor.map(asesor => (    
        <td>      
        <p class="HEADER-TEXT11">{asesor.nombres}, {asesor.apePat} {asesor.apeMat}  </p>
        <p class="HEADER-TEXT11">{asesor.correo}  </p>
        </td>
        
        
- ))}
+ )):<p class="HEADER-TEXT11">Sin asesor asignado  </p>
+}    
+
+
+
+ 
+
         <p class="HEADER-TEXT2-INF">Docente</p>
-        {docente.map(docente => (    
+        {docente.map(docente => (   
        <td>      
-       <p class="HEADER-TEXT11"> {docente.nombresDocente}  {docente.apePatDocente} {docente.apeMatDocente}</p>
-       <p class="HEADER-TEXT11">{docente.correoDocente}  </p>
+       <p class="HEADER-TEXT11"> {docente.idDocente>0?docente.nombresDocente:"Sin docente asigando"}  {docente.idDocente>0?docente.apePatDocente:""} {docente.idDocente>0?docente.apeMatDocente:""}</p>
+       <p class="HEADER-TEXT11">{docente.idDocente>0?docente.correoDocente:""}  </p>
 </td>
        
        

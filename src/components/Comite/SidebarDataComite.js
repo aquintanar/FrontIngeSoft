@@ -81,12 +81,12 @@ export const SidebarData = [
 
         subNav: [
             {
-                title: 'Reporte de Alumnos',
+                title: 'Reporte de tesis sustentadas y en proceso ',
                 path: 'ReporteAlumnos',
                 icon: <BsIcons.BsFileEarmarkPerson />
             },
             {
-                title: 'Reporte de tesis sustentadas',
+                title: 'Reporte de Alumnos - Asesor - Tema',
                 path: 'tesis',
                 icon: <FaIcons.FaUserGraduate />
             },

@@ -34,14 +34,14 @@ export const SidebarDataTesis2 = [
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
 
-    },
+    },*/
     {
         title: 'Evaluar Asesor',
         path: 'gestion/EvaluaAsesor',
         icon: <BsIcons.BsJournalBookmark />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
-    },*/
+    },
     {
         title: 'Reuniones',
         path: 'gestion/Reuniones',

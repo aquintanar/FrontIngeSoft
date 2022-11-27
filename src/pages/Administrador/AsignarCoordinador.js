@@ -10,7 +10,7 @@ import DataTable from "./DataTable";
 import * as Ionicons5 from "react-icons/io5";
 import * as BsIcons from "react-icons/bs";
 import * as BootIcons from "react-icons/bs";
-import * as RiIcons  from "react-icons/ri";
+import * as RiIcons from "react-icons/ri";
 import ModalBuscarUsuario from "./ModalBuscarUsuario";
 import DatePicker from "react-date-picker";
 import "../../stylesheets/Calendar.css";
@@ -22,15 +22,17 @@ var datos;
 
 const URLPOST =
   "https://localhost:7012/api/ComiteXEspecialidad/PostComiteXEspecialidad";
-const URLGET= "https://localhost:7012/api/ComiteTesis/GetComiteTesisXIdEspecialidad"
+const URLGET =
+  "https://localhost:7012/api/ComiteTesis/GetComiteTesisXIdEspecialidad";
 
+const URLDELETE =
+  "https://localhost:7012/api/ComiteXEspecialidad/DeleteComiteXEspecialidad";
 
-const URLDELETE="https://localhost:7012/api/ComiteXEspecialidad/DeleteComiteXEspecialidad";;
-
-const URLESPECIALIDAD = "https://localhost:7012/api/Especialidad/GetEspecialidadXId";
+const URLESPECIALIDAD =
+  "https://localhost:7012/api/Especialidad/GetEspecialidadXId";
 const AsignarCoordinador = () => {
   const [selectCoord, setSelectCoord] = useState([]);
-  const [selecEsp,setSelecEsp]= useState([]);
+  const [selecEsp, setSelecEsp] = useState([]);
   let navigate = useNavigate();
   const [edit, SetEdit] = useState(0);
   const [coordinadores, setCoord] = useState([]); /// los seleccionados
@@ -50,75 +52,97 @@ const AsignarCoordinador = () => {
     esDocente: 0,
     apePat: "",
   });
-  const [ides,setIdes]= useState({
-    fidComiteTesis:91,
-    fidEspecialidad:6
-  })
-  const postDocente = async (doc1) => {
+  const [ides, setIdes] = useState({
+    fidComiteTesis: 91,
+    fidEspecialidad: 6,
+  });
+  const RelacionarEspecialidad = async (doc1) => {
     let idComit = parseInt(doc1.idComiteTesis);
     let idEspecia = parseInt(id);
-    ides.fidComiteTesis=idComit;
+    ides.fidComiteTesis = idComit;
     ides.fidEspecialidad = idEspecia;
     console.log(ides.fidEspecialidad);
     console.log(ides.fidComiteTesis);
     console.log("se presiono");
     try {
-      const resp = await axios.post(URLPOST,ides);
-      console.log(resp.data);
-      window.location.reload()
+      const resp = await axios
+        .post(URLPOST, ides)
+        .then(() => {
+          console.log(doc1);
+          //RelacionarComiteXCurso(doc1);
+          console.log(resp.data);
+          window.location.reload();
+        })
+        .catch(() => {});
     } catch (error) {
       console.log(error);
     }
   };
-  
+  /*const RelacionarComiteXCurso= async(doc1) =>{
+    let idComiteTesis=doc1.idComiteTesis;
+    try{
+      const resp = await axios.post().then(()=>{
+
+      }).catch(()=>{
+        
+      })
+    }catch(error){
+
+    }
+  };*/
+
   const ListDocentes = async () => {
     console.log(id);
-    await axios.get(URLGET,{params:{idEspecialidad:id}})
-    .then(response=>{
-      console.log(response.data)
-      setCoord(response.data);
-    }).catch(error =>{
-      console.log(error.message);
-    })
+    await axios
+      .get(URLGET, { params: { idEspecialidad: id } })
+      .then((response) => {
+        console.log(response.data);
+        setCoord(response.data);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
   const ListEspecialidad = async () => {
     console.log(id);
     console.log("HOLAAAAAAAAAA");
-    await axios.get(URLESPECIALIDAD,{params:{idEspecialidad:id}})
-    .then(response=>{
-      console.log(response.data)
-      setSelecEsp(response.data[0].nombre);
-    }).catch(error =>{
-      console.log(error.message);
-    })
+    await axios
+      .get(URLESPECIALIDAD, { params: { idEspecialidad: id } })
+      .then((response) => {
+        console.log(response.data);
+        setSelecEsp(response.data[0].nombre);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
-  useEffect(()=>{
+  useEffect(() => {
     ListDocentes();
     ListEspecialidad();
- },[])
+  }, []);
   const agregarDatos = (doc1) => {
-    postDocente(doc1);
+    RelacionarEspecialidad(doc1);
   };
   const quitaCoord = async (elemento) => {
     var index = coordinadores.indexOf(elemento);
     let idComit = parseInt(coordinadores[index].idComiteTesis);
     let idEspecia = parseInt(id);
-    ides.fidComiteTesis=idComit;
-    ides.fidEspecialidad = idEspecia
+    ides.fidComiteTesis = idComit;
+    ides.fidEspecialidad = idEspecia;
     console.log(ides);
     try {
-      const resp = await axios.delete(URLDELETE,{
-        data:{
-          fidComiteTesis:idComit,
-          fidEspecialidad:idEspecia
-        }
+      const resp = await axios.delete(URLDELETE, {
+        data: {
+          fidComiteTesis: idComit,
+          fidEspecialidad: idEspecia,
+        },
       });
-      window.location.reload()
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   const nextPage = () => {
     if (coordinadores.length >= currentPage)
       //VER CODIGO
@@ -133,8 +157,8 @@ const AsignarCoordinador = () => {
       [e.target.name]: e.target.value,
     });
   };
-  function atras(){
-    navigate("../gestion/gesEspecialidad/")
+  function atras() {
+    navigate("../gestion/gesEspecialidad/");
   }
 
   const asignarCoordinadores = async (e) => {};
@@ -185,7 +209,7 @@ const AsignarCoordinador = () => {
             <button
               class="btn btn-primary fs-4 fw-bold   AÑADIR"
               type="button"
-              onClick={() => postDocente(docentes)}
+              onClick={() => RelacionarEspecialidad(docentes)}
             >
               <span>Añadir</span>
             </button>
@@ -206,7 +230,7 @@ const AsignarCoordinador = () => {
               <tr class>
                 <th style={{ width: 100 }}>ID</th>
                 <th style={{ width: 200 }}>Nombre</th>
-                <th style={{ width: 50 }}></th>  
+                <th style={{ width: 50 }}></th>
                 <th style={{ width: 200 }}>Correo</th>
                 <th style={{ width: 50 }}>Acciones</th>
               </tr>
@@ -214,12 +238,11 @@ const AsignarCoordinador = () => {
             <tbody>
               {coordinadores.map((elemento) => (
                 <tr key={elemento.idComiteTesis}>
-                  <td >{elemento.idComiteTesis}</td>
-                  <td>{elemento.nombres+" "+elemento.apeMat}</td>
-                  <td>
-                  </td>
+                  <td>{elemento.idComiteTesis}</td>
+                  <td>{elemento.nombres + " " + elemento.apeMat}</td>
+                  <td></td>
                   <td>{elemento.correo}</td>
-                 
+
                   <td>
                     <button
                       class=" btn BTN-ACCIONES"
@@ -236,7 +259,7 @@ const AsignarCoordinador = () => {
           <button
             class="btn btn-primary fs-4 fw-bold BOTON-ATRAS"
             type="button"
-            onClick={()=>atras()}
+            onClick={() => atras()}
           >
             <span>Cancelar</span>
           </button>

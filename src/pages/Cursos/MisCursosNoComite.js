@@ -129,8 +129,10 @@ function GestionarCurso()  {
       }
     
     const petitionCurso=async()=>{
-        await axios.get(urlCur+"GetCursos/")
+        let idUs = window.localStorage.getItem("IDUSUARIO");
+        await axios.get(urlCur+"ListarCursosXIdComiteTesis?idComiteTesis="+idUs)
         .then(response=>{
+          console.log(response.data);
           setData(response.data);
         }).catch(error =>{
           console.log(error.message);
@@ -172,8 +174,29 @@ function GestionarCurso()  {
         petitionSem();
         petitionFacu();
         petitionEsp();
-        petitionCurso();
+        petitionCurso()
+        /*let tipoUsuario = window.localStorage.getItem("TIPOUSUARIO");
+        if(tipoUsuario=="DOCENTE"){
+          petitionCursoDocente(0)
+        }
+        else if(tipoUsuario=="COMITE"){
+          petitionCursoDocente(1)
+        }
+        else if(tipoUsuario=="ASESOR"){
+          petitionCursoAsesor();
+        }*/
     },[])
+    /*const petitionCursoDocente= async(e)=>{
+      let idUs = window.localStorage.getItem("IDUSUARIO");
+      idUs = idUs-e;
+        await axios.get(urlCur+"ListarCursosXIdComiteTesis?idComiteTesis="+idUs)
+        .then(response=>{
+          console.log(response.data);
+          setData(response.data);
+        }).catch(error =>{
+          console.log(error.message);
+        })
+    };*/
     function seleccionarFila() {
       const rows=document.querySelectorAll('tr');
       for(var i=1;i<rows.length;i++){

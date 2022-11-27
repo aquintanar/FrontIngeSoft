@@ -63,7 +63,7 @@ const getTipoEntregables = async() => {
             <span>
       <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
     </span>
-        <p class="HEADER-TEXT1">Portafolio de Entregables </p>
+        <p class="HEADER-TEXT1">Portafolio de Entregables de Tesis 1</p>
        <br></br>   
            {asesor.map(asesor => (
        
