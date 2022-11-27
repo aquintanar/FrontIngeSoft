@@ -68,10 +68,10 @@ const AsignarCoordinador = () => {
       const resp = await axios
         .post(URLPOST, ides)
         .then(() => {
-          console.log(doc1);
-          //RelacionarComiteXCurso(doc1);
-          console.log(resp.data);
+          console.log("SE DEBE REINICIAR");
           window.location.reload();
+          console.log(doc1);
+          console.log(resp.data);
         })
         .catch(() => {});
     } catch (error) {
