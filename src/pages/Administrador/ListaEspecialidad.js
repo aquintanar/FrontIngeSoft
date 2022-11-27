@@ -7,7 +7,6 @@ import * as AiIcons from 'react-icons/ai';
 import {  Button} from '@material-ui/core';
 import {  useNavigate } from 'react-router-dom';
 import '../../stylesheets/Administrador.css'
-import "../../stylesheets/General.css";
 import useModal from '../../hooks/useModals';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 import * as BsIcons from 'react-icons/bs';
@@ -127,21 +126,21 @@ function ListaEspecialidad()  {
   return (      
     <div class=" CONTAINERADMIN">   
 
-      <h1>Gestión de Especialidades</h1>
-      <h2>Búsqueda de especialidades</h2>
+      <p class="HEADER-TEXT1">Gestión de Especialidades</p>
+      <p class="HEADER-TEXT2">Búsqueda de especialidades</p>
 
       <div class="row">
-          <div class="col col-7" >
+          <div class="col col-7 FILTRO-LISTAR-BUSCAR" >
               <p>Ingresar nombre de la especialidad</p>
-              <div class="input-group ">
-                  <input size="10" type="search" value={search} class="form-control icon-search" name="search" placeholder="Especialidad" aria-label="serach" onChange={buscador}/>
+              <div class="input-group mb-2 ">
+                  <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Especialidad" aria-label="serach" onChange={buscador}/>
               </div>
           </div>
 
-          <div class="col col-4 " >
+          <div class="col col-5 FILTRO-LISTAR" >
               <p>Facultad</p>
               <select select class="form-select" aria-label="Default select example"  onChange= {cambioSelect} >  
-                   <option style={{cursor: PointerEvent}} selected value = "0">Todos</option>
+                   <option selected value = "0">Todos</option>
                   {facus.map(elemento=>(
                     <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.nombre}</option>  
                   ))}
@@ -150,7 +149,7 @@ function ListaEspecialidad()  {
       </div>
 
 
-      <h2>Lista de especialidades</h2>
+      <p class="HEADER-TEXT2" >Lista de especialidades</p>
       <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
       <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
       <div class = "row LISTAR-TABLA">
@@ -162,7 +161,7 @@ function ListaEspecialidad()  {
                   <th style ={{width: 240}}>Nombre</th>
                   <th style = {{width:60}}>Clave</th>
                   <th style = {{width:180}}>Facultad</th>
-                  <th style = {{width:80}}>Acciones</th>
+                  <th style = {{width:90}}>Acciones</th>
               </tr>
             </thead>
             <tbody >
@@ -174,7 +173,7 @@ function ListaEspecialidad()  {
                     <td>{especialidad.facultad.nombre}</td>
                     <td>
                     <button title="Asignar coordinadores" class=" btn BTN-ACCIONES" onClick={()=>{navigate("asignarCoordinador/"+especialidad.idEspecialidad)}}> <AiIcons.AiOutlineUserAdd /></button>
-                    <button title="Modificar especialidad" class="btn BTN-ACCIONES" onClick={()=>{navigate("datosEspecialidad/"+especialidad.idEspecialidad)}}> <FaIcons.FaEdit /></button>
+                    <button title="Editar especialidad" class="btn BTN-ACCIONES" onClick={()=>{navigate("datosEspecialidad/"+especialidad.idEspecialidad)}}> <FaIcons.FaEdit /></button>
                     <button title="Eliminar especialidad" class=" btn BTN-ACCIONES" onClick={()=>seleccionarEspecialidad(especialidad)}> <BootIcons.BsTrash /></button>
                     </td>
                 </tr>
@@ -207,8 +206,8 @@ function ListaEspecialidad()  {
         </div>
       </ModalConfirmación>
       
-      <div className='d-grid gap-2 d-md-flex justify-content-md-end INSERTAR-BOTONES'>
-          <button title= "Registrar especialidad" className='btn btn-primary fs-4 fw-bold mb-3 REGISTRAR' onClick={()=>{navigate("datosEspecialidad/0")}}><span>Registrar</span></button>
+      <div className='LISTAR-BOTON'>
+          <button title= "Registrar especialidad" className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosEspecialidad/0")}}><span>Registrar</span></button>
       </div>             
     </div>              
   )

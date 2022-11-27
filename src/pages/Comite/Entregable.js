@@ -5,8 +5,8 @@ import axios from 'axios';
 import '../../stylesheets/Administrador.css'
 import { useParams } from 'react-router-dom';
 
-const url1= "http://34.195.33.246/api/Entregable/";
-const url2= "http://34.195.33.246/api/DetalleRubrica/";
+const url1= "https://localhost:7012/api/Entregable/";
+const url2= "https://localhost:7012/api/DetalleRubrica/";
 
 //const url1= "http://44.210.195.91/api/Entregable/";
 //const url2= "http://44.210.195.91/api/DetalleRubrica/";

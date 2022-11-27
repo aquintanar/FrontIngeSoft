@@ -30,6 +30,7 @@ function MisCursos()  {
     const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
 
     let filtrado =[];
+    let especialidades = !selFac? esp:esp.filter((dato)=>dato.facultad.idFacultad===selFac);
     const buscador = e=>{
         setSearch(e.target.value);
     }
@@ -110,7 +111,7 @@ function MisCursos()  {
     }
 
     const petitionFacu=async()=>{
-        await axios.get(urlFac+"GetFacultades/")
+        await axios.get(urlFac+"GetFacultadesSimple/")
         .then(response=>{
           setFacus(response.data);
         }).catch(error =>{
@@ -131,7 +132,6 @@ function MisCursos()  {
         await axios.get(urlCur+"GetCursos/")
         .then(response=>{
           setData(response.data);
-          console.log("dassra", response.data)
         }).catch(error =>{
           console.log(error.message);
         })
@@ -173,7 +173,6 @@ function MisCursos()  {
         petitionFacu();
         petitionEsp();
         petitionCurso();
-        console.log("dara", data)
     },[])
     function seleccionarFila() {
       const rows=document.querySelectorAll('tr');
@@ -234,7 +233,7 @@ function MisCursos()  {
                   <p>Seleccione especialidad</p>
                   <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelectEspp}>
                       <option selected value = "0">Todos</option>
-                      {esp.map(elemento=>(
+                      {especialidades.map(elemento=>(
                         <option key={elemento.idEspecialidad} value={elemento.idEspecialidad}>{elemento.nombre}</option>  
                       ))} 
                   </select>
@@ -248,7 +247,7 @@ function MisCursos()  {
               <table className='table fs-6 TABLALISTARCURSOS' >
                 <thead class >
                   <tr class>
-                      <th style = {{width:10}}>Id</th>
+                      <th style = {{width:20}}>ID</th>
                       <th style ={{width: 275}}>Nombre</th>
                   </tr>
                 </thead>

@@ -13,7 +13,7 @@ import {  Button} from '@material-ui/core';
 import useModal from '../../hooks/useModals';
 
 const TemaSeleccionado = () => {
-  const url="http://34.195.33.246/api/TemaTesis/GetTemaTesis";
+  const url="https://localhost:7012/api/TemaTesis/GetTemaTesis";
   //const url="http://44.210.195.91/api/TemaTesis/GetTemaTesis";
   let navigate = useNavigate();
   let {id} = useParams();
@@ -86,7 +86,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
     color="text-success"
   }
   const  getDataT = async() => {
-    const response= await axios(`http://34.195.33.246/api/TemaTesis/GetTemaTesisXId?idTemaTesis=${location.state.id}`);
+    const response= await axios(`https://localhost:7012/api/TemaTesis/GetTemaTesisXId?idTemaTesis=${location.state.id}`);
     setDataT(response.data);
     console.log(response.data);
     setTemaSeleccionado({
@@ -107,7 +107,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
     console.log(temaSeleccionado);
   };
   const  getDataTFeedback = async() => {
-    const response= await axios(`http://34.195.33.246/api/TemaTesis/GetTemaTesisXId?idTemaTesis=${location.state.id}`);
+    const response= await axios(`https://localhost:7012/api/TemaTesis/GetTemaTesisXId?idTemaTesis=${location.state.id}`);
     setDataT(response.data);
     console.log(response.data);
     setTemaSeleccionadoFeedback({
@@ -151,7 +151,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
   }
 
   const aprobarTema=async()=>{
-      await axios.put("http://34.195.33.246/api/TemaTesis/AprobarTemaTesis?idTemaTesis="+location.state.id)
+      await axios.put("https://localhost:7012/api/TemaTesis/AprobarTemaTesis?idTemaTesis="+location.state.id)
       //await axios.put("http://44.210.195.91/api/TemaTesis/AprobarTemaTesis?idTemaTesis="+location.state.id)
       .then(response=>{
         console.log("Aprobado");
@@ -170,7 +170,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
     }
     const asignarAlumno=async()=>{
       
-      await axios.put("http://34.195.33.246/api/TemaTesis/ModifyTemaTesis",temaSeleccionado)
+      await axios.put("https://localhost:7012/api/TemaTesis/ModifyTemaTesis",temaSeleccionado)
       .then(response=>{
         closeEditModal();
         openGuardadoModal();
@@ -180,7 +180,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
     }
     const observar=async()=>{
       
-      await axios.put("http://34.195.33.246/api/TemaTesis/ModifyTemaTesis",temaSeleccionadoFeedback)
+      await axios.put("https://localhost:7012/api/TemaTesis/ModifyTemaTesis",temaSeleccionadoFeedback)
       .then(response=>{
         closeEditModal();
         openGuardadoModal();
@@ -189,7 +189,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
       })
     }
     const modificarAlumnoAsignarTema=async()=>{
-      await axios.put(`http://34.195.33.246/api/Alumno/AsignarTema?idAlumno=${idAlum}`)
+      await axios.put(`https://localhost:7012/api/Alumno/AsignarTema?idAlumno=${idAlum}`)
       .then(response=>{
         closeEditModal();
         openGuardadoModal();

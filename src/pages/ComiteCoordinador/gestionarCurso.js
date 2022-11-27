@@ -30,6 +30,7 @@ function GestionarCurso()  {
     const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
 
     let filtrado =[];
+    let especialidades = !selFac? esp:esp.filter((dato)=>dato.facultad.idFacultad===selFac);
     const buscador = e=>{
         setSearch(e.target.value);
     }
@@ -112,7 +113,7 @@ function GestionarCurso()  {
     }
 
     const petitionFacu=async()=>{
-        await axios.get(urlFac+"GetFacultades/")
+        await axios.get(urlFac+"GetFacultadesSimple/")
         .then(response=>{
           setFacus(response.data);
         }).catch(error =>{
@@ -210,7 +211,7 @@ function GestionarCurso()  {
                   <p>Seleccione especialidad</p>
                   <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelectEspp}>
                       <option selected value = "0">Todos</option>
-                      {esp.map(elemento=>(
+                      {especialidades.map(elemento=>(
                         <option key={elemento.idEspecialidad} value={elemento.idEspecialidad}>{elemento.nombre}</option>  
                       ))} 
                   </select>

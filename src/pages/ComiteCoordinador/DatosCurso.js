@@ -33,6 +33,7 @@ function DatosCurso() {
   const [checkAlumno, setCheckedAl] = React.useState(false);
   const [checkTemaAsignado, setCheckedTemaAs] = React.useState(false);
 
+
   const petitionEsp = async () => {
     let idesEspecialidades = JSON.parse(
       window.localStorage.getItem("infoEspecialidades")
@@ -40,13 +41,7 @@ function DatosCurso() {
     await axios
       .get(urlEsp + "GetEspecialidades/")
       .then((response) => {
-        const filtradoEsp = response.data.filter((Especialidad) => {
-          for (let k in idesEspecialidades) {
-            if (Especialidad.idEspecialidad === idesEspecialidades[k])
-              return Especialidad;
-          }
-        });
-        setEsp(filtradoEsp);
+        setEsp(response.data);
         petitionFac();
       })
       .catch((error) => {
@@ -69,14 +64,9 @@ function DatosCurso() {
       window.localStorage.getItem("infoFacultad")
     );
     await axios
-      .get(urlFac + "GetFacultades/")
+      .get(urlFac + "GetFacultadesSimple/")
       .then((response) => {
-        const filtradoFac = response.data.filter((Facultad) => {
-          for (let k in idesFacultades) {
-            if (Facultad.idFacultad === idesFacultades[k]) return Facultad;
-          }
-        });
-        setFac(filtradoFac);
+        setFac(response.data);
       })
       .catch((error) => {
         console.log(error.message);
@@ -161,8 +151,8 @@ function DatosCurso() {
   };
 
   useEffect(() => {
-    petitionSem();
     petitionEsp();
+    petitionSem();
     cargarCurso();
   }, []);
 
@@ -192,7 +182,6 @@ function DatosCurso() {
       ...prevState,
       idEspecialidad: e.target.value,
     }));
-    console.log(cursoNuevo);
   };
 
   const cambioSelectSem = (e) => {
@@ -209,7 +198,6 @@ function DatosCurso() {
       ...prevState,
       idFacultad: e.target.value,
     }));
-    console.log(cursoNuevo);
   };
 
   const cambioTitulo = (e) => {
@@ -289,9 +277,7 @@ function DatosCurso() {
               selected
               value={cursoNuevo && cursoNuevo.idFacultad}
             >
-              <option selected value="0">
-                Todos
-              </option>
+              
               {fac.map((elemento) => (
                 <option key={elemento.idFacultad} value={elemento.idFacultad}>
                   {elemento.nombre}
@@ -310,9 +296,7 @@ function DatosCurso() {
             selected
             value={cursoNuevo && cursoNuevo.idEspecialidad}
           >
-            <option selected value="0">
-              Todos
-            </option>
+            
             {esp.map((elemento) => (
               <option
                 key={elemento.idEspecialidad}
@@ -333,9 +317,7 @@ function DatosCurso() {
             selected
             value={cursoNuevo && cursoNuevo.idSemestre}
           >
-            <option selected value="0">
-              Todos
-            </option>
+            
             {sem.map((elemento) => (
               <option key={elemento.idSemestre} value={elemento.idSemestre}>
                 {elemento.nombre}

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {  useNavigate, useParams } from 'react-router-dom';
 import '../../stylesheets/Comite.css'
-import "../../stylesheets/General.css";
 import axios from 'axios';
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
@@ -190,7 +189,7 @@ function DatosAsesor() {
 
   return(
       <div class="CONTAINERCOMITE">
-          <h1>{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat + " " + asesorSeleccionado.apeMat}</h1>
+          <p className="HEADER-TEXT1">{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat + " " + asesorSeleccionado.apeMat}</p>
           <div className='row'>
               <div className='col-8 PERFIL'>
                   <div class='BLOCK PERFIL-HEADER fw-bold'>{asesorSeleccionado.correo} </div>
@@ -217,7 +216,6 @@ function DatosAsesor() {
           <div className='col-12 PERFIL'>
             <div class='BLOCK PERFIL-HEADER fw-bold'> Alumnos asesorados </div>
             <div class='BLOCK' >
-                <div class = ' PERFIL-TITLE fw-bold'> Alumnos:
                     {alumnos.length ===0
                     ?<div class = " PERFIL-SUBTITLE fw-normal text-black ms-3"> No tiene alumnos asignados</div>
                     :<div>
@@ -226,7 +224,6 @@ function DatosAsesor() {
                     ))}
                     </div>
                     }
-                </div>
             </div>
           </div>
           <div class="row INSERTAR-BOTONES">                            

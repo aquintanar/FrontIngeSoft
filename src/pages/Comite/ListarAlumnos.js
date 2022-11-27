@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {  useNavigate } from 'react-router-dom';
 import '../../stylesheets/Comite.css'
-import "../../stylesheets/General.css";
 import axios from 'axios';
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
@@ -115,18 +114,18 @@ function ListarAlumnos()  {
 
   return(
       <div className="CONTAINERCOMITE">
-          <h1>Gestión de Alumnos</h1>
-          <h2>Búsqueda de alumnos </h2>
+          <p className="HEADER-TEXT1">Gestión de Alumnos</p>
+          <p class="HEADER-TEXT2">Búsqueda de alumnos </p>
           <div class="row">
-            <div class="col-12 " >
+            <div class="col-12 FILTRO-LISTAR-BUSCAR" >
                 <p>Ingrese el nombre del alumno</p>
                 <div class="input-group">
-                    <input size="10" type="search" value={search} class="form-control icon-search" name="search" placeholder="Nombre del alumno" aria-label="serach" onChange={buscador}/>
+                    <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre del alumno" aria-label="serach" onChange={buscador}/>
                 </div>
             </div>
-            <div class="col-4 " >
+            <div class="col-4 FILTRO-LISTAR" >
                 <p> ¿Tiene tema?</p>
-                <select select class="form-select " aria-label="Default select example" onChange= {cambioEstaObservado} >
+                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioEstaObservado} >
                       <option key={0} value = {0}>Todos</option>
                       <option key={1} value = {1}>Si</option>
                       <option key={2} value={2}>No</option>
@@ -134,7 +133,7 @@ function ListarAlumnos()  {
               </div>
           </div>
 
-        <h2>Lista de alumnos en el curso</h2>
+        <p class="HEADER-TEXT2 mt-0" >Lista de alumnos en el curso</p>
         <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
         <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
         <div class = "row LISTAR-TABLA">
