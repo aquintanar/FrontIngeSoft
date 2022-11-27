@@ -160,11 +160,11 @@ function MisCursos() {
     let idUs = window.localStorage.getItem("IDUSUARIO");
     await axios
       .get(
-        "https://localhost:7012/api/ComiteTesis/BuscarComiteTesisXId?idComiteTesis=" +
+        "https://localhost:7012/api/ComiteXEspecialidad/ListarComitexEspecialidad_x_idComite?idComite=" +
           idUs
       )
       .then((response) => {
-        petitionCurso2(response.data[0].idEspecialidad);
+        petitionCurso2(response.data[0].fidEspecialidad);
       })
       .catch((error) => {
         console.log(error.message);
