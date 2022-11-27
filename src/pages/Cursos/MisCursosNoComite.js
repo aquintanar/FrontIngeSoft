@@ -131,6 +131,7 @@ function GestionarCurso()  {
         await axios.get(urlCur+"GetCursos/")
         .then(response=>{
           setData(response.data);
+          console.log("dassra", response.data)
         }).catch(error =>{
           console.log(error.message);
         })

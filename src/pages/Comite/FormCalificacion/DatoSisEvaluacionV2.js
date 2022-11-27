@@ -6,6 +6,7 @@ import {  useNavigate ,useParams} from 'react-router-dom';
 import axios from 'axios';
 import * as BsIcons from 'react-icons/bs';
 import '../../../stylesheets/Asesor.css'
+import "../../../stylesheets/General.css";
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
 import {ModalConfirmación, ModalPregunta} from '../../../components/Modals';
@@ -268,20 +269,20 @@ function DatoSistEvaluacionV2()  {
 
     return(
         <div class=" CONTAINERALUMNO">   
-            <p class="HEADER-TEXT1">{subTitulo}</p>
+            <h1>{subTitulo}</h1>
 
             <div class="row">
-                <div class="col-4 DATOS" >
-                    <div class="text-start fs-6  mb-1 fw-normal "><p>Código</p></div>
-                        <div class="input-group mb-2 ">
+                <div class="col-4" >
+                    <p>Código</p>
+                        <div class="input-group">
                             <input type="text"  class="form-control" name="codigo" placeholder="Código" aria-label="codigo"  
                                 onChange={handleChange} value={notaSeleccionada.codigo}/>
                         </div>
                 </div>
                 
-                <div class="col-8 DATOS1" >
+                <div class="col-8 " >
                     <p>Nombre</p>
-                    <div class="input-group mb-2 ">
+                    <div class="input-group">
                         <textarea class="form-control TEXTAREA2" name="nombre" placeholder="Nombre" aria-label="nombre"  
                             onChange={handleChange} value={notaSeleccionada && notaSeleccionada.nombre}/>
                     </div>
@@ -289,16 +290,18 @@ function DatoSistEvaluacionV2()  {
             </div>
 
             <div class="row">
-                <div class = "col-3 DATOS" >
+                <div class = "col-3" >
                     <p>Peso</p>
-                    <input type="number" min="1" class="form-control" name="peso" placeholder="Peso" aria-label="peso"  
-                        onChange={handleChange} value={notaSeleccionada && notaSeleccionada.peso}/>
+                    <div class="input-group">
+                      <input type="number" min="1" class="form-control" name="peso" placeholder="Peso" aria-label="peso"  
+                          onChange={handleChange} value={notaSeleccionada && notaSeleccionada.peso}/>
+                    </div>
                 </div>
             </div>
 
-            <div className="col">
-                    <div class="fs-5 fw-normal  mb-1 ">Nombre de la evaluación seleccionada</div>
-                    <div class = "row DATOS3">
+            <div class="row">
+                    <p>Nombre de la evaluación seleccionada</p>
+                    <div class = "row">
                         <div className = "col-11 mb-2">
                             <input type='text'  className="form-control" id="nombreEvaluacion" name="nombreEvaluacion"  disabled
                              value={evaluacion && evaluacion.nombre}/>

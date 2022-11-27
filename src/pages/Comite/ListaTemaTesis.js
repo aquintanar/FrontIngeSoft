@@ -11,6 +11,7 @@ import ToolkitProvider, {
   Search,
 } from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit";
 import "../../stylesheets/Comite.css";
+import "../../stylesheets/General.css";
 import * as BsIcons from "react-icons/bs";
 import useModal from "../../hooks/useModals";
 
@@ -211,6 +212,7 @@ function ListaTemaTesis() {
       headerStyle: {
         backgroundColor: "#042354",
         color: "white",
+        fontSize: "15px"
       },
     },
 
@@ -297,8 +299,8 @@ function ListaTemaTesis() {
   return (
     <div className="CONTAINERCOMITE">
       <div>
-        <h2 className="HEADER-TEXT1">Temas de Tesis</h2>
-        <h2 className="HEADER-TEXT2"> Lista de Propuestas </h2>
+        <h1>Temas de Tesis</h1>
+        <h2 > Lista de Propuestas </h2>
         <div className="LISTAR-TABLA-ELEMENTOS">
           <ToolkitProvider
             keyField="idTemaTesis"

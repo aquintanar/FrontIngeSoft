@@ -448,16 +448,16 @@ function DatosSemestre() {
   return (
     <div class=" CONTAINERADMIN">
       <div class="row">
-        <p class="HEADER-TEXT1">Gestión de Semestres Académicos</p>
-        <p class="HEADER-TEXT2">{subTitulo}</p>
+        <h1>Gestión de Semestres Académicos</h1>
+        <h2>{subTitulo}</h2>
       </div>
 
-      <div class="row DATOS">
+      <div class="row ">
         <div class="col-4">
-          <div class="  fs-5 fw-normal  mb-1 ">Seleccione año</div>
+          <p>Seleccione año</p>
           <select
             select
-            class="form-select Cursor"
+            class="form-select"
             aria-label="Default select example"
             onChange={cambioSelectAnio}
             selected
@@ -473,10 +473,10 @@ function DatosSemestre() {
         </div>
 
         <div class="col-4">
-          <div class="  fs-5 fw-normal  mb-1 ">Seleccione semestre</div>
+          <p>Seleccione semestre</p>
           <select
             select
-            class="form-select Cursor"
+            class="form-select"
             aria-label="Default select example"
             onChange={cambioSelectSem}
             selected
@@ -488,7 +488,7 @@ function DatosSemestre() {
         </div>
 
         <div class="col-4">
-          <div class="fs-5 fw-normal  mb-1 ">Fecha de inicio</div>
+          <p>Fecha de inicio</p>
           <div class="mb-3 FILTRO-FECHA">
             <DatePicker
               onChange={(fecha) => ModificarFechaIni(fecha)}
@@ -498,7 +498,7 @@ function DatosSemestre() {
         </div>
 
         <div class="col-4">
-          <div class="fs-5 fw-normal  mb-1 ">Fecha fin</div>
+          <p>Fecha fin</p>
           <div class="mb-3 FILTRO-FECHA">
             <DatePicker
               onChange={(fecha) => ModificarFechaFin(fecha)}
@@ -507,10 +507,10 @@ function DatosSemestre() {
           </div>
         </div>
         <div class="col-4">
-          <div class="  fs-5 fw-normal  mb-1 ">¿Está en curso?</div>
+          <p>¿Está en curso?</p>
           <select
             select
-            class="form-select Cursor"
+            class="form-select"
             aria-label="Default select example"
             onChange={cambioSelectCurso}
             selected
@@ -601,14 +601,14 @@ function DatosSemestre() {
 
       <div class="row INSERTAR-BOTONES">
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-          <button
+          <button title = "Guardar semestre académico"
             class="btn btn-primary fs-4 fw-bold GUARDAR"
             type="button"
             onClick={() => peticionSelecter()}
           >
             <span>Guardar</span>
           </button>
-          <button
+          <button title = "Cancelar"
             class="btn btn-primary fs-4 fw-bold   CANCELAR"
             type="button"
             onClick={() => {

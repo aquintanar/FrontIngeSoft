@@ -131,6 +131,7 @@ function MisCursos()  {
         await axios.get(urlCur+"GetCursos/")
         .then(response=>{
           setData(response.data);
+          console.log("dassra", response.data)
         }).catch(error =>{
           console.log(error.message);
         })
@@ -172,6 +173,7 @@ function MisCursos()  {
         petitionFacu();
         petitionEsp();
         petitionCurso();
+        console.log("dara", data)
     },[])
     function seleccionarFila() {
       const rows=document.querySelectorAll('tr');

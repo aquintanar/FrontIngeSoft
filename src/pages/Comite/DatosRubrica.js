@@ -1,6 +1,7 @@
 import React, { useState} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../../stylesheets/Administrador.css';
+import "../../stylesheets/General.css";
 import axios from 'axios';
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
@@ -266,50 +267,50 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
     return (      
         <div class ="CONTAINERADMIN " >   
     
-        <p class="HEADER-TEXT1 mb-5">Datos Rúbrica</p>
+        <h1>Datos Rúbrica</h1>
 
 
-        <div class="DATOS row" >
+        <div class=" row" >
             <div class="col-3">
                 <p>Entrega o Presentación</p>
             </div>
             <div class="col">
-                <div class="input-group mb-3">
+                <div class="input-group">
                     <input type="text" disabled class="form-control" name="entregable" placeholder="Entrega o presentación" value={entregable.nombre}/>
                 </div>
             </div>
         </div>
 
-        <div class="DATOS row" >
+        <div class=" row" >
             <div class="col-3">
                 <p>Rubro</p>
             </div>
             <div class="col">
-                <div class="input-group mb-3 ">
+                <div class="input-group">
                     <input type="text"  class="form-control" name="rubro" placeholder="Rubro" 
                           onChange={handleChange} value={rubricaSeleccionada && rubricaSeleccionada.rubro} />
                 </div>
             </div>
         </div>
 
-        <div class="DATOS row" >
+        <div class=" row" >
             <div class="col-3">
                 <p>Nivel Deseado</p>
             </div>
             <div class="col">
-                <div class="input-group  mb-3">
+                <div class="input-group ">
                         <textarea class="form-control" name="nivelDeseado" placeholder="Descripción"
                           onChange={handleChange} value={rubricaSeleccionada && rubricaSeleccionada.nivelDeseado} />
                 </div>
             </div>
         </div>
 
-        <div class="DATOS row" >
+        <div class=" row" >
             <div class="col-3">
                 <p>Puntaje Máximo</p>
             </div>
             <div class="col-3">
-                <div class="input-group mb-3 ">
+                <div class="input-group ">
                     <input type="number"  class="form-control" name="puntajeMaximo" placeholder="Puntaje"  
                           onChange={handleChange} value={rubricaSeleccionada && rubricaSeleccionada.puntajeMaximo} />
                 </div>
@@ -318,11 +319,11 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
 
         <div class="row INSERTAR-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>agregaDatos()}><span>Añadir</span></button>
+                    <button title='Añadir rúbrica' class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>agregaDatos()}><span>Añadir</span></button>
                 </div>
         </div>   
   
-          <p class="HEADER-TEXT2 mt-0" >Rúbrica</p>
+          <h2>Rúbrica</h2>
           <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
           <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
           <div class = "row LISTAR-TABLA-EV mb-1">
@@ -343,8 +344,8 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
                         <td >{elemento.nivelDeseado}</td>    
                         <td>{elemento.puntajeMaximo}</td>    
                         <td>
-                        <button class="btn BTN-ACCIONES" onClick={()=>cargaRub(elemento)}> <FaIcons.FaEdit /></button>
-                        <button  class=" btn BTN-ACCIONES" onClick={()=>quitaRubro(elemento)}> <BootIcons.BsTrash /></button>
+                        <button title='Modificar rúbrica' class="btn BTN-ACCIONES" onClick={()=>cargaRub(elemento)}> <FaIcons.FaEdit /></button>
+                        <button title='Eliminar rúbrica' class=" btn BTN-ACCIONES" onClick={()=>quitaRubro(elemento)}> <BootIcons.BsTrash /></button>
                         </td>
                     </tr>
                   ))}
@@ -400,8 +401,8 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
           
             <div class="row INSERTAR-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button"  onClick={()=>peticionSelecter()}><span>Guardar</span></button>
-                    <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button"  onClick={()=>{navigate("../preparacion/entregables")}}><span>Cancelar</span></button>
+                    <button title='Guardar entrega o presentación' class="btn btn-primary fs-4 fw-bold GUARDAR" type="button"  onClick={()=>peticionSelecter()}><span>Guardar</span></button>
+                    <button title="Cancelar" class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button"  onClick={()=>{navigate("../preparacion/entregables")}}><span>Cancelar</span></button>
                 </div>
             </div>           
         </div>              

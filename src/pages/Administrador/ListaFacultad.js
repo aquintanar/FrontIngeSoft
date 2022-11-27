@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 //import './DatosFacultad.css';
 import * as BsIcons from "react-icons/bs";
 import "../../stylesheets/Administrador.css";
+import "../../stylesheets/General.css";
 import useModal from "../../hooks/useModals";
 import { ModalPregunta, ModalConfirmación } from "../../components/Modals";
 
@@ -97,14 +98,14 @@ function ListaFacultad() {
   }
 
   //----------------
-  filtrado = filtrado.slice(currentPage, currentPage + 6);
+  filtrado = filtrado.slice(currentPage, currentPage + 5);
   const nextPage = () => {
-    if (filtrado.length >= 6)
+    if (filtrado.length >= 5)
       //VER CODIGO
-      SetCurrentPage(currentPage + 6);
+      SetCurrentPage(currentPage + 5);
   };
   const previousPage = () => {
-    if (currentPage > 0) SetCurrentPage(currentPage - 6);
+    if (currentPage > 0) SetCurrentPage(currentPage - 5);
   };
   //----------------
   //Listar facultades tabla--
@@ -181,19 +182,17 @@ function ListaFacultad() {
 
   return (
     <div class="CONTAINERADMIN">
-      <p class="HEADER-TEXT1">Gestión de Facultades</p>
-      <p class="HEADER-TEXT2">Búsqueda de facultades</p>
+      <h1>Gestión de Facultades</h1>
+      <h2>Búsqueda de facultades</h2>
 
       <div class="row ">
-        <div class="col-lg-7 FILTRO-LISTAR-BUSCAR">
-          <div class="text-start fs-6  mb-1 fw-normal ">
-            <p>Ingresar nombre de la facultad</p>
-          </div>
-          <div class="input-group mb-2 ">
+        <div class="col-lg-7 ">
+          <p>Ingresar nombre de la facultad</p>
+          <div class="input-group">
             <input
-              type="text"
+              type="search"
               value={search}
-              class="form-control"
+              class="form-control icon-search"
               name="search"
               placeholder="Facultad"
               aria-label="serach"
@@ -203,7 +202,7 @@ function ListaFacultad() {
         </div>
       </div>
 
-      <p class="HEADER-TEXT2">Lista de facultades</p>
+      <h2>Lista de facultades</h2>
       <button onClick={previousPage} className="PAGINACION-BTN">
         <BsIcons.BsCaretLeftFill />
       </button>
@@ -229,7 +228,7 @@ function ListaFacultad() {
                   <td>{facultad.descripcion}</td>
 
                   <td>
-                    <button
+                    <button title="Modificar facultad"
                       className="btn BTN-ACCIONES"
                       onClick={() => {
                         navigate("datosFacultad/" + facultad.idFacultad);
@@ -238,7 +237,7 @@ function ListaFacultad() {
                       {" "}
                       <FaIcons.FaEdit />
                     </button>
-                    <button
+                    <button title="Eliminar facultad"
                       className=" btn BTN-ACCIONES"
                       onClick={() => seleccionarFacultad(facultad)}
                     >
@@ -291,9 +290,9 @@ function ListaFacultad() {
           </Button>
         </div>
       </ModalConfirmación>
-      <div className="d-grid gap-2 d-md-flex justify-content-md-end LISTAR-BOTON ">
-        <button
-          className="btn btn-primary fs-4 fw-bold mb-3 "
+      <div className="d-grid gap-2 d-md-flex justify-content-md-end INSERTAR-BOTONES ">
+        <button title="Registrar facultad"
+          className="btn btn-primary fs-4 fw-bold mb-3 REGISTRAR"
           onClick={() => {
             navigate("datosFacultad/0");
           }}
