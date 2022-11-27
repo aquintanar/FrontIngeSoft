@@ -124,6 +124,7 @@ function DatosSemestre() {
   //Control de cambio en select de anio
   const cambioSelectAnio = (e) => {
     const { name, value } = e.target;
+    console.log(e.target);
     semestreSeleccionada.anho = value;
     //cargaNombre(semestreSeleccionada.idEspecialidad)
     setSemestreSeleccionada((prevState) => ({
@@ -226,6 +227,7 @@ function DatosSemestre() {
     console.log(semestreSeleccionada);
     if(semestreSeleccionada.enCurso=="true")semestreSeleccionada.enCurso=true;
     else if(semestreSeleccionada.enCurso=="false")semestreSeleccionada.enCurso=false;
+    
     await axios
       .post(url + "PostSemestre", semestreSeleccionada)
       .then((response) => {

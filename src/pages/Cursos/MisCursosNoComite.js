@@ -129,8 +129,10 @@ function GestionarCurso()  {
       }
     
     const petitionCurso=async()=>{
-        await axios.get(urlCur+"GetCursos/")
+        let idUs = window.localStorage.getItem("IDUSUARIO");
+        await axios.get(urlCur+"ListarCursosXIdComiteTesis?idComiteTesis="+idUs)
         .then(response=>{
+          console.log(response.data);
           setData(response.data);
         }).catch(error =>{
           console.log(error.message);
