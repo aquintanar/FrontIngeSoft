@@ -150,7 +150,7 @@ const getEntregableID = async () => {
     <span>
       <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
     </span>
-      <p class="HEADER-TEXT1">{location.state.nombreEntregable}</p>
+      <p class="HEADER-TEXT1">{location.state.nombreEntregable} </p>
 
       
         

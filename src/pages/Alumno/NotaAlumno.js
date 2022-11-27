@@ -126,12 +126,13 @@ const peticionNotasEntregables = async() => {
     const dataDocumentoFinal = await responseDocumentoFinal.json()
  //   console.log(dataAvances)
     SetDocumentoFinal(dataDocumentoFinal)
-
+    if(dataCurso[0].numTesis==2){
     const urlEntregables5  = (urlCodigo+'api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso='+localStorage.getItem('idCurso')+'&idTipoEntregable='+idEntregable5+'&idAlumno='+idAlumno);
     const responseEntregables5 = await fetch(urlEntregables5)
     const dataEntregables5 = await responseEntregables.json()
   //  console.log(dataEntregables)
     SetEntregables5(dataEntregables5) 
+    }
 }
 
 
@@ -168,13 +169,16 @@ var sumEntregables=0;
                 index = 0 ; 
                 
                 for ( i = 0 ; i < result.data.length ; i++){
-                      if(result.data[i].notaVersionMasReciente >= 0) index = index +result.data[i].notaVersionMasReciente;   
+                      if(result.data[i].notaVersionMasReciente >= 0 && result.data[i].estadoMasReciente>=5 &&  result.data[i].estadoMasReciente<=7) index = index +result.data[i].notaVersionMasReciente;   
                       else index=index+0;
                       console.log("if");
                       
                       
                 }   
+                console.log(elem.idNota);
                 console.log(index);
+                console.log(elem.fidTipoEntregable);
+                console.log(elem.peso);
                 console.log(result.data.length);
                 if(result.data.length==0) result.data.length=1;
                 if(result.data.length>0) sumEntregables = sumEntregables +  ((index/result.data.length)*elem.peso);
@@ -189,13 +193,16 @@ var sumEntregables=0;
                   //SetEntregablesParciales(result.data);
                   let i = 0  ; 
                   for ( i = 0 ; i < result.data.length ; i++){
-                        if(result.data[i].notaVersionMasReciente >= 0) index2 = index2 +result.data[i].notaVersionMasReciente;   
+                    if(result.data[i].notaVersionMasReciente >= 0 && result.data[i].estadoMasReciente>=5 &&  result.data[i].estadoMasReciente<=7) index2 = index2 +result.data[i].notaVersionMasReciente;   
                         else index2=index2+0;
                         console.log("else");
                         
                         
                   }   
+                  console.log(elem.idNota);
                   console.log(index2);
+                  console.log(elem.fidTipoEntregable);
+                  console.log(elem.peso);
                   console.log(result.data.length);
                   if(result.data.length==0) result.data.length=1;
                   if(result.data.length>0) sumEntregables = sumEntregables+  ((index2/result.data.length)*elem.peso);
@@ -240,7 +247,7 @@ useEffect(()=>{
         {entregablesParciales.map(entregable => (
                 <tr class="BTN-CUADRADO-NOTA" key={entregable.idVersion}>
                     <td style ={{width: 800, paddingLeft: '0.5%', paddingRight: '5%'}}>{entregable.nombre}</td>                    
-                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {((entregable.notaVersionMasReciente >= 0) ? entregable.notaVersionMasReciente : "-" )}</td>
+                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {(entregable.estadoMasReciente>=5 &&  entregable.estadoMasReciente<=7)?(entregable.notaVersionMasReciente >= 0 ? entregable.notaVersionMasReciente : "-" ):"-"}</td>
                 </tr>
          ))}
 
@@ -250,7 +257,7 @@ useEffect(()=>{
         {entregables.map(entregable => (
                 <tr class="BTN-CUADRADO-NOTA" key={entregable.idVersion}>
                     <td style ={{width: 800, paddingLeft: '0.5%', paddingRight: '5%'}}>{entregable.nombre} </td>    
-                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {((entregable.notaVersionMasReciente >= 0) ? entregable.notaVersionMasReciente : "-" )} </td>                  
+                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {(entregable.estadoMasReciente>=5 &&  entregable.estadoMasReciente<=7)?(entregable.notaVersionMasReciente >= 0 ? entregable.notaVersionMasReciente : "-" ):"-"}</td>                  
                 </tr>
               ))}
 
@@ -260,7 +267,7 @@ useEffect(()=>{
         {exposiciones.map(entregable => (
                 <tr class="BTN-CUADRADO-NOTA" key={entregable.idVersion}>
                     <td style ={{width: 800, paddingLeft: '0.5%', paddingRight: '5%'}}>{entregable.nombre} </td>    
-                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {((entregable.notaVersionMasReciente >= 0) ? entregable.notaVersionMasReciente : "-" )} </td>              
+                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {(entregable.estadoMasReciente>=5 &&  entregable.estadoMasReciente<=7)?(entregable.notaVersionMasReciente >= 0 ? entregable.notaVersionMasReciente : "-" ):"-"} </td>              
                 </tr>
               ))}
         {cursos.map(curso => (
@@ -270,7 +277,7 @@ useEffect(()=>{
         {documentoFinal.map(entregable => (
                 <tr class="BTN-CUADRADO-NOTA" key={entregable.idVersion}>
                     <td style ={{width: 800, paddingLeft: '0.5%', paddingRight: '5%'}}>{entregable.nombre}</td>                    
-                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {((entregable.notaVersionMasReciente >= 0) ? entregable.notaVersionMasReciente : "-" )} </td>
+                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {(entregable.estadoMasReciente>=5 &&  entregable.estadoMasReciente<=7)?(entregable.notaVersionMasReciente >= 0 ? entregable.notaVersionMasReciente : "-" ):"-"} </td>
                 </tr>
               ))}
 
@@ -283,7 +290,7 @@ useEffect(()=>{
         {entregables5.map(entregable => (
                 <tr class="BTN-CUADRADO-NOTA" key={entregable.idVersion}>
                     <td style ={{width: 800, paddingLeft: '0.5%', paddingRight: '5%'}}>{entregable.nombre} </td>    
-                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {((entregable.notaVersionMasReciente >= 0) ? entregable.notaVersionMasReciente : "-" )} </td>                  
+                    <td style ={{width: 150, paddingLeft: '0.5%', paddingRight: '5%'}}> {(entregable.estadoMasReciente>=5 &&  entregable.estadoMasReciente<=7)?(entregable.notaVersionMasReciente >= 0 ? entregable.notaVersionMasReciente : "-" ):"-"} </td>                  
                 </tr>
               ))}
 
