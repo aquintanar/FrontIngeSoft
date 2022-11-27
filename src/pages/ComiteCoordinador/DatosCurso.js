@@ -250,6 +250,7 @@ function DatosCurso() {
       <div class="row">
         <p class="HEADER-TEXT1">Gestión de Curso</p>
         <p class="HEADER-TEXT2">Registro de Curso - {subTitulo} </p>
+        <h5 >*Recuerde crear cursos solo de la especialidad que es coordinador</h5>
       </div>
       <div class="row DATOS">
         <div class="col-12">

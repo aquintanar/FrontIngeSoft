@@ -17,6 +17,7 @@ const urlCur = "https://localhost:7012/api/Curso/";
 function GestionarCurso() {
   let navigate = useNavigate();
   const [currentPage, SetCurrentPage] = useState(0);
+  const [especialidadGestionada,SetEspecialidadGestionada]=useState("");
   const [idesp, SetIdEsp] = useState(0);
   const [data, setData] = useState([]);
   const [selFac, setSelFac] = useState(0);
@@ -166,6 +167,8 @@ function GestionarCurso() {
           idUs
       )
       .then((response) => {
+        console.log(response.data[0]);
+        SetEspecialidadGestionada(response.data[0].nombre);
         petitionCurso2(response.data[0].idEspecialidad);
       })
       .catch((error) => {
@@ -227,7 +230,8 @@ function GestionarCurso() {
 
   return (
     <div className="CONTAINERCOMITE">
-      <h1 className="HEADER-TEXT1">Mis Cursos</h1>
+      <h1 className="HEADER-TEXT1">{"Mis Cursos" }</h1>
+      <h3>{"Gestion de "+especialidadGestionada}</h3>
       <div class="row">
         <div class="col-9 FILTRO-LISTAR-BUSCAR">
           <p>Ingrese el nombre del curso</p>
