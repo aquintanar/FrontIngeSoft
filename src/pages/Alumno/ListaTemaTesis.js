@@ -129,8 +129,14 @@ function ListaTemaTesis() {
     let idcur = window.localStorage.getItem("idCurso");
     const response = await axios.get("https://localhost:7012/api/TemaTesis/GetTemaTesisXIdCurso?idCurso="+idcur)
     .then((response)=>{
+      let filtro = [];
       console.log(response.data);
-      setData(response.data);
+      for(let k in response.data){
+        if(response.data[k].estadoTema=="Publicado"){
+          filtro.push(response.data[k]);
+        }
+      }
+      setData(filtro);
     }).catch(()=>{
 
     })
