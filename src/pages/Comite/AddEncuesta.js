@@ -14,9 +14,9 @@ import axios from 'axios';
 import {  Button} from '@material-ui/core';
 import { isCursorAtStart } from "@testing-library/user-event/dist/utils";
 
-const url1= "http://34.195.33.246/api/Entregable/";
-const urlCurso = "http://34.195.33.246/api/Curso/"
-const urlEncuesta = "http://34.195.33.246/api/Encuesta/"
+const url1= "https://localhost:7012/api/Entregable/";
+const urlCurso = "https://localhost:7012/api/Curso/"
+const urlEncuesta = "https://localhost:7012/api/Encuesta/"
 const AddEncuesta = () => {
     const [encuestaSeleccionada, setEncuestaSeleccionada]=useState({
         idEncuesta: 0 , 
@@ -58,7 +58,8 @@ const AddEncuesta = () => {
       }
 
     const peticionGetEncuesta = async()=>{
-        await axios.get(urlEncuesta+"GetEncuesta")
+        let idcur = window.localStorage.getItem("idCurso");
+        await axios.get("https://localhost:7012/api/Encuesta/BuscarEncuestaXIdCurso?idCurso="+idcur)
         .then(response => {
             setData(response.data);
         }).catch(error => {
@@ -67,20 +68,40 @@ const AddEncuesta = () => {
     }
 
     const petitionCursos = async()=>{
+        let idcur = window.localStorage.getItem("idCurso");
+        const response=await axios.get("https://localhost:7012/api/Curso/BuscarCursoXId?idCurso="+ idcur)
+        .then((response)=>{
+            SetCursos(response.data);
+        }).catch(()=>{
+
+        })
+        
+        /*
+
+
         await axios.get(urlCurso+"GetCursos")
         .then(response=>{
             SetCursos(response.data);
         }).catch(error =>{
         console.log(error.message);
-        })
+        })*/
     }
     const petitionEncuesta = async()=> {
+        let idcur = window.localStorage.getItem("idCurso");
+        await axios.get("https://localhost:7012/api/Encuesta/BuscarEncuestaXIdCurso?idCurso="+idcur)
+        .then(response => {
+            SetEncuestas(response.data);
+        }).catch(error => {
+            console.log(error.message);
+        })
+
+        /*
         await axios.get(urlEncuesta+"LeerEncuestas")
         .then(response=>{
             SetEncuestas(response.data);
         }).catch(error => {
             console.log(error.message);
-        })
+        })*/
     }
 
     const peticionSelecter=()=>{
@@ -88,6 +109,8 @@ const AddEncuesta = () => {
         openPostModal()
     }
     const peticionPost=async()=>{
+        console.log(encuestaSeleccionada);
+        encuestaSeleccionada.fidCurso=window.localStorage.getItem("idCurso");
         await axios.post(urlEncuesta+"InsertarEncuesta",encuestaSeleccionada,{
             _method: 'POST'
           })

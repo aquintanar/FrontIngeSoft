@@ -11,9 +11,9 @@ import {  Button} from '@material-ui/core';
 import {ModalConfirmación, ModalPregunta , ModalInsertar} from '../../components/Modals';
 import { Comparator } from 'react-bootstrap-table2-filter';
 
-const url2= "http://34.195.33.246/api/DetalleRubrica/";
-const url1= "http://34.195.33.246/api/Entregable/";
-const urlPregunta= "http://34.195.33.246/api/PreguntaEncuesta/";
+const url2= "https://localhost:7012/api/DetalleRubrica/";
+const url1= "https://localhost:7012/api/Entregable/";
+const urlPregunta= "https://localhost:7012/api/PreguntaEncuesta/";
 
 //const url2= "http://44.210.195.91/api/DetalleRubrica/";
 //const url1= "https://44.210.195.91/api/Entregable/";
@@ -279,6 +279,8 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
       }
     useEffect(()=>{
         peticionPreguntas();
+        console.log("SOY EL ENTREGABLE");
+        console.log(entregable);
      },[]) 
 
     
