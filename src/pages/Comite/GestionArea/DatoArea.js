@@ -25,7 +25,7 @@ function DatoArea()  {
     const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
     const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
     const [subTitulo,setSubtitulo] = useState("Registrar área");
-    const infoEspecialidad = JSON.parse(localStorage.getItem('infoEspecialidad'))
+    const infoEspecialidad = JSON.parse(localStorage.getItem('infoCurso'))
 
     const [facultad, setFacultad] = useState({
         idFacultad: 0,
@@ -39,7 +39,7 @@ function DatoArea()  {
 
     const [areaSeleccionada, setAreaSeleccionada]=useState({
         idArea: 0,
-        idEspecialidad: infoEspecialidad.numEsp,
+        idEspecialidad: infoEspecialidad.idEspec,
         nombre: '',
     })
 
@@ -89,7 +89,7 @@ function DatoArea()  {
     }
                                               
     const peticionGetFacultad=async()=>{        // FACULTAD  del usuario      
-        await axios.get(urlFacultad+ "GetFacultadesById?id_facultad="+infoEspecialidad.numFac)       
+        await axios.get(urlFacultad+ "GetFacultadesById?id_facultad="+infoEspecialidad.idFac)       
         .then(response=>{
             if(response.data.length !== 0){
                 setFacultad({
@@ -103,7 +103,7 @@ function DatoArea()  {
     }
                                               
     const peticionGetEspecialidad=async()=>{    // ESPECIALIDAD del usuario   
-        await axios.get(urlEspecialidad+ "GetEspecialidadXId?idEspecialidad="+infoEspecialidad.numEsp)       
+        await axios.get(urlEspecialidad+ "GetEspecialidadXId?idEspecialidad="+infoEspecialidad.idEspec)       
         .then(response=>{
             if(response.data.length !== 0){
                 setEspecialidad({

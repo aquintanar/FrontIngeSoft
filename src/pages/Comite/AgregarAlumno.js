@@ -171,7 +171,7 @@ function ListarAlumnosNoEstan() {
           </select>
         </div>
       </div>
-
+      <p>*Solo se pueden agregar alumnos de la misma especialidad del curso</p>
       <p class="HEADER-TEXT2 mt-5" >Lista de alumnos no asignados</p>
       <button onClick={previousPage} className="PAGINACION-BTN">
         <BsIcons.BsCaretLeftFill />
