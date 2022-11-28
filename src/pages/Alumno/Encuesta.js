@@ -14,7 +14,7 @@ const urlDetallePreguntaEncuesta = "https://localhost:7012/api/DetallePreguntaEn
 const Encuesta = () => {
     let navigate = useNavigate();
     const [preguntaActual , setPreguntaActual] = useState(0) ; 
-    const [preguntas,SetPreguntas] = useState([]);
+    const [preguntas,SetPreguntas] = useState([" "," "," ", " "," ", " ", " ", " ", " ", " "," "," "," "]);
     const [cuestionario ,SetCuestionario] = useState([]);
     const [data,setData] = useState([]);
     const [isFinished , setFinished] = useState(false); 
@@ -26,9 +26,22 @@ const Encuesta = () => {
         respuesta: '',
     })
     
+    const buscarAsesor = async()=>{
+        let idcur = window.localStorage.getItem("idCurso");
+        let idalum = window.localStorage.getItem("IDUSUARIO");
+        axios.get("https://localhost:7012/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno="+idalum+"&idCurso="+idcur)
+        .then((response)=>{
+
+            console.log(response.data);
+            //handleNextQuestion(e);
+        }).catch(()=>{
+
+        })
+    }
+
     function handleNextQuestion(){
         setRpta({
-            fidAlumno: 1,
+            fidAlumno: window.localStorage.getItem("IDUSUARIO"),
             fidAsesor: 2,
             fidPreguntaEncuesta: preguntas[preguntaActual].idPreguntaEncuesta,
             respuesta : puntaje, 
@@ -67,9 +80,22 @@ const Encuesta = () => {
         })
       }
     let pregs = [] ;
-    const peticionGetPreguntas=async()=>{
+    const buscarEncuesta=async()=>{
+        let idCur = window.localStorage.getItem("idCurso");
+        await axios.get("https://localhost:7012/api/Encuesta/BuscarEncuestaXIdCurso?idCurso="+idCur)
+        .then((response)=>{
+            console.log("LA ENCUESTA");
+            console.log(response.data);
+            peticionGetPreguntas(response.data[0].idEncuesta);
+        }).catch(()=>{
+
+        })
+    }
+
+
+    const peticionGetPreguntas=async(e)=>{
         let aux ; 
-        await axios.get(urlPregunta+"BuscarPreguntaEncuestaXIdEncuesta?idEncuesta=3")
+        await axios.get(urlPregunta+"BuscarPreguntaEncuestaXIdEncuesta?idEncuesta="+e)
         .then(response=>{
             console.log("PETICION PREGUNTA EJECUTADA");
             console.log(response.data);
@@ -86,11 +112,11 @@ const Encuesta = () => {
         console.log(preguntas)
     }
     useEffect(() => {
-        peticionGetPreguntas();
+        buscarEncuesta();
         //nsole.log(pregs)
         //console.log(preguntas)
         
-    },[peticionGetPreguntas]);
+    },[]);
     //peticionGetPreguntas();
     //ciclo de vida del componente de react algo de moutnh
     return (      
@@ -105,7 +131,7 @@ const Encuesta = () => {
                         <span> Pregunta {preguntaActual  + 1 }  de </span> {preguntas.length}
                     </div>
                     <div>
-                           {/*preguntas[preguntaActual].pregunta*/} 
+                           {preguntas[preguntaActual].pregunta} 
                     </div>
                 </div>
                 <div class="form-check">
@@ -141,7 +167,7 @@ const Encuesta = () => {
                 <br></br>
                 <div className='d-grid gap-2 d-md-flex justify-content-start LISTAR-ESPECIALIDADES-BOTON '>
                     <button type="button" class="btn btn-primary fs-4 fw-bold" id = "botnnext" onClick={handleNextQuestion2}>Atras</button>
-                    <button type="button" class="btn btn-primary fs-4 fw-bold" id = "botnnext" onClick={handleNextQuestion}>Guardar respuesta</button>
+                    <button type="button" class="btn btn-primary fs-4 fw-bold" id = "botnnext" onClick={buscarAsesor}>Guardar respuesta</button>
                 </div>
                
                 
