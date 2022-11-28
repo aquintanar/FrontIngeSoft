@@ -16,6 +16,8 @@ import DatePicker from "react-date-picker";
 import "../../stylesheets/Calendar.css";
 import "../../stylesheets/DatePicker.css";
 import "../../stylesheets/General.css";
+import {ToastContainer,toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 var coordRegist;
 var datos;
@@ -56,6 +58,30 @@ const AsignarCoordinador = () => {
     fidComiteTesis: 91,
     fidEspecialidad: 6,
   });
+  const notify=()=>{
+    toast.error("El usuario ya es coordinador de otra especialidad");
+  }
+  const verificarDisponibilidad = async(doc1)=>{
+    let idComit = doc1.idComiteTesis;
+    try{
+      const response = await axios.get("https://localhost:7012/api/ComiteXEspecialidad/ListarComitexEspecialidad_x_idComite?idComite="+idComit)
+      .then((response)=>{
+        if(Object.keys(response.data).length==0){
+          console.log("ESTOY LIBRE")
+          RelacionarEspecialidad(doc1);
+        }
+        else{
+          notify();
+          console.log("NO ESTOY LIBRE XD")
+        }
+      }).catch((error)=>{
+
+      })
+    }
+    catch(error){
+    }
+  }
+
   const RelacionarEspecialidad = async (doc1) => {
     let idComit = parseInt(doc1.idComiteTesis);
     let idEspecia = parseInt(id);
@@ -78,18 +104,7 @@ const AsignarCoordinador = () => {
       console.log(error);
     }
   };
-  /*const RelacionarComiteXCurso= async(doc1) =>{
-    let idComiteTesis=doc1.idComiteTesis;
-    try{
-      const resp = await axios.post().then(()=>{
-
-      }).catch(()=>{
-        
-      })
-    }catch(error){
-
-    }
-  };*/
+  
 
   const ListDocentes = async () => {
     console.log(id);
@@ -209,7 +224,7 @@ const AsignarCoordinador = () => {
             <button
               class="btn btn-primary fs-4 fw-bold   AÑADIR"
               type="button"
-              onClick={() => RelacionarEspecialidad(docentes)}
+              onClick={() => verificarDisponibilidad(docentes)}
             >
               <span>Añadir</span>
             </button>
@@ -263,6 +278,7 @@ const AsignarCoordinador = () => {
           >
             <span>Cancelar</span>
           </button>
+          <ToastContainer/>
         </div>
       </div>
     </div>
