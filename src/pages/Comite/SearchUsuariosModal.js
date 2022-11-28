@@ -1,9 +1,10 @@
+import axios from "axios";
 import React ,{useState , useEffect} from "react";
 import { render } from 'react-dom';
 //import './proponerTemaAsesor.css';
 import '../Asesor/proponerTemaAsesor.css';
 
-const URL= "http://34.195.33.246/api/Alumno/GetAlumnos";
+const URL= "https://localhost:7012/api/Alumno/GetAlumnos";
 
 
 const SearchUsuariosModal = ( {show ,setShow, al, setAl,idAlum,setIdAlum} ) =>{
@@ -18,10 +19,15 @@ const SearchUsuariosModal = ( {show ,setShow, al, setAl,idAlum,setIdAlum} ) =>{
         // http://44.210.195.91/
         //hacer axios aca carga tabla con setAsesores
     const showData = async() => {
-        const response = await fetch(URL)
-        const data = await response.json()
-        console.log(data)
-        setAlumnos(data)
+        let idcur = window.localStorage.getItem("idCurso");
+        const response = await axios.get("https://localhost:7012/api/Alumno/GetAlumnosxCurso?idCurso="+idcur)
+        .then((response)=>{
+            console.log(response.data);
+            setAlumnos(response.data)
+        }).catch(()=>{
+
+        })
+       
     }
     //funcion de busqueda
     const searcher = (e) =>{
@@ -75,13 +81,13 @@ const SearchUsuariosModal = ( {show ,setShow, al, setAl,idAlum,setIdAlum} ) =>{
 
                         <tbody>
                             {results.map((docs)=> (
-                                <tr key = {docs.idUsuario}>
-                                    <td>{docs.idUsuario}</td>
-                                    <td>{docs.nombres + " " + docs.apeMat }</td>
-                                    <td>{docs.correo}</td>
+                                <tr key = {docs.IdUsuario}>
+                                    <td>{docs.IdUsuario}</td>
+                                    <td>{docs.Nombres + " " + docs.ApePat }</td>
+                                    <td>{docs.Correo}</td>
                                      {(() => {
                                         switch(docs.tieneTema){
-                                            case 0 : return   <td>No tiene Tema</td>;
+                                            case false : return   <td>No tiene Tema</td>;
                         
                                             default: return <td>Sí tiene Tema</td> ;
                                     }
@@ -89,14 +95,14 @@ const SearchUsuariosModal = ( {show ,setShow, al, setAl,idAlum,setIdAlum} ) =>{
                                     <td><button className = "BUTTON_TABLA" onClick={()=>{ 
                                         
                                         setAl({
-                                            idAlumno: docs.idUsuario,
-                                            nombres: docs.nombres,
-                                            apeMat: docs.apeMat,
-                                            correo: docs.correo,
-                                            codigoPUCP: docs.codigoPUCP,
+                                            idAlumno: docs.IdUsuario,
+                                            nombres: docs.Nombres,
+                                            apeMat: docs.ApeMat,
+                                            correo: docs.Correo,
+                                            codigoPUCP: docs.CodigoPUCP,
                                             tieneTema: docs.tieneTema,
-                                            apePat: " ",
-                                        }); setShow(false);setIdAlum(docs.idUsuario); }}> Seleccionar</button></td>
+                                            apePat: docs.ApePat ,
+                                        }); setShow(false);setIdAlum(docs.IdUsuario); }}> Seleccionar</button></td>
                                 </tr>
                             ))}
                         </tbody>

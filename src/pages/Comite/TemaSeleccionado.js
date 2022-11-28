@@ -11,7 +11,8 @@ import ModalBuscarUsuario from './ModalBuscarUsuario';
 import {ModalConfirmación, ModalPregunta,ModalComentario} from '../../components/Modals';
 import {  Button} from '@material-ui/core';
 import useModal from '../../hooks/useModals';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const TemaSeleccionado = () => {
   const url="https://localhost:7012/api/TemaTesis/GetTemaTesis";
   //const url="http://44.210.195.91/api/TemaTesis/GetTemaTesis";
@@ -19,7 +20,7 @@ const TemaSeleccionado = () => {
   let {id} = useParams();
   let color;
   const location = useLocation();
-  
+  const globalidcur = window.localStorage.getItem("idCurso");
   const [espec,setEspec]= useState([]);
   const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
   const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
@@ -118,7 +119,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
       PalabraClave1: response.data[0].PalabraClave1,
       PalabraClave2: response.data[0].PalabraClave2,
       feedback: response.data[0].feedback,
-      fidCurso:1,
+      fidCurso:globalidcur,
     });
     console.log(temaSeleccionado);
   };
@@ -139,7 +140,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
       PalabraClave1: response.data[0].PalabraClave1,
       PalabraClave2: response.data[0].PalabraClave2,
       feedback: response.data[0].feedback,
-      fidCurso:1,
+      fidCurso:globalidcur,
     });
     console.log(temaSeleccionadoFeedback);
   };
@@ -184,8 +185,8 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
       asignarAlumno();
       modificarAlumnoAsignarTema();
     }
-    const asignarAlumno=async()=>{
-      
+    const asignarAlumno=async()=>{  
+      temaSeleccionado.idEstadoTemaTesis=6;
       await axios.put("https://localhost:7012/api/TemaTesis/ModifyTemaTesis",temaSeleccionado)
       .then(response=>{
         closeEditModal();
@@ -229,7 +230,17 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
         closeComentarioModal();
       }
      
-    
+      const notify = () => {
+        toast.warn("Solo el coordinador puede acceder a esta funcionalidad");
+      };
+      const revisarCoordinador = () => {
+        let escoordinador = window.localStorage.getItem("ESCOORDINADOR");
+        if (escoordinador == "SI") {
+          navigate("AgregarAsesor")
+        } else {
+          notify();
+        }
+      };
       
     return (
       <div className="CONTAINERCOMITE">
@@ -274,7 +285,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
                   <div class="text-start fs-7 fw-normal ">Alumno</div>
                   <div class=" row DATOS3 input-group input-group-lg mb-3">
                       <input type="text"   disabled="true" onChange={(e) =>handleChangeAlum(e)} class="form-control" name="alumno" placeholder="Alumno" aria-label="alumno" aria-describedby="inputGroup-sizing-lg" 
-                         value={idAlum + " " + al.nombres + " " + al.apeMat }/>
+                         value={location.state.nombresAlumno + " " +location.state.apeMatAlumno}/>
                  
                   {(() => {
                         switch(location.state.estado){
@@ -375,6 +386,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
                 </div>
                 </div>
             </ModalComentario>
+            <ToastContainer/>
   </div>    
     )
 }

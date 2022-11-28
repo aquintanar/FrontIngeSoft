@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import * as AiIcons from 'react-icons/ai';
+import { Link, useNavigate  } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import { SidebarData } from './SidebarDataComiteCoordinador';
 import SubMenu from './SubMenuComiteCoordinador';
 import { IconContext } from 'react-icons/lib';
 import logo from '../../imagenes/logo.png';
 import '../../stylesheets/SideBar.css'
-
+import {useAuth0 }from '@auth0/auth0-react'
+import { useContext } from 'react';
+import { UserContext } from '../../UserContext';
 const Nav = styled.div`
   background: #042354;
   height: 60px;
@@ -50,8 +51,13 @@ const SidebarWrap = styled.div`
 
 const SidebarComiteCoordinador = () => {
   const [sidebar, setSidebar] = useState(true);
-
+  const {logout, isAuthenticated}=useAuth0();
+  const navigate = useNavigate();
   const showSidebar = () => setSidebar(sidebar);
+  const cerrarSesion =async (e) =>{
+    e.preventDefault();
+    navigate('/')
+  }
 
   return (
     <>
@@ -61,6 +67,9 @@ const SidebarComiteCoordinador = () => {
               {showSidebar}
             </NavIcon> 
             <div>
+              <button title="Cerrar sesión" style={{ backgroundColor:"#042354", border:"none" }} class="BTN-LOGOUT" onClick={()=>logout()}>
+                 <FaIcons.FaDoorOpen />
+              </button>
               <img src={logo}  class="mx-4 logo"></img>
             </div>  
         </Nav>

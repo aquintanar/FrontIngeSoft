@@ -11,7 +11,8 @@ import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as AntIcons from "react-icons/ai";
 import {ModalConfirmación, ModalPregunta} from '../../../components/Modals';
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 const url = "https://localhost:7012/"
 // const url = "http://34.195.33.246/"
 
@@ -95,7 +96,18 @@ function ListaAreas()  {
         console.log(infoEspecialidad)
         peticionGetInfo();
     },[])
-
+    const notify=()=>{
+        toast.warn("Solo el coordinador puede acceder a esta funcionalidad");
+    }
+    const revisarCoordinador=()=>{
+        let escoordinador = window.localStorage.getItem("ESCOORDINADOR");
+        if(escoordinador=="SI"){
+            navigate("datoArea/0")
+        }
+        else{
+            notify();
+        }
+    }
     return (
         <div class=" CONTAINERADMIN" style={{}} >
              <h1>Gestión de Áreas</h1>
@@ -124,9 +136,9 @@ function ListaAreas()  {
                 ))}
 
             <div className='d-grid gap-2 d-md-flex justify-content-md-end INSERTAR-BOTONES '>
-                <button title="Registrar área" className='btn btn-primary fs-4 fw-bold mb-3 REGISTRAR' onClick={()=>{ navigate("datoArea/0")}} ><span>Registrar</span></button>
+                <button title="Registrar área" className='btn btn-primary fs-4 fw-bold mb-3 REGISTRAR' onClick={()=>{ revisarCoordinador()}} ><span>Registrar</span></button>
             </div> 
-
+            <ToastContainer/>
             <ModalPregunta      isOpen={isOpenDeleteModal}      closeModal={closeDeleteModal}   procedimiento = "eliminar"  
                                 objeto = "el área"              elemento = {areaSeleccionada && areaSeleccionada.nombre}        >
                 <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>

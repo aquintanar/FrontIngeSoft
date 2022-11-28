@@ -6,7 +6,6 @@ import SubMenu from './SubMenuAdmin';
 import { IconContext } from 'react-icons/lib';
 import '../../Pagina.css';
 import logo from '../../imagenes/logo.png';
-import '../../stylesheets/Administrador.css'
 import {useAuth0 }from '@auth0/auth0-react'
 import { useContext } from 'react';
 import { UserContext } from '../../UserContext';
@@ -70,6 +69,9 @@ const Sidebar = () => {
               {showSidebar}
             </NavIcon> 
             <div>
+              <button title="Cerrar sesión" style={{ backgroundColor:"#042354", border:"none" }} class="BTN-LOGOUT" onClick={()=>logout()}>
+                 <FaIcons.FaDoorOpen />
+              </button>
               <img src={logo}  class="mx-4 logo"></img>
             </div>  
         </Nav>
