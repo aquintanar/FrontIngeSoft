@@ -295,28 +295,6 @@ function ListaTemaTesis() {
         color: "white",
       },
     },
-    {
-      dataField: "PalabraClave1",
-      text: "PalabraClave1",
-      sort: true,
-      //filter: textFilter(),
-      formatter: funcFormatter,
-      headerStyle: {
-        backgroundColor: "#042354",
-        color: "white",
-      },
-    },
-    {
-      dataField: "PalabraClave2",
-      text: "PalabraClave2",
-      sort: true,
-      //filter: textFilter(),
-      formatter: funcFormatter,
-      headerStyle: {
-        backgroundColor: "#042354",
-        color: "white",
-      },
-    },
   ];
   const handeToogleClick = async () => {
     setToggleButton(!toggleButton);
