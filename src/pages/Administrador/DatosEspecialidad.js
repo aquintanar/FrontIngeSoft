@@ -30,7 +30,7 @@ function DatosEspecialidad() {
       nombre: '',
       descripcion: '',
       facultad: {
-        idFacultad:1 
+        idFacultad:34 
       }
   })
 
@@ -64,6 +64,8 @@ function DatosEspecialidad() {
 
   //Insertar nueva especialidad--
   const peticionPost=async()=>{
+    console.log(especialidadSeleccionada);
+    /*
     await axios.post(url+"PostEspecialidad",especialidadSeleccionada,{
         _method: 'POST'
       })
@@ -72,7 +74,7 @@ function DatosEspecialidad() {
       openGuardadoModal();
     }).catch(error =>{
       console.log(error.message);
-    })
+    })*/
   }
 
   const cerrarPost=()=>{
@@ -144,7 +146,7 @@ function DatosEspecialidad() {
 
                 <div class="col-6" >
                     <p>Facultad</p>
-                    <select select class="form-select Cursor"  onChange= {cambioSelect}  selected value = {especialidadSeleccionada.facultad.idFacultad} >
+                    <select select class="form-select Cursor"  onChange= {cambioSelect}  selected value = {especialidadSeleccionada.facultad.idFacultad}  >
                       {facus.map(elemento=>
                           <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.nombre}</option>  
                       )}

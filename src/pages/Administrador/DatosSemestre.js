@@ -75,8 +75,8 @@ function DatosSemestre() {
   //Objeto semestre
   const [semestreSeleccionada, setSemestreSeleccionada] = useState({
     idSemestre: 0,
-    nombre: "",
-    anho: 0,
+    nombre: "2022-1",
+    anho: 2022,
     numSemestre: 1,
     fechaInicio: new Date(),
     fechaFin: new Date(),
