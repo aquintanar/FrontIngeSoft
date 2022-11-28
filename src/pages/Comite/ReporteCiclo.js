@@ -129,14 +129,30 @@ const Tesis = () => {
     const response = await axios /* NO OLVIDAR CAMBIAR EL ID DEL CURSO */
       .get(
         "https://localhost:7012/api/Curso/ReporteNotasAlumnosXCurso?idCurso=" +
-          1,
+          idCurso,
         {
           _method: "GET",
         }
       )
       .then((response) => {
+        var dataRegistro = [];
         console.log(response.data);
+        for (let i in response.data) {
+          for (let j in response.data[i].versiones) {
+            var reg = new registro();
+            reg.Alumno =
+            response.data[i].versiones[j].nombres +
+              " " +
+              response.data[i].versiones[j].apePat;
+            reg.Entregable = response.data[i].versiones[j].nombre;
+            reg.Comentarios = response.data[i].versiones[j].comentarios;
+            reg.Estado = response.data[i].versiones[j].estadoEntregable;
+            reg.Nota = response.data[i].versiones[j].notaVersion;
+            dataRegistro.push(reg);
+          }
+        }
         setRawData(response.data);
+        setData(dataRegistro);
       })
       .catch((error) => {
         console.log(error.message);
@@ -194,41 +210,23 @@ const Tesis = () => {
             <table className="table fs-6 ">
               <thead>
                 <tr class>
-                  <th style={{ width: 200 }}>Nombre</th>
-                  <th style={{ width: 200 }}>E-mail</th>
-                  <th style={{ width: 100 }}>Acciones</th>
+                  <th style={{ width: 200 }}>Alumno</th>
+                  <th style={{ width: 200 }}>Entregable</th>
+                  <th style={{ width: 100 }}>Estado</th>
+                  <th style={{width:200}}>Comentario</th>
+                  <th style={{width:150}}>Nota</th>
                 </tr>
               </thead>
               <tbody>
                 {filtrado.map((alumno) => (
-                  <tr key={alumno.nombres}>
-                    <td>{alumno.nombres}</td>
-                    <td>{alumno.correo}</td>
+                  <tr key={alumno.Alumno}>
+                    <td>{alumno.Alumno}</td>
+                    <td>{alumno.Entregable}</td>
+                    <td>{alumno.Estado}</td>
+                    <td>{alumno.Comentarios}</td>
+                    <td>{alumno.Nota}</td>
 
-                    <td>
-                      <button
-                        className="btn BTN-ACCIONES"
-                        onClick={
-                          /*()=>{navigate("datosFacultad/"+facultad.idFacultad)}*/ console.log(
-                            "hola"
-                          )
-                        }
-                      >
-                        {" "}
-                        <FaIcons.FaEdit />
-                      </button>
-                      <button
-                        className=" btn BTN-ACCIONES"
-                        onClick={
-                          /*()=>seleccionarFacultad(facultad)*/ console.log(
-                            "hola"
-                          )
-                        }
-                      >
-                        {" "}
-                        <BootIcons.BsTrash />
-                      </button>
-                    </td>
+                    
                   </tr>
                 ))}
               </tbody>

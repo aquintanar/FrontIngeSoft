@@ -182,7 +182,7 @@ const Tesis = () => {
     const response = await axios
       .get(
         "https://localhost:7012/api/Curso/ReporteTemasAlumnoAsesorXCurso?idCurso=" +
-          1 /* cambiar esto por idCurso, se esta poniendo para la prueba*/,
+          idCurso /* cambiar esto por idCurso, se esta poniendo para la prueba*/,
         {
           _method: "GET",
         }
@@ -296,7 +296,7 @@ const Tesis = () => {
 
   return (
     <div className="CONTAINERADMIN">
-      <p class="HEADER-TEXT1">Reporte de Tesis Susentantadas y Pendientes</p>
+      <p class="HEADER-TEXT1">Reporte de Tesis-Alumno-Asesor</p>
       <p class="HEADER-TEXT2">Previsualización</p>
 
       <div className="FONDO-TESIS">
