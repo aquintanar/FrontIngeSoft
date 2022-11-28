@@ -42,6 +42,21 @@ const Opciones = () => {
     }
     navigate("/cursos");
   };
+  const handleSubmitJurado = () => {
+    let tiposusuarios = JSON.parse(
+      window.localStorage.getItem("TIPOSUSUARIOS")
+    );
+    let idusuarios = JSON.parse(window.localStorage.getItem("IDUSUARIOS"));
+    for (let j in tiposusuarios) {
+      if (tiposusuarios[j] == "JURADO") {
+        window.localStorage.setItem("IDUSUARIO", idusuarios[j]);
+        window.localStorage.setItem("TIPOUSUARIO", "JURADO");
+        setValue(idusuarios[j]);
+        break;
+      }
+    }
+    navigate("/jurado");
+  };
   const handleSubmitComite = () => {
     let tiposusuarios = JSON.parse(
       window.localStorage.getItem("TIPOSUSUARIOS")
@@ -70,7 +85,7 @@ const Opciones = () => {
           <h3>¿A qué pantalla desea ingresar?</h3>
 
           <div className="GrupoInfo">
-            <div className="seccion-izq seccion-opciones">
+            <div className="seccion-izq seccion">
               <button
                 className="BOTON-OPCIONES BOTON-PROFESOR"
                 onClick={handleSubmitProfesor}
@@ -85,7 +100,11 @@ const Opciones = () => {
                 <span><b>ASESOR</b></span>
                 <FaIcons.FaPeopleArrows/>
               </button>
+              
+              
+
             </div>
+          
             <div className="seccion-der seccion">
               <button
                 className="BOTON-OPCIONES BOTON-COMITE"
@@ -94,7 +113,15 @@ const Opciones = () => {
                 <span><b>COMITE</b></span>
                 <FaIcons.FaUsers/>
               </button>
+              <button
+                className="BOTON-OPCIONES"
+                onClick={handleSubmitJurado}
+              >
+                <span><b>JURADO</b></span>
+                <FaIcons.FaUsers/>
+              </button>
             </div>
+            
           </div>
         </section>
       </div>

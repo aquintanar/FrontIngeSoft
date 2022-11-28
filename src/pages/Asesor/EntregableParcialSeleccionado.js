@@ -24,7 +24,10 @@ import {
   FilePreviewContainer
 } from "../../components/Upload.styles";
 function EntregableParcialSeleccionado(){
+  var [suma,setSuma]=useState(0);
   var idDetalleRubricaSelec=0;
+  var [iRubro,setiRubro]=useState(0);
+  var cantRubros=0;
   let navigate = useNavigate();
   const location = useLocation();
   const [buttonText, setButtonText] = useState(" ");
@@ -37,7 +40,6 @@ function EntregableParcialSeleccionado(){
   const [documentosVersionDocente , setDocumentosVersionDocente ] = useState([]);
   useEffect(() => {
     getData();
-    {location.state.estado==2?changeText("Guardar"):changeText("Modificar")}
     getDataV();
     cargarDocumentos();
   }, []);
@@ -46,6 +48,7 @@ function EntregableParcialSeleccionado(){
   
   const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
   const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
+  const [isOpenEditDetNotaModal, openEditDetNotaModal ,closeEditDetNotaModal ] = useModal();
   const [isOpenAprobarModal, openAprobarModal ,closeAprobarModal ] = useModal();
   const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
   const [isOpenComentarioModal, openComentarioModal ,closeComentarioModal ] = useModal();
@@ -147,18 +150,11 @@ const cargarDocumentos=async()=>{
            }
       }
       for(i=0;i<dataDocumentos.length;i++){
-        if(location.state.estado==5){
-        if(dataDocumentos[i].esRetroalimentacionDocente==1){
-          documentosVersionAsesor[i] = dataDocumentos[i];
-           }
-          }
-        else{
+
+      
           if(dataDocumentos[i].esRetroalimentacion==1){
             documentosVersionAsesor[i] = dataDocumentos[i];
              }
-
-
-        }
       }
       setDocumentosVersionAlumno(documentosVersionAlumno);
       setDocumentosVersionAsesor(documentosVersionAsesor);
@@ -240,10 +236,21 @@ const handleChange= (nombre,e)=>{
         ...prevState,
         [name]: parseFloat(value),
         [`fidDetalleRubrica`]: parseInt(nombre),
+      }));
+      setdetNotaSeleccionadoModificar(prevState=>({
+        ...prevState,
+        [name]: parseFloat(value),
+        [`fidDetalleRubrica`]: parseInt(nombre),
       }))
+      
     }
     else{
       setdetNotaSeleccionado(prevState=>({
+        ...prevState,
+        [name]: value,
+        [`fidDetalleRubrica`]: parseInt(nombre),
+      }));
+      setdetNotaSeleccionadoModificar(prevState=>({
         ...prevState,
         [name]: value,
         [`fidDetalleRubrica`]: parseInt(nombre),
@@ -253,6 +260,7 @@ const handleChange= (nombre,e)=>{
     setIdDetalleRubrica(parseInt(nombre));
     console.log(nombre);
     console.log(detNotaSeleccionado);
+    console.log(detNotaSeleccionadoModificar);
     
   }
   const handleChangeComentario= (e)=>{
@@ -278,14 +286,18 @@ const handleChange= (nombre,e)=>{
   console.log(versionSeleccionadaC);
   console.log(versionSeleccionadaMod);
   }
-  const selectPeticion=()=>{
-    if(buttonText=="Modificar"){
-      peticionEditDetalleNota();
-    }
-    else if(buttonText=="Guardar"){
+  const insertarDetNota=()=>{
+   
+      setSuma(suma+(detNotaSeleccionado.puntaje));
       peticionPost();
-    }
+    
   }
+  const modificarDetNota=()=>{
+   
+    setSuma(suma+(detNotaSeleccionadoModificar.puntaje)-detNotaSeleccionado.puntaje);
+    peticionEditDetalleNota();
+  
+}
   const peticionPost=async()=>{
     await axios.post("https://localhost:7012/api/DetalleNotaRubrica/PostDetalleNotaRubrica",detNotaSeleccionado,{
         _method: 'POST'
@@ -294,17 +306,23 @@ const handleChange= (nombre,e)=>{
       console.log(response);
       idDetalleRubricaSelec=response.data.idDetalleNotaRubrica;
       console.log(idDetalleRubricaSelec);
+      setdetNotaSeleccionadoModificar(prevState=>({
+        ...prevState,
+        [`idDetalleNotaRubrica`]:response.data.idDetalleNotaRubrica ,
+      }));
+      console.log(detNotaSeleccionadoModificar);
       closePostModal();
       openGuardadoModal();
     }).catch(error =>{
       console.log(error.message);
     })
+   
 
   }
   const peticionEditDetalleNota=async()=>{
-    await axios.put("https://localhost:7012/api/DetalleNotaRubrica/ModifyDetalleNotaRubrica",detNotaSeleccionado)
+    await axios.put("https://localhost:7012/api/DetalleNotaRubrica/ModifyDetalleNotaRubrica",detNotaSeleccionadoModificar)
     .then(response=>{
-      closePostModal();
+      closeEditDetNotaModal();
       openGuardadoModal();
     }).catch(error =>{
       console.log(error.message);
@@ -365,7 +383,9 @@ const handleChange= (nombre,e)=>{
       const result = await axios(`https://localhost:7012/api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
       //const result = await axios(`http://44.210.195.91/api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
       setData(result.data);
-      console.log(data)
+      console.log(data);
+      cantRubros=result.data.length;
+      console.log("LONG RUBROS:" + cantRubros);
     })();
   };
   
@@ -414,7 +434,7 @@ const {
     return(
         <div className='CONTAINERASESOR'>
          <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
-        <h1 className='HEADER-TEXT1'>Entregable Parcial-{ location.state.tituloDoc }</h1>
+        <h1 className='HEADER-TEXT1'>Entregable-{ location.state.tituloDoc }</h1>
         <br></br>
         <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
         <div className='ContenidoPrincipal'>
@@ -502,8 +522,13 @@ const {
                     </td>
                     <td>
                     
-                    <button type="button" className='btn btn-light' onClick={()=>{openPostModal(); location.state.estado==2?changeText("Guardar"):changeText("Modificar")}}>{buttonText}</button>
-                    </td>
+                    <button type="button" className='btn btn-light' onClick={()=>{openPostModal()}}>Insertar</button>
+                    
+                    <button type="button" className='btn btn-light' onClick={()=>{openEditDetNotaModal()}}>Modificar</button>
+                     </td>
+                    
+                    
+                    
                 </tr>
               ))}
             </tbody>
@@ -513,7 +538,7 @@ const {
       <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
           tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}})} >
            Agregar Documentos de Retroalimentación</p>
-
+      <p className="HEADER-TEXT2">Nota Asignada : {suma}</p>
       <p className="HEADER-TEXT3">Documentos Enviados:</p>
            <PreviewList>
 {((location.state.idVersion >= 0) ? 
@@ -530,6 +555,7 @@ documentosVersionAsesor.map((documentos) => {
                 }): " ")} </PreviewList>
       <div className = "DATOS">
                 <div className = "col-12">
+                    
                     <div className="text-start fs-5 fw-normal "><p>Comentarios Generales</p></div>
                     <div className="input-group input-group-lg mb-3">
                         <textarea className="form-control" name="comentarios" placeholder="Comentarios" aria-label="comentarios"  
@@ -554,8 +580,20 @@ documentosVersionAsesor.map((documentos) => {
     elemento={detNotaSeleccionado && detNotaSeleccionado.nombre}
   >
     <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
-      <Button class="btn  btn-success btn-lg" onClick={()=>selectPeticion()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <Button class="btn  btn-success btn-lg" onClick={()=>insertarDetNota()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <Button class="btn btn-danger btn-lg"  onClick={closePostModal}>Cancelar</Button>
+    </div>
+  </ModalPregunta>
+  <ModalPregunta
+    isOpen={isOpenEditDetNotaModal} 
+    closeModal={closeEditDetNotaModal}
+    procedimiento = "modificar"
+    objeto="el puntaje y comentario para este rubro"
+    elemento={detNotaSeleccionado && detNotaSeleccionado.nombre}
+  >
+    <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+      <Button class="btn  btn-success btn-lg" onClick={()=>modificarDetNota()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <Button class="btn btn-danger btn-lg"  onClick={closeEditDetNotaModal}>Cancelar</Button>
     </div>
   </ModalPregunta>
   <ModalPregunta
@@ -623,6 +661,5 @@ documentosVersionAsesor.map((documentos) => {
             </ModalComentario>
         </div>
     );
-
 }
 export default  EntregableParcialSeleccionado;

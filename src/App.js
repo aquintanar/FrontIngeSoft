@@ -11,6 +11,7 @@ import Administrador from './Administrador';
 import Alumno from './Alumno';
 import Profesor from './Profesor';
 import Asesor from './Asesor';
+import Jurado from './Jurado';
 import Login from './components/lniciar_Sesion/Login'
 import Register from './components/lniciar_Sesion/Register';
 import RequireAuth from './components/lniciar_Sesion/RequireAuth';
@@ -39,6 +40,7 @@ function App() {
                   <Route path='/alumno/*' exact element= {<Alumno/>} />
                   <Route path='/profesor/*' exact element= {<Profesor/>} />
                   <Route path='/asesor/*' exact element= {<Asesor/>} />
+                  <Route path='/jurado/*' exact element= {<Jurado/>} />
                   <Route path='/confirmarRegistro/*' exact element={<ConfirmarRegistro/>}/>
             </Routes>
            

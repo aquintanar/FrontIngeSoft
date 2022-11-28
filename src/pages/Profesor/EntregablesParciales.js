@@ -11,83 +11,63 @@ import * as RiIcons  from "react-icons/ri";
 import * as BsIcons from 'react-icons/bs';
 
 function EntregablesParciales(){
+
   let navigate = useNavigate();
   const location = useLocation();
   const [currentPage,SetCurrentPage] = useState(0);
   const [search1, setSearch1] = useState("");
   const [data, setData] = useState([]);
+  const [entregable,setEntregable]=useState([]);
+  const [dataE, setDataE] = useState([]);
   useEffect(() => {
     getData();
-  }, []);
-  const [dataE, setDataE] = useState([]);
-  const [ent,setEnt]=useState([]);
-  useEffect(() => {
     getDataE();
   }, []);
- /*
+  
+
+  const getData=async()=> {
+    (async () => {
+      const result = await fetch(`https://localhost:7012/api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso=${location.state.idCurso}&idTipoEntregable=1&idAlumno=${location.state.idAlumno}`);
+      //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
+      const dataEnt= await result.json();
+      setData(dataEnt);
+      console.log(data)
       var i=0;
-      for(i=0;i<data.length;i++){
-        if(data[i].estadoMasReciente==4 || data[i].estadoMasReciente==5){
-            ent[i]=data[i];
+      var j=0;
+      for(i=0;i<dataEnt.length;i++){
+        if(dataEnt[i].estadoMasReciente==4 || dataEnt[i].estadoMasReciente==5 && dataEnt[i].responsableEvaluar=="Docente"){
+            entregable[j]=dataEnt[i];
+            j++;
         }
       }
-      setEnt(ent);
-      console.log(ent);
-      */
-  async function getData() {
-        (async () => {
-          const result = await axios(`https://localhost:7012/api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso=${location.state.idCurso}&idTipoEntregable=3&idAlumno=${location.state.idAlumno}`);
-          //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
-          setData(result.data);
-          console.log(data);
-          
-          var i=0;
-          for(i=0;i<data.length;i++){
-            if(data[i].estadoMasReciente==4 || data[i].estadoMasReciente==5){
-                ent[i]=data[i];
-            }
-          }
-          setEnt(ent);
-          console.log(ent);
-      
-        })();
+      setEntregable(entregable);
+      console.log(entregable);
+    })();
   };
   async function getDataE() {
     (async () => {
       const result = await axios(`https://localhost:7012/api/Entregable/BuscarEntregableXId?idEntregable=4`);
       //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
       setDataE(result.data);
-      //console.log(data);
+      console.log(data)
     })();
   };
  
   const buscador1 = e=>{
     setSearch1(e.target.value);
   }
+  
   let filtrado =[];
 
   if(!search1){//sin filtro
-    filtrado=data;
+    filtrado=entregable;
 }
 else{
 
   if(search1)
-  /*
-  {(() => {
-    switch(data.filter((dato)=>dato.estadoMasReciente)){
-      case 1 : return  filtrado="Por Entregar";
-      case 2: return filtrado="Enviado para retroalimentación";
-      case 3 : return  filtrado="Con retroalimentación";
-      case 4 : return  filtrado="Entregado a docente";
-      case 5 : return  filtrado="Calificado por el docente";
-        
-        default: return  filtrado="Por Entregar";
-    }
-}) ()}
-*/
 
-  filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search1.toLocaleLowerCase())) ;
-  //filtrado=data.filter((dato)=>dato.estadoMasReciente.includes(parseInt(search1))) ;
+
+  filtrado=entregable.filter((dato)=>dato.nombre.toLowerCase().includes(search1.toLocaleLowerCase())) ;
 }
   filtrado = filtrado.slice(currentPage,currentPage+5);
   const nextPage = () =>{
@@ -98,7 +78,6 @@ else{
     if(currentPage>0)
       SetCurrentPage(currentPage-5);
   }
- 
   return(
       <div className='CONTAINERASESOR'>
           <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>

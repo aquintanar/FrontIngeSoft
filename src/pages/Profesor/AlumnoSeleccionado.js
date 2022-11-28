@@ -26,6 +26,14 @@ function AlumnoSeleccionado(){
                 </div>
             </nav>
        </div>
+
+       <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container-fluid">
+                <a  class="BTN-CUADRADO" type='button' onClick={() =>navigate("entregablesFinales",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat,idCurso: localStorage.getItem('idCurso')}})}>Entregables Finales</a>
+                </div>
+            </nav>
+       </div>
        <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container-fluid">

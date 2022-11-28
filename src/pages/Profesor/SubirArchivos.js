@@ -6,7 +6,7 @@ import '../../stylesheets/Alumno.css'
 import useModal from '../../hooks/useModals';
 
 import axios from 'axios';
-import Upload_Asesor from "../../components/Upload_Docente";
+import Upload_Docente from "../../components/Upload_Docente";
 import { Buffer } from "buffer";
 import AWS from "aws-sdk";
 import {  Button} from '@material-ui/core';
@@ -137,7 +137,7 @@ useEffect(() => {
    <div class="row ">
 
       
-        <Upload_Asesor
+        <Upload_Docente
          accept=".pdf,.docx"
           files={files}
           linkDoc={location.state.linkDoc}

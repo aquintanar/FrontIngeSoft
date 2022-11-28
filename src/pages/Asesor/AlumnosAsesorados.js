@@ -4,7 +4,7 @@ import "./buttonGroup.css";
 import  '../../stylesheets/Asesor.css';
 import { useTable ,useFilters,setFilter} from 'react-table';
 import axios from 'axios';
-import {  useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';     
 import * as BsIcons from 'react-icons/bs';
 import { NonceProvider } from 'react-select';
 
@@ -14,20 +14,41 @@ function AlumnosAsesorados() {
     const [currentPage,SetCurrentPage] = useState(0);
     const [search1, setSearch1] = useState("");
     const [search2, setSearch2] = useState("");
-
-  
+    const [sem, setSem] = useState([]);
+    const [nom, setNom] = useState([]);
+    const [esp, setEsp] = useState([]);
+    const [anhio, setAnhio] = useState([]);
     useEffect(() => {
       getDataI();
+      infoCurso();
     }, []);
  
     async function getDataI() {
       (async () => {
-        const result = await axios("https://localhost:7012/api/Alumno/ListAlumnosXIdAsesor?idAsesor=2");
+        const result = await axios(`https://localhost:7012/api/Alumno/ListAlumnosXIdAsesor?idAsesor=${localStorage.getItem('IDUSUARIO')}`);
         //const result = await axios("http://44.210.195.91/api/Alumno/ListAlumnosXIdAsesor?idAsesor=2");
         setDataI(result.data);
       })();
     };
-  
+    const infoCurso = async () => {
+      const response = await axios
+        .get(
+          "https://localhost:7012/api/Curso/BuscarCursoXId",
+          { params: { idCurso: localStorage.getItem("idCurso") } },
+          {
+            _method: "GET",
+          }
+        )
+        .then((response) => {
+          setAnhio(response.data[0].anhoSemestre);
+          setSem(response.data[0].numSemestre);
+          setNom(response.data[0].nombre);
+          setEsp(response.data[0].nombreEspecialidad);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    };
     const columns = React.useMemo(
         () => [
           {
@@ -111,7 +132,7 @@ function AlumnosAsesorados() {
   
         <div className='CONTAINERASESOR'>
         <h1 className='HEADER-TEXT1'>Alumnos Asesorados</h1>
-        <h2 className='HEADER-TEXT2'>TESIS 1 - INGENIERIA INFORMÁTICA</h2>
+        <h2 className='HEADER-TEXT2'> {nom} - {esp}</h2>
       
         <div className="col col-7 FILTRO-LISTAR-BUSCAR" >
               <p>Ingresar apellido para realizar búsqueda</p>

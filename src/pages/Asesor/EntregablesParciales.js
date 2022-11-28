@@ -14,12 +14,14 @@ import * as RiIcons  from "react-icons/ri";
 import * as BsIcons from 'react-icons/bs';
 
 function EntregablesParciales(){
+
     let navigate = useNavigate();
     const location = useLocation();
     const [currentPage,SetCurrentPage] = useState(0);
     const [estadoEnt, setEstadoEnt] = useState([]);
     const [search1, setSearch1] = useState("");
     let [data, setData] = useState([]);
+    const [entregable,setEntregable]=useState([]);
     const [fil, setFil] = useState(0);
     useEffect(() => {
       getData();
@@ -31,10 +33,18 @@ function EntregablesParciales(){
  
     async function getData() {
       (async () => {
-        const result = await axios(`https://localhost:7012/api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso=${location.state.idCurso}&idTipoEntregable=2&idAlumno=${location.state.idAlumno}`);
+        const result = await axios(`https://localhost:7012/api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso=${location.state.idCurso}&idTipoEntregable=1&idAlumno=${location.state.idAlumno}`);
         //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
         setData(result.data);
-        console.log(data)
+        console.log(data);
+        var i=0;
+        var j=0;
+        for(i=0;i<result.data.length;i++){
+        if(result.data[i].responsableSubir=="Asesor"){
+            entregable[j]=result.data[i];
+            j++;
+          }
+        } 
       })();
     };
     async function getDataE() {
@@ -66,18 +76,18 @@ function EntregablesParciales(){
     let filtrado =[];
 
     if(!search1 && !fil){//sin filtro
-      filtrado=data;
+      filtrado=entregable;
     }
     else{
 
       if(search1 && fil){
-        filtrado=data.filter((dato)=>dato.estadoMasReciente===fil);
-        filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search1.toLocaleLowerCase()));
+        filtrado=entregable.filter((dato)=>dato.estadoMasReciente===fil);
+        filtrado=entregable.filter((dato)=>dato.nombre.toLowerCase().includes(search1.toLocaleLowerCase()));
       }
-      if(fil)//filtro por facultad
-        filtrado=data.filter((dato)=>dato.estadoMasReciente===fil);
+      if(fil)
+        filtrado=entregable.filter((dato)=>dato.estadoMasReciente===fil);
       if(search1)
-        filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search1.toLocaleLowerCase()));
+        filtrado=entregable.filter((dato)=>dato.nombre.toLowerCase().includes(search1.toLocaleLowerCase()));
     
   }
     filtrado = filtrado.slice(currentPage,currentPage+5);

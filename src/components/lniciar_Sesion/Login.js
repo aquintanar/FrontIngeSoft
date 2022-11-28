@@ -153,7 +153,9 @@ function Login() {
             localStorage.setItem("TIPOUSUARIO", "ASESOR");
             localStorage.setItem("IDUSUARIO", e);
             navigate("/cursos");
-          } else if (response2.data[0].nombre === "COMITE DE TESIS") {
+          }
+          
+          else if (response2.data[0].nombre === "COMITE DE TESIS") {
             localStorage.setItem("TIPOUSUARIO", "COMITE");
             localStorage.setItem("IDUSUARIO", e);
             console.log(value);

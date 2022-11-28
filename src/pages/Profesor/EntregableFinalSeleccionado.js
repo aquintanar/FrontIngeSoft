@@ -23,7 +23,7 @@ import {
   FilePreviewContainer
 } from "../../components/Upload.styles";
 
-function EntregableSeleccionado(){
+function EntregableFinalSeleccionado(){
   var [suma,setSuma]=useState(0);
   var idDetalleRubricaSelec=0;
   var [iRubro,setiRubro]=useState(0);
@@ -434,7 +434,7 @@ const {
     return(
       <div className='CONTAINERASESOR'>
       <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
-     <h1 className='HEADER-TEXT1'>Entregable-{ location.state.tituloDoc }</h1>
+     <h1 className='HEADER-TEXT1'>Entregable Final-{ location.state.tituloDoc }</h1>
      <br></br>
      <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
      <div className='ContenidoPrincipal'>
@@ -662,4 +662,4 @@ documentosVersionDocente.map((documentos) => {
 
 }
 
-export default  EntregableSeleccionado;
+export default  EntregableFinalSeleccionado;
