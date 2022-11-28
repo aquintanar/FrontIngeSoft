@@ -87,7 +87,7 @@ function AsignarJurado()  {
   }
 
   const peticionPostJurado=async()=>{
-      await axios.post(urlJuradoxAlumno+"PostJuradoXAlumno?idJurado="+jurado.idJurado+"&idAlumno="+parseInt(id))
+      await axios.post(urlJuradoxAlumno+"PostJuradoXAlumno?idJurado="+jurado.idJurado+"&idAlumno="+parseInt(id)+"&idCurso="+localStorage.getItem('idCurso'))
       .then(response=>{
         closeRegistroModal();
         openRegistroConfModal();

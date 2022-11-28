@@ -121,7 +121,7 @@ function DatosAlumno() {
 
     
     const peticionDelete=async()=>{
-        await axios.delete(urlJuradoxAlumno+ "DeleteJuradoXAlumno?idJurado="+juradoSelec.idJurado+"&idAlumno="+id)
+        await axios.delete(urlJuradoxAlumno+ "DeleteJuradoXAlumno?idJurado="+juradoSelec.idJurado+"&idAlumno="+id+"&idCurso"+localStorage.getItem('idCurso'))
         .then(response=>{
           closeDeleteModal();
           openConfirmModal();
