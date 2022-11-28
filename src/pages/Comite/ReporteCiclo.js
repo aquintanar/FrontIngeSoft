@@ -193,10 +193,8 @@ const Tesis = () => {
       <p class="HEADER-TEXT2">Previsualización</p>
 
       <div className="FONDO-TESIS">
-        <h1 class="HEADER-TEXTCICLO">Ciclo 2022-1</h1>
         <div className="HEADER-TEXTO">
-          <h4 class="HEADER-TEXTALUMNOSI">Alumnos Inscritos : </h4>
-          <h4 class="HEADER-TEXTALUMNOSS">Alumnos que Sustentaron Tesis : </h4>
+         
         </div>
         <p class="HEADER-TEXT2">Temas por Alumno : </p>
         <button onClick={previousPage} className="PAGINACION-BTN">

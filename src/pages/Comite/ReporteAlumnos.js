@@ -97,7 +97,7 @@ const ReporteAlumnos = () => {
       var reg = new registro();
       let titInt = data[i].TituloTesis.toLowerCase();
       reg.Titulo = titInt.charAt(0).toUpperCase() + titInt.slice(1);
-      reg.Descripcion = data[i].nombre;
+      reg.Descripcion = data[i].descripcion;
       reg.Estado = data[i].estadoTema;
       dataRegistro.push(reg);
     }
@@ -281,10 +281,8 @@ const ReporteAlumnos = () => {
       <p class="HEADER-TEXT2">Previsualización</p>
 
       <div className="FONDO-TESIS">
-        <h1 class="HEADER-TEXTCICLO">Ciclo 2022-1</h1>
         <div className="HEADER-TEXTO">
-          <h4 class="HEADER-TEXTALUMNOSI">Alumnos Inscritos : </h4>
-          <h4 class="HEADER-TEXTALUMNOSS">Alumnos que Sustentaron Tesis : </h4>
+          
         </div>
         <p class="HEADER-TEXT2">Temas por Alumno : </p>
         <button onClick={previousPage} className="PAGINACION-BTN">
@@ -307,8 +305,8 @@ const ReporteAlumnos = () => {
               <tbody>
                 {filtrado.map((tesis) => (
                   <tr key={tesis.idTemaTesis}>
-                    <td>{tesis.nombre}</td>
                     <td>{tesis.TituloTesis}</td>
+                    <td>{tesis.descripcion}</td>
                     <td>{tesis.estadoTema}</td>
                   </tr>
                 ))}

@@ -99,7 +99,7 @@ const Tesis = () => {
       var reg = new registro();
       let titInt = data[i].TituloTesis.toLowerCase();
       reg.Titulo = titInt.charAt(0).toUpperCase() + titInt.slice(1);
-      reg.Descripcion = data[i].nombre;
+      reg.Descripcion = data[i].descripcion;
       reg.Estado = data[i].estadoTema;
       let alIntNom = data[i].nombresAlum.toLowerCase();
       let alIntApe = data[i].apePatAlum.toLowerCase();
@@ -300,10 +300,9 @@ const Tesis = () => {
       <p class="HEADER-TEXT2">Previsualización</p>
 
       <div className="FONDO-TESIS">
-        <h1 class="HEADER-TEXTCICLO">Ciclo 2022-1</h1>
+
         <div className="HEADER-TEXTO">
-          <h4 class="HEADER-TEXTALUMNOSI">Alumnos Inscritos : </h4>
-          <h4 class="HEADER-TEXTALUMNOSS">Alumnos que Sustentaron Tesis : </h4>
+        
         </div>
         <p class="HEADER-TEXT2">Temas por Alumno : </p>
         <button onClick={previousPage} className="PAGINACION-BTN">
@@ -327,8 +326,8 @@ const Tesis = () => {
               <tbody>
                 {filtrado.map((tesis) => (
                   <tr key={tesis.idTemaTesis}>
-                    <td>{tesis.nombre}</td>
                     <td>{tesis.TituloTesis}</td>
+                    <td>{tesis.descripcion}</td>
                     <td>{tesis.estadoTema}</td>
                     <td>{tesis.nombresAlum + " " + tesis.apePatAlum}</td>
                     <td>{tesis.nombresAS + " " + tesis.apePatAS}</td>
