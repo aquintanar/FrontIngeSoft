@@ -88,43 +88,28 @@ const ReporteEncuesta = () => {
 
   var registro = function () {
     this.Nombre = "";
-    this.Alumno = "";
     this.Pregunta = "";
+    this.Alumno = "";
+    this.Asesor = " "; 
     this.Puntaje = "";
   };
   const exportToExcel = async () => {
     var dataRegistro = [];
     for (let i in data) {
       var reg = new registro();
-      let titInt = data[i].TituloTesis.toLowerCase();
-      reg.Titulo = titInt.charAt(0).toUpperCase() + titInt.slice(1);
-      reg.Descripcion = data[i].descripcion;
-      reg.Estado = data[i].estadoTema;
-      let alIntNom = data[i].nombresAlum.toLowerCase();
-      let alIntApe = data[i].apePatAlum.toLowerCase();
-
-      reg.Alumno =
-        alIntNom.charAt(0).toUpperCase() +
-        alIntNom.slice(1) +
-        " " +
-        alIntApe.charAt(0).toUpperCase() +
-        alIntApe.slice(1);
-      let asIntNom = data[i].nombresAS.toLowerCase();
-      let asIntApe = data[i].apePatAS.toLowerCase();
-      reg.Asesor =
-        asIntNom.charAt(0).toUpperCase() +
-        asIntNom.slice(1) +
-        " " +
-        asIntApe.charAt(0).toUpperCase() +
-        asIntApe.slice(1);
+        reg.Nombre=data[i].nombreEncuesta;
+        reg.Pregunta = data[i].pregunta;
+        reg.Alumno = data[i].nombresAlumno + " " + data[i].apePatAlumno;
+        reg.Asesor  = data[i].nombresAsesor + " " + data[i].apePatAsesor;
+        reg.Puntaje = data[i].respuesta;
       dataRegistro.push(reg);
     }
     console.log(dataRegistro);
     const ws = XLSX.utils.json_to_sheet(dataRegistro);
-    const wb = {Sheets:{'data':ws},SheetNames:['data']};
-    const excelBuffer = XLSX.write(wb,{bookType:'xlsx',type:'array'});
-    const  dat = new Blob([excelBuffer],{type:fileType});
-    FileSaver.saveAs(dat,"ReporteTemas"+fileExtension);
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const dat = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(dat, "ReporteTemas" + fileExtension);
   };
   function capitalizeString(string) {
     let tam = string.length;
@@ -195,16 +180,19 @@ const ReporteEncuesta = () => {
         console.log(error.message);
       });
   };
-  const petitionGet2 = async(e)=>{
-    let response =await await axios.get("https://localhost:7012/api/DetallePreguntaEncuesta/BuscarDetallePreguntaEncuestaXIdEncuesta?idEncuesta="+e)
-    .then((response)=>{
+  const petitionGet2 = async (e) => {
+    let response = await await axios
+      .get(
+        "https://localhost:7012/api/DetallePreguntaEncuesta/BuscarDetallePreguntaEncuestaXIdEncuesta?idEncuesta=" +
+          e
+      )
+      .then((response) => {
         console.log("LAS RESPUSETAS");
         console.log(response.data);
         setData(response.data);
-    }).catch(()=>{
-
-    })
-  }
+      })
+      .catch(() => {});
+  };
   const GeneratePDF = () => {
     console.log("SE CLICKEO");
     var doc = new jsPDF("landscape", "px", "a4", "false");
@@ -309,10 +297,7 @@ const ReporteEncuesta = () => {
       <p class="HEADER-TEXT2">Previsualización</p>
 
       <div className="FONDO-TESIS">
-
-        <div className="HEADER-TEXTO">
-        
-        </div>
+        <div className="HEADER-TEXTO"></div>
         <p class="HEADER-TEXT2">Encuestas del Ciclo : </p>
         <button onClick={previousPage} className="PAGINACION-BTN">
           <BsIcons.BsCaretLeftFill />
@@ -326,17 +311,19 @@ const ReporteEncuesta = () => {
               <thead>
                 <tr class>
                   <th style={{ width: 200 }}>Nombre</th>
-                  <th style={{ width: 200 }}>Alumno</th>
                   <th style={{ width: 150 }}>Pregunta</th>
+                  <th style={{ width: 200 }}>Alumno</th>
+                  <th style={{ width: 200 }}> Asesor</th>
                   <th style={{ width: 200 }}>Puntaje </th>
                 </tr>
               </thead>
               <tbody>
                 {filtrado.map((respuesta) => (
                   <tr key={respuesta.idDetallePreguntaEncuesta}>
-                    <td>{respuesta.TituloTesis}</td>
-                    <td>{respuesta.descripcion}</td>
+                    <td>{respuesta.nombreEncuesta}</td>
                     <td>{respuesta.pregunta}</td>
+                    <td>{respuesta.nombresAlumno +" "+ respuesta.apePatAlumno}</td>
+                    <td>{respuesta.nombresAsesor +" "+ respuesta.apePatAsesor}</td>
                     <td>{respuesta.respuesta}</td>
                   </tr>
                 ))}
