@@ -13,6 +13,8 @@ import {ModalPregunta, ModalConfirmación , ModalInsertar} from '../../component
 import axios from 'axios';
 import {  Button} from '@material-ui/core';
 import { isCursorAtStart } from "@testing-library/user-event/dist/utils";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const url1= "https://localhost:7012/api/Entregable/";
 const urlCurso = "https://localhost:7012/api/Curso/"
@@ -86,6 +88,9 @@ const AddEncuesta = () => {
         console.log(error.message);
         })*/
     }
+    const notify = () => {
+        toast.warn("Solo se puede tener una encuesta a la vez.");
+      };
     const petitionEncuesta = async()=> {
         let idcur = window.localStorage.getItem("idCurso");
         await axios.get("https://localhost:7012/api/Encuesta/BuscarEncuestaXIdCurso?idCurso="+idcur)
@@ -122,7 +127,22 @@ const AddEncuesta = () => {
           console.log(error.message);
         })
       }
+      const buscarEncuestaxCurso = async()=>{
+        let idcur = window.localStorage.getItem("idCurso");
+        await axios.get("https://localhost:7012/api/Encuesta/BuscarEncuestaXIdCurso?idCurso="+idcur)
+        .then((response)=>{
+            console.log(response.data);
+            console.log(Object.keys(response.data).length)
+            if(Object.keys(response.data).length==1){
+                notify();
+            }
+            else{
+                openPostModal()
+            }
+        }).catch(()=>{
 
+        })
+      }
     const cambioSelect = e =>{
         setEncuestaSeleccionada(prevState=>({
             ...prevState, 
@@ -141,6 +161,17 @@ const AddEncuesta = () => {
      },[])
 
      filtrado = encuestas ;
+    function seleccionarEncuesta(e){
+        deleteEncuesta(e);
+    }
+    const deleteEncuesta = async(e)=>{
+        axios.delete("https://localhost:7012/api/Encuesta/EliminarEncuesta?idEncuesta="+e)
+        .then(()=>{
+
+        }).catch(()=>{
+            
+        })
+    }
     return(
              
         <div class ="CONTAINERADMIN ">
@@ -165,7 +196,7 @@ const AddEncuesta = () => {
             </div>
             <div class="row INSERTAR-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>peticionSelecter()}><span>Añadir</span></button>
+                    <button class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>buscarEncuestaxCurso()}><span>Añadir</span></button>
                 </div>
             </div>   
             <p class="HEADER-TEXT2 mt-5" >Lista de encuestas</p>
@@ -188,7 +219,7 @@ const AddEncuesta = () => {
                             <td>{encuestas.nombre}</td>
                             <td>
                             <button class="btn BTN-ACCIONES" onClick={()=>{navigate("lista/"+encuestas.idEncuesta)}}> <FaIcons.FaEdit /></button>
-                            <button  class=" btn BTN-ACCIONES" onClick> <BootIcons.BsTrash /></button>
+                            <button  class=" btn BTN-ACCIONES" onClick={()=>{seleccionarEncuesta(encuestas.idEncuesta)}}> <BootIcons.BsTrash /></button>
                             </td>
                         </tr>
                     ))}
@@ -196,7 +227,7 @@ const AddEncuesta = () => {
                 </table>
                 </div>
             </div>
-
+            <ToastContainer/>
             
             <ModalInsertar
             isOpen={isOpenPostModal} 
