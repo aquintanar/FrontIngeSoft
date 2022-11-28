@@ -20,7 +20,7 @@ const TemaSeleccionado = () => {
   let {id} = useParams();
   let color;
   const location = useLocation();
-  
+  const globalidcur = window.localStorage.getItem("idCurso");
   const [espec,setEspec]= useState([]);
   const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
   const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
@@ -119,7 +119,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
       PalabraClave1: response.data[0].PalabraClave1,
       PalabraClave2: response.data[0].PalabraClave2,
       feedback: response.data[0].feedback,
-      fidCurso:1,
+      fidCurso:globalidcur,
     });
     console.log(temaSeleccionado);
   };
@@ -140,7 +140,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
       PalabraClave1: response.data[0].PalabraClave1,
       PalabraClave2: response.data[0].PalabraClave2,
       feedback: response.data[0].feedback,
-      fidCurso:1,
+      fidCurso:globalidcur,
     });
     console.log(temaSeleccionadoFeedback);
   };
@@ -185,8 +185,8 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
       asignarAlumno();
       modificarAlumnoAsignarTema();
     }
-    const asignarAlumno=async()=>{
-      
+    const asignarAlumno=async()=>{  
+      temaSeleccionado.idEstadoTemaTesis=6;
       await axios.put("https://localhost:7012/api/TemaTesis/ModifyTemaTesis",temaSeleccionado)
       .then(response=>{
         closeEditModal();

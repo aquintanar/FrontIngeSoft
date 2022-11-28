@@ -81,7 +81,7 @@ const SearchUsuariosModal = ( {show ,setShow, al, setAl,idAlum,setIdAlum} ) =>{
 
                         <tbody>
                             {results.map((docs)=> (
-                                <tr key = {docs.idUsuario}>
+                                <tr key = {docs.IdUsuario}>
                                     <td>{docs.IdUsuario}</td>
                                     <td>{docs.Nombres + " " + docs.ApePat }</td>
                                     <td>{docs.Correo}</td>
@@ -95,14 +95,14 @@ const SearchUsuariosModal = ( {show ,setShow, al, setAl,idAlum,setIdAlum} ) =>{
                                     <td><button className = "BUTTON_TABLA" onClick={()=>{ 
                                         
                                         setAl({
-                                            idAlumno: docs.idUsuario,
-                                            nombres: docs.nombres,
-                                            apeMat: docs.apeMat,
-                                            correo: docs.correo,
-                                            codigoPUCP: docs.codigoPUCP,
+                                            idAlumno: docs.IdUsuario,
+                                            nombres: docs.Nombres,
+                                            apeMat: docs.ApeMat,
+                                            correo: docs.Correo,
+                                            codigoPUCP: docs.CodigoPUCP,
                                             tieneTema: docs.tieneTema,
-                                            apePat: " ",
-                                        }); setShow(false);setIdAlum(docs.idUsuario); }}> Seleccionar</button></td>
+                                            apePat: docs.ApePat ,
+                                        }); setShow(false);setIdAlum(docs.IdUsuario); }}> Seleccionar</button></td>
                                 </tr>
                             ))}
                         </tbody>
