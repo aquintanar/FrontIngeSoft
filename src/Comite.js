@@ -30,6 +30,7 @@ import DatosDocente from "./pages/Comite/DatosDocente";
 import ListarDocentesNoEstan from "./pages/Comite/AgregarDocente";
 import ListaAreas from './pages/Comite/GestionArea/ListaAreas';
 import DatoArea from './pages/Comite/GestionArea/DatoArea';
+import ReporteEncuesta from "./pages/Comite/ReporteEncuesta";
 
 
 function Comite() {
@@ -60,6 +61,7 @@ function Comite() {
                   <Route path='encuesta/anadirEncuesta' exact element = {<AddEncuesta/>}/>
                   <Route path='encuesta/anadirEncuesta/lista/:id' exact element= {<EncuestaPreguntas/>}/>
                   <Route path='encuesta/anadirEncuesta/lista/:id/datosEncuesta' exact element= {<DatosEncuesta/>}/>
+                  <Route path='encuesta/reporte' exact element={<ReporteEncuesta/>}/>
                   <Route path='reportealumnos' exact element={<ReporteAlumnos/>}/>
                   <Route path='tesis' exact element={<Tesis/>}/>
                   <Route path='reporteciclo' exact element={<ReporteCiclo/>} />

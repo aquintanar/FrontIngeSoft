@@ -112,7 +112,7 @@ export const SidebarData = [
             },
             {
                 title: 'Reporte de encuesta',
-                path: '',
+                path: 'encuesta/reporte',
                 icon: <BsIcons.BsFileBarGraph />
             },
            

@@ -16,6 +16,7 @@ const Encuesta = () => {
     const [preguntaActual , setPreguntaActual] = useState(0) ; 
     const [preguntas,SetPreguntas] = useState([" "," "," ", " "," ", " ", " ", " ", " ", " "," "," "," "]);
     const [cuestionario ,SetCuestionario] = useState([]);
+    const [nomEncuesta,setNomEncuesta]=useState("");
     const [data,setData] = useState([]);
     const [isFinished , setFinished] = useState(false); 
     const[puntaje,setPuntaje] = useState();
@@ -31,21 +32,23 @@ const Encuesta = () => {
         let idalum = window.localStorage.getItem("IDUSUARIO");
         axios.get("https://localhost:7012/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno="+idalum+"&idCurso="+idcur)
         .then((response)=>{
-
+            console.log("ESTA ES LA LISTA DE ASESORES");
             console.log(response.data);
-            //handleNextQuestion(e);
+            handleNextQuestion(response.data[0].idAsesor);
         }).catch(()=>{
 
         })
     }
 
-    function handleNextQuestion(){
+    function handleNextQuestion(e){
         setRpta({
             fidAlumno: window.localStorage.getItem("IDUSUARIO"),
-            fidAsesor: 2,
+            fidAsesor: 1,
             fidPreguntaEncuesta: preguntas[preguntaActual].idPreguntaEncuesta,
             respuesta : puntaje, 
         })
+        rpta.fidAsesor=e;
+        console.log("ESTA ES LA RESPUESTA");
         console.log(rpta)
         peticionPostRpta(rpta)
         if (preguntaActual === preguntas.length - 1 ){
@@ -86,6 +89,7 @@ const Encuesta = () => {
         .then((response)=>{
             console.log("LA ENCUESTA");
             console.log(response.data);
+            setNomEncuesta(response.data[0].nombre);
             peticionGetPreguntas(response.data[0].idEncuesta);
         }).catch(()=>{
 
@@ -122,7 +126,7 @@ const Encuesta = () => {
     return (      
         <div>
             <div class=" CONTAINERASESOR">
-                <p class="HEADER-TEXT1 mb-0">Encuesta de satisfacción</p>
+                <p class="HEADER-TEXT1 mb-0">{nomEncuesta}</p>
             </div>
             
             <div class = " CONTAINERASESOR2">
