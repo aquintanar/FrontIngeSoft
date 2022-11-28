@@ -38,7 +38,7 @@ function AvancesSemanales(){
     };
     async function getDataE() {
       (async () => {
-        const result = await axios(`http://34.195.33.246/api/Entregable/BuscarEntregableXId?idEntregable=4`);
+        const result = await axios(`https://localhost:7012/api/Entregable/BuscarEntregableXId?idEntregable=4`);
         //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
         setDataE(result.data);
         console.log(data)

@@ -6,6 +6,7 @@ import {  useNavigate ,useParams} from 'react-router-dom';
 import axios from 'axios';
 import '../../../stylesheets/Alumno.css'
 import '../../../stylesheets/Comite.css'
+import "../../../stylesheets/General.css";
 import {ModalConfirmación, ModalPregunta} from '../../../components/Modals';
 
 const url = "https://localhost:7012/api/"
@@ -24,7 +25,7 @@ function DatoArea()  {
     const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
     const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
     const [subTitulo,setSubtitulo] = useState("Registrar área");
-    const infoEspecialidad = JSON.parse(localStorage.getItem('infoEspecialidad'))
+    const infoEspecialidad = JSON.parse(localStorage.getItem('infoCurso'))
 
     const [facultad, setFacultad] = useState({
         idFacultad: 0,
@@ -38,7 +39,7 @@ function DatoArea()  {
 
     const [areaSeleccionada, setAreaSeleccionada]=useState({
         idArea: 0,
-        idEspecialidad: infoEspecialidad.numEsp,
+        idEspecialidad: infoEspecialidad.idEspec,
         nombre: '',
     })
 
@@ -88,7 +89,7 @@ function DatoArea()  {
     }
                                               
     const peticionGetFacultad=async()=>{        // FACULTAD  del usuario      
-        await axios.get(urlFacultad+ "GetFacultadesById?id_facultad="+infoEspecialidad.numFac)       
+        await axios.get(urlFacultad+ "GetFacultadesById?id_facultad="+infoEspecialidad.idFac)       
         .then(response=>{
             if(response.data.length !== 0){
                 setFacultad({
@@ -102,7 +103,7 @@ function DatoArea()  {
     }
                                               
     const peticionGetEspecialidad=async()=>{    // ESPECIALIDAD del usuario   
-        await axios.get(urlEspecialidad+ "GetEspecialidadXId?idEspecialidad="+infoEspecialidad.numEsp)       
+        await axios.get(urlEspecialidad+ "GetEspecialidadXId?idEspecialidad="+infoEspecialidad.idEspec)       
         .then(response=>{
             if(response.data.length !== 0){
                 setEspecialidad({
@@ -153,27 +154,27 @@ function DatoArea()  {
 
     return (
         <div class=" CONTAINERADMIN">
-            <p class="HEADER-TEXT1">{subTitulo}</p>
+            <h1>{subTitulo}</h1>
 
             <div class="row">
-                    <div class="col-4 FILTRO-LISTAR" >
+                    <div class="col-4" >
                         <p>Facultad</p>
-                        <select select class="form-select Cursor"  selected value = {facultad.idFacultad} disabled="true" >
+                        <select select class="form-select"  selected value = {facultad.idFacultad} disabled="true" >
                             <option key={facultad.idFacultad} value={facultad.idFacultad}>{facultad.nombreF}</option>  
                         </select>
                     </div>
-                    <div class="col-4 FILTRO-LISTAR" >
+                    <div class="col-4" >
                         <p>Especialidad</p>
-                        <select select class="form-select Cursor"  selected value = {especialidad.idEspecialidad} disabled="true" >
+                        <select select class="form-select"  selected value = {especialidad.idEspecialidad} disabled="true" >
                             <option key={especialidad.idEspecialidad} value={especialidad.idEspecialidad}>{especialidad.nombreE}</option>  
                         </select>
                     </div>
             </div>
 
-            <div class = "DATOS">
+            <div class = "row">
                     <div class = "col-8">
-                        <div class="text-start fs-5 fw-normal "><p>Nombre del área</p></div>
-                        <div class="input-group mb-3 ">
+                        <p>Nombre del área</p>
+                        <div class="input-group">
                             <input  type="text" class="form-control" name="nombre" placeholder="Nombre del área" 
                             onChange={handleChange} value={areaSeleccionada && areaSeleccionada.nombre} />
                         </div>
@@ -182,8 +183,8 @@ function DatoArea()  {
 
             <div class="row INSERTAR-BOTONES">                            
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
-                        <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../areas")}}><span>Cancelar</span></button>
+                        <button title="Guardar área" class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
+                        <button title="Cancelar" class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../areas")}}><span>Cancelar</span></button>
                     </div>
             </div>
 

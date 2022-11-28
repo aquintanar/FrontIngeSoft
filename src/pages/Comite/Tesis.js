@@ -16,8 +16,8 @@ import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
 import jsPDF from "jspdf";
 import ReactHtmlTableToExcel from "react-html-table-to-excel";
 import logo from "../../imagenes/logopucp.jpg";
-import * as FileSaver from 'file-saver';
-import XLSX from 'sheetjs-style';
+import * as FileSaver from "file-saver";
+import XLSX from "sheetjs-style";
 const url = "http://34.195.33.246/api/Alumno/";
 
 /*
@@ -65,7 +65,8 @@ const Tesis = () => {
   const [search, setSearch] = useState("");
   const [modalEliminar, setModalEliminar] = useState(false);
   const [currentPage, SetCurrentPage] = useState(0);
-  const fileType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
   const fileExtension = ".xlsx";
   let navigate = useNavigate();
 
@@ -84,14 +85,56 @@ const Tesis = () => {
     foto: null,
     estado: "",
   });
-  const exportToExcel = async() =>{
-    const ws = XLSX.utils.json_to_sheet(data);
+
+  var registro = function () {
+    this.Titulo = "";
+    this.Descripcion = "";
+    this.Estado = "";
+    this.Alumno = "";
+    this.Asesor = "";
+  };
+  const exportToExcel = async () => {
+    var dataRegistro = [];
+    for (let i in data) {
+      var reg = new registro();
+      let titInt = data[i].TituloTesis.toLowerCase();
+      reg.Titulo = titInt.charAt(0).toUpperCase() + titInt.slice(1);
+      reg.Descripcion = data[i].nombre;
+      reg.Estado = data[i].estadoTema;
+      let alIntNom = data[i].nombresAlum.toLowerCase();
+      let alIntApe = data[i].apePatAlum.toLowerCase();
+
+      reg.Alumno =
+        alIntNom.charAt(0).toUpperCase() +
+        alIntNom.slice(1) +
+        " " +
+        alIntApe.charAt(0).toUpperCase() +
+        alIntApe.slice(1);
+      let asIntNom = data[i].nombresAS.toLowerCase();
+      let asIntApe = data[i].apePatAS.toLowerCase();
+      reg.Asesor =
+        asIntNom.charAt(0).toUpperCase() +
+        asIntNom.slice(1) +
+        " " +
+        asIntApe.charAt(0).toUpperCase() +
+        asIntApe.slice(1);
+      dataRegistro.push(reg);
+    }
+    console.log(dataRegistro);
+    const ws = XLSX.utils.json_to_sheet(dataRegistro);
     const wb = {Sheets:{'data':ws},SheetNames:['data']};
     const excelBuffer = XLSX.write(wb,{bookType:'xlsx',type:'array'});
     const  dat = new Blob([excelBuffer],{type:fileType});
     FileSaver.saveAs(dat,"ReporteTemas"+fileExtension);
+  };
+  function capitalizeString(string) {
+    let tam = string.length;
+    for (let i = 0; i < tam; i++) {
+      if (i == 0) string.charAt(0).toUpperCase();
+      else string.charAt(i).toLowerCase();
+    }
+    return string;
   }
-
 
   const data2 = [
     { name: "Facebook", value: 200 },
@@ -121,7 +164,7 @@ const Tesis = () => {
   }
 
   //----------------
-  //filtrado = filtrado.slice(currentPage, currentPage + 6);
+  filtrado = filtrado.slice(currentPage, currentPage + 6);
   const nextPage = () => {
     if (filtrado.length >= currentPage)
       //VER CODIGO
@@ -139,7 +182,7 @@ const Tesis = () => {
     const response = await axios
       .get(
         "https://localhost:7012/api/Curso/ReporteTemasAlumnoAsesorXCurso?idCurso=" +
-          1,/* cambiar esto por idCurso, se esta poniendo para la prueba*/
+          idCurso /* cambiar esto por idCurso, se esta poniendo para la prueba*/,
         {
           _method: "GET",
         }
@@ -253,7 +296,7 @@ const Tesis = () => {
 
   return (
     <div className="CONTAINERADMIN">
-      <p class="HEADER-TEXT1">Reporte de Tesis Susentantadas y Pendientes</p>
+      <p class="HEADER-TEXT1">Reporte de Tesis-Alumno-Asesor</p>
       <p class="HEADER-TEXT2">Previsualización</p>
 
       <div className="FONDO-TESIS">
@@ -287,8 +330,8 @@ const Tesis = () => {
                     <td>{tesis.nombre}</td>
                     <td>{tesis.TituloTesis}</td>
                     <td>{tesis.estadoTema}</td>
-                    <td>{tesis.nombresAlum +" "+ tesis.apePatAlum}</td>
-                    <td>{tesis.nombresAS +" "+ tesis.apePatAS}</td>
+                    <td>{tesis.nombresAlum + " " + tesis.apePatAlum}</td>
+                    <td>{tesis.nombresAS + " " + tesis.apePatAS}</td>
                   </tr>
                 ))}
               </tbody>
@@ -299,7 +342,7 @@ const Tesis = () => {
               className="btn btn-primary fs-4 fw-bold mb-3 "
               onClick={() => exportToExcel()}
             >
-              <span>PDF</span>
+              <span>Excel</span>
             </button>
             <ReactHtmlTableToExcel
               className="btn btn-primary fs-4 fw-bold mb-3"

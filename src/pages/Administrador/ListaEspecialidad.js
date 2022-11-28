@@ -161,7 +161,7 @@ function ListaEspecialidad()  {
                   <th style ={{width: 240}}>Nombre</th>
                   <th style = {{width:60}}>Clave</th>
                   <th style = {{width:180}}>Facultad</th>
-                  <th style = {{width:80}}>Acciones</th>
+                  <th style = {{width:90}}>Acciones</th>
               </tr>
             </thead>
             <tbody >
@@ -206,7 +206,7 @@ function ListaEspecialidad()  {
         </div>
       </ModalConfirmación>
       
-      <div className='LISTAR-ESPECIALIDADES-BOTON'>
+      <div className='LISTAR-BOTON'>
           <button title= "Registrar especialidad" className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosEspecialidad/0")}}><span>Registrar</span></button>
       </div>             
     </div>              

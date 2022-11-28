@@ -1,11 +1,14 @@
 ﻿import React, { useState } from "react";
 import "../Pagina.css";
 import "../stylesheets/BarraVolver.css";
+import { useNavigate,useParams } from 'react-router-dom';
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 export function BarraVolver() {
   const url = "https://localhost:7012/";
   const [clicked, setClicked] = useState(false);
   const [anhio, setAnhio] = useState([]);
+  let navigate = useNavigate();
   const [sem, setSem] = useState([]);
   const [nom, setNom] = useState([]);
   const [esp, setEsp] = useState([]);
@@ -34,6 +37,16 @@ export function BarraVolver() {
       });
   };
   InfoArribaDinamica();
+  const  volverCursos=()=>{
+    let escoordinador=window.localStorage.getItem("ESCOORDINADOR");
+    let tipoUsuario = window.localStorage.getItem("TIPOUSUARIO")
+    if(escoordinador=="SI" && tipoUsuario=="COMITE"){
+      navigate('/comiteCoordinador')
+    }
+    else{
+      navigate('/cursos');
+    }
+  }
   return (
     <div className="barra2 ">
       <div className="tituloSistema">
@@ -42,7 +55,7 @@ export function BarraVolver() {
           src={require("../imagenes/casa.png")}
           alt="casa"
         ></img>
-        <h4 className="volver"><a href="/cursos">Volver a mis cursos</a></h4>
+        <h4 className="volver"><div onClick={()=>volverCursos()}>Volver a mis cursos</div></h4>
       </div>
       <div>
         <h4 className="titulo-info">{anhio + "-" + sem + " " + nom }</h4>

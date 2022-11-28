@@ -68,6 +68,14 @@
     height: 55px;
 }
 
+.HEADER-TEXT5{
+    font-size: 32px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    color: #042354;
+    font-weight: bold;
+    height: 55px;
+    text-decoration: underline;
+}
 .DATOS input{
     height: 2vh;
     width: 100%;

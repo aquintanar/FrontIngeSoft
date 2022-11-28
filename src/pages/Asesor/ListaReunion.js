@@ -20,8 +20,8 @@ import { UserContext } from '../../UserContext';
 import { AsesorContext } from './AsesorContext';
 import { AiTwotoneDollarCircle } from 'react-icons/ai';
 
-const url= "http://34.195.33.246/api/ReunionAlumnoAsesor/";
-const urlAlxAs = "http://34.195.33.246/api/Alumno/";
+const url= "https://localhost:7012/api/ReunionAlumnoAsesor/";
+const urlAlxAs = "https://localhost:7012/api/Alumno/";
 //const url= "http://44.210.195.91/api/Reunion/";
 
 function ListaReunion(alumno, setAlumno)  {
@@ -74,84 +74,58 @@ function ListaReunion(alumno, setAlumno)  {
         filtrado=filtrado.filter((dato)=>dato.idAlumno===fol) ;
       }
       else{                                  //tiene a lo mas tres filtros activos
-        if(search && fil){               
-          filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+        if(search && fechas && fil){    
+          filtrado = data.filter(element => {
+            let ok =false;
+            const fec = Date.parse(element.fechaHoraInicio);
+            if(fechas[1]>=fec && fec>=fechas[0]){
+              ok = true;
+            }
+            return ok;
+          });           
+          filtrado=filtrado.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
           filtrado=filtrado.filter((dato)=>dato.estadoReunion===fil) ;
-          if(fol)
-            filtrado=filtrado.filter((dato)=>dato.idAlumno===fol) ;
-          else if(fechas){
-            filtrado = data.filter(element => {
-                let ok =false;
-                const fec = Date.parse(element.fechaHoraInicio);
-                if(fechas[1]>=fec && fec>=fechas[0]){
-                  ok = true;
-                }
-                return ok;
-              });
+          
+        }
+        else if(fechas &&fil && fol){  
+          filtrado = data.filter(element => {
+            let ok =false;
+            const fec = Date.parse(element.fechaHoraInicio);
+            if(fechas[1]>=fec && fec>=fechas[0]){
+              ok = true;
+            }
+            return ok;
+          }); 
+          filtrado=filtrado.filter((dato)=>dato.estadoReunion===fil) ;
+          filtrado=filtrado.filter((dato)=>dato.idAlumno===fol) ;
+        }
+        else if(fol && fechas && search){     
+          filtrado = data.filter(element => {
+          let ok =false;
+          const fec = Date.parse(element.fechaHoraInicio);
+          if(fechas[1]>=fec && fec>=fechas[0]){
+            ok = true;
           }
-        }
-        else if(fil && fol){
-          filtrado=filtrado.filter((dato)=>dato.estadoReunion===fil) ;
-          filtrado=filtrado.filter((dato)=>dato.idAlumno===fol) ;
-        }
-        else if(fol && fechas){       
-          filtrado = data.filter(element => {
-            let ok =false;
-            const fec = Date.parse(element.fechaHoraInicio);
-            if(fechas[1]>=fec && fec>=fechas[0]){
-              ok = true;
-            }
-            return ok;
-          });
-          filtrado=filtrado.filter((dato)=>dato.idAlumno===fol) ;
-          if(fil)
-            filtrado=filtrado.filter((dato)=>dato.estadoReunion===fil) ;
-          else if(search)
-            filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
-        }
-        else if(search && fechas){          //tiene a los mas dos filtros
-          filtrado = data.filter(element => {
-            let ok =false;
-            const fec = Date.parse(element.fechaHoraInicio);
-            if(fechas[1]>=fec && fec>=fechas[0]){
-              ok = true;
-            }
-            return ok;
+          return ok;
           });
           filtrado=filtrado.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
-        } 
-        else{   
-          if(fil){//filtro por estado
-           filtrado=data.filter((dato)=>dato.estadoReunion===fil) ;
-            if(fol)
-              filtrado=data.filter((dato)=>dato.idAlumno===fol) ;
-            else if(fechas)
-              filtrado = data.filter(element => {
-                let ok =false;
-                const fec = Date.parse(element.fechaHoraInicio);
-                if(fechas[1]>=fec && fec>=fechas[0]){
-                  ok = true;
-                }
-                return ok;
-              });
-          }
-          if(search){//filtro por nombre
+          filtrado=filtrado.filter((dato)=>dato.idAlumno===fol) ;
+        }
+        else if(fol && fil && search){ 
+          filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+          filtrado=filtrado.filter((dato)=>dato.idAlumno===fol) ;
+          filtrado=filtrado.filter((dato)=>dato.estadoReunion===fil) ;
+        }
+        else{
+          if(search && fil){               
             filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
-            if(fol)
-              filtrado=data.filter((dato)=>dato.idAlumno===fol) ;
-            else if(fechas)
-              filtrado = data.filter(element => {
-                let ok =false;
-                const fec = Date.parse(element.fechaHoraInicio);
-                if(fechas[1]>=fec && fec>=fechas[0]){
-                  ok = true;
-                }
-                return ok;
-              });
+            filtrado=filtrado.filter((dato)=>dato.estadoReunion===fil) ;
           }
-          if(fol)//filtro por alumno
-            filtrado=data.filter((dato)=>dato.idAlumno===fol) ;
-          if(fechas)
+          else if(fil && fol){
+            filtrado=filtrado.filter((dato)=>dato.estadoReunion===fil) ;
+            filtrado=filtrado.filter((dato)=>dato.idAlumno===fol) ;
+          }
+          else if(fol && fechas){       
             filtrado = data.filter(element => {
               let ok =false;
               const fec = Date.parse(element.fechaHoraInicio);
@@ -160,6 +134,54 @@ function ListaReunion(alumno, setAlumno)  {
               }
               return ok;
             });
+            filtrado=filtrado.filter((dato)=>dato.idAlumno===fol) ;
+          }
+          else if(search && fechas){          //tiene a los mas dos filtros
+            filtrado = data.filter(element => {
+              let ok =false;
+              const fec = Date.parse(element.fechaHoraInicio);
+              if(fechas[1]>=fec && fec>=fechas[0]){
+                ok = true;
+              }
+              return ok;
+            });
+            filtrado=filtrado.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+          } 
+          else if(search && fol){ 
+            filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+            filtrado=filtrado.filter((dato)=>dato.idAlumno===fol) ;
+          }
+          else if(fil && fechas){          //tiene a los mas dos filtros
+            filtrado = data.filter(element => {
+              let ok =false;
+              const fec = Date.parse(element.fechaHoraInicio);
+              if(fechas[1]>=fec && fec>=fechas[0]){
+                ok = true;
+              }
+              return ok;
+            });
+            filtrado=filtrado.filter((dato)=>dato.estadoReunion===fil) ;
+          }  
+          else{   
+            if(fil){//filtro por estado
+            filtrado=data.filter((dato)=>dato.estadoReunion===fil) ;
+            }
+            else if(search){//filtro por nombre
+              filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+            }
+            else if(fol)//filtro por alumno
+              filtrado=data.filter((dato)=>dato.idAlumno===fol) ;
+            else if(fechas){
+              filtrado = data.filter(element => {
+                let ok =false;
+                const fec = Date.parse(element.fechaHoraInicio);
+                if(fechas[1]>=fec && fec>=fechas[0]){
+                  ok = true;
+                }
+                return ok;
+              });
+            }
+          }
         }
       }
     }
@@ -201,8 +223,8 @@ function ListaReunion(alumno, setAlumno)  {
         await axios.get(url+ "BuscarReunionesXIdAsesorYIdCurso?idAsesor=" + localStorage.getItem('IDUSUARIO') + "&idCurso=" +localStorage.getItem('idCurso'))     
         .then(response=>{
           setData(response.data);
-          console.log("response.data");
-          console.log(response.data);
+          console.log(localStorage.getItem('IDUSUARIO'));
+          console.log(localStorage.getItem('idCurso'));
         }).catch(error =>{
           console.log(error.message);
         })

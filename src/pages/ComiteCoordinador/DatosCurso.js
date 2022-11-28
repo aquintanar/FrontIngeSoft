@@ -27,11 +27,12 @@ function DatosCurso() {
   const [isOpenEditModal, openEditModal, closeEditModal] = useModal();
   const [isOpenEditadoModal, openEditadoModal, closeEditadoModal] = useModal();
   const [subTitulo, setSubtitulo] = useState("Nuevo curso");
-
+  const infoEspecialidad = JSON.parse(localStorage.getItem('infoCurso'))
   // checkBox
   const [checkAsesor, setCheckedAs] = React.useState(false);
   const [checkAlumno, setCheckedAl] = React.useState(false);
   const [checkTemaAsignado, setCheckedTemaAs] = React.useState(false);
+
 
   const petitionEsp = async () => {
     let idesEspecialidades = JSON.parse(
@@ -40,13 +41,11 @@ function DatosCurso() {
     await axios
       .get(urlEsp + "GetEspecialidades/")
       .then((response) => {
-        const filtradoEsp = response.data.filter((Especialidad) => {
-          for (let k in idesEspecialidades) {
-            if (Especialidad.idEspecialidad === idesEspecialidades[k])
-              return Especialidad;
-          }
-        });
-        setEsp(filtradoEsp);
+        let filtroespecialidades=[];
+        for(let k in response.data){
+          if(response.data[k].idEspecialidad==infoEspecialidad.idEspec)filtroespecialidades.push(response.data[k]);
+        }
+        setEsp(filtroespecialidades);
         petitionFac();
       })
       .catch((error) => {
@@ -69,14 +68,14 @@ function DatosCurso() {
       window.localStorage.getItem("infoFacultad")
     );
     await axios
-      .get(urlFac + "GetFacultades/")
+      .get(urlFac + "GetFacultadesSimple/")
       .then((response) => {
-        const filtradoFac = response.data.filter((Facultad) => {
-          for (let k in idesFacultades) {
-            if (Facultad.idFacultad === idesFacultades[k]) return Facultad;
-          }
-        });
-        setFac(filtradoFac);
+        let filtrofacultades=[];
+        for(let k in response.data){
+          if(response.data[k].idFacultad==infoEspecialidad.idFac)filtrofacultades.push(response.data[k]);
+        }
+
+        setFac(filtrofacultades);
       })
       .catch((error) => {
         console.log(error.message);
@@ -87,6 +86,16 @@ function DatosCurso() {
     let idCoordinador = window.localStorage.getItem("IDUSUARIO");
     console.log(idCoordinador);
     console.log(cursoNuevo);
+    
+    for(let i=0;i<cursoNuevo.nombre.length;i++){
+      if(cursoNuevo.nombre.charAt(i)=="1"){
+        cursoNuevo.numTesis=1;
+      }
+      if(cursoNuevo.nombre.charAt(i)=="2"){
+        cursoNuevo.numTesis=2;
+      }
+    }
+
     cursoNuevo.idComiteTesis= idCoordinador;
     await axios
       .post("https://localhost:7012/api/Curso/PostCursoConComite",cursoNuevo, {
@@ -132,6 +141,8 @@ function DatosCurso() {
         asesorPropone: response.data[0].asesorPropone,
         alumnoPropone: response.data[0].alumnoPropone,
         temaAsignado: response.data[0].temaAsignado,
+        numTesis:response.data[0].numTesis
+
       });
       setSubtitulo("Modificar Curso");
       setCheckedAs(response.data[0].asesorPropone);
@@ -149,8 +160,8 @@ function DatosCurso() {
   };
 
   useEffect(() => {
-    petitionSem();
     petitionEsp();
+    petitionSem();
     cargarCurso();
   }, []);
 
@@ -160,10 +171,10 @@ function DatosCurso() {
     cant_alumnos: 0,
     cant_temas_prop: 0,
     activo: 0,
-    idSemestre: 0,
+    idSemestre: 49,
     idDocente: 0,
-    idFacultad: 0,
-    idEspecialidad: 0,
+    idFacultad: infoEspecialidad.idFac,
+    idEspecialidad: infoEspecialidad.idEspec,
     asesorPropone: false,
     alumnoPropone: false,
     temaAsignado: false,
@@ -171,6 +182,7 @@ function DatosCurso() {
     asesorPropone: false,
     alumnoPropone: false,
     temaAsignado: false,
+    numTesis:1,
     idComiteTesis:0
   });
 
@@ -179,7 +191,6 @@ function DatosCurso() {
       ...prevState,
       idEspecialidad: e.target.value,
     }));
-    console.log(cursoNuevo);
   };
 
   const cambioSelectSem = (e) => {
@@ -196,7 +207,6 @@ function DatosCurso() {
       ...prevState,
       idFacultad: e.target.value,
     }));
-    console.log(cursoNuevo);
   };
 
   const cambioTitulo = (e) => {
@@ -209,9 +219,11 @@ function DatosCurso() {
 
   const cerrarPost = () => {
     closeGuardadoModal();
+    navigate("../GestionarCurso");
   };
   const cerrarPut = () => {
     closeEditadoModal();
+    navigate("../GestionarCurso");
   };
 
   //checkboxes
@@ -247,6 +259,7 @@ function DatosCurso() {
       <div class="row">
         <p class="HEADER-TEXT1">Gestión de Curso</p>
         <p class="HEADER-TEXT2">Registro de Curso - {subTitulo} </p>
+        <h5 >*Recuerde crear cursos solo de la especialidad que es coordinador</h5>
       </div>
       <div class="row DATOS">
         <div class="col-12">
@@ -274,9 +287,7 @@ function DatosCurso() {
               selected
               value={cursoNuevo && cursoNuevo.idFacultad}
             >
-              <option selected value="0">
-                Todos
-              </option>
+              
               {fac.map((elemento) => (
                 <option key={elemento.idFacultad} value={elemento.idFacultad}>
                   {elemento.nombre}
@@ -295,9 +306,7 @@ function DatosCurso() {
             selected
             value={cursoNuevo && cursoNuevo.idEspecialidad}
           >
-            <option selected value="0">
-              Todos
-            </option>
+            
             {esp.map((elemento) => (
               <option
                 key={elemento.idEspecialidad}
@@ -318,9 +327,7 @@ function DatosCurso() {
             selected
             value={cursoNuevo && cursoNuevo.idSemestre}
           >
-            <option selected value="0">
-              Todos
-            </option>
+            
             {sem.map((elemento) => (
               <option key={elemento.idSemestre} value={elemento.idSemestre}>
                 {elemento.nombre}

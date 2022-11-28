@@ -8,6 +8,7 @@ import * as BsIcons from 'react-icons/bs';
 import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
+import { AppStream } from 'aws-sdk';
 
 const urlAs= "https://localhost:7012/api/Alumno/";
 const urlEsp= "https://localhost:7012/api/Especialidad/";
@@ -18,11 +19,9 @@ function ListarAlumnos()  {
   let idAsesorRef = 0;
   let navigate = useNavigate();
   const [currentPage,SetCurrentPage] = useState(0);
-  const [selEsp, setSelEsp] = useState(0);
   const [observado, setObservado] = useState(0);
   const [search, setSearch] = useState("");
   const [as, setAs] = useState([]);
-  const [esp, setEsp] = useState([]);
   const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
   const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
 
@@ -30,30 +29,30 @@ function ListarAlumnos()  {
   const buscador = e=>{
       setSearch(e.target.value);
   }
-  if(!search && !selEsp){//sin filtro
+  if(!search && !observado){//sin filtro
     filtrado=as;
   }
   else{
-    if(search && selEsp){//ambos filtros
-      filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
-      filtrado=as.filter((dato)=>dato.fidEspecialidad===selEsp) ;
-    }
-    filtrado=as.filter((dato)=>dato.fidEspecialidad===selEsp) ;
-    if(search)//filtro por nombre
-      filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+      if(search && observado){
+        filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+        filtrado=filtrado.filter((dato)=>dato.tieneTema===(observado===1?1:0)) ;
+      }
+      else{
+        if(search)//filtro por nombre
+          filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+        if(observado)
+          filtrado=as.filter((dato)=>dato.tieneTema===(observado===1?1:0)) ;
+      }
   }
 
-  const cambioSelectEspp =e=>{
-      const valor = parseInt(e.target.value)
-      setSelEsp(valor)
-    }
+
   const cambioEstaObservado =e=>{
       const valor = parseInt(e.target.value)
       setObservado(valor)
   }
 
   const nextPage = () =>{
-        if(filtrado.length>=currentPage) //VER CODIGO
+        if(filtrado.length>=5) //VER CODIGO
         SetCurrentPage(currentPage+5);
     }
   const previousPage =() =>{
@@ -97,15 +96,6 @@ function ListarAlumnos()  {
       })
   }
   
-    const petitionEsp=async()=>{
-      await axios.get(urlEsp+"GetEspecialidades/")
-      .then(response=>{
-        setEsp(response.data);
-      }).catch(error =>{
-        console.log(error.message);
-      })
-    }
-
   
     const peticionDelete=async()=>{
       console.log(asesorSeleccionado);
@@ -120,31 +110,22 @@ function ListarAlumnos()  {
   
   useEffect(()=>{
       petitionAs();
-      petitionEsp();
   },[])
 
   return(
       <div className="CONTAINERCOMITE">
-          <h1 className="HEADER-TEXT1">Alumnos en el curso</h1>
+          <p className="HEADER-TEXT1">Gestión de Alumnos</p>
+          <p class="HEADER-TEXT2">Búsqueda de alumnos </p>
           <div class="row">
             <div class="col-12 FILTRO-LISTAR-BUSCAR" >
                 <p>Ingrese el nombre del alumno</p>
                 <div class="input-group">
-                    <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre del curso" aria-label="serach" onChange={buscador}/>
+                    <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre del alumno" aria-label="serach" onChange={buscador}/>
                 </div>
             </div>
             <div class="col-4 FILTRO-LISTAR" >
-                <p>Seleccione especialidad</p>
-                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelectEspp}>
-                    <option selected value = "0">Todos</option>
-                    {esp.map(elemento=>(
-                      <option key={elemento.idEspecialidad} value={elemento.idEspecialidad}>{elemento.nombre}</option>  
-                    ))} 
-                </select>
-              </div>
-              <div class="col-4 FILTRO-LISTAR" >
                 <p> ¿Tiene tema?</p>
-                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioEstaObservado} value ={observado}>
+                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioEstaObservado} >
                       <option key={0} value = {0}>Todos</option>
                       <option key={1} value = {1}>Si</option>
                       <option key={2} value={2}>No</option>
@@ -152,6 +133,7 @@ function ListarAlumnos()  {
               </div>
           </div>
 
+        <p class="HEADER-TEXT2 mt-0" >Lista de alumnos en el curso</p>
         <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
         <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
         <div class = "row LISTAR-TABLA">
@@ -167,10 +149,10 @@ function ListarAlumnos()  {
               <tbody >
                 {filtrado.map(asesor => (
                   <tr key={asesor.idAsesor}>
-                      <td >{asesor.nombres + " " + asesor.apePat}</td>
+                      <td >{asesor.nombres + " " + asesor.apePat + " " + asesor.apeMat}</td>
                       <td >{asesor.correo}</td>
                       <td>
-                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosAlumno/"+asesor.idAsesor)}}> <FaIcons.FaEdit /></button>
+                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosAlumno/"+asesor.idAlumno)}}> <BsIcons.BsEye  /></button>
                       <button class=" btn BTN-ACCIONES" onClick={()=>seleccionarAsesor(asesor)}> <BootIcons.BsTrash /></button>
                       </td>
                   </tr>

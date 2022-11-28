@@ -58,37 +58,12 @@ const Sidebar = () => {
   const [nombre , setNombre] = useState([]);
   const showSidebar = () => setSidebar(sidebar);
   const peticionGet=async()=>{
-    console.log("hola");
-    const response =await axios.get("https://localhost:7012/api/Asesor/GetAsesores")
+    let idas = window.localStorage.getItem("IDUSUARIO")
+    const response =await axios.get("https://localhost:7012/api/Asesor/GetAsesorXId?idAsesor="+idas)
     .then(response=>{
-      console.log("HOLA SE LLEGO A HACER EL REQUEST");
-      console.log("El valor de value es" + value);
-      console.log(response);
-      console.log(response.data[0].idUsuario);
-      for(let i in response.data){
-        console.log(response.data[i].idUsuario);
-        if(value!=0 && value!=undefined && value!=null && value!='' && value!='Hello from context'){
-          if(response.data[i].idUsuario===value){
-            console.log("PASE POR VALUE");
-            setNombre(response.data[i].nombres +" "+ response.data[i].apeMat);
-            console.log(nombre);
-            break;
-          }  
-        }
-        else{
-          var valorGuardado = localStorage.getItem("IDUSUARIO");
-          console.log("El valor de ID es " + response.data[i].idUsuario);
-          console.log("El valor guardado es " + localStorage.getItem("IDUSUARIO"));
-          if(response.data[i].idUsuario==valorGuardado){
-            console.log("PASE POR EL LOCAL STORAGE");
-            setNombre(response.data[i].nombres +" "+ response.data[i].apeMat);
-            console.log(nombre);
-            break;
-          }  
-        }
-        
-      }
-      console.log("El nombre actual es : " + nombre)
+      console.log();
+      setNombre(response.data[0].nombres +" " + response.data[0].apePat)
+      
     }).catch(error =>{
       console.log(error.message);
     })
@@ -111,7 +86,7 @@ const Sidebar = () => {
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <Nav>
-          <h1 className='nombreUsuario'>{nombre + localStorage.getItem("IDUSUARIO")}</h1>
+          <h1 className='nombreUsuario'>{nombre}</h1>
             <NavIcon to='#'>
               {showSidebar}
             </NavIcon> 

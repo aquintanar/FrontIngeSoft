@@ -8,9 +8,9 @@ import axios from 'axios';
 import {ModalConfirmación, ModalPregunta} from '../../components/Modals';
 import {  Button} from '@material-ui/core';
 import '../../stylesheets/Administrador.css'
-
-const url= "http://34.195.33.246/api/Facultad/";
-const urlEspe= "http://34.195.33.246/api/Especialidad/";
+import "../../stylesheets/General.css";
+const url= "https://localhost:7012/api/Facultad/";
+const urlEspe= "https://localhost:7012/api/Especialidad/";
 
 //const url= "http://44.210.195.91/api/Facultad/";
 //const urlEspe= "http://44.210.195.91/api/Especialidad/";
@@ -159,40 +159,39 @@ const handleChange=  (e)=>{
   return (
     <div class="CONTAINERADMIN">
         <div class="row">
-            <p class="HEADER-TEXT1">Gestión de Facultades</p>
-            <p class="HEADER-TEXT2">{subTitulo}</p>
+            <h1>Gestión de Facultades</h1>
+            <h2>{subTitulo}</h2>
         </div> 
 
             <div class="row ">
-                <div class="col-7 DATOS-FACULTAD" >
-                      <div class="text-start fs-5 fw-normal  mb-1"><p>Nombre de la facultad</p></div>
-                      <div class="input-group mb-3 ">
+                <div class="col-7" >
+                      <p>Nombre de la facultad</p>
+                      <div class="input-group">
                           <input type="text"  class="form-control" name="nombre" placeholder="Facultad" 
                             onChange={handleChange} value={facultadSeleccionada && facultadSeleccionada.nombre } />
                       </div>
 
-                      <div class=" text-start fs-5 fw-normal ">
+                      
                           <p>Clave</p>
-                          <div class="input-group input-group-lg mb-3">
+                          <div class="input-group input-group-lg">
                             <input type="text" class="form-control" name="descripcion" placeholder="Clave"  
                                 onChange={handleChange} value={facultadSeleccionada && facultadSeleccionada.descripcion}  />
                           </div>
-                      </div>
+                      
 
                       {!modificar ? null: 
                       <div class=" col-6  LISTAR-TABLA">
-                      <p>Lista de Especialidades</p>
                           <table className='table-responsive fs-6'>
                               <thead class ="bg-primary text-white">
                                 <tr class>
-                                    <th width="200">Nombre</th>
+                                    <th width="300">Especialidades</th>
                                 </tr>
                               </thead >
                               <tbody class="text-decoration-overline">
                                 <u>
                                 {espes.map(especialidad => (
                                     <tr key={especialidad.idEspecialidad}>
-                                        <td width="200">{especialidad.nombre}</td>
+                                        <td width="300">{especialidad.nombre}</td>
                                     </tr>
                                   ))}
                                   </u>
@@ -265,8 +264,8 @@ const handleChange=  (e)=>{
 
             <div class="row INSERTAR-BOTONES">                            
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
-                    <button class="btn btn-primary fs-4 fw-bold  CANCELAR " type="button" onClick={()=>{navigate("../gestion/gesFacultad")}}><span>Cancelar</span></button>
+                    <button title='Guardar facultad' class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
+                    <button title='Cancelar' class="btn btn-primary fs-4 fw-bold  CANCELAR " type="button" onClick={()=>{navigate("../gestion/gesFacultad")}}><span>Cancelar</span></button>
                 </div>
             </div>
     </div>

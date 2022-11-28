@@ -9,6 +9,7 @@ import {  useNavigate } from 'react-router-dom';
 //import './DatosFacultad.css';
 import * as BsIcons from 'react-icons/bs';
 import '../../stylesheets/Administrador.css'
+import "../../stylesheets/General.css";
 import useModal from '../../hooks/useModals';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
@@ -168,14 +169,14 @@ const ReportexAlumno = () => {
     return(
         <div className="CONTAINERADMIN">   
 
-        <p class="HEADER-TEXT1">Reporte de Alumnos</p>
-        <p class="HEADER-TEXT2">Búsqueda de alumnos</p>
+        <h1>Reporte de Alumnos</h1>
+        <h2>Búsqueda de alumnos</h2>
   
         <div class="row ">
-            <div class="col-lg-7 FILTRO-LISTAR-BUSCAR" >
-                <div class="text-start fs-6  mb-1 fw-normal "><p>Ingresar el nombre del alumno</p></div>
+            <div class="col-lg-7 " >
+                <p>Ingresar el nombre del alumno</p>
                 <div class="input-group mb-2 ">
-                    <input type="text" value={search} class="form-control" name="search" placeholder="Nombre" aria-label="serach" onChange={buscador}/>
+                    <input type="search" value={search} class="form-control icon-search" name="search" placeholder="Nombre" aria-label="serach" onChange={buscador}/>
                 </div>
             </div>
   
@@ -235,8 +236,8 @@ const ReportexAlumno = () => {
             <Button class="btn btn-success btn-lg" onClick={closeConfirmModal}>Entendido</Button>
           </div>
         </ModalConfirmación>
-        <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-BOTON '>
-            <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("datosFacultad/0")}}><span>Registrar</span></button>
+        <div className='d-grid gap-2 d-md-flex justify-content-md-end INSERTAR-BOTONES '>
+            <button className="btn btn-primary fs-4 fw-bold mb-3 REGISTRAR" onClick={()=>{navigate("datosFacultad/0")}}><span>Registrar</span></button>
         </div>             
       </div> 
     );

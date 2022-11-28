@@ -6,6 +6,7 @@ import {  useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import '../../../stylesheets/Alumno.css'
 import '../../../stylesheets/Comite.css'
+import "../../../stylesheets/General.css";
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as AntIcons from "react-icons/ai";
@@ -24,10 +25,16 @@ function ListaAreas()  {
     const infoEspecialidad = JSON.parse(localStorage.getItem('infoEspecialidad'))
     const [areas, setAreas] = useState ([]);
     const [search, setSearch] = useState("");
-
+    const [idesp,SetIDEsp]=useState(0);
+    const [idfac,SetIDFac]=useState(0);
+    const [infoCurso,setInfoCurso] = useState({
+        idEspec:0,
+        idFac:0
+    })
+   
     const [areaSeleccionada, setAreaSeleccionada]=useState({
         idArea: 0,
-        idEspecialidad: infoEspecialidad.numEsp,
+        idEspecialidad:0,
         nombre: '',
     })
 
@@ -60,28 +67,44 @@ function ListaAreas()  {
     }
 
     const peticionGetAreas=async()=>{               //Listar notas de un curso 
-        await axios.get(urlArea+ "GetAreaXEspecialidad?idEspecialidad="+infoEspecialidad.numEsp)       
+        let ides = JSON.parse(window.localStorage.getItem("infoCurso"))
+        await axios.get(urlArea+ "GetAreaXEspecialidad?idEspecialidad="+ides.idEspec)       
         .then(response=>{
+            console.log("LAS ESPECIALIDADES");
+            console.log(response.data);
             setAreas(response.data)
         }).catch(error =>{
             console.log(error.message);
         })
     }
+    const peticionGetInfo=async()=>{
+        let idcur = window.localStorage.getItem("idCurso");
+        let response=await axios.get("https://localhost:7012/api/Curso/BuscarCursoXId?idCurso="+idcur)
+        .then((response)=>{
+            console.log("ESTE ES EL CURSO");
+            infoCurso.idEspec = response.data[0].idEspecialidad;
+            infoCurso.idFac = response.data[0].idFacultad;
+            window.localStorage.setItem("infoCurso",JSON.stringify(infoCurso));
+            areaSeleccionada.idEspecialidad=response.data[0].idEspecialidad;
+            peticionGetAreas();
+        }).catch(()=>{
 
+        })
+    }
     useEffect(()=>{
         console.log(infoEspecialidad)
-        peticionGetAreas(); 
+        peticionGetInfo();
     },[])
 
     return (
         <div class=" CONTAINERADMIN" style={{}} >
-             <p class="HEADER-TEXT1">Gestión de Áreas</p>
+             <h1>Gestión de Áreas</h1>
 
                 <div class="row">
-                    <div class="col  FILTRO-LISTAR-BUSCAR" >
+                    <div class="col-6" >
                         <p>Ingresar nombre del área</p>
                         <div class="input-group  ">
-                            <input type="text" value={search} class="form-control" size="5" name="search" placeholder="Nombre del área" aria-label="serach" onChange={buscador}/>
+                            <input type="search" value={search} class="form-control icon-search" size="5" name="search" placeholder="Nombre del área" aria-label="serach" onChange={buscador}/>
                         </div>
                     </div>
                 </div>
@@ -100,8 +123,8 @@ function ListaAreas()  {
                 </tr>
                 ))}
 
-            <div className='LISTAR-ESPECIALIDADES-BOTON'>
-                <button title="Registrar área" className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{ navigate("datoArea/0")}} ><span>Registrar</span></button>
+            <div className='d-grid gap-2 d-md-flex justify-content-md-end INSERTAR-BOTONES '>
+                <button title="Registrar área" className='btn btn-primary fs-4 fw-bold mb-3 REGISTRAR' onClick={()=>{ navigate("datoArea/0")}} ><span>Registrar</span></button>
             </div> 
 
             <ModalPregunta      isOpen={isOpenDeleteModal}      closeModal={closeDeleteModal}   procedimiento = "eliminar"  

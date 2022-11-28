@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import * as BsIcons from "react-icons/bs";
 import "../../stylesheets/Administrador.css";
 import "../../stylesheets/Comite.css";
+import "../../stylesheets/General.css";
 import useModal from "../../hooks/useModals";
 import { ModalPregunta, ModalConfirmación } from "../../components/Modals";
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
@@ -236,10 +237,10 @@ const Tesis = () => {
 
   return (
     <div className="CONTAINERADMIN">
-      <p class="HEADER-TEXT1">Reporte de Alumnos</p>
+      <h1>Reporte de Alumnos</h1>
 
       <div className="FONDO-TESIS">
-        <p class="HEADER-TEXT2">Alumnos : </p>
+        <h2>Alumnos : </h2>
         <button onClick={previousPage} className="PAGINACION-BTN">
           <BsIcons.BsCaretLeftFill />
         </button>
@@ -267,9 +268,9 @@ const Tesis = () => {
               </tbody>
             </table>
           </div>
-          <div className="d-grid gap-2 d-md-flex justify-content-md-end LISTAR-BOTON ">
+          <div className="d-grid gap-2 d-md-flex justify-content-md-end INSERTAR-BOTONES ">
             <button
-              className="btn btn-primary fs-4 fw-bold mb-3 "
+              className="btn btn-primary fs-4 fw-bold mb-3 DESCARGAR"
               onClick={() => GeneratePDF()}
             >
               <span>Descargar</span>

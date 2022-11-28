@@ -18,6 +18,11 @@ function TemaTesis() {
         palabraClave1:'',
         palabraClave2:'',
         motivoRechazo:'',
+        area:{
+            idArea:0,
+            idEspecialidad:0,
+            nombre:'',
+        },
         fidCurso: parseInt(localStorage.getItem("idCurso")),
     })
 

@@ -1,17 +1,19 @@
 import React ,{useState , useEffect} from "react";
 import { render } from 'react-dom';
 import './proponerTemaAsesor.css';
+const urlAsesor= "https://localhost:7012/api/Asesor/";
+
 const SearchAsesoresModal = ( {show ,setShow, asesorTesis, setAsesor} ) =>{
     //setear los hooks useState
     const[Asesores , setAsesores] = useState([]);
     const[search , setSearch] = useState("");
-    const URL = "http://34.195.33.246/api/Asesor/GetAsesores";
+    const URL = "https://localhost:7012/api/Asesor/GetAsesores";
     //local
         //http://34.195.33.246/
         //EC2
         // http://44.210.195.91/
     const showData = async() => {
-        const response = await fetch(URL)
+        const response = await fetch(urlAsesor + "GetAsesores")
         const data = await response.json()
         console.log(data)
         setAsesores(data)
@@ -32,27 +34,9 @@ const SearchAsesoresModal = ( {show ,setShow, asesorTesis, setAsesor} ) =>{
         ) 
     }
 
-    const fetchData = () =>{
-        fetch('http://44.210.195.91/api/TemaTesis/GetTemaTesis')
-        .then(response => {
-            return response.json()
-        })
-        .then(data => {
-            const data2 = data.getElementById('codigoPUCP');
-            console.log(data) ; 
-            setAsesores(data) ; 
-        })
-    }
-
     useEffect(()=>{
         showData()
-        fetchData()
     },[])
-
-    
-    
- 
-
     return (
         <div class = "container">
             <div class = "row">

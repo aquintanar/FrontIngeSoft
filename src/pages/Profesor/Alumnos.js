@@ -3,13 +3,15 @@ import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom'
 import  '../../stylesheets/Profesor.css';
 import { useTable ,useFilters,setFilter} from 'react-table';
 import axios from 'axios';
-import {  useNavigate } from 'react-router-dom';
+import {  useNavigate ,useLocation} from 'react-router-dom';
 import * as BsIcons from 'react-icons/bs';
 import { NonceProvider } from 'react-select';
 
 function Alumnos() {
     let navigate = useNavigate();
+    const location = useLocation();
     let [dataI, setDataI] = useState([]);
+    let [curso, setCurso] = useState([]);
     const [currentPage,SetCurrentPage] = useState(0);
     const [search1, setSearch1] = useState("");
     const [search2, setSearch2] = useState("");
@@ -17,13 +19,22 @@ function Alumnos() {
   
     useEffect(() => {
       getDataI();
+      getCurso();
     }, []);
  
     async function getDataI() {
       (async () => {
-        const result = await axios("http://34.195.33.246/api/Alumno/ListAlumnosXIdCurso?idCurso=1");
+        const result = await axios(`https://localhost:7012/api/Alumno/ListAlumnosXIdCurso?idCurso=${localStorage.getItem('idCurso')}`);
         //const result = await axios("http://44.210.195.91/api/Alumno/ListAlumnosXIdCurso?idCurso=1");
         setDataI(result.data);
+      })();
+    };
+
+    async function getCurso() {
+      (async () => {
+        const result = await axios(`https://localhost:7012/api/Curso/BuscarCursoXId?idCurso=${localStorage.getItem('idCurso')}`);
+        //const result = await axios("http://44.210.195.91/api/Curso/BuscarCursoXId?idCurso=");
+        setCurso(result.data[0]);
       })();
     };
   
@@ -110,7 +121,7 @@ function Alumnos() {
   
         <div className='CONTAINERASESOR'>
         <h1 className='HEADER-TEXT1'>Alumnos</h1>
-        <h2 className='HEADER-TEXT2'>TESIS 1 - INGENIERÍA INFORMÁTICA</h2>
+        <h2 className='HEADER-TEXT2'>{curso.nombre} - {curso.nombreEspecialidad}</h2>
       
         <div className="col col-7 FILTRO-LISTAR-BUSCAR" >
               <p>Ingresar apellido para realizar búsqueda</p>
@@ -149,7 +160,7 @@ function Alumnos() {
          {rows.map(row => {
            prepareRow(row)
            return (
-               <tr {...row.getRowProps()} onClick={() =>navigate("alumnoSeleccionado",{state:{idAlumno:row.original.idAlumno,nombres:row.original.nombres,apellidoPat:row.original.apePat,apellidoMaterno:row.original.apeMat}})}>
+               <tr {...row.getRowProps()} onClick={() =>navigate("alumnoSeleccionado",{state:{idAlumno:row.original.idAlumno,nombres:row.original.nombres,apellidoPat:row.original.apePat,apellidoMat:row.original.apeMat}})}>
                
                  {row.cells.map(cell => {
                    return (

@@ -20,30 +20,17 @@ import ListaReunion from './pages/Asesor/ListaReunion';
 import DatoReunion from './pages/Asesor/DatoReunion';
 import ListaRecordatorio from './pages/Asesor/ListaRecordatorio';
 import SolicitudesTema from './pages/Asesor/SolicitudesTema';
+import ListarTemasTesis from './pages/Asesor/SearchComponent';
+import ProponerTemaAsesor from './pages/Asesor/proponerTemaAsesor';
+
 function Asesor() {
-    const[active, setActive] = useState("proponerTema");
-    const[formato, setFormato] = useState("botonActivo1");
-    const [show, setShow] = useState(false);
-    const[temaTesis, setTemaTesis] = useState({
-        idTema: 0,
-        idAsesor: 2,
-        idAlumno: 1,
-        idEstadoTemaTesis: 3,
-        idArea: 1,
-        idProponente: 2,
-        estadoTema: '',
-        tituloTesis:'',
-        descripcion:'',
-        palabraClave1:'',
-        palabraClave2:'',
-        feedback:'',
-    })
     return (
         <div>   
             <SidebarAsesor/>            
                 <BarraVolver/>
                 <Routes>
-                  <Route path='temaTesis' exact element= {<TemaTesis/>}/>
+                  <Route path='temaTesis' exact element= {<ListarTemasTesis/>}/>
+                  <Route path='temaTesis/agregarTema/:id' exact element= {<ProponerTemaAsesor/>}/>
                   <Route path='alumnos' exact element= {<AlumnosAsesorados/>}/>
                   <Route path='calendario' exact element= {<Calendario/>}/>
                   <Route path='alumnos/alumnoSeleccionado' exact element= {<AlumnoSeleccionado/>}/>

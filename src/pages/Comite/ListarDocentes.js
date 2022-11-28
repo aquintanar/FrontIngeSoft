@@ -11,6 +11,11 @@ import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
 //https://localhost:7012/api/
 //http://34.195.33.246/
+/*
+const urlAs= "https://localhost:7012/api/Docente/";
+const urlEsp= "https://localhost:7012/api/Especialidad/";
+const urlAsXCurso="https://localhost:7012/api/DocenteXCurso/";
+*/
 const urlAs= "https://localhost:7012/api/Docente/";
 const urlEsp= "https://localhost:7012/api/Especialidad/";
 const urlAsXCurso="https://localhost:7012/api/DocenteXCurso/";
@@ -20,11 +25,8 @@ function ListarDocentes()  {
   let idAsesorRef = 0;
   let navigate = useNavigate();
   const [currentPage,SetCurrentPage] = useState(0);
-  const [selEsp, setSelEsp] = useState(0);
-  const [observado, setObservado] = useState(0);
   const [search, setSearch] = useState("");
   const [as, setAs] = useState([]);
-  const [esp, setEsp] = useState([]);
   const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
   const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
 
@@ -32,30 +34,18 @@ function ListarDocentes()  {
   const buscador = e=>{
       setSearch(e.target.value);
   }
-  if(!search && !selEsp){//sin filtro
+  
+  if(!search){//sin filtro
     filtrado=as;
   }
   else{
-    if(search && selEsp){//ambos filtros
-      filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
-      filtrado=as.filter((dato)=>dato.fidEspecialidad===selEsp) ;
-    }
-    filtrado=as.filter((dato)=>dato.fidEspecialidad===selEsp) ;
-    if(search)//filtro por nombre
       filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
   }
 
-  const cambioSelectEspp =e=>{
-      const valor = parseInt(e.target.value)
-      setSelEsp(valor)
-    }
-  const cambioEstaObservado =e=>{
-      const valor = parseInt(e.target.value)
-      setObservado(valor)
-  }
+
 
   const nextPage = () =>{
-        if(filtrado.length>=currentPage) //VER CODIGO
+        if(filtrado.length>=5) //VER CODIGO
         SetCurrentPage(currentPage+5);
     }
   const previousPage =() =>{
@@ -96,16 +86,6 @@ function ListarDocentes()  {
       })
   }
   
-    const petitionEsp=async()=>{
-      await axios.get(urlEsp+"GetEspecialidades/")
-      .then(response=>{
-        setEsp(response.data);
-      }).catch(error =>{
-        console.log(error.message);
-      })
-    }
-
-  
     const peticionDelete=async()=>{
       console.log(asesorSeleccionado);
       console.log(idCursoGlobal);
@@ -119,30 +99,22 @@ function ListarDocentes()  {
   
   useEffect(()=>{
       petitionAs();
-      petitionEsp();
   },[])
 
   return(
       <div className="CONTAINERCOMITE">
-          <h1 className="HEADER-TEXT1">Docentes en el curso</h1>
+          <p className="HEADER-TEXT1">Gestión de Docentes</p>
+          <p class="HEADER-TEXT2">Búsqueda de docentes </p>
           <div class="row">
-            <div class="col-12 FILTRO-LISTAR-BUSCAR" >
+            <div class="col FILTRO-LISTAR-BUSCAR" >
                 <p>Ingrese el nombre del docente</p>
                 <div class="input-group">
-                    <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre del curso" aria-label="serach" onChange={buscador}/>
+                    <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre del docente" aria-label="serach" onChange={buscador}/>
                 </div>
             </div>
-            <div class="col-4 FILTRO-LISTAR" >
-                <p>Seleccione especialidad</p>
-                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelectEspp}>
-                    <option selected value = "0">Todos</option>
-                    {esp.map(elemento=>(
-                      <option key={elemento.idEspecialidad} value={elemento.idEspecialidad}>{elemento.nombre}</option>  
-                    ))} 
-                </select>
-              </div>
           </div>
 
+        <p class="HEADER-TEXT2 mt-0" >Lista de docentes en el curso</p>
         <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
         <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
         <div class = "row LISTAR-TABLA">
@@ -158,10 +130,10 @@ function ListarDocentes()  {
               <tbody >
                 {filtrado.map(asesor => (
                   <tr key={asesor.idDocente}>
-                      <td >{asesor.nombres + " " + asesor.apeMat}</td>
+                      <td >{asesor.nombres + " " + asesor.apePat+ " " + asesor.apeMat}</td>
                       <td >{asesor.correo}</td>
                       <td>
-                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosDocente/"+asesor.idDocente)}}> <FaIcons.FaEdit /></button>
+                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("DatosDocente/"+asesor.idDocente)}}> <BsIcons.BsEye /></button>
                       <button class=" btn BTN-ACCIONES" onClick={()=>seleccionarAsesor(asesor)}> <BootIcons.BsTrash /></button>
                       </td>
                   </tr>

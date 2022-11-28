@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../../stylesheets/General.css";
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import {makeStyles, createTheme} from '@material-ui/core/styles';
@@ -236,15 +237,15 @@ function ListaSemestre()  {
   return (      
     <div class="CONTAINERADMIN">   
 
-      <p class="HEADER-TEXT1">Gestión de Semestres Académicos</p>
-      <p class="HEADER-TEXT2">Búsqueda de semestres académicos</p>
+      <h1>Gestión de Semestres Académicos</h1>
+      <h2>Búsqueda de semestres académicos</h2>
 
       <div class="row ">
           
 
-          <div class="col-lg-3 FILTRO-LISTAR" >
-            <div class=" fs-5 fw-normal  mb-1 "><p>Año</p></div>
-            <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioAnho}>
+          <div class="col-3" >
+            <p>Año</p>
+            <select select class="form-select" aria-label="Default select example" onChange= {cambioAnho}>
               <option selected value = "0">Todos</option>
                   {anhos.map(elemento=>
                     <option key={elemento} value={elemento}>{elemento}</option>  
@@ -252,9 +253,9 @@ function ListaSemestre()  {
             </select>
           </div>
 
-          <div class="col-lg-3 FILTRO-LISTAR" >
-              <div class=" fs-5 fw-normal  mb-1 "><p>Semestre</p></div>
-              <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelect}>
+          <div class="col-3" >
+              <p>Semestre</p>
+              <select select class="form-select" aria-label="Default select example" onChange= {cambioSelect}>
                 <option key="0" selected value = "0">Todos</option>
                 <option key="1" value="1">1</option>
                 <option key="2" value="2">2</option>
@@ -275,7 +276,7 @@ function ListaSemestre()  {
 
       </div>
 
-      <p class="text-start  HEADER-TEXT2" >Lista de semestres académicos</p>
+      <h2>Lista de semestres académicos</h2>
       <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
       <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
          
@@ -306,8 +307,8 @@ function ListaSemestre()  {
                     <td>{semestre.fechaInicio.slice(0,10)}</td>
                     <td>{semestre.fechaFin.slice(0,10)}</td>
                     <td>
-                      <button class="btn BTN-ACCIONES" onClick={()=>{navigate("datosSemestre/" + semestre.idSemestre)}}> <FaIcons.FaEdit/></button>
-                      <button  class=" btn BTN-ACCIONES" onClick={()=>seleccionarSemestre(semestre, 'Eliminar')}> <BootIcons.BsTrash/></button>
+                      <button title='Modificar semestre académico' class="btn BTN-ACCIONES" onClick={()=>{navigate("datosSemestre/" + semestre.idSemestre)}}> <FaIcons.FaEdit/></button>
+                      <button title='Eliminar semestre académico' class=" btn BTN-ACCIONES" onClick={()=>seleccionarSemestre(semestre, 'Eliminar')}> <BootIcons.BsTrash/></button>
                     </td>
                 </tr>
               ))}
@@ -315,8 +316,9 @@ function ListaSemestre()  {
           </table>
         </div>
       </div>
-      <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
-          <button className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{navigate("datosSemestre/0")}}>Registrar</button>
+      
+      <div className='d-grid gap-2 d-md-flex justify-content-md-end INSERTAR-BOTONES '>
+          <button title='Registrar semestre académico' className='btn btn-primary fs-4 fw-bold mb-3 REGISTRAR' onClick={()=>{navigate("datosSemestre/0")}}><span>Registrar</span></button>
       </div>
       
       <Modal

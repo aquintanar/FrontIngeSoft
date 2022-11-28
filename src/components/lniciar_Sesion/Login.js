@@ -34,6 +34,12 @@ function Login() {
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
+  const [espe, setEspe] = useState({
+    numEsp:0,
+    esp:'',
+    numFac:0,
+    fac:'',
+  });
   const { value, setValue } = useContext(UserContext);
   useEffect(() => {
     setErrMsg("");
@@ -114,6 +120,9 @@ function Login() {
 
   /*BUSCAMOS SU ROL */
   const searchId = async (e) => {
+    console.log("ENTRE A SEARCH ID");
+    console.log("EL ID QUE ENTRA A SEARCH ID ES");
+    console.log(e);
     try {
       console.log(e);
       setValue(e);
@@ -130,23 +139,25 @@ function Login() {
           console.log(response2.data[0].nombre);
           if (response2.data[0].nombre === "ADMINISTRADOR") {
             localStorage.setItem("TIPOUSUARIO", "ADMINISTRADOR");
-            localStorage.setItem("IDUSUARIO", value);
+            localStorage.setItem("IDUSUARIO", e);
             navigate("/administrador");
           } else if (response2.data[0].nombre === "ALUMNO") {
             localStorage.setItem("TIPOUSUARIO", "ALUMNO");
-            localStorage.setItem("IDUSUARIO", value);
+            localStorage.setItem("IDUSUARIO", e);
             navigate("/cursos");
           } else if (response2.data[0].nombre === "DOCENTE") {
             localStorage.setItem("TIPOUSUARIO", "DOCENTE");
-            localStorage.setItem("IDUSUARIO", value);
+            localStorage.setItem("IDUSUARIO", e);
             navigate("/cursos");
           } else if (response2.data[0].nombre === "ASESOR") {
             localStorage.setItem("TIPOUSUARIO", "ASESOR");
-            localStorage.setItem("IDUSUARIO", value);
+            localStorage.setItem("IDUSUARIO", e);
             navigate("/cursos");
-          } else if (response2.data[0].nombre === "COMITE DE TESIS") {
+          }
+          
+          else if (response2.data[0].nombre === "COMITE DE TESIS") {
             localStorage.setItem("TIPOUSUARIO", "COMITE");
-            localStorage.setItem("IDUSUARIO", value);
+            localStorage.setItem("IDUSUARIO", e);
             console.log(value);
             validarCoordinadorAntiguo(e);
           }
@@ -169,11 +180,12 @@ function Login() {
           }
         )
         .then((response) => {
-          console.log(response.data.usuarios);
+          console.log(response.data);
+          buscarEspecialidad(response.data.usuarios[0].fidEspecialidad);
           if (response.data.cant === 1) {
+            console.log("ESTOY PASANDO POR RESPONSE==1");
             const idUs = response.data.usuarios[0].idUsuario;
-            setValue(idUs);
-            searchId(idUs);
+            searchId(response.data.usuarios[0].idUsuario);
           } else {
             valor1(response.data.usuarios);
           }
@@ -194,6 +206,26 @@ function Login() {
       /*lOS ROLES SON UN ARREGLO DE NUMEROS */
     } catch (err) {}
   };
+
+  const buscarEspecialidad=async(e)=>{
+    try {
+      const response2 = await axios
+        .get(
+          "https://localhost:7012/api/Especialidad/GetEspecialidadXId?idEspecialidad="+e,{
+            _method: "GET",
+          }
+        )
+        .then((response2) => {
+            console.log(response2.data);
+            espe.numEsp = response2.data[0].idEspecialidad;
+            espe.numFac = response2.data[0].idFacultad;
+            espe.esp = response2.data[0].nombre;
+
+            window.localStorage.setItem("infoEspecialidad",JSON.stringify(espe));
+        })
+        .catch((error) => {});
+    } catch (err) {}
+  }
   /*VEMOS DE QUE ROL ES CADA CUENTA */
   const valor1 = async (e) => {
     try {

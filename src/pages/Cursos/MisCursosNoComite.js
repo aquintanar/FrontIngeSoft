@@ -30,6 +30,7 @@ function GestionarCurso()  {
     const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
 
     let filtrado =[];
+    let especialidades = !selFac? esp:esp.filter((dato)=>dato.facultad.idFacultad===selFac);
     const buscador = e=>{
         setSearch(e.target.value);
     }
@@ -128,8 +129,10 @@ function GestionarCurso()  {
       }
     
     const petitionCurso=async()=>{
-        await axios.get(urlCur+"GetCursos/")
+        let idUs = window.localStorage.getItem("IDUSUARIO");
+        await axios.get(urlCur+"ListarCursosXIdComiteTesis?idComiteTesis="+idUs)
         .then(response=>{
+          console.log(response.data);
           setData(response.data);
         }).catch(error =>{
           console.log(error.message);
@@ -171,8 +174,62 @@ function GestionarCurso()  {
         petitionSem();
         petitionFacu();
         petitionEsp();
-        petitionCurso();
+        petitionCurso()
+        let tipoUsuario = window.localStorage.getItem("TIPOUSUARIO");
+        if(tipoUsuario=="DOCENTE"){
+          petitionCursoDocente()
+        }
+        else if(tipoUsuario=="COMITE"){
+          petitionCursoComite()
+        }
+        else if(tipoUsuario=="ASESOR"){
+          petitionCursoAsesor();
+        }
+        else if(tipoUsuario=="ALUMNO"){
+          petitionCursoAlumno();
+        }
     },[])
+    const petitionCursoDocente= async()=>{
+      let idUs = window.localStorage.getItem("IDUSUARIO");
+        await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdDocente?idDocente="+idUs)
+        .then(response=>{
+          console.log("CURSOS DE DOCENTE");
+          console.log(response.data);
+          setData(response.data);
+        }).catch(error =>{
+          console.log(error.message);
+        })
+    };
+    const petitionCursoComite = async()=>{
+      let idUs = window.localStorage.getItem("IDUSUARIO");
+        await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdComiteTesis?idComiteTesis="+idUs)
+        .then(response=>{
+          console.log(response.data);
+          setData(response.data);
+        }).catch(error =>{
+          console.log(error.message);
+        })
+    }
+    const petitionCursoAsesor = async()=>{
+      let idUs = window.localStorage.getItem("IDUSUARIO");
+        await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdAsesor?idAsesor="+idUs)
+        .then(response=>{
+          console.log(response.data);
+          setData(response.data);
+        }).catch(error =>{
+          console.log(error.message);
+        })
+    }
+    const petitionCursoAlumno= async()=>{
+      let idUs = window.localStorage.getItem("IDUSUARIO");
+        await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdAlumno?idAlumno="+idUs)
+        .then(response=>{
+          console.log(response.data);
+          setData(response.data);
+        }).catch(error =>{
+          console.log(error.message);
+        })
+    }
     function seleccionarFila() {
       const rows=document.querySelectorAll('tr');
       for(var i=1;i<rows.length;i++){
@@ -238,7 +295,7 @@ function GestionarCurso()  {
                   <p>Seleccione especialidad</p>
                   <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelectEspp}>
                       <option selected value = "0">Todos</option>
-                      {esp.map(elemento=>(
+                      {especialidades.map(elemento=>(
                         <option key={elemento.idEspecialidad} value={elemento.idEspecialidad}>{elemento.nombre}</option>  
                       ))} 
                   </select>

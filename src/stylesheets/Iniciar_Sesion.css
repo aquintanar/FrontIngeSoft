@@ -7,6 +7,7 @@ ESTILOS DE REGISTRO
 }
 .seccion-izq{
     margin-right: 40px;
+    padding-left:40px;
 }
 
 .GrupoInfo{
@@ -411,7 +412,7 @@ ESTILOS PARA REGISTRAR DESDE COMITE
     margin-left: 4vw;
 }
 .INPUTCOD{
-    margin-left: 3vw;
+    margin-left: 7.5vw;
 }
 .INFOTEXT{
     font-size: 0.7vw;
@@ -428,7 +429,15 @@ ESTILOS PARA REGISTRAR DESDE COMITE
 }
 .BOTON-OPCIONES{
     width:15vw;
+
+  
 }
-.GrupoInfo{
-    
+.BOTON-OPCIONES span{
+    margin-right: 0.5vw;
+    align-self: center;
+    justify-self: center;
+}
+.ESPECIALIDADES-CREAR-CUENTA{
+    font-size: 17px;
+    font-family: 'Roboto';
 }

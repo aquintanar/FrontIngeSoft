@@ -2,15 +2,15 @@ import React, {useEffect, useState} from 'react';
 import {  useNavigate, useParams } from 'react-router-dom';
 import '../../stylesheets/Comite.css'
 import axios from 'axios';
-import * as FaIcons from 'react-icons/fa';
-import * as BootIcons  from "react-icons/bs";
-import * as BsIcons from 'react-icons/bs';
-import useModal from '../../hooks/useModals';
-import {  Button} from '@material-ui/core';
-import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
-
+import { type } from '@testing-library/user-event/dist/type';
+/*
 const urlAs= "http://34.195.33.246/api/Alumno/";
 const urlEsp= "http://34.195.33.246/api/Especialidad/";
+*/
+const urlAs= "https://localhost:7012/api/Alumno/";
+const urlEsp= "https://localhost:7012/api/Especialidad/";
+const urlAse = "https://localhost:7012/api/Asesor/";
+const urlJur = "https://localhost:7012/api/Jurado/";
 let idCur = 0;
 let idAs = 0;
 let idEs = 0;
@@ -18,6 +18,7 @@ let idEs = 0;
 function DatosAlumno() {
   let navigate = useNavigate();
   let {id} = useParams();
+  let idCursoGlobal = localStorage.getItem("idCurso");
   const [especialidadAs, setespecialidadAs] =useState({
       idEspecialidad: 0,
       nombre: '',
@@ -42,8 +43,10 @@ function DatosAlumno() {
       descripcion: '',
       idFacultad: 0
   })
+  const [asesor,setAsesor] = useState([]);
+  const [jurados,setJurados] = useState([]);
 
-  const cargarAsesor=async()=>{
+  const cargarAlumno=async()=>{
       if(id!=='0'){
         const response = await axios.get(urlAs+"GetAlumnoXId?idAlumno="+parseInt(id));
         setAsesorSeleccionado({
@@ -73,39 +76,80 @@ function DatosAlumno() {
       console.log(idEs);
       await axios.get(urlEsp+"GetEspecialidadXId?idEspecialidad="+idEs)
       .then(response=>{
-          setespecialidadAs(response.data);
+          setespecialidadAs(response.data[0]);
           console.log(response.data);
       }).catch(error =>{
       console.log(error.message);
       })
   }
+  const cargarAsesor=async()=>{
+      console.log(idEs);
+      await axios.get(urlAse+"ListAsesoresXAlumnoXCurso?idAlumno="+parseInt(id)+"&idCurso="+idCursoGlobal)
+      .then(response=>{
+          setAsesor(response.data);
+      }).catch(error =>{
+      console.log(error.message);
+      })
+  }
+  const cargarJurados=async()=>{
+      console.log(idEs);
+      await axios.get(urlJur+"ListarJuradosXAlumno?idAlumno="+parseInt(id))
+      .then(response=>{
+        setJurados(response.data);
+      }).catch(error =>{
+      console.log(error.message);
+      })
+  }
   useEffect(()=>{
+      cargarAlumno();
       cargarAsesor();
+      cargarJurados();
   },[])
 
 
   return(
       <div class="CONTAINERCOMITE">
-          <p className="HEADER-TEXT1">{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat}</p>
+          <p className="HEADER-TEXT1">{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat+ " " + asesorSeleccionado.apeMat}</p>
           <div className='row'>
-              <div className='col-8 PERFIL'>
-                  <div class='BLOCK PERFIL-HEADER fw-bold'>{asesorSeleccionado.correo} </div>
-                  <div class = 'BLOCK PERFIL-TITLE fw-bold'> Áreas de interés y especialización: {especialidadAs.nombre} 
-                      <div class = "fw-normal text-black">
-                        {especialidadAs.nombre}
-                      </div>
+            <div className='col-6 PERFIL'>
+                    <div class='BLOCK PERFIL-HEADER fw-bold'>{asesorSeleccionado.correo} </div>
+                    <div class='BLOCK' >
+                        <div class = 'PERFIL-TITLE fw-bold'> 	ALUMNO MATRIC:
+                            <div class = " PERFIL-SUBTITLE fw-normal text-black ms-3"> {asesorSeleccionado.codigoPucp}</div>
+                        </div>
+                        <div class = 'PERFIL-TITLE fw-bold'> Áreas de interés y especialización:
+                            <div class = " PERFIL-SUBTITLE fw-normal text-black ms-3"> {especialidadAs.nombre}</div>
+                        </div>
                     </div>
               </div>
           </div>
-          <div className='row INSERTAR-BOTONES'>
-              <div className='col-8'>
-                  <p> Evaluaciones: </p>
+          <div className='row mt-5'>
+              <div className='col-12 PERFIL'>
+                    <div class='BLOCK PERFIL-HEADER fw-bold'> Asesor y jurados asignados </div>
+                    <div class='BLOCK' >
+                        <div class = ' PERFIL-TITLE fw-bold'> Asesor:
+                            {asesor.length ===0
+                            ?<div class = " PERFIL-SUBTITLE fw-normal text-black ms-3"> No tiene asesor asignado</div>
+                            :<div class = " PERFIL-SUBTITLE fw-normal text-black ms-3"> - {asesor[0].nombres + " " + asesor[0].apePat + " " + asesor[0].apeMat}</div>
+                            }
+                        </div>
+                        <div class = ' PERFIL-TITLE fw-bold'> Jurados:
+                            {jurados.length ===0
+                            ?<div class = " PERFIL-SUBTITLE fw-normal text-black ms-3"> No tiene jurados asignados</div>
+                            :<div>
+                                {jurados.map(element => (
+                                <div class = " PERFIL-SUBTITLE fw-normal text-black ms-3"> - {element.nombres + " "+ element.apePat+ " "+ element.apeMat}</div>
+                            ))}
+                            </div>
+                            }
+                        </div>
+                    </div>
               </div>
           </div>
           
           <div class="row INSERTAR-BOTONES">                            
               <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
-              <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../asesor")}}><span>Cancelar</span></button>
+              <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../alumno")}}><span>Cancelar</span></button>
               </div>
           </div>
       </div>

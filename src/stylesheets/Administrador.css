@@ -141,6 +141,7 @@
     text-indent: 0.4em;
 }
 
+
 .LISTAR-TABLA-EV td:nth-child(1){
     font-size: 12px;
     max-width: 100px;
@@ -388,6 +389,7 @@
 }
 .INSERTAR-BOTONES .AÑADIR{
     background-color: #042354;
+    height: 30px;
 }
 .INSERTAR-BOTONES .SIGUIENTE{
     background-color: #042354;
@@ -460,7 +462,7 @@
     transition: 0.5s;
 }
 .LISTAR-BOTON button span:after{
-    content:'\2295';
+    content:'\002B';
     position:absolute;
     opacity: 0;
     top: 0;
@@ -740,6 +742,37 @@ ESTILOS DE INSERTAR FACULTAD
 }
 .INSERTAR-FACULTAD-BOTONES button:hover span:after{
     
+    opacity: 1;
+    right: 0;
+}
+.BOTON-ATRAS{
+    margin-left: 57vw;
+    background-color: #B80000;
+    height: 30px;
+    width: 130px;
+    text-align: center;
+}
+.BOTON-ATRAS span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+.BOTON-ATRAS span::after{
+    content:'\1F5D9';
+    position:absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.BOTON-ATRAS:hover{
+    background-color: #C80909;
+}
+.BOTON-ATRAS:hover span{
+    padding-right:25px;
+}
+.BOTON-ATRAS:hover span::after{
     opacity: 1;
     right: 0;
 }

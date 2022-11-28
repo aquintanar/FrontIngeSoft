@@ -24,7 +24,7 @@ import DatePicker from "react-date-picker";
 import { AsesorContext } from './AsesorContext';
 
 
-const url= "http://34.195.33.246/api/ReunionAlumnoAsesor/";
+const url= "https://localhost:7012/api/ReunionAlumnoAsesor/";
 
 
 function DatoReunion()  {
@@ -43,7 +43,7 @@ function DatoReunion()  {
     const [reunion1, setReunion1] = useState({
         idReunionAlumnoAsesor: 0,
         idAlumno: 0,
-        idAsesor: 2,
+        idAsesor: localStorage.getItem('IDUSUARIO') ,
         idCurso: 1,
         nombre: '',
         descripcion: '',
@@ -83,6 +83,10 @@ function DatoReunion()  {
     }
 
     const cargarReunion = () =>{
+        setReunion(prevState => ({
+            ...prevState,
+            idAsesor: localStorage.getItem('IDUSUARIO'),
+        }))
         if(asesor.tipo == 0){
             console.log("modificar registrar", asesor.tipo, asesor.reunion)
             setStartDate(new Date(reunion.fechaHoraInicio));

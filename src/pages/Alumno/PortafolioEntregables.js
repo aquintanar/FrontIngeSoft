@@ -10,11 +10,14 @@ const urlFacu= "http://34.195.33.246/api/Facultad/";
 const url= "http://44.210.195.91/api/Especialidad/";
 const urlFacu= "http://44.210.195.91/api/Facultad/";
 */
+
+var numTesis = 0;
 function PortafolioEntregables()  {
 
   let navigate = useNavigate();
   const location = useLocation();
-
+  const [cursos , SetCursos] = useState([]);
+  const [tipoEntregables, setTipoEntregables]=useState([]);
   const getAsesor = async() => {
     const urlAsesor  = 'https://localhost:7012/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno='+localStorage.getItem('IDUSUARIO')+'&idCurso='+localStorage.getItem('idCurso');
     const response = await fetch(urlAsesor);
@@ -23,9 +26,39 @@ function PortafolioEntregables()  {
     console.log(data[0].nombres);
     setAsesor(data);
 }
+
+/*
+        <a class="BTN-CUADRADO" onClick={()=>{navigate("EntregablesParciales",{state:{idAlumno:localStorage.getItem('IDUSUARIO'),nombres:"Peter",apellidoPat:"Gonzales",apellidoMaterno: "Monserrat", idCurso: localStorage.getItem('idCurso'),idTipoEntregable: 1,nombreEntregable: "Avances Semanales"}})}}>Avances Semanales</a>
+  
+        <a class="BTN-CUADRADO"  onClick={()=>{navigate("EntregablesParciales",{state:{idAlumno:localStorage.getItem('IDUSUARIO'),nombres:"Peter",apellidoPat:"Gonzales",apellidoMaterno: "Monserrat", idCurso: localStorage.getItem('idCurso'),idTipoEntregable: 3,nombreEntregable: "Entregables"}})}}>Entregables</a>
+  
+        <a class="BTN-CUADRADO" onClick={()=>{navigate("EntregablesParciales",{state:{idAlumno:localStorage.getItem('IDUSUARIO'),nombres:"Peter",apellidoPat:"Gonzales",apellidoMaterno: "Monserrat", idCurso: localStorage.getItem('idCurso'), idTipoEntregable: 2,nombreEntregable: "Entregables Parciales"}})}}>Entregables Parciales</a>
+  
+        <a class="BTN-CUADRADO"  onClick={()=>{navigate("EntregablesParciales",{state:{idAlumno:localStorage.getItem('IDUSUARIO'),nombres:"Peter",apellidoPat:"Gonzales",apellidoMaterno: "Monserrat", idCurso: localStorage.getItem('idCurso'),idTipoEntregable: 4,nombreEntregable: "Exposiciones"}})}}>Exposiciones</a>
+        */
+const getTipoEntregables = async() => {
+
+
+
+  const urlCurso = 'https://localhost:7012/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
+  const responseCurso = await fetch(urlCurso);
+  const dataCurso = await responseCurso.json();
+  console.log(dataCurso);
+  
+  SetCursos(dataCurso);
+  const urlAsesor  = 'https://localhost:7012/api/TipoEntregable/ListTipoEntregableXNumTesis?numTesis='+dataCurso[0].numTesis;
+  const response = await fetch(urlAsesor);
+  const data = await response.json();
+  console.log(data);
+  setTipoEntregables(data);
+  numTesis=dataCurso[0].numTesis;
+
+}
+
    const [asesor, setAsesor]=useState([]);
   useEffect(()=>{
     getAsesor();
+    getTipoEntregables();
  },[])
     return (      
       <div class=" CONTAINERADMIN">
@@ -40,13 +73,19 @@ function PortafolioEntregables()  {
               ))}
 
   
-        <a class="BTN-CUADRADO" onClick={()=>{navigate("EntregablesParciales",{state:{idAlumno:localStorage.getItem('IDUSUARIO'),nombres:"Peter",apellidoPat:"Gonzales",apellidoMaterno: "Monserrat", idCurso: localStorage.getItem('idCurso'),idTipoEntregable: 1,nombreEntregable: "Avances Semanales"}})}}>Avances Semanales</a>
-  
-        <a class="BTN-CUADRADO"  onClick={()=>{navigate("EntregablesParciales",{state:{idAlumno:localStorage.getItem('IDUSUARIO'),nombres:"Peter",apellidoPat:"Gonzales",apellidoMaterno: "Monserrat", idCurso: localStorage.getItem('idCurso'),idTipoEntregable: 3,nombreEntregable: "Entregables"}})}}>Entregables</a>
-  
-        <a class="BTN-CUADRADO" onClick={()=>{navigate("EntregablesParciales",{state:{idAlumno:localStorage.getItem('IDUSUARIO'),nombres:"Peter",apellidoPat:"Gonzales",apellidoMaterno: "Monserrat", idCurso: localStorage.getItem('idCurso'), idTipoEntregable: 2,nombreEntregable: "Entregables Parciales"}})}}>Entregables Parciales</a>
-  
-        <a class="BTN-CUADRADO"  onClick={()=>{navigate("EntregablesParciales",{state:{idAlumno:localStorage.getItem('IDUSUARIO'),nombres:"Peter",apellidoPat:"Gonzales",apellidoMaterno: "Monserrat", idCurso: localStorage.getItem('idCurso'),idTipoEntregable: 4,nombreEntregable: "Exposiciones"}})}}>Exposiciones</a>
+{tipoEntregables.map(tipoEntregable => (
+       
+    
+       <a class="BTN-CUADRADO" onClick={()=>{navigate("EntregablesParciales",{state:{idAlumno:localStorage.getItem('IDUSUARIO'),nombres:"Peter",apellidoPat:"Gonzales",apellidoMaterno: "Monserrat", idCurso: localStorage.getItem('idCurso'),idTipoEntregable: tipoEntregable.idTipoEntregable,nombreEntregable: tipoEntregable.nombre}})}}>{tipoEntregable.nombre}</a>
+   
+      
+ ))}
+        {cursos.map(curso => (
+          <td class= {curso.numTesis==2?"BTN-CUADRADO":""}>
+           {curso.numTesis==2? <a  onClick={()=>{navigate("PortafolioEntregablesTesis1",{state:{idAlumno:localStorage.getItem('IDUSUARIO'), idCurso: localStorage.getItem('idCurso')}})}}>Tesis 1</a>: ""}   
+           </td>
+         ))}
+     
       
       </div>              
     )

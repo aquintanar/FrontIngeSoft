@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import axios from "axios";
+import { ModalConfirmación, ModalPregunta } from "../../components/Modals";
 import "../../stylesheets/Iniciar_Sesion.css";
 import "../../stylesheets/Iniciar_Sesion.css";
 import Select from "react-select";
@@ -154,7 +155,7 @@ const CrearCuentaAlumno = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    console.log("HOLA");
     console.log("Si llega a handle summit");
     const v1 = USER_REGEX.test(user);
     const v2 = PWD_REGEX.test(pwd);
@@ -172,7 +173,7 @@ const CrearCuentaAlumno = () => {
     UsuarioSeleccionado.apeMat = apellidoM;
     UsuarioSeleccionado.contrasena = pwd;
     UsuarioSeleccionado.codigoPucp = codigoPUCP;
-    UsuarioSeleccionado.fidEspecialidad = value2;
+    console.log("HOLA");
     try {
       let response = await axios
         .post(
@@ -183,14 +184,37 @@ const CrearCuentaAlumno = () => {
           }
         )
         .then((response) => {
-          console.log("ya se posteo xD");
+          closePostModal();
+          openGuardadoModal();
         })
         .catch((error) => {
           console.log(error.message);
         });
     } catch (err) {}
   };
-
+  const handleSubmit1 = async (e) => {
+    let idCu = window.localStorage.getItem("idCurso");
+    try {
+      let response = await axios
+        .get(
+          "https://localhost:7012/api/Curso/BuscarCursoXId?idCurso="+idCu,
+          {
+            _method: "GET",
+          }
+        )
+        .then((response) => {
+          UsuarioSeleccionado.fidEspecialidad = response.data[0].idEspecialidad;
+          handleSubmit();
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    } catch (err) {}
+  };
+  const cerrarPost = () => {
+    closeGuardadoModal();
+    navigate("../alumno/AgregarAlumno");
+  };
   const ListarEsp = async (e) => {
     try {
       let response = await axios
@@ -306,7 +330,12 @@ const CrearCuentaAlumno = () => {
               <FontAwesomeIcon icon={faInfoCircle} />
               Debe ser un correo electrónico
             </p>
-            <label htmlFor="password">Contraseña:</label>
+            
+          </form>
+        </div>
+        <div className="seccion-der seccion">
+          <form>
+          <label htmlFor="password">Contraseña:</label>
             <input
               type="password"
               id="password"
@@ -343,10 +372,6 @@ const CrearCuentaAlumno = () => {
               <FontAwesomeIcon icon={faInfoCircle} />
               Debe coincidir con la contraseña.
             </p>
-          </form>
-        </div>
-        <div className="seccion-der seccion">
-          <form>
             <label htmlFor="codigoPucp">Codigo PUCP:</label>
             <input
               type="text"
@@ -366,32 +391,48 @@ const CrearCuentaAlumno = () => {
               <br />
               Debe tener 8 digitos
             </p>
-            <label>Especialidad:</label>
-            <select
-              value={value2}
-              select
-              class="form-select Cursor"
-              aria-label="Default select example"
-              onChange={(e) => setValues2(e.target.value)}
-            >
-              <option selected value="0">
-                Todos
-              </option>
-              {especialidad.map((elemento) => (
-                <option
-                  key={elemento.idEspecialidad}
-                  value={elemento.idEspecialidad}
-                >
-                  {elemento.nombre}
-                </option>
-              ))}
-            </select>
+            
           </form>
         </div>
       </div>
-
+      <ModalPregunta
+        isOpen={isOpenPostModal}
+        closeModal={closePostModal}
+        procedimiento="guardar"
+        objeto="una cuenta"
+      >
+        <div
+          align="center"
+          class="d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom"
+        >
+          <button
+            class="btn  btn-success btn-lg"
+            onClick={() => handleSubmit1()}
+          >
+            Confirmar
+          </button>{" "}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button class="btn btn-danger btn-lg" onClick={closePostModal}>
+            Cancelar
+          </button>
+        </div>
+      </ModalPregunta>
+      <ModalConfirmación
+        isOpen={isOpenGuardadoModal}
+        closeModal={closeGuardadoModal}
+        procedimiento="guardado"
+      >
+        <div
+          align="center"
+          class="d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom"
+        >
+          <button class="btn btn-success btn-lg" onClick={() => cerrarPost()}>
+            Entendido
+          </button>
+        </div>
+      </ModalConfirmación>
       <button
-        onClick={handleSubmit}
+        onClick={openPostModal}
         disabled={
           !validName ||
           !validPwd ||
