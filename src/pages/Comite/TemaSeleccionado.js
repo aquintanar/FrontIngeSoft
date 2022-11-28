@@ -11,7 +11,8 @@ import ModalBuscarUsuario from './ModalBuscarUsuario';
 import {ModalConfirmación, ModalPregunta,ModalComentario} from '../../components/Modals';
 import {  Button} from '@material-ui/core';
 import useModal from '../../hooks/useModals';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const TemaSeleccionado = () => {
   const url="https://localhost:7012/api/TemaTesis/GetTemaTesis";
   //const url="http://44.210.195.91/api/TemaTesis/GetTemaTesis";
@@ -229,7 +230,17 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
         closeComentarioModal();
       }
      
-    
+      const notify = () => {
+        toast.warn("Solo el coordinador puede acceder a esta funcionalidad");
+      };
+      const revisarCoordinador = () => {
+        let escoordinador = window.localStorage.getItem("ESCOORDINADOR");
+        if (escoordinador == "SI") {
+          navigate("AgregarAsesor")
+        } else {
+          notify();
+        }
+      };
       
     return (
       <div className="CONTAINERCOMITE">
@@ -375,6 +386,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
                 </div>
                 </div>
             </ModalComentario>
+            <ToastContainer/>
   </div>    
     )
 }
