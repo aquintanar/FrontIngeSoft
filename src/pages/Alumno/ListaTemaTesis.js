@@ -126,13 +126,15 @@ function ListaTemaTesis() {
   }, []);
 
   async function getData() {
-    const response = await fetch(
-      "https://localhost:7012/api/TemaTesis/GetTemaTesisCompleto"
-    );
-    //const response = await fetch("http://44.210.195.91/api/TemaTesis/GetTemaTesis");
-    const data = await response.json();
-    setData(data);
-    console.log(data);
+    let idcur = window.localStorage.getItem("idCurso");
+    const response = await axios.get("https://localhost:7012/api/TemaTesis/GetTemaTesisXIdCurso?idCurso="+idcur)
+    .then((response)=>{
+      console.log(response.data);
+      setData(response.data);
+    }).catch(()=>{
+
+    })
+
   }
 
   const selectRow = {
@@ -269,7 +271,7 @@ function ListaTemaTesis() {
       },
     },
     {
-      dataField: "nombres",
+      dataField: "nombresAsesor",
       text: "Asesor",
       sort: true,
       //filter: textFilter(),
@@ -280,7 +282,7 @@ function ListaTemaTesis() {
       },
     },
     {
-      dataField: "Area",
+      dataField: "nombreArea",
       text: "Área",
       sort: true,
       //filter: textFilter(),
@@ -292,7 +294,7 @@ function ListaTemaTesis() {
     },
 
     {
-      dataField: "Observaciones",
+      dataField: "estadoTema",
       text: "Observaciones",
       sort: true,
       //filter: textFilter(),

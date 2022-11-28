@@ -223,7 +223,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
       })
     }
     const asignarAlumnoXAsesor= async()=>{
-      await axios.put("https://localhost:7012/api/AlumnoXAsesor/PostAlumnoXAsesor?idAlumno=}"+ location.state.alumno+"&idAsesor="+location.state.asesor)
+      await axios.post("https://localhost:7012/api/AlumnoXAsesor/PostAlumnoXAsesor?idAlumno="+ location.state.alumno+"&idAsesor="+location.state.asesor)
       .then(response=>{
         
       }).catch(error =>{
