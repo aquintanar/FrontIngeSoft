@@ -1,3 +1,4 @@
+/*-------------------------------TEXTO---------------------------*/
 h1 {
     font-size: 40px;
     font-family: 'Montserrat', sans-serif;
@@ -22,6 +23,11 @@ h3{
     padding-bottom: 6px;
 }
 
+p{
+    font-size: 14px;
+    font-family: roboto;
+    margin-bottom: 0rem;
+}
 
 .input-group, .form-control{
     height: 35px;
@@ -52,7 +58,8 @@ option{
     cursor: pointer;
 }
 
-/*ESTILOS PARA LA PAGINACION DE TABLAS*/
+/*-------------------------------BOTONES---------------------------*/
+/*------------------------------PAGINACION--------------------------*/
 .PAGINACION-BTN{
     width: 35px;
     height: 35px;
@@ -100,7 +107,7 @@ option{
     transition: all .35s;
 }
 
-/*ESTILOS PARA ESPECIALIDAD/SEMESTRE REGISTRAR MODIFICAR*/
+/*------------------------------INSERTAR-BOTONES/REGISTRAR/GUARDAR/BUSCAR/AÑADIR/SIGUIENTE/CANCELAR--------------------------*/
 .INSERTAR-BOTONES button{
     border-radius: 4px;
     font-family: roboto;
@@ -175,7 +182,6 @@ option{
     opacity: 1;
     right: 0;
 }
-
 
 .icon-search {
     background-image: url("https://cdn4.iconfinder.com/data/icons/evil-icons-user-interface/64/magnifier-256.png");

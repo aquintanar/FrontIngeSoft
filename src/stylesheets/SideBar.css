@@ -7,3 +7,7 @@
     font-size: 23px;
     margin-left: 30px;
 }
+.BTN-LOGOUT svg{
+    height: 1.25em;
+    width: 1.25em;
+}
