@@ -30,7 +30,10 @@ function GestionarCurso() {
   const [esp, setEsp] = useState([]);
   const [isOpenDeleteModal, openDeleteModal, closeDeleteModal] = useModal();
   const [isOpenConfirmModal, openConfirmModal, closeConfirmModal] = useModal();
-
+  const [infoCurso,setInfoCurso] = useState({
+    idEspec:0,
+    idFac:0
+})
   let filtrado = [];
   let especialidades = !selFac
     ? esp
@@ -169,6 +172,9 @@ function GestionarCurso() {
       .then((response) => {
         console.log("ESTO RECIBO");
         console.log(response.data[0]);
+        infoCurso.idEspec=response.data[0].fidEspecialidad;
+        infoCurso.idFac=response.data[0].idFacultad;
+        window.localStorage.setItem("ESPECIALIDADGESTIONADA",JSON.stringify(infoCurso));
         SetEspecialidadGestionada(response.data[0].especialidad);
         petitionCurso2(response.data[0].fidEspecialidad);
       })

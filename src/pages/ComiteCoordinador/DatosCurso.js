@@ -27,7 +27,7 @@ function DatosCurso() {
   const [isOpenEditModal, openEditModal, closeEditModal] = useModal();
   const [isOpenEditadoModal, openEditadoModal, closeEditadoModal] = useModal();
   const [subTitulo, setSubtitulo] = useState("Nuevo curso");
-
+  const infoEspecialidad = JSON.parse(localStorage.getItem('infoCurso'))
   // checkBox
   const [checkAsesor, setCheckedAs] = React.useState(false);
   const [checkAlumno, setCheckedAl] = React.useState(false);
@@ -41,7 +41,11 @@ function DatosCurso() {
     await axios
       .get(urlEsp + "GetEspecialidades/")
       .then((response) => {
-        setEsp(response.data);
+        let filtroespecialidades=[];
+        for(let k in response.data){
+          if(response.data[k].idEspecialidad==infoEspecialidad.idEspec)filtroespecialidades.push(response.data[k]);
+        }
+        setEsp(filtroespecialidades);
         petitionFac();
       })
       .catch((error) => {
@@ -66,7 +70,12 @@ function DatosCurso() {
     await axios
       .get(urlFac + "GetFacultadesSimple/")
       .then((response) => {
-        setFac(response.data);
+        let filtrofacultades=[];
+        for(let k in response.data){
+          if(response.data[k].idFacultad==infoEspecialidad.idFac)filtrofacultades.push(response.data[k]);
+        }
+
+        setFac(filtrofacultades);
       })
       .catch((error) => {
         console.log(error.message);
@@ -162,10 +171,10 @@ function DatosCurso() {
     cant_alumnos: 0,
     cant_temas_prop: 0,
     activo: 0,
-    idSemestre: 0,
+    idSemestre: 49,
     idDocente: 0,
-    idFacultad: 0,
-    idEspecialidad: 0,
+    idFacultad: infoEspecialidad.idFac,
+    idEspecialidad: infoEspecialidad.idEspec,
     asesorPropone: false,
     alumnoPropone: false,
     temaAsignado: false,
