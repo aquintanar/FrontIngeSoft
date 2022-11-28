@@ -24,7 +24,6 @@ function Alumno() {
             <SidebarAlumno/>
               <BarraVolver/>
               <Routes>
-                listarTemas
               <Route path='encuesta' exact element = {<Encuesta/>}/>
               <Route path='listarTemas' exact element = {<ListaTemaTesis/>}/>
               <Route path='gestion/gesPortafolio' exact element= {<PortafolioEntregables/>}/>
