@@ -3,9 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../../stylesheets/Asesor.css'
-const url1= "http://34.195.33.246/api/Entregable/";
+const url1= "https://localhost:7012/api/Entregable/";
 //const url1= "http://44.210.195.91/api/Entregable/";
-const url2= "http://34.195.33.246/api/Curso/";
+const url2= "https://localhost:7012/api/Curso/";
 //const url2= "http://44.210.195.91/api/Curso/";
 const urlPregunta = "https://localhost:7012/api/PreguntaEncuesta/"
 const urlDetallePreguntaEncuesta = "https://localhost:7012/api/DetallePreguntaEncuesta/"
@@ -105,7 +105,7 @@ const Encuesta = () => {
                         <span> Pregunta {preguntaActual  + 1 }  de </span> {preguntas.length}
                     </div>
                     <div>
-                           {preguntas[preguntaActual].pregunta} 
+                           {/*preguntas[preguntaActual].pregunta*/} 
                     </div>
                 </div>
                 <div class="form-check">
