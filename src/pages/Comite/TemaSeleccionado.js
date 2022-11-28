@@ -101,6 +101,11 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
   }
   useEffect(() => {
     getAreas();
+    console.log("IDES");
+    console.log("ALUMNO"+location.state.alumno);
+    console.log("ASESOR"+location.state.asesor);
+    console.log("ESTE ES EL LOCATION STATE");
+    console.log(location.state)
   }, []);
   const  getDataT = async() => {
     const response= await axios(`https://localhost:7012/api/TemaTesis/GetTemaTesisXId?idTemaTesis=${location.state.id}`);
@@ -182,8 +187,11 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
     const asignar = ()=>{
       getDataT();
       getDataAlum();
+      
       asignarAlumno();
+      asignarAlumnoXAsesor();
       modificarAlumnoAsignarTema();
+      
     }
     const asignarAlumno=async()=>{  
       temaSeleccionado.idEstadoTemaTesis=6;
@@ -210,6 +218,14 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
       .then(response=>{
         closeEditModal();
         openGuardadoModal();
+      }).catch(error =>{
+        console.log(error.message);
+      })
+    }
+    const asignarAlumnoXAsesor= async()=>{
+      await axios.put("https://localhost:7012/api/AlumnoXAsesor/PostAlumnoXAsesor?idAlumno=}"+ location.state.alumno+"&idAsesor="+location.state.asesor)
+      .then(response=>{
+        
       }).catch(error =>{
         console.log(error.message);
       })
@@ -270,11 +286,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
                   <div className="input-group mb-3 ">
                       <input type="text" disabled={location.state.estado=="Por Revisar"?false:true}  className="form-control" name="titulo" placeholder="Área" 
                          value={location.state.areaNombre} />
-                         <select>
-                         {espec.map(elemento=>
-                          <option key={elemento.idArea} value={elemento.idArea}>{elemento.nombre}</option>  
-                      )}
-                         </select>
+                         
                   </div>
               </div>
               
@@ -285,7 +297,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
                   <div class="text-start fs-7 fw-normal ">Alumno</div>
                   <div class=" row DATOS3 input-group input-group-lg mb-3">
                       <input type="text"   disabled="true" onChange={(e) =>handleChangeAlum(e)} class="form-control" name="alumno" placeholder="Alumno" aria-label="alumno" aria-describedby="inputGroup-sizing-lg" 
-                         value={location.state.nombresAlumno + " " +location.state.apeMatAlumno}/>
+                         value={location.state.nombresAlumno + " " + location.state.apellidoPatAlumno}/>
                  
                   {(() => {
                         switch(location.state.estado){
