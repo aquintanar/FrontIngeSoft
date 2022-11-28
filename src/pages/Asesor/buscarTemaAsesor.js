@@ -2,11 +2,13 @@ import React from 'react'
 import './proponerTemaAsesor.css';
 import {useState , useEffect} from "react";
 import axios from 'axios';
+import {  useNavigate } from 'react-router-dom';
 const urlCoAsesor= "http://34.195.33.246/api/TemaTesisXAsesor/";
 const urlAsesor= "http://34.195.33.246/api/Asesor/";
 let id = 0;
 
 const BuscarTemaAsesor = ({temaTesis, setTemaTesis}) => {
+    let navigate = useNavigate();
     const [asesorTesis, setAsesor] = useState({
         idAsesor: '',
         maxAsesorados: 0,
@@ -65,7 +67,7 @@ const BuscarTemaAsesor = ({temaTesis, setTemaTesis}) => {
             <div className="form-group DATOS row mt-3">
                 <p for="asesor" className="col-md-2 col-form-label FUENTE-LABEL"> Nombre asesor:</p>
                 <div className = "col-md-10">
-                    <p > Daniel Augusto Peirano </p>
+                    <p > {asesorTesis.nombres + " " + asesorTesis.apePat } </p>
                 </div>
             </div>
             <div className="form-group DATOS row mt-3">
@@ -112,7 +114,7 @@ const BuscarTemaAsesor = ({temaTesis, setTemaTesis}) => {
                 </div>
             </div>
             <div className="col-md-12 mt-3 row BOTONES-FORM">
-                    <button type="button" className="btn botonForm" >
+                    <button type="button" className="btn botonForm" onClick={()=>navigate("solicitudes/")}>
                         Solicitudes
                     </button>
             </div>

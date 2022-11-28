@@ -19,6 +19,7 @@ import SubirArchivos from './pages/Asesor/SubirArchivos';
 import ListaReunion from './pages/Asesor/ListaReunion';
 import DatoReunion from './pages/Asesor/DatoReunion';
 import ListaRecordatorio from './pages/Asesor/ListaRecordatorio';
+import SolicitudesTema from './pages/Asesor/SolicitudesTema';
 function Asesor() {
     const[active, setActive] = useState("proponerTema");
     const[formato, setFormato] = useState("botonActivo1");
@@ -61,6 +62,8 @@ function Asesor() {
                   <Route path='reunion' exact element= {<ListaReunion/>}/>
                   <Route path='reunion/datoReunion' exact element= {<DatoReunion/>}/>
                   <Route path='recordatorio' exact element={<ListaRecordatorio/>}/>
+                  <Route path='recordatorio' exact element={<ListaRecordatorio/>}/>
+                  <Route path='temaTesis/solicitudes/' exact element={<SolicitudesTema/>}/>
               </Routes>
         </div>
     )
