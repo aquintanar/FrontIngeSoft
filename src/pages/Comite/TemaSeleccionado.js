@@ -8,21 +8,25 @@ import  '../../stylesheets/Comite.css';
 import { useTable } from 'react-table';
 import '../../stylesheets/Administrador.css'
 import ModalBuscarUsuario from './ModalBuscarUsuario';
+import ModalBuscarAsesor from "./ModalBuscarAsesor";
 import {ModalConfirmación, ModalPregunta,ModalComentario} from '../../components/Modals';
 import {  Button} from '@material-ui/core';
 import useModal from '../../hooks/useModals';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Sector } from "recharts";
 const TemaSeleccionado = () => {
   const url="https://localhost:7012/api/TemaTesis/GetTemaTesis";
   //const url="http://44.210.195.91/api/TemaTesis/GetTemaTesis";
   let navigate = useNavigate();
   let {id} = useParams();
   let color;
+  let esp;
   const location = useLocation();
   const globalidcur = window.localStorage.getItem("idCurso");
   const [espec,setEspec]= useState([]);
   const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
+  const [isOpenEdit2Modal, openEdit2Modal ,closeEdit2Modal ] = useModal();
   const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
   const [isOpenComentarioModal, openComentarioModal ,closeComentarioModal ] = useModal();
   const [isOpenAsignadoModal, openAsignadoModal ,closeAsignadoModal ] = useModal();
@@ -35,6 +39,8 @@ const TemaSeleccionado = () => {
     getDataAlum();
   }, [idAlum]);
   const [show, setShow] = useState(false);
+  const [show1, setShow1] = useState(false);
+  const [conf, setConf] = useState(false);
   const []= useState();
   const [selectAlum, setSelectAlum] =useState({
     idAlumno: 0,
@@ -53,6 +59,14 @@ const TemaSeleccionado = () => {
     correo: " ",
     codigoPUCP: 0,
     tieneTema:0,
+  })
+
+  
+  const [ase, setAse] = useState({
+    idAsesor: 0,
+    nombres: " ",
+    apePat: " ",
+    apeMat: " ",
   })
   
   const [temaSeleccionado, setTemaSeleccionado]=useState({
@@ -86,12 +100,10 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
   fidCurso:0,
 });
   if(location.state.estado==="Aprobado"){
-    color="text-success"
+    color="text-success font-weight-bold"
   }
   const getAreas = async()=>{
-    let infoesp  = JSON.parse(window.localStorage.getItem("infoEspecialidad"));
-    let idEsp = infoesp.numEsp;
-    const response = await axios.get("https://localhost:7012/api/Area/GetAreaXEspecialidad?idEspecialidad="+idEsp,{
+    const response = await axios.get("https://localhost:7012/api/Area/GetAreaXEspecialidad?idEspecialidad="+esp,{
       _method:'GET'
     }).then((response)=>{
       setEspec(response.data);
@@ -99,17 +111,23 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
 
     })
   }
+  const getCurso = async()=>{
+    const response = await axios.get("https://localhost:7012/api/Curso/BuscarCursoXId?idCurso="+globalidcur,{
+      _method:'GET'
+    }).then((response)=>{
+      esp=response.data[0].idEspecialidad;
+      getAreas();
+    }).catch(()=>{
+
+    })
+  }
   useEffect(() => {
-    getAreas();
-    console.log("IDES");
-    console.log("ALUMNO"+location.state.alumno);
-    console.log("ASESOR"+location.state.asesor);
-    console.log("ESTE ES EL LOCATION STATE");
-    console.log(location.state)
+    getCurso();
   }, []);
   const  getDataT = async() => {
     const response= await axios(`https://localhost:7012/api/TemaTesis/GetTemaTesisXId?idTemaTesis=${location.state.id}`);
     setDataT(response.data);
+    cargaMod(response.data[0]);
     console.log(response.data);
     setTemaSeleccionado({
       idTemaTesis: parseInt(response.data[0].idTemaTesis),
@@ -187,11 +205,8 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
     const asignar = ()=>{
       getDataT();
       getDataAlum();
-      
       asignarAlumno();
-      asignarAlumnoXAsesor();
       modificarAlumnoAsignarTema();
-      
     }
     const asignarAlumno=async()=>{  
       temaSeleccionado.idEstadoTemaTesis=6;
@@ -218,14 +233,6 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
       .then(response=>{
         closeEditModal();
         openGuardadoModal();
-      }).catch(error =>{
-        console.log(error.message);
-      })
-    }
-    const asignarAlumnoXAsesor= async()=>{
-      await axios.post("https://localhost:7012/api/AlumnoXAsesor/PostAlumnoXAsesor?idAlumno="+ location.state.alumno+"&idAsesor="+location.state.asesor)
-      .then(response=>{
-        
       }).catch(error =>{
         console.log(error.message);
       })
@@ -257,52 +264,121 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
           notify();
         }
       };
+
+      const cambioSelect =e=>{
+        setTemaCambiar(prevState=>({
+          ...prevState,
+          idArea: parseInt(e.target.value)
+        }))
+      }
+
+      const cargaMod =(elemento)=>{
+        setTemaCambiar({
+          idTemaTesis: elemento.idTemaTesis,
+          idArea: elemento.idArea,
+          idProponente: elemento.idAsesor,
+          nombreAsesor : elemento.nombresAsesor,
+          ApePatAsesor : elemento.apePatAsesor,
+          titulo : elemento.tituloTesis,
+          descripcion: elemento.descripcion,
+          observacionesYEntregables: elemento.observacionesYEntregables,
+        })
+        setAse({
+          idAsesor: elemento.idAsesor,
+          nombres: elemento.nombresAsesor,
+          apePat: elemento.apePatAsesor,
+        })
+      }
+
+      const [temaCambiar, setTemaCambiar] = useState({
+        idTemaTesis: 1,
+        idArea: 1,
+        idProponente: 1,
+        nombreAsesor : "",
+        ApePatAsesor : "",
+        titulo : "",
+        descripcion: "",
+        observacionesYEntregables: ""
+      }) 
+      const handleChange=e=>{
+        const {name, value}=e.target;
+        setTemaCambiar(prevState=>({
+          ...prevState,
+          [name]: value
+        }))
+      }
+
+      const ModificarTema=async()=>{
+        await axios.put("https://localhost:7012/api/TemaTesis/ModificarTemaTesisParaDocente?idTemaTesis="+temaCambiar.idTemaTesis+
+          "&idArea="+temaCambiar.idArea+"&idProponente="+ase.idAsesor+"&titulo="+temaCambiar.titulo+"&descripcion="+temaCambiar.descripcion+
+          "&observacionesYEntregables="+temaCambiar.observacionesYEntregables)
+        .then(response=>{
+          closeEdit2Modal();
+          openGuardadoModal();
+        }).catch(error =>{
+          console.log(error.message);
+        })
+      }
       
     return (
       <div className="CONTAINERCOMITE">
       <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
       <div className="row">
-          <p className="HEADER-TEXT2">Ver Tema</p>
+          <p className="HEADER-TEXT1 mb-4">Tema Seleccionado</p>
       </div> 
           <div className="row">
-              <div className="col-100%" >
-                  <div className="text-start fs-7 fw-normal  mb-1">Título</div>
-                  <div className="input-group mb-3 ">
+              <div className="col-100% DATOS" >
+                  <div className="text-start fs-7 fw-normal  mb-1">Título de tesis</div>
+                  <div className="input-group mb-4 ">
                       <input type="text" disabled={location.state.estado=="Por Revisar"?false:true}  className="form-control" name="titulo" placeholder="Titulo" 
-                         value={ location.state.titulo } />
+                         value={ temaCambiar && temaCambiar.titulo } onChange={handleChange}/>
                   </div>
               </div>
           </div>
-          <div className="row">
+          <div className="row DATOS">
               <div className="col-6" >
                   <div className="text-start fs-7 fw-normal  mb-1">Asesor</div>
-                  <div className="input-group mb-3 ">
-                      <input type="text" disabled="true"  className="form-control" name="titulo" placeholder="Asesor" 
-                         value={location.state.nombresAsesor + ' ' + location.state.apellidoPatAsesor} />
+                  <div className="input-group mb-4 ">
+                      <input type="text" disabled={true}  className="form-control" name="titulo" placeholder="Asesor" 
+                         value={ase.nombres + ' ' + ase.apePat} />
+                          {(() => {
+                          switch(location.state.estado){
+                            case "Por Revisar" : return  <div class="INSERTAR-BOTONES">
+                            <button type="button" onClick={() => {setShow1(true)}} class=" btn btn-primary fs-4 ms-3 mt-2 fw-bold BUSCAR" >
+                                ...
+                            </button>
+                            </div>;
+                            default: return <br></br> ;
+                            }
+                          }) ()}
                   </div>
               </div>
               <div className="col-6" >
               <div className="text-start fs-7 fw-normal  mb-1">Área</div>
-                  <div className="input-group mb-3 ">
-                      <input type="text" disabled={location.state.estado=="Por Revisar"?false:true}  className="form-control" name="titulo" placeholder="Área" 
-                         value={location.state.areaNombre} />
-                         
+                  <div className="input-group mb-4 ">
+                    <select select class="form-select Cursor"  disabled={location.state.estado=="Por Revisar"?false:true}  
+                        onChange= {cambioSelect} name="titulo" placeholder="Área" selected value = {temaCambiar && temaCambiar.idArea}  >
+                      {espec.map(elemento=>
+                          <option key={elemento.idArea} value={elemento.idArea}>{elemento.nombre}</option>  
+                      )}
+                    </select>
+                      
                   </div>
               </div>
               
             </div>         
 
-          <div class = "row">
+          <div class = "row DATOS">
               <div class = "col-6">
                   <div class="text-start fs-7 fw-normal ">Alumno</div>
-                  <div class=" row DATOS3 input-group input-group-lg mb-3">
+                  <div class=" input-group input-group-lg mb-4">
                       <input type="text"   disabled="true" onChange={(e) =>handleChangeAlum(e)} class="form-control" name="alumno" placeholder="Alumno" aria-label="alumno" aria-describedby="inputGroup-sizing-lg" 
-                         value={location.state.nombresAlumno + " " + location.state.apellidoPatAlumno}/>
+                         value={location.state.nombresAlumno + " " +location.state.apeMatAlumno}/>
                  
                   {(() => {
                         switch(location.state.estado){
                           case "Publicado" : return  <div class="INSERTAR-BOTONES">
-                          <button type="button" onClick={() => {setShow(true)}} class=" btn btn-primary fs-4 fw-bold BUSCAR" >
+                          <button type="button" onClick={() => {setShow(true)}} class=" btn btn-primary fs-4 ms-3 mt-2 fw-bold BUSCAR" >
                               ...
                           </button>
                           </div>;
@@ -315,18 +391,27 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
           {<ModalBuscarUsuario  show={show} setShow={setShow} 
                                               al={al} setAl={setAl} idAlum={idAlum} setIdAlum={setIdAlum}
                         />}
-          <div className = "row ">
+          {<ModalBuscarAsesor  show1={show1} setShow1={setShow1} ase={ase} setAse={setAse} conf={conf} setConf={setConf}/>}
+          <div className = "row DATOS">
           <div className = "col-lg-12">
-                  <div class="text-start fs-7 fw-normal ">Descripción</div>
+                  <div class="text-start fs-7 fw-normal ">Tema de tesis</div>
                   <div class="input-group input-group-lg mb-3">
                       <input type="text" disabled={location.state.estado=="Por Revisar"?false:true}  class="form-control" name="descripcion" placeholder="Descripcion" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
-                         value={location.state.descripcion}/>
+                         value={temaCambiar && temaCambiar.descripcion} onChange={handleChange}/>
                   </div>
-              </div>       
+              </div>    
+
+               <div className = "col-lg-12">
+                  <div class="text-start fs-7 fw-normal ">Observaciones y entregables</div>
+                  <div class="input-group input-group-lg mb-3">
+                      <input type="text" disabled={location.state.estado=="Por Revisar"?false:true}  class="form-control" name="observacionesYEntregables" placeholder="Descripcion" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
+                         value={ temaCambiar && temaCambiar.observacionesYEntregables} onChange={handleChange}/>
+                  </div>
+              </div>      
           </div>             
         
-          <div className = "row">
-              <p display="inline">Estado de Aprobación: <span className={color}>{location.state.estado }</span></p>
+          <div className = "row DATOS">
+              <p display="inline">Estado de Aprobación: <span style={{fontWeight: 'bold'}} className={color}>{location.state.estado }</span></p>
             
             </div>    
           <div className="row">                            
@@ -334,6 +419,12 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
               {(() => {
                         switch(location.state.estado){
                           case "Publicado" : return  <button onClick={()=>openAsignadoModal()} class="btn btn-primary fs-4 fw-bold mb-3 me-3 "  type="button">Asignar Alumno</button>;
+                          case "Por Revisar" : 
+                          return <div>
+                          <button class="btn btn-primary fs-4 fw-bold mb-3 me-3 "  type="button" onClick={()=>openEditModal()}>Aprobar</button>
+                          <button class="btn btn-primary fs-4 fw-bold mb-3 me-3" onClick={()=>abrirPost()} type="button">Observar</button>
+                          <button class="btn btn-primary fs-4 fw-bold mb-3 me-3" onClick={()=>openEdit2Modal()} type="button">Modificar</button>
+                          </div>;
                           default: return <div>
                           <button class="btn btn-primary fs-4 fw-bold mb-3 me-3 "  type="button" onClick={()=>openEditModal()}>Aprobar</button>
                           <button class="btn btn-primary fs-4 fw-bold mb-3 me-3" onClick={()=>abrirPost()} type="button">Observar</button>
@@ -353,6 +444,18 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
               <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
                 <Button class="btn  btn-success btn-lg" onClick={()=>aprobarTema()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <Button class="btn btn-danger btn-lg"  onClick={closeEditModal}>Cancelar</Button>
+              </div>
+            </ModalPregunta>
+          <ModalPregunta
+              isOpen={isOpenEdit2Modal} 
+              closeModal={closeEdit2Modal}
+              procedimiento = "modificar"
+              objeto="el tema"
+              elemento={temaCambiar.titulo}
+            >
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+                <Button class="btn  btn-success btn-lg" onClick={()=>ModificarTema()} >Confirmar</Button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <Button class="btn btn-danger btn-lg"  onClick={closeEdit2Modal}>Cancelar</Button>
               </div>
             </ModalPregunta>
             <ModalPregunta

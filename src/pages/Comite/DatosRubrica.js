@@ -74,7 +74,7 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
 
     const quitaRubro=(elemento)=>{
         var index = rubricas.indexOf(elemento);
-        Setmax(max+elemento.puntajeMaximo);
+        Setmax(max+ parseInt(elemento.puntajeMaximo));
         rubricas.splice(index,1);
         SetEdit(!edit);
     }
