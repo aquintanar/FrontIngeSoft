@@ -285,7 +285,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
                   <div class="text-start fs-7 fw-normal ">Alumno</div>
                   <div class=" row DATOS3 input-group input-group-lg mb-3">
                       <input type="text"   disabled="true" onChange={(e) =>handleChangeAlum(e)} class="form-control" name="alumno" placeholder="Alumno" aria-label="alumno" aria-describedby="inputGroup-sizing-lg" 
-                         value={idAlum + " " + al.nombres + " " + al.apeMat }/>
+                         value={location.state.nombresAlumno + " " +location.state.apeMatAlumno}/>
                  
                   {(() => {
                         switch(location.state.estado){
