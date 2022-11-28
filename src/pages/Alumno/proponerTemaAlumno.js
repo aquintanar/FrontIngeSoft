@@ -1,7 +1,6 @@
 import React from "react";
-import "./proponerTemaAsesor.css";
 import { useState, useEffect } from "react";
-import ModalBuscarAsesor from "./ModalBuscarAsesor";
+import ModalBuscarAsesor from "../Asesor/ModalBuscarAsesor";
 import { ModalConfirmación, ModalPregunta } from "../../components/Modals";
 import useModal from "../../hooks/useModals";
 import { Button } from "@material-ui/core";
@@ -15,20 +14,20 @@ import 'react-toastify/dist/ReactToastify.css'
 //https://localhost:7012/api/
 const urlCoAsesor= "https://localhost:7012/api/TemaTesisXAsesor/";
 const urlTemaTesis= "https://localhost:7012/api/TemaTesis/";
-const urlAs = "https://localhost:7012/api/Asesor/";
+const urlAs = "https://localhost:7012/api/Alumno/";
 const urlPalabra = "https://localhost:7012/api/PalabraClave/";
 
-const ProponerTemaAsesor = () => {
+const ProponerTemaAlumno = () => {
   let navigate = useNavigate();
   let { id } = useParams();
   const [show, setShow] = useState(false);
   const [active, setActive] = useState(false);
   const handleShow = () => setShow(true);
-  let idAsesorRef = window.localStorage.getItem("IDUSUARIO");
+  let idAsesorRef = 0;
   let idCoasesorRef = 0;
   let idTemaGlo = 0;
   let idCoasesor = 0;
-  let idAlumnoEx = 0;
+  let idAlumnoEx = window.localStorage.getItem("IDUSUARIO");
   let confirm = 0;
   let long = 0;
   let idPal = 0;
@@ -55,7 +54,7 @@ const ProponerTemaAsesor = () => {
     idAlumno: 0,
     estadoTema: 'Por Revisar',
     idProponente: parseInt(localStorage.getItem("IDUSUARIO")),
-    idAsesor: parseInt(localStorage.getItem("IDUSUARIO")),
+    idAsesor: 0,
     tituloTesis:'',
     descripcion:'',
     palabraClave1:'',
@@ -68,7 +67,7 @@ const ProponerTemaAsesor = () => {
   });
 
   const [asesorTesis, setAsesor] = useState({
-    idUsuario: parseInt(localStorage.getItem("IDUSUARIO")),
+    idUsuario: 0,
     nombres: '',
     apeMat: '',
     apePat: ''
@@ -130,9 +129,19 @@ const [alumno, setAlumno] = useState({
     setpalabraInputC("");
   }
 
-  const subirTemaTesis = async () => {
+  const subirTemaTesis = async () => {/*
+    setTemaTesis({
+        ...temaTesis,
+        idAsesor: asesorTesis.idUsuario,
+    });
+    */
+    //temaTesis.idAsesor = asesorTesis.idAsesor; //probablemente no funciona
+    idAsesorRef = asesorTesis.idUsuario;
+    cambioAsesor();
     console.log("DEBAJO ESTA TEMA DE TESIS");
     console.log(temaTesis);
+    console.log(temaTesis.idAsesor);
+    console.log(asesorTesis.idUsuario);
     await axios
       .post(urlTemaTesis + "PostTemaTesisSinAlumno", temaTesis).catch((error) => {
         console.log(error.message);
@@ -141,24 +150,9 @@ const [alumno, setAlumno] = useState({
         openGuardadoModal();
         temaTesis.idTemaTesis = response.data.idTemaTesis;
         idTemaGlo = response.data.idTemaTesis;
-        idCoasesor = coasesorTesis.idUsuario;
         console.log(response);
         console.log(idTemaGlo);
-        console.log(idCoasesor);
         //idAsesorRef = asesorTesis.idUsuario;
-        if (coasesorTesis.idUsuario !== 0) {
-          /*
-          setAsesorXTema({
-            idTemaTesisXAsesor: 0,
-            idAsesor: coasesorTesis.idUsuario,
-            idTemaTesis: response.data.idTemaTesis,
-            esPrincipal: 0
-          });
-          */
-          subirCoasesor();
-        }else{
-          openGuardadoModal();
-        }
         guarda();
       })
       .catch((error) => {
@@ -354,12 +348,15 @@ const guardarPalabra=async(element)=>{
       idArea: parseInt(e.target.value),
     }));
     console.log(temaTesis);
-    /*
-    setAreasel(prevState=>({
-      ...prevState,
-      area:{idArea: e.target.value}}))
-    console.log(areasel);
-    */
+  }
+  const cambioAsesor =()=>{
+    let idAsesoraux = asesorTesis.idUsuario;
+    console.log(idAsesoraux);
+    setTemaTesis({
+      ...temaTesis,
+      idAsesor: idAsesoraux,
+    });
+    console.log(temaTesis);
   }
   const cambioPalabra = (e)=>{
     setPalabraC({
@@ -434,7 +431,8 @@ const guardarPalabra=async(element)=>{
       });
   };  
   useEffect(()=>{
-    if (id === "0") cargarAsesor(idAsesorRef);
+    //if (id === "0") cargarAsesor(idAsesorRef);
+    cargarAlumnos(idAsesorRef);
     ListarAreas1();
     if (id !== "0") cargarTema();
     },[])
@@ -474,25 +472,20 @@ const guardarPalabra=async(element)=>{
                     <div className = "form-group row">
                         <div className = "col-md-3"><p for="Estado"> Estado:  </p></div>
                         <div className = "col-md-6"><p for="Estado"> {temaTesis.estadoTema} </p></div> 
-                    </div>                 
-                    <div className = "form-group row">
-                        <div className = "col-md-3"><p for="Asesor"> Asesor:  </p></div>
-                        <div className = "col-md-6"><p for="Asesor">{asesorTesis.nombres + " "+ asesorTesis.apePat}</p></div> 
                     </div>
                     <div className = "form-group row">
                         <div className = "col-md-3"><p for="Alumno"> Alumno:  </p></div>
-                        <div className = "col-md-9"> <input onChange={handleChange} type='text' id="nombreCoAsesor" name="nombreCoAsesor"  disabled
-                        style={{display: 'flex'}} value={alumno && (alumno.nombres + " " + alumno.apePat)}/></div> 
+                        <div className = "col-md-6"><p for="Estado"> {alumno.nombres + " " + alumno.apePat} </p></div>  
                     </div>
                     <div className = "form-group row">
-                        <div className = "col-md-3"><p for="coasesor"> Co-asesor:  </p></div>
+                        <div className = "col-md-3"><p for="coasesor"> Asesor:  </p></div>
                         <div className = "col-md-7"> <input onChange={cambioCoasesor} type='text' id="idAsesor" name="idAsesor"  disabled
-                        style={{display: 'flex'}} value={coasesorTesis && (coasesorTesis.nombres + " " + coasesorTesis.apeMat)}/></div>
+                        style={{display: 'flex'}} value={asesorTesis && (asesorTesis.nombres + " " + asesorTesis.apeMat)}/></div>
                         <div className = "col-md-1"><button type="button" onClick={() => {setShow(true)}} className="btn btn-primary fs-4 fw-bold BUSCAR" >
                         <RiIcons.RiSearch2Line />
                         </button></div>
                         <div>
-                            {<ModalBuscarAsesor show={show} setShow={setShow} asesorTesis={coasesorTesis} setAsesor={setCoAsesor}/>}
+                            {<ModalBuscarAsesor show={show} setShow={setShow} asesorTesis={asesorTesis} setAsesor={setAsesor}/>}
                         </div>
                     </div>
                     <div className = "form-group row">
@@ -580,7 +573,7 @@ const guardarPalabra=async(element)=>{
           align="center"
           class="d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom"
         >
-          <Button class="btn btn-success btn-lg" onClick={() => navigate("../temaTesis")}>
+          <Button class="btn btn-success btn-lg" onClick={() => navigate("../listarTemas")}>
             Entendido
           </Button>
         </div>
@@ -597,7 +590,7 @@ const guardarPalabra=async(element)=>{
             >
               <button
                 class="btn btn-success btn-lg"
-                onClick={() => navigate("../temaTesis")}
+                onClick={() => navigate("../listarTemas")}
               >
                 Entendido
               </button>
@@ -701,7 +694,7 @@ const guardarPalabra=async(element)=>{
               </button>
               : <></>
             }
-            <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../temaTesis");}}>
+            <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../listarTemas");}}>
               Cancelar
             </button>
             </div>
@@ -711,4 +704,4 @@ const guardarPalabra=async(element)=>{
   );
 };
 
-export default ProponerTemaAsesor;
+export default ProponerTemaAlumno;

@@ -14,6 +14,7 @@ import "../../stylesheets/Comite.css";
 import * as BsIcons from "react-icons/bs";
 import useModal from "../../hooks/useModals";
 
+const urlCurso= "https://localhost:7012/api/Curso/";
 const themeX = createTheme({
   palette: {
     type: "dark",
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 function ListaTemaTesis() {
   let navigate = useNavigate();
   const styles = useStyles();
+  let idCursoGlobal = localStorage.getItem("idCurso");
   const [data, setData] = useState([]);
   const [modalGuardar, setModalGuardar] = useState(false);
   const [isOpenModal, openModal, closeModal] = useModal();
@@ -56,7 +58,8 @@ function ListaTemaTesis() {
   const [currentPage, SetCurrentPage] = useState(0);
   const [toggleButton, setToggleButton] = useState(false);
   const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
-  const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();   
+  const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
+  const [aceptarTemas,setAceptarTemas] = useState(0);  
   const [temaSolicitar , SetTemaSolicitar] = useState({
       idSolicitudTemaXAlumno: 0 ,
       fidTemaTesis: 1 ,
@@ -110,9 +113,16 @@ function ListaTemaTesis() {
       </div>
     </div>
   );
+  const cargarAceptando = async () => {
+    const response = await axios.get(
+        urlCurso + "BuscarCursoXId?idCurso=" + parseInt(idCursoGlobal)
+    );
+    setAceptarTemas(response.data[0].aceptandoTemas);
+  };
 
   useEffect(() => {
     getData();
+    cargarAceptando();
   }, []);
 
   async function getData() {
@@ -357,6 +367,15 @@ function ListaTemaTesis() {
       >
         {bodyGuardar}
       </Modal>
+
+      <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
+        {aceptarTemas === 1 ?
+          <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("proponerTema/0")}}> Agregar Tema</button>
+          : <p class="FUENTE-LABEL">
+          El periodo de recepcion de temas ha terminado
+          </p>
+        }                    
+      </div>
     </div>
   );
 }

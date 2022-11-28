@@ -18,6 +18,8 @@ import ListaTemaTesis from './pages/Alumno/ListaTemaTesis'
 import PortafolioEntregablesTesis1 from './pages/Alumno/PortafolioEntregablesTesis1';
 import EntregablesParcialesTesis1 from './pages/Alumno/EntregablesParcialesTesis1';
 import EntregableParcialSeleccionadoTesis1 from './pages/Alumno/EntragableParcialSeleccionadoTesis1';
+import ProponerTemaAlumno from './pages/Alumno/proponerTemaAlumno';
+
 function Alumno() {
     return (
         <div>    
@@ -27,6 +29,7 @@ function Alumno() {
                 listarTemas
               <Route path='encuesta' exact element = {<Encuesta/>}/>
               <Route path='listarTemas' exact element = {<ListaTemaTesis/>}/>
+              <Route path='listarTemas/proponerTema/:id' exact element = {<ProponerTemaAlumno/>}/>
               <Route path='gestion/gesPortafolio' exact element= {<PortafolioEntregables/>}/>
               <Route path='gestion/gesPortafolio/AvancesSemanales' exact element= {<AvancesSemanales/>}/>
               <Route path='gestion/gesPortafolio/EntregablesParciales' exact element= {<EntregablesParciales/>}/>

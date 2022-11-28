@@ -7,6 +7,7 @@ import * as BsIcons from 'react-icons/bs';
 import {ToastContainer,toast} from 'react-toastify';
 
 const urlTemaTesis= "https://localhost:7012/api/TemaTesis/";
+const urlCurso= "https://localhost:7012/api/Curso/";
 const ListarTemasTesis = () =>{
     //setear los hooks useState
     let navigate = useNavigate();
@@ -17,6 +18,7 @@ const ListarTemasTesis = () =>{
     const[searchClav,  setSearchClav] = useState("");
     const[record , setRecord] = useState([]);
     const [currentPage,SetCurrentPage] = useState(0);
+    const [aceptarTemas,setAceptarTemas] = useState(0);
     const[modelData , setModelData] = useState({
         id:"",
         titulo:"",
@@ -53,6 +55,7 @@ const ListarTemasTesis = () =>{
             console.log(error.message);
           });
       };
+    
     const nextPage = () =>{
         if(results.length>=currentPage) //VER CODIGO
         SetCurrentPage(currentPage+5);
@@ -105,9 +108,17 @@ const ListarTemasTesis = () =>{
 
     results = results.slice(currentPage,currentPage+5);
 
+    const cargarAceptando = async () => {
+        const response = await axios.get(
+            urlCurso + "BuscarCursoXId?idCurso=" + parseInt(idCursoGlobal)
+        );
+        setAceptarTemas(response.data[0].aceptandoTemas);
+    };
+
     useEffect(()=>{
-        console.log(Titles)
-        showData()
+        console.log(Titles);
+        cargarAceptando();
+        showData();
     },[])
     
     return (        
@@ -178,7 +189,12 @@ const ListarTemasTesis = () =>{
                 </div>
                 </div>
                 <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
-                    <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("agregarTema/0")}}> Agregar Tema</button>
+                    {aceptarTemas === 1 ?
+                        <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("agregarTema/0")}}> Agregar Tema</button>
+                        : <p class="FUENTE-LABEL">
+                            El periodo de recepcion de temas ha terminado
+                        </p>
+                    }                    
                 </div>
         </div>
         
