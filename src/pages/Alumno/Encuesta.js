@@ -135,7 +135,7 @@ const Encuesta = () => {
                         <span> Pregunta {preguntaActual  + 1 }  de </span> {preguntas.length}
                     </div>
                     <div>
-                           {preguntas[preguntaActual].pregunta} 
+                           {/* {preguntas[preguntaActual].pregunta}  */}
                     </div>
                 </div>
                 <div class="form-check">

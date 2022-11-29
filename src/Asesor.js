@@ -50,7 +50,7 @@ function Asesor() {
                   <Route path='reunion/datoReunion' exact element= {<DatoReunion/>}/>
                   <Route path='recordatorio' exact element={<ListaRecordatorio/>}/>
                   <Route path='recordatorio' exact element={<ListaRecordatorio/>}/>
-                  <Route path='temaTesis/solicitudes/' exact element={<SolicitudesTema/>}/>
+                  <Route path='temaTesis/agregarTema/:id/solicitudes' exact element={<SolicitudesTema/>}/>
               </Routes>
         </div>
     )

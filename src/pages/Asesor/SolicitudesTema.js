@@ -28,7 +28,7 @@ const SolicitudesTema = () =>{
         })
     }
     filtrado = filtrado.slice(currentPage,currentPage+5);
-    const aceptarSolicitud=async (id)=>{
+    const aceptarSolicitud=async (id , idAlumno)=>{
         let urlAceptar  = "https://localhost:7012/api/SolicitudTemaXAlumno/AceptarSolicitud?idSolicitud="+id
         await axios.put(urlAceptar,
           {
@@ -40,8 +40,8 @@ const SolicitudesTema = () =>{
         }).catch(error =>{
           console.log(error.message);
         })
-
-        let urlActualizar = "https://localhost:7012/api/TemaTesis/AsignarTemaTesisUno?idTemaTesis="+id
+        console.log(idAlumno)
+        let urlActualizar = "https://localhost:7012/api/TemaTesis/AsignarTemaTesisUno?idTemaTesis="+idAlumno
         await axios.put(urlActualizar,
             {
             _method: 'PUT'
@@ -75,7 +75,7 @@ const SolicitudesTema = () =>{
       
 
     useEffect(()=>{
-        console.log("SOLICITUDES")
+        console.log("SOLICITUDESs")
         listarSolicitudes();
         console.log(solicitudes)
      },[])
@@ -107,7 +107,7 @@ const SolicitudesTema = () =>{
                         <td>{sols.nombreAlumno}</td>
                         <td>{sols.estadoTema}</td>
                         <td>
-                        <button class="btn BTN-ACCIONES" onClick={()=>aceptarSolicitud(sols.idSolicitudTemaXAlumno)}> <BsIcons.BsCheckLg/></button>
+                        <button class="btn BTN-ACCIONES" onClick={()=>aceptarSolicitud(sols.idSolicitudTemaXAlumno, sols.fidAlumno )}> <BsIcons.BsCheckLg/></button>
                         <button  class=" btn BTN-ACCIONES" onClick={()=>rechazarSolicitud(sols.idSolicitudTemaXAlumno)}> <BsIcons.BsFillXCircleFill /></button>
                         </td>
                     </tr>

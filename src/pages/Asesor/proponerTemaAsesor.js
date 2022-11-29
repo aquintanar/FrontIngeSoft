@@ -691,11 +691,11 @@ const guardarPalabra=async(element)=>{
             </button>
             : <></>
             }
-            { temaTesis.idEstadoTemaTesis === 4 ?
+            { temaTesis.idEstadoTemaTesis === 3 ?
               <button
               type="button"
               className="btn btn-primary fs-4 botonForm GUARDAR"
-              onClick={() => peticionSelecter()}
+              onClick={() => navigate("solicitudes")}
               >
               Ver solicitudes
               </button>
