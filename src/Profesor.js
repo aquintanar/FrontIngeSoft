@@ -41,14 +41,15 @@ function Profesor() {
                   <Route path='alumnos/alumnoSeleccionado/entregables/historialVersiones' exact element= {<HistorialVersiones/>}/>
                   <Route path='alumnos/alumnoSeleccionado/avancesSemanales/historialVersiones' exact element= {<HistorialVersiones/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales/historialVersiones' exact element= {<HistorialVersiones/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregablesFinales/historialVersiones' exact element= {<HistorialVersiones/>}/>
                   <Route path='alumnos/alumnoSeleccionado/exposiciones/exposicionSeleccionada' exact element= {<ExposicionSeleccionada/>}/>
-                  <Route path='alumnos/alumnoSeleccionado/entregables/entregableSeleccionado' exact element= {<EntregableFinalSeleccionado/>}/>
-                  <Route path='alumnos/alumnoSeleccionado/entregables/entregableFinalSeleccionado' exact element= {<EntregableSeleccionado/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregablesFinales/entregableFinalSeleccionado' exact element= {<EntregableFinalSeleccionado/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregables/entregableSeleccionado' exact element= {<EntregableSeleccionado/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales/entregableParcialSeleccionado' exact element= {<EntregableParcialSeleccionado/>}/>
-                  <Route path='alumnos/alumnoSeleccionado/entregablesParciales/entregableParcialSeleccionado/SubirArchivos' exact element= {<SubirArchivos/>}/>
-                  <Route path='alumnos/alumnoSeleccionado/entregablesParciales/entregableSeleccionado/SubirArchivos' exact element= {<SubirArchivos/>}/>
-                  <Route path='alumnos/alumnoSeleccionado/entregablesParciales/avanceSemanalSeleccionado/SubirArchivos' exact element= {<SubirArchivos/>}/>
-                  <Route path='alumnos/alumnoSeleccionado/entregablesParciales/entregableFinalSeleccionado/SubirArchivos' exact element= {<SubirArchivos/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregablesParciales/entregableParcialSeleccionado/subirArchivos' exact element= {<SubirArchivos/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregables/entregableSeleccionado/subirArchivos' exact element= {<SubirArchivos/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/avancesSemanales/avanceSemanalSeleccionado/subirArchivos' exact element= {<SubirArchivos/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregablesFinales/entregableFinalSeleccionado/subirArchivos' exact element= {<SubirArchivos/>}/>
                   <Route path='entregables' exact element= {<ListaEntregables/>}/>
                   <Route path='entregables/menu/:id' exact element= {<Entregable/>}/>
                   <Route path='entregables/menu/:id/datosEntregable' exact element= {<DatosEntregable/>}/>

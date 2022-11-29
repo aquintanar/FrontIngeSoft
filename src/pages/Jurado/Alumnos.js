@@ -24,7 +24,7 @@ function Alumnos() {
  
     async function getDataI() {
       (async () => {
-        const result = await axios(`https://localhost:7012/api/Alumno/ListAlumnosXIdJurado?idJurado=4`);
+        const result = await axios(`https://localhost:7012/api/Alumno/ListAlumnosXIdJurado?idJurado=${localStorage.getItem('IDUSUARIO')}`);
         //const result = await axios("http://44.210.195.91/api/Alumno/ListAlumnosXIdCurso?idCurso=1");
         setDataI(result.data);
       })();

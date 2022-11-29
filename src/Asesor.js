@@ -43,9 +43,9 @@ function Asesor() {
                   <Route path='alumnos/alumnoSeleccionado/entregables/entregableSeleccionado' exact element= {<EntregableSeleccionado/>}/>
                   <Route path='alumnos/alumnoSeleccionado/avancesSemanales/avanceSemanalSeleccionado' exact element= {<AvanceSemanalSeleccionado/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales/entregableParcialSeleccionado' exact element= {<EntregableParcialSeleccionado/>}/>
-                  <Route path='alumnos/alumnoSeleccionado/entregablesParciales/entregableParcialSeleccionado/SubirArchivos' exact element= {<SubirArchivos/>}/>
-                  <Route path='alumnos/alumnoSeleccionado/entregablesParciales/entregableSeleccionado/SubirArchivos' exact element= {<SubirArchivos/>}/>
-                  <Route path='alumnos/alumnoSeleccionado/entregablesParciales/avanceSemanalSeleccionado/SubirArchivos' exact element= {<SubirArchivos/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregablesParciales/entregableParcialSeleccionado/subirArchivos' exact element= {<SubirArchivos/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregables/entregableSeleccionado/subirArchivos' exact element= {<SubirArchivos/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/avancesSemanales/avanceSemanalSeleccionado/subirArchivos' exact element= {<SubirArchivos/>}/>
                   <Route path='reunion' exact element= {<ListaReunion/>}/>
                   <Route path='reunion/datoReunion' exact element= {<DatoReunion/>}/>
                   <Route path='recordatorio' exact element={<ListaRecordatorio/>}/>

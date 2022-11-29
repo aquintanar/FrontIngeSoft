@@ -13,7 +13,7 @@ export const SidebarData = [
 
     },
     {
-        title: 'Alumnos',
+        title: 'Alumnos/Asignar Jurado',
         path: 'alumnos',
         icon: <BsIcons.BsPeople />,
         iconClosed: <IonIcons4.IoIosArrowDown />,

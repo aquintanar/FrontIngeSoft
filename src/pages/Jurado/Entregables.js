@@ -23,7 +23,7 @@ function Entregables(){
 
   const getData=async()=> {
     (async () => {
-      const result = await fetch(`https://localhost:7012/api/Entregable/ListEntregablesXIdCursoYIdAlumnoParaJurado?idCurso=1&idAlumno=${location.state.idAlumno}`);
+      const result = await fetch(`https://localhost:7012/api/Entregable/ListEntregablesXIdCursoYIdAlumnoParaJurado?idCurso=${localStorage.getItem('idCurso')}&idAlumno=${location.state.idAlumno}`);
       //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
       const dataEnt= await result.json();
       setData(dataEnt);
