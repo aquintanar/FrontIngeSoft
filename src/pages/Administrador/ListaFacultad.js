@@ -87,13 +87,13 @@ function ListaFacultad() {
     if (search) {
       //ambos filtros
       filtrado = data.filter((dato) =>
-        dato.descripcion.toLowerCase().includes(search.toLocaleLowerCase())
+        dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())
       );
     }
     if (search)
       //filtro por nombre
       filtrado = data.filter((dato) =>
-        dato.descripcion.toLowerCase().includes(search.toLocaleLowerCase())
+        dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())
       );
   }
 

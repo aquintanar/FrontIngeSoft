@@ -262,10 +262,10 @@ const handleChange=  (e)=>{
               </div>
             </ModalConfirmación>
 
-            <div class="row INSERTAR-BOTONES">                            
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button title='Guardar facultad' class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
-                    <button title='Cancelar' class="btn btn-primary fs-4 fw-bold  CANCELAR " type="button" onClick={()=>{navigate("../gestion/gesFacultad")}}><span>Cancelar</span></button>
+            <div class="row ">                            
+                <div class="INSERTAR-BOTONES">
+                    <button title='Guardar facultad' class="btn GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
+                    <button title='Cancelar' class="btn CANCELAR " type="button" onClick={()=>{navigate("../gestion/gesFacultad")}}><span>Cancelar</span></button>
                 </div>
             </div>
     </div>

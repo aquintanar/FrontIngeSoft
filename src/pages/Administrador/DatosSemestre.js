@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
 import axios from "axios";
 import "../../stylesheets/Administrador.css";
+import "../../stylesheets/General.css";
 import { Button } from "@material-ui/core";
 import useModal from "../../hooks/useModals";
 import { ModalConfirmación, ModalPregunta } from "../../components/Modals";
@@ -601,17 +602,17 @@ function DatosSemestre() {
         </div>
       </ModalConfirmación>
 
-      <div class="row INSERTAR-BOTONES">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <div class="row ">
+        <div class="INSERTAR-BOTONES">
           <button title = "Guardar semestre académico"
-            class="btn btn-primary fs-4 fw-bold GUARDAR"
+            class="btn GUARDAR"
             type="button"
             onClick={() => peticionSelecter()}
           >
             <span>Guardar</span>
           </button>
           <button title = "Cancelar"
-            class="btn btn-primary fs-4 fw-bold   CANCELAR"
+            class="btn CANCELAR"
             type="button"
             onClick={() => {
               navigate("../gestion/gesSemestre");

@@ -184,7 +184,7 @@ const AsignarCoordinador = () => {
         <h3>{selecEsp}</h3>
         <p>Nombre docente</p>
         <div class="row">
-          <div className="col-11 mb-2">
+          <div className="col-11">
             <input
               type="text"
               onChange={handleChangeCoord}
@@ -195,13 +195,13 @@ const AsignarCoordinador = () => {
               value={docentes && docentes.nombres + " " + docentes.apeMat}
             />
           </div>
-          <div class="INSERTAR-BOTONES col-1">
+          <div class="col-1">
             <button
               type="button"
               onClick={() => {
                 setShow(true);
               }}
-              class=" btn btn-primary fs-4 fw-bold BUSCAR"
+              class=" btn BOTON-ICON"
             >
               <RiIcons.RiSearch2Line />
             </button>
@@ -219,10 +219,10 @@ const AsignarCoordinador = () => {
             />
           }
         </div>
-        <div class="row INSERTAR-BOTONES">
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <div class="row ">
+          <div class="INSERTAR-BOTONES">
             <button
-              class="btn btn-primary fs-4 fw-bold   AÑADIR"
+              class="btn AÑADIR"
               type="button"
               onClick={() => verificarDisponibilidad(docentes)}
             >
@@ -271,13 +271,15 @@ const AsignarCoordinador = () => {
               ))}
             </tbody>
           </table>
-          <button
-            class="btn btn-primary fs-4 fw-bold BOTON-ATRAS"
-            type="button"
-            onClick={() => atras()}
-          >
-            <span>Cancelar</span>
-          </button>
+          <div class="INSERTAR-BOTONES">
+            <button
+              class="btn CANCELAR"
+              type="button"
+              onClick={() => atras()}
+            >
+              <span>Cancelar</span>
+            </button>
+          </div> 
           <ToastContainer/>
         </div>
       </div>

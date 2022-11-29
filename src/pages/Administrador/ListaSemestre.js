@@ -317,8 +317,8 @@ function ListaSemestre()  {
         </div>
       </div>
       
-      <div className='d-grid gap-2 d-md-flex justify-content-md-end INSERTAR-BOTONES '>
-          <button title='Registrar semestre académico' className='btn btn-primary fs-4 fw-bold mb-3 REGISTRAR' onClick={()=>{navigate("datosSemestre/0")}}><span>Registrar</span></button>
+      <div className='INSERTAR-BOTONES '>
+          <button title='Registrar semestre académico' className='btn REGISTRAR' onClick={()=>{navigate("datosSemestre/0")}}><span>Registrar</span></button>
       </div>
       
       <Modal
