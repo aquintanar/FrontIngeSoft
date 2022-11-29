@@ -191,7 +191,7 @@ const ListarTemasTesis = () =>{
                 </div>
                 <div className='d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON '>
                     {aceptarTemas === 1 ?
-                        <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("agregarTema/0")}}> Agregar Tema</button>
+                        <button className='btn btn-primary fs-4 fw-bold mb-3 ' onClick={()=>{navigate("agregarTema/0")}}> Agregar Tema / Ver Solicitudes</button>
                         : <p class="FUENTE-LABEL">
                             El periodo de recepcion de temas ha terminado
                         </p>

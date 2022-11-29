@@ -20,7 +20,7 @@ const SolicitudesTema = () =>{
         SetCurrentPage(currentPage-5);
     }
     const listarSolicitudes = async()=>{
-        await axios.get(urlSolicitud+"ListSolicitudesTemaXAsesor?idAsesor=2")// + localStorage.getItem("IDUSUARIO")
+        await axios.get(urlSolicitud+"ListSolicitudesTemaXAsesor?idAsesor="+ localStorage.getItem("IDUSUARIO"))// 
         .then(response=>{
             SetSolicitudes(response.data);
         }).catch(error =>{
@@ -28,7 +28,7 @@ const SolicitudesTema = () =>{
         })
     }
     filtrado = filtrado.slice(currentPage,currentPage+5);
-    const aceptarSolicitud=async (id , idAlumno)=>{
+    const aceptarSolicitud=async (id , idAlumno , idTemaTesis , idAs)=>{
         let urlAceptar  = "https://localhost:7012/api/SolicitudTemaXAlumno/AceptarSolicitud?idSolicitud="+id
         await axios.put(urlAceptar,
           {
@@ -41,7 +41,7 @@ const SolicitudesTema = () =>{
           console.log(error.message);
         })
         console.log(idAlumno)
-        let urlActualizar = "https://localhost:7012/api/TemaTesis/AsignarTemaTesisUno?idTemaTesis="+idAlumno
+        let urlActualizar = "https://localhost:7012/api/TemaTesis/AsignarTemaTesisUno?idTemaTesis="+idTemaTesis+"&idAlumno="+idAlumno+"&idAsesor="+idAs
         await axios.put(urlActualizar,
             {
             _method: 'PUT'
@@ -107,7 +107,7 @@ const SolicitudesTema = () =>{
                         <td>{sols.nombreAlumno}</td>
                         <td>{sols.estadoTema}</td>
                         <td>
-                        <button class="btn BTN-ACCIONES" onClick={()=>aceptarSolicitud(sols.idSolicitudTemaXAlumno, sols.fidAlumno )}> <BsIcons.BsCheckLg/></button>
+                        <button class="btn BTN-ACCIONES" onClick={()=>aceptarSolicitud(sols.idSolicitudTemaXAlumno, sols.fidAlumno , sols.idTemaTesis , sols.idAsesor)}> <BsIcons.BsCheckLg/></button>
                         <button  class=" btn BTN-ACCIONES" onClick={()=>rechazarSolicitud(sols.idSolicitudTemaXAlumno)}> <BsIcons.BsFillXCircleFill /></button>
                         </td>
                     </tr>
