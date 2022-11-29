@@ -6,7 +6,7 @@ export const SidebarData = [
 
     {
         title: 'Calificar Entregables',
-        path: 'entregables',
+        path: 'alumnos',
         icon: <BsIcons.BsNewspaper />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,

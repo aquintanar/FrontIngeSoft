@@ -27,7 +27,7 @@ function DatosCurso() {
   const [isOpenEditModal, openEditModal, closeEditModal] = useModal();
   const [isOpenEditadoModal, openEditadoModal, closeEditadoModal] = useModal();
   const [subTitulo, setSubtitulo] = useState("Nuevo curso");
-  const infoEspecialidad = JSON.parse(localStorage.getItem('infoCurso'))
+  const infoEspecialidad = JSON.parse(localStorage.getItem('ESPECIALIDADGESTIONADA'))
   // checkBox
   const [checkAsesor, setCheckedAs] = React.useState(false);
   const [checkAlumno, setCheckedAl] = React.useState(false);
@@ -112,6 +112,15 @@ function DatosCurso() {
   };
 
   const peticionPut = async () => {
+    console.log(cursoNuevo);
+    cursoNuevo.idSemestre=parseInt(cursoNuevo.idSemestre);
+    if(cursoNuevo.asesorPropone==1) cursoNuevo.asesorPropone=true 
+    else cursoNuevo.asesorPropone=false;
+    if(cursoNuevo.alumnoPropone==1) cursoNuevo.alumnoPropone=true
+    else cursoNuevo.alumnoPropone=false;
+    if(cursoNuevo.temaAsignado==1) cursoNuevo.temaAsignado=true;
+    else cursoNuevo.temaAsignado=false;
+
     await axios
       .put(urlPost + "PutCursoSinDocente", cursoNuevo)
       .then((response) => {
@@ -132,9 +141,9 @@ function DatosCurso() {
         idCurso: parseInt(id),
         nombre: response.data[0].nombre,
         cant_alumnos: response.data[0].cant_alumnos,
-        cant_temas_propuestos: response.data[0].cant_temas_propuestos,
+        cant_temas_prop: response.data[0].cant_temas_propuestos,
         activo: 1,
-        idSemestre: response.data[0].idSemestre,
+        idSemestre: parseInt(response.data[0].idSemestre),
         idDocente: 0, //response.data[0].idDocente,
         idFacultad: response.data[0].idFacultad,
         idEspecialidad: response.data[0].idEspecialidad,

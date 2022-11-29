@@ -65,7 +65,7 @@ function DatosEspecialidad() {
   //Insertar nueva especialidad--
   const peticionPost=async()=>{
     console.log(especialidadSeleccionada);
-    /*
+    
     await axios.post(url+"PostEspecialidad",especialidadSeleccionada,{
         _method: 'POST'
       })
@@ -74,7 +74,7 @@ function DatosEspecialidad() {
       openGuardadoModal();
     }).catch(error =>{
       console.log(error.message);
-    })*/
+    })
   }
 
   const cerrarPost=()=>{
