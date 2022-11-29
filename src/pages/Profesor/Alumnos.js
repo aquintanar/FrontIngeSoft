@@ -83,13 +83,23 @@ function Alumnos() {
   }
   else{
     if(search1 && search2){//ambos filtros
-      data=dataI.filter((dato)=>dato.apePat.toLowerCase().includes(search1.toLocaleLowerCase())) ;
-      data=dataI.filter((dato)=>dato.codigoPucp) ;
+      data=dataI.filter((dato)=>{
+        let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat
+        console.log(a)
+        return a.toLowerCase().includes(search1.toLocaleLowerCase());
+      }) ;
+      data=data.filter((dato)=>dato.codigoPucp.includes(search2)) ;
     }
-    if(search1)
-    data=dataI.filter((dato)=>dato.apePat.toLowerCase().includes(search1.toLocaleLowerCase())) ;
-    if(search2)
-    data=dataI.filter((dato)=>dato.codigoPucp) ;
+    else{
+      if(search1)
+        data=dataI.filter((dato)=>{
+          let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat
+          console.log(a)
+          return a.toLowerCase().includes(search1.toLocaleLowerCase());
+        }) ;
+      if(search2)
+        data=data.filter((dato)=>dato.codigoPucp.includes(search2)) ;
+    }
   }
     data = data.slice(currentPage,currentPage+4);
     console.log(data);
@@ -120,19 +130,20 @@ function Alumnos() {
     return(
   
         <div className='CONTAINERASESOR'>
-        <h1 className='HEADER-TEXT1'>Alumnos</h1>
-        <h2 className='HEADER-TEXT2'>{curso.nombre} - {curso.nombreEspecialidad}</h2>
+        <h1 >Alumnos</h1>
+        <h2 >{curso.nombre} - {curso.nombreEspecialidad}</h2>
       
-        <div className="col col-7 FILTRO-LISTAR-BUSCAR" >
-              <p>Ingresar apellido para realizar búsqueda</p>
-              <div className="input-group mb-2 ">
-                  <input size="10" type="text" value={search1} class="form-control" name="search1" placeholder="Apellido" aria-label="serach" onChange={buscador1}/>
-              </div>
-              <p>Ingresar código para realizar búsqueda</p>
-              <div className="input-group mb-2 ">
-                  <input size="10" type="text" value={search2} class="form-control" name="search2" placeholder="Código" aria-label="serach" onChange={buscador2}/>
-              </div>
+        <div className="row " >
+          <div class= "col-6">
+              <p>Ingresar nombre del alumno</p>
+              <input size="10" type="search" value={search1} class="form-control icon-search" name="search1" placeholder="Nombre del alumno" aria-label="serach" onChange={buscador1}/>
           </div>
+          <div class= "col-6"> 
+              <p>Ingresar código del alumno</p>
+              <input size="10" type="search" value={search2} class="form-control icon-search" name="search2" placeholder="Código del alumno" aria-label="serach" onChange={buscador2}/>
+          </div>
+        </div>
+
           <div className="ContenidoPrincipal">
             <h2>Seleccione un alumno para ver su portafolio de entregables/asignarle un jurado:</h2>
         <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
@@ -161,7 +172,7 @@ function Alumnos() {
          {rows.map(row => {
            prepareRow(row)
            return (
-               <tr {...row.getRowProps()} onClick={() =>navigate("alumnoSeleccionado",{state:{idAlumno:row.original.idAlumno,nombres:row.original.nombres,apellidoPat:row.original.apePat,apellidoMat:row.original.apeMat}})}>
+               <tr {...row.getRowProps()}  style={{cursor:"pointer" }} onClick={() =>navigate("alumnoSeleccionado",{state:{idAlumno:row.original.idAlumno,nombres:row.original.nombres,apellidoPat:row.original.apePat,apellidoMat:row.original.apeMat}})}>
                
                  {row.cells.map(cell => {
                    return (

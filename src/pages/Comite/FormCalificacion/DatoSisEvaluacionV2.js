@@ -184,8 +184,8 @@ function DatoSistEvaluacionV2()  {
       .then(response=>{
           console.log("SOY YO");
           console.log(response.data);
-          //const datos = response.data.filter(dato=> dato.fidNota === "null");
-          const datos = response.data;
+          const datos = response.data.filter(dato=> dato.fidNota === "null");
+          //const datos = response.data;
           console.log(datos);
           setListEvaluacionesModal(datos);
       }).catch(error =>{
@@ -278,40 +278,29 @@ function DatoSistEvaluacionV2()  {
             <div class="row">
                 <div class="col-4" >
                     <p>Código</p>
-                        <div class="input-group">
-                            <input type="text"  class="form-control" name="codigo" placeholder="Código" aria-label="codigo"  
-                                onChange={handleChange} value={notaSeleccionada.codigo}/>
-                        </div>
+                    <input type="text"  class="form-control" name="codigo" placeholder="Código" aria-label="codigo"  
+                            onChange={handleChange} value={notaSeleccionada.codigo}/>
+                    <p>Peso</p>
+                    <input type="number" min="1" class="form-control" name="peso" placeholder="Peso" aria-label="peso"  
+                          onChange={handleChange} value={notaSeleccionada && notaSeleccionada.peso}/>
                 </div>
                 
                 <div class="col-8 " >
                     <p>Nombre</p>
-                    <div class="input-group">
-                        <textarea class="form-control TEXTAREA2" name="nombre" placeholder="Nombre" aria-label="nombre"  
+                        <textarea class="form-control" style={{height:"112px" }} name="nombre" placeholder="Nombre" aria-label="nombre"  
                             onChange={handleChange} value={notaSeleccionada && notaSeleccionada.nombre}/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class = "col-3" >
-                    <p>Peso</p>
-                    <div class="input-group">
-                      <input type="number" min="1" class="form-control" name="peso" placeholder="Peso" aria-label="peso"  
-                          onChange={handleChange} value={notaSeleccionada && notaSeleccionada.peso}/>
-                    </div>
                 </div>
             </div>
 
             <div class="row">
                     <p>Nombre de la evaluación seleccionada</p>
                     <div class = "row">
-                        <div className = "col-11 mb-2">
+                        <div className = "col-11">
                             <input type='text'  className="form-control" id="nombreEvaluacion" name="nombreEvaluacion"  disabled
                              value={evaluacion && evaluacion.nombre}/>
                         </div> 
-                        <div class="INSERTAR-BOTONES col-1">
-                            <button title="Buscar" type="button" onClick={() => {setShow(true)}} class=" btn btn-primary fs-4 fw-bold BUSCAR" >
+                        <div class="col-1">
+                            <button title="Buscar evaluaciones del curso" type="button" onClick={() => {setShow(true)}} class=" btn BOTON-ICON" >
                                 <RiIcons.RiSearch2Line />
                             </button>
                         </div>
@@ -322,14 +311,14 @@ function DatoSistEvaluacionV2()  {
                                                   listaEvaluaciones = {listaEvaluaciones}  
                         />}
                     </div>  
-                    <div class="row INSERTAR-BOTONES">                            
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end" >
-                            <button title="Añadir evaluación" class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>agregarDatos(evaluacion)}  ><span>Añadir</span></button>
+                    <div class="row ">                            
+                        <div class="INSERTAR-BOTONES" >
+                            <button title="Añadir evaluación" class="btn AÑADIR" type="button" onClick={()=>agregarDatos(evaluacion)}  ><span>Añadir</span></button>
                         </div>
                     </div>   
                 </div>
 
-            <p class="HEADER-TEXT2 mt-3" >Evaluaciones</p>
+            <h2 >Evaluaciones</h2>
             <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
             <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
             <div class = "row LISTAR-TABLA-EV">
@@ -362,10 +351,10 @@ function DatoSistEvaluacionV2()  {
             </div>
 
 
-            <div class="row INSERTAR-BOTONES">                            
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button title="Guardar evaluación" class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()} ><span>Guardar</span></button>
-                    <button title="Cancelar " class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button" onClick={()=>{navigate("../sistEvaluacion")}}><span>Cancelar</span></button>
+            <div class="row ">                            
+                <div class="INSERTAR-BOTONES ">
+                    <button title="Guardar evaluación" class="btn  GUARDAR" type="button" onClick={()=>peticionSelecter()} ><span>Guardar</span></button>
+                    <button title="Cancelar " class="btn CANCELAR" type="button" onClick={()=>{navigate("../sistEvaluacion")}}><span>Cancelar</span></button>
                 </div>
             </div>
 

@@ -22,6 +22,20 @@ h3{
     padding-top: 10px;
     padding-bottom: 6px;
 }
+h4{
+    font-size: 22px; 
+    color: #042354;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 6px;
+}
+h5{
+    font-size: 17px; 
+    color: #042354;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 6px;
+}
 
 input, .form-control{
     height: 35px;
@@ -156,7 +170,19 @@ option{
     width: 1.7em;
     height: 1.7em;
 }
-
+.BTN-INFORMATION{
+    cursor: auto;
+}
+.BTN-INFORMATION svg{
+    color: #042354;
+    width: 1.5em;
+    height: 1.5em;
+}
+.BTN-INFORMATION:hover svg{
+    color: #042354;
+    width: 1.6em;
+    height: 1.6em;
+}
 /*------------------------------INSERTAR-BOTONES/REGISTRAR/GUARDAR/BUSCAR/AÑADIR/SIGUIENTE/CANCELAR--------------------------*/
 .INSERTAR-BOTONES{
     display: inline-flexbox;

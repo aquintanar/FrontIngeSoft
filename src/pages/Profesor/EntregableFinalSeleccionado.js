@@ -7,7 +7,9 @@ import {  useNavigate ,useParams} from 'react-router-dom';
 import axios from 'axios';
 import { useTable } from 'react-table';
 import * as BsIcons from 'react-icons/bs';
+import * as Heroicons from "react-icons/hi";
 import '../../stylesheets/Asesor.css'
+import  '../../stylesheets/General.css';
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
@@ -434,9 +436,8 @@ const {
     return(
       <div className='CONTAINERASESOR'>
       <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
-     <h1 className='HEADER-TEXT1'>Entregable Final-{ location.state.tituloDoc }</h1>
-     <br></br>
-     <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
+      <h1 >Entregable Final - { location.state.tituloDoc }</h1>
+      <h2 >Alumno - {location.state.nombres} { location.state.apellidoPat } {location.state.apellidoMat}</h2>
      <div className='ContenidoPrincipal'>
      <table   {...getTableProps()} style={{minWidth: 650, borderCollapse: 'separate',
  borderSpacing: '0px 15px'}}>
@@ -480,7 +481,7 @@ const {
       })}
       </tbody>
     </table>
-    <p class="HEADER-TEXT3">Documentos Enviados por el Alumno: </p>
+    <h4>Documentos enviados por el alumno: </h4>
     <PreviewList>
 {((location.state.idVersion >= 0) ? documentosVersionAlumno.map((documentos) => {
                 return (
@@ -493,9 +494,16 @@ const {
              }): " ")} </PreviewList>
  
      <br></br>
-     <h4  className='HEADER-TEXT3'> Ingrese la nota, comentario y guarde por cada rubro.Luego agrege un archivo , un comentario general y seleccione Guardar:</h4>
-     <br></br>
-     <h3 className='HEADER-TEXT5'>Rúbrica de Evaluación</h3>
+     <h5 style={{display:"none"}}> *Ingrese los puntajes, comentarios y guarde por cada rubro. Luego agrege un archivo, un comentario general y seleccione Guardar.</h5>
+     <div class = "row">
+          <div class="col-11">
+            <h4 >Rúbrica de Evaluación</h4>
+          </div>
+          <div style={{alignContent:"center", marginTop:"7px" }} class="col-1 BTN-INFORMATION" title="Ingrese el puntaje, comentario y guarde por cada rubro. Luego agrege un archivo, un comentario general y seleccione Guardar.">
+             <Heroicons.HiInformationCircle/> 
+          </div>
+     </div>
+
      <div className = "row LISTAR-TABLA">
      <div className=" col-12  ">
        <table className='table fs-6 '>
@@ -535,11 +543,12 @@ const {
        </table>
      </div>
    </div>
-   <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
+   
+        <h4>Nota asignada: {suma}</h4>
+        <h4>Documentos Enviados:</h4>
+        <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
        tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}})} >
         Agregar Documentos de Retroalimentación</p>
-   <p className="HEADER-TEXT2">Nota Asignada : {suma}</p>
-   <p className="HEADER-TEXT3">Documentos Enviados:</p>
         <PreviewList>
 {((location.state.idVersion >= 0) ? 
 
@@ -553,20 +562,19 @@ documentosVersionDocente.map((documentos) => {
            
          );
              }): " ")} </PreviewList>
-   <div className = "DATOS">
-             <div className = "col-12">
-                 
-                 <div className="text-start fs-5 fw-normal "><p>Comentarios Generales</p></div>
-                 <div className="input-group input-group-lg mb-3">
-                     <textarea className="form-control" name="comentarios" placeholder="Comentarios" aria-label="comentarios"  
+   <div className = "">
+              <div className = "col-12">
+                 <p>Comentarios Generales</p>
+                 <div className="input-group-lg">
+                     <textarea className="form-control form-control2" name="comentarios" placeholder="Comentarios" aria-label="comentarios"  
                        onChange={(e) => handleChangeComentario(e)}/>
                  </div>
              </div>
          </div>
          <br></br>
       <div className="row">                            
-              <div className="LISTAR-BOTON">      
-              <button onClick={()=>openAprobarModal()} className="btn btn-success fs-4 fw-bold mb-3 me-3 "  type="button">Guardar</button>
+              <div className="INSERTAR-BOTONES ">      
+              <button onClick={()=>openAprobarModal()} className="btn GUARDAR"  type="button">Guardar</button>
               </div>
         </div>
         </div>
