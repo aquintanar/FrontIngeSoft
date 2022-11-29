@@ -22,12 +22,14 @@ import Entregable from "./pages/Comite/Entregable";
 import DatosRubrica from "./pages/Comite/DatosRubrica";
 import EntregablesFinales from "./pages/Profesor/EntregablesFinales";
 import EntregableFinalSeleccionado from './pages/Profesor/EntregableFinalSeleccionado';
+import Informacion from './pages/Profesor/Informacion'
 function Profesor() {
     return (
     <div>    
             <SidebarProfesor/>    
             <BarraVolver/>
                 <Routes>
+                  <Route path='Informacion' exact element= {<Informacion/>}/>
                   <Route path='alumnos' exact element= {<Alumnos/>}/>
                   <Route path='alumnos/alumnoSeleccionado' exact element= {<AlumnoSeleccionado/>}/>
                   <Route path='alumnos/alumnoSeleccionado/perfil/:id' exact element= {<DatosAlumno/>}/>

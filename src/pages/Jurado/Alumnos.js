@@ -134,6 +134,7 @@ function Alumnos() {
               </div>
           </div>
           <div className="ContenidoPrincipal">
+          <h2>Seleccione un alumno para ver su portafolio de entregables:</h2>
         <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
         <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
         <table   {...getTableProps()} style={{minWidth: 650, borderCollapse: 'separate',

@@ -6,7 +6,7 @@ import * as ImIcons from 'react-icons/im';
 export const SidebarData = [
     {
         title: 'Información',
-        path: '',
+        path: 'Informacion',
         icon: <BsIcons.BsPencil />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
