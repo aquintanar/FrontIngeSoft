@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../stylesheets/Comite.css";
+import "../../stylesheets/General.css";
 import { Button } from "@material-ui/core";
 import { ModalConfirmación, ModalPregunta } from "../../components/Modals";
 import useModal from "../../hooks/useModals";
@@ -266,13 +267,13 @@ function DatosCurso() {
   return (
     <div class="CONTAINERADMIN">
       <div class="row">
-        <p class="HEADER-TEXT1">Gestión de Curso</p>
-        <p class="HEADER-TEXT2">Registro de Curso - {subTitulo} </p>
+        <h1>Gestión de Curso</h1>
+        <h2>Registro de Curso - {subTitulo} </h2>
         <h5 >*Recuerde crear cursos solo de la especialidad que es coordinador</h5>
       </div>
-      <div class="row DATOS">
+      <div class="row ">
         <div class="col-12">
-          <div class="  fs-5 fw-normal  mb-1 ">Nombre del curso</div>
+          <p>Nombre del curso</p>
           <input
             onChange={cambioTitulo}
             type="text"
@@ -284,13 +285,13 @@ function DatosCurso() {
           />
         </div>
       </div>
-      <div class="row DATOS">
+      <div class="row">
         <div class="col-4">
-          <div class="  fs-5 fw-normal  mb-1 ">Seleccione Facultad</div>
+          <p>Seleccione Facultad</p>
           {
             <select
-              select
-              class="form-select Cursor"
+              select disabled
+              class="form-select "
               aria-label="Default select example"
               onChange={cambioSelectFac}
               selected
@@ -306,10 +307,10 @@ function DatosCurso() {
           }
         </div>
         <div class="col-4">
-          <div class="  fs-5 fw-normal  mb-1 ">Seleccione Especialidad</div>
+          <p>Seleccione Especialidad</p>
           <select
-            select
-            class="form-select Cursor"
+            select disabled
+            class="form-select "
             aria-label="Default select example"
             onChange={cambioSelectEsp}
             selected
@@ -327,10 +328,10 @@ function DatosCurso() {
           </select>
         </div>
         <div class="col-4">
-          <div class="  fs-5 fw-normal  mb-1 ">Seleccione Semestre</div>
+          <p>Seleccione Semestre</p>
           <select
             select
-            class="form-select Cursor"
+            class="form-select"
             aria-label="Default select example"
             onChange={cambioSelectSem}
             selected
@@ -452,23 +453,23 @@ function DatosCurso() {
         </div>
       </ModalConfirmación>
 
-      <div class="row INSERTAR-BOTONES">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <div class="row ">
+        <div class="INSERTAR-BOTONES">
           <button
-            class="btn btn-primary fs-4 fw-bold   CANCELAR"
+            class="btn GUARDAR" title="Guardar curso"
+            type="button"
+            onClick={() => peticionSelecter()}
+          >
+            <span>Guardar</span>
+          </button>
+          <button
+            class="btn CANCELAR" title="Cancelar"
             type="button"
             onClick={() => {
               navigate("../GestionarCurso");
             }}
           >
             <span>Cancelar</span>
-          </button>
-          <button
-            class="btn btn-primary fs-4 fw-bold GUARDAR"
-            type="button"
-            onClick={() => peticionSelecter()}
-          >
-            <span>Guardar</span>
           </button>
         </div>
       </div>

@@ -290,9 +290,9 @@ function ListaFacultad() {
           </Button>
         </div>
       </ModalConfirmación>
-      <div className="d-grid gap-2 d-md-flex justify-content-md-end INSERTAR-BOTONES ">
+      <div className="INSERTAR-BOTONES ">
         <button title="Registrar facultad"
-          className="btn btn-primary fs-4 fw-bold mb-3 REGISTRAR"
+          className="btn REGISTRAR"
           onClick={() => {
             navigate("datosFacultad/0");
           }}

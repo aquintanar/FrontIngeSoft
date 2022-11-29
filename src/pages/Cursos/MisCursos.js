@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../stylesheets/Comite.css";
+import "../../stylesheets/General.css";
 import axios from "axios";
 import * as FaIcons from "react-icons/fa";
 import * as BootIcons from "react-icons/bs";
@@ -37,33 +38,75 @@ function MisCursos() {
     setSearch(e.target.value);
   };
 
-  if (!search && !selFac) {
-    //sin filtro
-    filtrado = data;
-  } else {
-    if (search && selFac && selSem && selEsp) {
-      //ambos filtros
-      filtrado = data.filter((dato) =>
-        dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())
-      );
-      filtrado = data.filter((dato) => dato.idFacultad === selFac);
-      filtrado = data.filter((dato) => dato.idSemestre === selSem);
-      filtrado = data.filter((dato) => dato.idEspecialidad === selEsp);
+  if(!search && !selFac && !selSem && !selEsp){//sin filtro
+    filtrado=data;
+    console.log(data)
+  }
+  else{
+    if(search && selFac && selSem && selEsp){//ambos filtros
+      filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+      filtrado=filtrado.filter((dato)=>dato.idFacultad===selFac) ;
+      filtrado=filtrado.filter((dato)=>dato.idSemestre===selSem) ;
+      filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ;
     }
-    if (selFac)
-      //filtro por facultad
-      filtrado = data.filter((dato) => dato.idFacultad === selFac);
-    if (selSem)
-      //filtro por facultad
-      filtrado = data.filter((dato) => dato.idSemestre === selSem);
-    if (selEsp)
-      //filtro por facultad
-      filtrado = data.filter((dato) => dato.idEspecialidad === selEsp);
-    if (search)
-      //filtro por nombre
-      filtrado = data.filter((dato) =>
-        dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())
-      );
+    else{
+      if(search && selFac && selSem){
+        filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+        filtrado=filtrado.filter((dato)=>dato.idFacultad===selFac) ;
+        filtrado=filtrado.filter((dato)=>dato.idSemestre===selSem) 
+      }
+      else if(search && selFac && selEsp){
+        filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+        filtrado=filtrado.filter((dato)=>dato.idFacultad===selFac) ;
+        filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ; 
+      }
+      else if(search && selSem && selEsp){
+        filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+        filtrado=filtrado.filter((dato)=>dato.idSemestre===selSem) 
+        filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ; 
+      }
+      else if(selFac && selSem && selEsp){
+        filtrado=data.filter((dato)=>dato.idFacultad===selFac) ;
+        filtrado=filtrado.filter((dato)=>dato.idSemestre===selSem) ;
+        filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ;
+      }
+      else{
+        if(search && selFac){
+          filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+          filtrado=filtrado.filter((dato)=>dato.idFacultad===selFac) ;
+        }
+        else if(search && selSem){
+          filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+          filtrado=filtrado.filter((dato)=>dato.idSemestre===selSem) 
+        }
+        else if(search && selEsp){
+          filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+          filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ;
+        }
+        else if(selFac && selSem){
+          filtrado=data.filter((dato)=>dato.idFacultad===selFac) ;
+          filtrado=filtrado.filter((dato)=>dato.idSemestre===selSem) 
+        }
+        else if(selFac && selEsp){
+          filtrado=data.filter((dato)=>dato.idFacultad===selFac) ;
+          filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ;
+        }
+        else if(selSem && selEsp){
+          filtrado=data.filter((dato)=>dato.idSemestre===selSem)
+          filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ; 
+        }
+        else {
+          if(selFac)//filtro por facultad
+            filtrado=data.filter((dato)=>dato.idFacultad===selFac) ;
+          if(selSem)//filtro por facultad
+            filtrado=data.filter((dato)=>dato.idSemestre===selSem) ;
+          if(selEsp)//filtro por facultad
+            filtrado=data.filter((dato)=>dato.idEspecialidad===selEsp) ;
+          if(search)//filtro por nombre
+            filtrado=data.filter((dato)=>dato.nombre.toLowerCase().includes(search.toLocaleLowerCase())) ;
+        }
+      }
+    }
   }
 
   const cambioSelectFacus = (e) => {
@@ -248,28 +291,28 @@ function MisCursos() {
 
   return (
     <div className="CONTAINERCOMITE">
-      <h1 className="HEADER-TEXT1">Mis Cursos</h1>
+      <h1>Mis Cursos</h1>
       <div class="row">
-        <div class="col-9 FILTRO-LISTAR-BUSCAR">
+        <div class="col-9 ">
           <p>Ingrese el nombre del curso</p>
-          <div class="input-group  ">
+          
             <input
               size="10"
-              type="text"
+              type="search"
               value={search}
-              class="form-control"
+              class="form-control icon-search"
               name="search"
               placeholder="Nombre del curso"
               aria-label="serach"
               onChange={buscador}
             />
-          </div>
+          
         </div>
-        <div class="col-3 FILTRO-LISTAR">
+        <div class="col-3">
           <p>Seleccione Semestre</p>
           <select
             select
-            class="form-select Cursor"
+            class="form-select"
             aria-label="Default select example"
             onChange={cambioSelectSemm}
           >
@@ -285,11 +328,11 @@ function MisCursos() {
         </div>
       </div>
       <div class="row">
-        <div class="col-6 FILTRO-LISTAR">
+        <div class="col-6 ">
           <p>Seleccione facultad</p>
           <select
             select
-            class="form-select Cursor"
+            class="form-select "
             aria-label="Default select example"
             onChange={cambioSelectFacus}
           >
@@ -303,11 +346,11 @@ function MisCursos() {
             ))}
           </select>
         </div>
-        <div class="col-6 FILTRO-LISTAR">
+        <div class="col-6">
           <p>Seleccione especialidad</p>
           <select
             select
-            class="form-select Cursor"
+            class="form-select "
             aria-label="Default select example"
             onChange={cambioSelectEspp}
           >
@@ -344,7 +387,7 @@ function MisCursos() {
             </thead>
             <tbody>
               {filtrado.map((curso) => (
-                <tr key={curso.idCurso}>
+                <tr key={curso.idCurso} style={{cursor: "pointer"}} >
                   <td>{curso.idCurso}</td>
                   <td>{curso.nombre}</td>
                   <td>{curso.nombreSemestre}</td>

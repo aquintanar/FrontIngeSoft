@@ -32,6 +32,16 @@ input, .form-control{
     width: 100%;
 }
 
+input[type="checkbox"] {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    height: 15px;
+    width: auto;
+    margin-right: 10px;
+}
+
 .form-control2{
     height: 70px;
 }
@@ -192,6 +202,10 @@ option{
 .INSERTAR-BOTONES .GUARDAR{
     background-color: #042354;
 }
+.INSERTAR-BOTONES .AGREGAR-CURSO{
+    background-color: #042354;
+    width: 150px;
+}
 .INSERTAR-BOTONES .BUSCAR{
     background-color: #042354;
     height: 30px;
@@ -209,6 +223,9 @@ option{
     background-color: #B80000;
 }
 .INSERTAR-BOTONES .GUARDAR:hover{
+    background-color: #2179D4;
+}
+.INSERTAR-BOTONES .AGREGAR-CURSO:hover{
     background-color: #2179D4;
 }
 .INSERTAR-BOTONES .REGISTRAR:hover{
@@ -230,6 +247,9 @@ option{
     content:'\1F5D9';
 }
 .INSERTAR-BOTONES .AÑADIR span:after{
+    content:'\002B';
+}
+.INSERTAR-BOTONES .AGREGAR-CURSO span:after{
     content:'\002B';
 }
 .INSERTAR-BOTONES .descargar span:after{
