@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 //import './DatosFacultad.css';
 import * as BsIcons from "react-icons/bs";
 import "../../stylesheets/Administrador.css";
+import "../../stylesheets/General.css";
 import "../../stylesheets/Comite.css";
 import useModal from "../../hooks/useModals";
 import { ModalPregunta, ModalConfirmación } from "../../components/Modals";
@@ -277,14 +278,14 @@ const ReporteAlumnos = () => {
 
   return (
     <div className="CONTAINERADMIN">
-      <p class="HEADER-TEXT1">Reporte de Tesis Susentantadas y Pendientes</p>
-      <p class="HEADER-TEXT2">Previsualización</p>
+      <h1>Reporte de Tesis Susentantadas y Pendientes</h1>
+      <h2>Previsualización</h2>
 
       <div className="FONDO-TESIS">
         <div className="HEADER-TEXTO">
           
         </div>
-        <p class="HEADER-TEXT2">Temas por Alumno : </p>
+        <h2>Temas por Alumno : </h2>
         <button onClick={previousPage} className="PAGINACION-BTN">
           <BsIcons.BsCaretLeftFill />
         </button>

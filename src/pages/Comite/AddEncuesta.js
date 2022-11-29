@@ -4,6 +4,7 @@ import * as BsIcons from 'react-icons/bs';
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import '../../stylesheets/Administrador.css'
+import '../../stylesheets/General.css'
 import '../../stylesheets/Calendar.css'
 import '../../stylesheets/DatePicker.css';
 import useModal from '../../hooks/useModals';
@@ -175,17 +176,17 @@ const AddEncuesta = () => {
     return(
              
         <div class ="CONTAINERADMIN ">
-            <p class="HEADER-TEXT1 mb-4">Encuesta de satisfacción</p>
-            <p class="HEADER-TEXT2 mt-5" >Registrar encuesta</p>
-            <div class="row DATOS" >
-                <p>Nombre de la encuesta:</p>
-                <div className = " input-group col-md-12 mb-3">
-                    <input  type='text' className="form-control" id="nombre" name="nombre" placeholder="Nombre de la Encuesta"
+            <h1 >Encuesta de satisfacción</h1>
+            <h2 >Registrar encuesta</h2>
+            <div class="row " >
+                <div className = " col-md-8 mb-3">
+                    <p>Nombre de la encuesta:</p>
+                    <input  type='search' className="form-control icon-search" id="nombre" name="nombre" placeholder="Nombre de la Encuesta"
                     onChange={handleChange}/>
                 </div>
-                <div class="col-lg-3 FILTRO-LISTAR" >
+                <div class="col-lg-4 " >
                     <div class=" fs-5 fw-normal  mb-1 "><p>Seleccione el Curso</p></div>
-                    <select select class="form-select Cursor" aria-label="Default select example" onChange={cambioSelect}>
+                    <select select class="form-select" aria-label="Default select example" onChange={cambioSelect}>
                         
                         <option selected value = "0">Cursos disponibles</option>
                         {cursos.map(elemento =>(
@@ -194,12 +195,12 @@ const AddEncuesta = () => {
                     </select>
                 </div>
             </div>
-            <div class="row INSERTAR-BOTONES">                            
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>buscarEncuestaxCurso()}><span>Añadir</span></button>
+            <div class="row">                            
+                <div class="INSERTAR-BOTONES">
+                    <button class="btn AÑADIR" title="Añadir encuesta" type="button" onClick={()=>buscarEncuestaxCurso()}><span>Añadir</span></button>
                 </div>
             </div>   
-            <p class="HEADER-TEXT2 mt-5" >Lista de encuestas</p>
+            <h2  >Lista de encuestas</h2>
             <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
             <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
             <div class = "row LISTAR-TABLA">
@@ -218,8 +219,8 @@ const AddEncuesta = () => {
                             <td >{encuestas.idEncuesta}</td>                   
                             <td>{encuestas.nombre}</td>
                             <td>
-                            <button class="btn BTN-ACCIONES" onClick={()=>{navigate("lista/"+encuestas.idEncuesta)}}> <FaIcons.FaEdit /></button>
-                            <button  class=" btn BTN-ACCIONES" onClick={()=>{seleccionarEncuesta(encuestas.idEncuesta)}}> <BootIcons.BsTrash /></button>
+                            <button class="btn BTN-ACCIONES" title="Modificar encuesta" onClick={()=>{navigate("lista/"+encuestas.idEncuesta)}}> <FaIcons.FaEdit /></button>
+                            <button  class=" btn BTN-ACCIONES" title="Eliminar encuesta" onClick={()=>{seleccionarEncuesta(encuestas.idEncuesta)}}> <BootIcons.BsTrash /></button>
                             </td>
                         </tr>
                     ))}

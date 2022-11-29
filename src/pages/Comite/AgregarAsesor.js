@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {  useNavigate } from 'react-router-dom';
 import '../../stylesheets/Comite.css'
+import '../../stylesheets/General.css'
 import axios from 'axios';
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
@@ -248,35 +249,33 @@ function ListarAsesoresNoEstan()  {
 
   return(
       <div className="CONTAINERCOMITE">
-          <p className="HEADER-TEXT1">Agregar asesores</p>
-          <p class="HEADER-TEXT2">Búsqueda de asesores </p>
+          <h1>Agregar asesores</h1>
+          <h2>Búsqueda de asesores </h2>
           <div class="row">
-            <div class="col-12 FILTRO-LISTAR-BUSCAR" >
+            <div class="col-8" >
                 <p>Ingrese el nombre del asesor</p>
-                <div class="input-group">
-                    <input size="10" type="text" value={search} class="form-control" name="search" placeholder="Nombre del asesor" aria-label="serach" onChange={buscador}/>
-                </div>
+                <input size="10" type="search" value={search} class="form-control icon-search" name="search" placeholder="Nombre del asesor" aria-label="serach" onChange={buscador}/>
             </div>
-            <div class="col-4 FILTRO-LISTAR" >
+            <div class="col-4 " >
                 <p>Seleccione especialidad</p>
-                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelectEspp}>
+                <select select class="form-select " aria-label="Default select example" onChange= {cambioSelectEspp}>
                     <option selected value = "0">Todos</option>
                     {esp.map(elemento=>(
                       <option key={elemento.idEspecialidad} value={elemento.idEspecialidad}>{elemento.nombre}</option>  
                     ))} 
                 </select>
               </div>
-              <div class="col-4 FILTRO-LISTAR" >
+              <div class="col-4 " >
                 <p> ¿Tiene asesorado?</p>
-                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioTieneAlum} >
+                <select select class="form-select " aria-label="Default select example" onChange= {cambioTieneAlum} >
                       <option key={0} value = {0}>Todos</option>
                       <option key={1} value = {1}>Sí</option>
                       <option key={2} value={2}>No</option>
                 </select>
               </div>
-              <div class="col-4 FILTRO-LISTAR" >
+              <div class="col-4" >
                 <p> ¿Está observado?</p>
-                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioEstaObservado} >
+                <select select class="form-select " aria-label="Default select example" onChange= {cambioEstaObservado} >
                       <option key={0} value = {0}>Todos</option>
                       <option key={1} value = {1}>Sí</option>
                       <option key={2} value={2}>No</option>
@@ -284,7 +283,7 @@ function ListarAsesoresNoEstan()  {
               </div>
           </div>
 
-        <p class="HEADER-TEXT2 mt-5" >Lista de asesores no asignados</p>
+        <h2>Lista de asesores no asignados</h2>
         <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
         <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
         <div class = "row LISTAR-TABLE">
@@ -358,9 +357,9 @@ function ListarAsesoresNoEstan()  {
             </div>
           </ModalConfirmación>
 
-            <div class="row INSERTAR-BOTONES">                            
-              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../asesor")}}><span>Cancelar</span></button>
+            <div class="row">                            
+              <div class="INSERTAR-BOTONES">
+              <button class="btn CANCELAR" title="Cancelar" type="button" onClick={()=>{navigate("../asesor")}}><span>Cancelar</span></button>
               </div>
           </div>
           

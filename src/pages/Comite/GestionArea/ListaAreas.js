@@ -135,8 +135,8 @@ function ListaAreas()  {
                 </tr>
                 ))}
 
-            <div className='d-grid gap-2 d-md-flex justify-content-md-end INSERTAR-BOTONES '>
-                <button title="Registrar área" className='btn btn-primary fs-4 fw-bold mb-3 REGISTRAR' onClick={()=>{ revisarCoordinador()}} ><span>Registrar</span></button>
+            <div className='INSERTAR-BOTONES '>
+                <button title="Registrar área" className='btn REGISTRAR' onClick={()=>{ revisarCoordinador()}} ><span>Registrar</span></button>
             </div> 
             <ToastContainer/>
             <ModalPregunta      isOpen={isOpenDeleteModal}      closeModal={closeDeleteModal}   procedimiento = "eliminar"  

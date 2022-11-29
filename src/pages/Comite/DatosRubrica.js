@@ -270,7 +270,7 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
     return (      
         <div class ="CONTAINERADMIN " >   
     
-        <p class="HEADER-TEXT1 mb-5">Datos Rúbrica</p>
+        <h1 class=" mb-5">Datos Rúbrica</h1>
 
 
         <div class=" row" >
@@ -278,9 +278,7 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
                 <p>Entrega o Presentación</p>
             </div>
             <div class="col">
-                <div class="input-group ">
-                    <input type="text" disabled class="form-control" name="entregable" placeholder="Entrega o presentación" value={entregable.nombre}/>
-                </div>
+                <input type="text" disabled class="form-control" name="entregable" placeholder="Entrega o presentación" value={entregable.nombre}/>
             </div>
         </div>
 
@@ -289,10 +287,8 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
                 <p>Rubro</p>
             </div>
             <div class="col">
-                <div class="input-group  ">
                     <input type="text"  class="form-control" name="rubro" placeholder="Rubro" 
                           onChange={handleChange} value={rubricaSeleccionada && rubricaSeleccionada.rubro} />
-                </div>
             </div>
         </div>
 
@@ -313,20 +309,18 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
                 <p>Puntaje Máximo</p>
             </div>
             <div class="col-3">
-                <div class="input-group  ">
                     <input type="number" min={1} max={max} class="form-control" name="puntajeMaximo" placeholder="Puntaje"  
                           onChange={handleChange} value={rubricaSeleccionada && rubricaSeleccionada.puntajeMaximo} />
-                </div>
             </div>
         </div>
 
-        <div class="row INSERTAR-BOTONES">                            
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>agregaDatos()}><span>Añadir</span></button>
+        <div class="row">                            
+                <div class="INSERTAR-BOTONES">
+                    <button class="btn AÑADIR" title='Agregar rúbrica' type="button" onClick={()=>agregaDatos()}><span>Añadir</span></button>
                 </div>
         </div>   
   
-          <p class="HEADER-TEXT2 mt-0" >Rúbrica</p>
+          <h2 class=" mt-0" >Rúbrica</h2>
           <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
           <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
           <div class = "row LISTAR-TABLA-EV mb-1">
@@ -347,8 +341,8 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
                         <td >{elemento.nivelDeseado}</td>    
                         <td>{elemento.puntajeMaximo}</td>    
                         <td>
-                        <button class="btn BTN-ACCIONES" onClick={()=>cargaRub(elemento)}> <FaIcons.FaEdit /></button>
-                        <button  class=" btn BTN-ACCIONES" onClick={()=>quitaRubro(elemento)}> <BootIcons.BsTrash /></button>
+                        <button class="btn BTN-ACCIONES" title='Modificar rúbrica' onClick={()=>cargaRub(elemento)}> <FaIcons.FaEdit /></button>
+                        <button  class=" btn BTN-ACCIONES" title='Eliminar rúbrica' onClick={()=>quitaRubro(elemento)}> <BootIcons.BsTrash /></button>
                         </td>
                     </tr>
                   ))}
@@ -402,10 +396,10 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
               </div>
             </ModalConfirmación>
           
-            <div class="row INSERTAR-BOTONES">                            
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button"  onClick={()=>peticionSelecter()}><span>Guardar</span></button>
-                    <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button"  onClick={()=>{navigate("../preparacion/entregables")}}><span>Cancelar</span></button>
+            <div class="row ">                            
+                <div class="INSERTAR-BOTONES">
+                    <button class="btn GUARDAR" title='Guardar entrega o presentación' type="button"  onClick={()=>peticionSelecter()}><span>Guardar</span></button>
+                    <button class="btn CANCELAR" title="Cancelar" type="button"  onClick={()=>{navigate("../preparacion/entregables")}}><span>Cancelar</span></button>
                 </div>
             </div>           
         </div>              

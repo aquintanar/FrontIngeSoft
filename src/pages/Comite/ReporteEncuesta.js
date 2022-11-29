@@ -293,12 +293,12 @@ const ReporteEncuesta = () => {
 
   return (
     <div className="CONTAINERADMIN">
-      <p class="HEADER-TEXT1">Reporte de Encuesta</p>
-      <p class="HEADER-TEXT2">Previsualización</p>
+      <h1>Reporte de Encuesta</h1>
+      <h2>Previsualización</h2>
 
       <div className="FONDO-TESIS">
         <div className="HEADER-TEXTO"></div>
-        <p class="HEADER-TEXT2">Encuestas del Ciclo : </p>
+        <h2>Encuestas del Ciclo : </h2>
         <button onClick={previousPage} className="PAGINACION-BTN">
           <BsIcons.BsCaretLeftFill />
         </button>
@@ -330,9 +330,9 @@ const ReporteEncuesta = () => {
               </tbody>
             </table>
           </div>
-          <div className="d-grid gap-2 d-md-flex justify-content-md-end LISTAR-BOTON ">
+          <div className="INSERTAR-BOTONES">
             <button
-              className="btn btn-primary fs-4 fw-bold mb-3 "
+              className="btn  REGISTRAR"
               onClick={() => exportToExcel()}
             >
               <span>Excel</span>

@@ -262,7 +262,6 @@ function ListarAsesores() {
       <div class="row">
         <div class="col-7 ">
           <p>Ingrese el nombre del asesor</p>
-          <div class="input-group">
             <input
               size="10"
               type="search"
@@ -273,7 +272,6 @@ function ListarAsesores() {
               aria-label="serach"
               onChange={buscador}
             />
-          </div>
         </div>
 
         <div class="col-5 ">
@@ -369,7 +367,7 @@ function ListarAsesores() {
                   <td>{asesor.correo}</td>
                   <td>
                     <button
-                      class="btn BTN-ACCIONES"
+                      class="btn BTN-ACCIONES" title="Ver perfil"
                       onClick={() => {
                         navigate("DatosAsesor/" + asesor.idAsesor);
                       }}
@@ -378,7 +376,7 @@ function ListarAsesores() {
                       <BsIcons.BsEye />
                     </button>
                     <button
-                      class=" btn BTN-ACCIONES"
+                      class=" btn BTN-ACCIONES" title="Retirar asesor del curso"
                       onClick={() => seleccionarAsesor(asesor)}
                     >
                       {" "}
@@ -430,15 +428,15 @@ function ListarAsesores() {
         </div>
       </ModalConfirmación>
 
-      <div className="d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON ">
+      <div className="INSERTAR-BOTONES">
         <button
-          className="btn btn-primary fs-4 fw-bold mb-3 "
+          className="btn AGREGAR-CURSO" title='Agregar asesor al curso'
           onClick={() => {
             revisarCoordinador();
           }}
         >
           {" "}
-          Agregar asesor
+          <span>Agregar asesor</span>
         </button>
       </div>
       <ToastContainer />

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../stylesheets/Comite.css";
+import "../../stylesheets/General.css";
 import axios from "axios";
 import * as FaIcons from "react-icons/fa";
 import * as BootIcons from "react-icons/bs";
@@ -122,27 +123,25 @@ function ListarDocentes() {
   };
   return (
     <div className="CONTAINERCOMITE">
-      <p className="HEADER-TEXT1">Gestión de Docentes</p>
-      <p class="HEADER-TEXT2">Búsqueda de docentes </p>
+      <h1>Gestión de Docentes</h1>
+      <h2>Búsqueda de docentes </h2>
       <div class="row">
-        <div class="col FILTRO-LISTAR-BUSCAR">
+        <div class="col-8">
           <p>Ingrese el nombre del docente</p>
-          <div class="input-group">
             <input
               size="10"
-              type="text"
+              type="search"
               value={search}
-              class="form-control"
+              class="form-control icon-search"
               name="search"
               placeholder="Nombre del docente"
               aria-label="serach"
               onChange={buscador}
             />
-          </div>
         </div>
       </div>
 
-      <p class="HEADER-TEXT2 mt-0">Lista de docentes en el curso</p>
+      <h2>Lista de docentes en el curso</h2>
       <button onClick={previousPage} className="PAGINACION-BTN">
         <BsIcons.BsCaretLeftFill />
       </button>
@@ -168,7 +167,7 @@ function ListarDocentes() {
                   <td>{asesor.correo}</td>
                   <td>
                     <button
-                      class="btn BTN-ACCIONES"
+                      class="btn BTN-ACCIONES" title="Ver perfil"
                       onClick={() => {
                         navigate("DatosDocente/" + asesor.idDocente);
                       }}
@@ -177,7 +176,7 @@ function ListarDocentes() {
                       <BsIcons.BsEye />
                     </button>
                     <button
-                      class=" btn BTN-ACCIONES"
+                      class=" btn BTN-ACCIONES" title="Retirar docente del curso"
                       onClick={() => seleccionarAsesor(asesor)}
                     >
                       {" "}
@@ -229,15 +228,15 @@ function ListarDocentes() {
         </div>
       </ModalConfirmación>
 
-      <div className="d-grid gap-2 d-md-flex justify-content-md-end LISTAR-ESPECIALIDADES-BOTON ">
+      <div className="INSERTAR-BOTONES">
         <button
-          className="btn btn-primary fs-4 fw-bold mb-3 "
+          className="btn AGREGAR-CURSO" title="Agregar docente al curso"
           onClick={() => {
             revisarCoordinador();
           }}
         >
           {" "}
-          Agregar docente
+          <span>Agregar docente</span>
         </button>
         <ToastContainer/>
       </div>

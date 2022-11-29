@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../stylesheets/Comite.css";
+import "../../stylesheets/General.css";
 import axios from "axios";
 import * as BsIcons from "react-icons/bs";
 import useModal from "../../hooks/useModals";
@@ -133,29 +134,27 @@ function ListarAlumnosNoEstan() {
 
   return (
     <div className="CONTAINERCOMITE">
-      <p className="HEADER-TEXT1">Agregar alumnos</p>
-      <p class="HEADER-TEXT2">Búsqueda de alumnos</p>
+      <h1>Agregar alumnos</h1>
+      <h2>Búsqueda de alumnos</h2>
       <div class="row">
-        <div class="col-12 FILTRO-LISTAR-BUSCAR">
+        <div class="col-8">
           <p>Ingrese el nombre del alumno</p>
-          <div class="input-group">
             <input
               size="10"
-              type="text"
+              type="search"
               value={search}
-              class="form-control"
+              class="form-control icon-search"
               name="search"
               placeholder="Nombre del alumno"
               aria-label="serach"
               onChange={buscador}
             />
-          </div>
         </div>
-        <div class="col-4 FILTRO-LISTAR">
+        <div class="col-4">
           <p> ¿Tiene tema?</p>
           <select
             select
-            class="form-select Cursor"
+            class="form-select "
             aria-label="Default select example"
             onChange={cambioEstaObservado}
           >
@@ -171,8 +170,8 @@ function ListarAlumnosNoEstan() {
           </select>
         </div>
       </div>
-      <p>*Solo se pueden agregar alumnos de la misma especialidad del curso</p>
-      <p class="HEADER-TEXT2 mt-5" >Lista de alumnos no asignados</p>
+      <p class="fw-bold">*Solo se pueden agregar alumnos de la misma especialidad del curso</p>
+      <h2>Lista de alumnos no asignados</h2>
       <button onClick={previousPage} className="PAGINACION-BTN">
         <BsIcons.BsCaretLeftFill />
       </button>
@@ -255,10 +254,10 @@ function ListarAlumnosNoEstan() {
         </div>
       </ModalConfirmación>
 
-      <div class="row INSERTAR-BOTONES">
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <div class="row ">
+        <div class="INSERTAR-BOTONES">
           <button
-            class="btn btn-primary fs-4 fw-bold CANCELAR"
+            class="btn AGREGAR-CURSO"  title="Crear cuenta al alumno"
             type="button"
             onClick={() => {
               navigate("../crearCuenta");
@@ -266,10 +265,8 @@ function ListarAlumnosNoEstan() {
           >
             <span>Crear Cuenta</span>
           </button>
-        </div>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           <button
-            class="btn btn-primary fs-4 fw-bold CANCELAR"
+            class="btn CANCELAR" title="Cancelar"
             type="button"
             onClick={() => {
               navigate("../alumno");

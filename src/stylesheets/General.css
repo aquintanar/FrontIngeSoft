@@ -202,9 +202,12 @@ option{
 .INSERTAR-BOTONES .GUARDAR{
     background-color: #042354;
 }
+.INSERTAR-BOTONES .DESCARGAR{
+    background-color: #042354;
+}
 .INSERTAR-BOTONES .AGREGAR-CURSO{
     background-color: #042354;
-    width: 150px;
+    width: 160px;
 }
 .INSERTAR-BOTONES .BUSCAR{
     background-color: #042354;
@@ -231,8 +234,14 @@ option{
 .INSERTAR-BOTONES .REGISTRAR:hover{
     background-color: #2179D4;
 }
+.INSERTAR-BOTONES .DESCARGAR:hover{
+    background-color: #2179D4;
+}
 .INSERTAR-BOTONES .AÑADIR:hover{
     background-color: #2179D4;
+}
+.INSERTAR-BOTONES .DESCARGAR span:after{
+    content: '\e615';
 }
 .INSERTAR-BOTONES .REGISTRAR span:after{
     content:'\002B';

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {  useNavigate, useParams } from 'react-router-dom';
 import '../../stylesheets/Comite.css'
+import '../../stylesheets/General.css'
 import axios from 'axios';
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
@@ -189,7 +190,7 @@ function DatosAsesor() {
 
   return(
       <div class="CONTAINERCOMITE">
-          <p className="HEADER-TEXT1">{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat + " " + asesorSeleccionado.apeMat}</p>
+          <h1>{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat + " " + asesorSeleccionado.apeMat}</h1>
           <div className='row'>
               <div className='col-8 PERFIL'>
                   <div class='BLOCK PERFIL-HEADER fw-bold'>{asesorSeleccionado.correo} </div>
@@ -200,14 +201,17 @@ function DatosAsesor() {
                     </div>
               </div>
           </div>
-          <div className='row INSERTAR-BOTONES'>
-              <div className='col-8'>
-                  <p> Cantidad máxima de asesorados:</p> <input onChange={cambioMax} type="number" id="maxAsesorados" name="maxAsesorados"
+          <div className='row '>
+            <p> Cantidad máxima de asesorados:</p> 
+              <div className='col-1'>
+                  <input  onChange={cambioMax} type="number" id="maxAsesorados" name="maxAsesorados"
                   min="0" max="10" value={max}/>
-                  <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>openEditModal()}><span>Guardar</span></button>
+              </div>
+              <div class="col-2 INSERTAR-BOTONES">
+                  <button class="btn  GUARDAR" style={{margin:"0px"}} type="button" onClick={()=>openEditModal()}><span>Guardar</span></button>
               </div>
           </div>
-          <div className='row INSERTAR-BOTONES'>
+          <div className='row' style={{marginBottom:"10px" }}>
               <div className='col-8'>
                   <p> Evaluaciones: </p>
               </div>
@@ -226,10 +230,10 @@ function DatosAsesor() {
                     }
             </div>
           </div>
-          <div class="row INSERTAR-BOTONES">                            
-              <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
-              <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button"><span>Observar</span></button>
-              <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../asesor")}}><span>Cancelar</span></button>
+          <div class="row ">                            
+              <div class="INSERTAR-BOTONES">
+              <button class="btn GUARDAR" type="button"><span>Observar</span></button>
+              <button class="btn CANCELAR" type="button" onClick={()=>{navigate("../asesor")}}><span>Cancelar</span></button>
               </div>
           </div>
 

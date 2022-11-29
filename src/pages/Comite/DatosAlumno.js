@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {  useNavigate, useParams } from 'react-router-dom';
 import '../../stylesheets/Comite.css'
+import '../../stylesheets/General.css'
 import axios from 'axios';
 import { type } from '@testing-library/user-event/dist/type';
 /*
@@ -109,7 +110,7 @@ function DatosAlumno() {
 
   return(
       <div class="CONTAINERCOMITE">
-          <p className="HEADER-TEXT1">{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat+ " " + asesorSeleccionado.apeMat}</p>
+          <h1>{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat+ " " + asesorSeleccionado.apeMat}</h1>
           <div className='row'>
             <div className='col-6 PERFIL'>
                     <div class='BLOCK PERFIL-HEADER fw-bold'>{asesorSeleccionado.correo} </div>

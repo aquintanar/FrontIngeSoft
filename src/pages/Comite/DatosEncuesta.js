@@ -1,6 +1,7 @@
 import React, { useState , useEffect} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../../stylesheets/Administrador.css';
+import '../../stylesheets/General.css'
 import axios from 'axios';
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
@@ -287,50 +288,50 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
     return (      
         <div class ="CONTAINERADMIN " >   
     
-        <p class="HEADER-TEXT1 mb-5">Datos Encuesta</p>
+        <h1 class=" mb-5">Datos Encuesta</h1>
 
 
-        <div class="DATOS row" >
+        <div class=" row" >
             <div class="col-2">
                 <p>Encuesta</p>
             </div>
             <div class="col">
-                <div class="input-group mb-3">
+                <div class="mb-3">
                     <input type="text" disabled class="form-control" name="entregable" placeholder="Nombre Encuesta" value={entregable.nombre}/>
                 </div>
             </div>
         </div>
 
-        <div class="DATOS row" >
+        <div class=" row" >
             <div class="col-2">
                 <p>Curso</p>
             </div>
             <div class="col">
-                <div class="input-group mb-3 ">
+                <div class="mb-3 ">
                     <input type="text" disabled class="form-control" name="rubro" placeholder="Curso" value={curso.nombre} />
                 </div>
             </div>
         </div>
 
-        <div class="DATOS row" >
+        <div class=" row" >
             <div class="col-2">
                 <p>Pregunta</p>
             </div>
             <div class="col">
-                <div class="input-group mb-3 ">
+                <div class="mb-3 ">
                     <input type="text" class="form-control" name="pregunta" id = 'pregunta' placeholder="Pregunta de la encuesta" 
                           onChange={handleChange} />
                 </div>
             </div>
         </div>
 
-        <div class="row INSERTAR-BOTONES">                            
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold   AÑADIR" type="button" onClick={()=>peticionSelecter()}><span>Añadir</span></button>
+        <div class="row ">                            
+                <div class="INSERTAR-BOTONES">
+                    <button class="btn AÑADIR" type="button" onClick={()=>peticionSelecter()}><span>Añadir</span></button>
                 </div>
         </div>   
   
-          <p class="HEADER-TEXT2 mt-3" >Preguntas</p>
+          <h2 class=" mt-3" >Preguntas</h2>
           <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
           <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
           <div class = "row LISTAR-TABLA-EV">
@@ -349,7 +350,7 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
                         <td >{elemento.idPreguntaEncuesta}</td>    
                         <td >{elemento.pregunta}</td>       
                         <td>
-                        <button  class="btn BTN-ACCIONES" onClick={()=>peticionDeletePregunta(elemento.idPreguntaEncuesta)}> <BootIcons.BsTrash /></button>
+                        <button  class="btn BTN-ACCIONES" title="Eliminar" onClick={()=>peticionDeletePregunta(elemento.idPreguntaEncuesta)}> <BootIcons.BsTrash /></button>
                         </td>
                     </tr>
                   ))}

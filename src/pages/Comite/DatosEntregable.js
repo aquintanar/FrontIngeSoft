@@ -64,17 +64,17 @@ const DatosEntregable = ({entregable, setEntregable, active, setActive,cero}) =>
     return(
              
         <div class ="CONTAINERADMIN ">
-            <p class="HEADER-TEXT1 mb-4">Datos Entrega o Presentación</p>
+            <h1>Datos Entrega o Presentación</h1>
 
-            <div class="row DATOS" >
+            <div class="row " >
                 <p>Nombre de la entrega o presentación:</p>
-                <div className = " input-group col-md-12 mb-3">
+                <div className = "col-md-12 mb-3">
                     <input onChange={handleChange} type='text' className="form-control" id="nombre" name="nombre" placeholder="Nombre de la entrega o presentación" 
                     value={entregable && entregable.nombre} />
                 </div>
             </div>
 
-            <div class="row DATOS">
+            <div class="row ">
                 <div class="col-6 " >
                     <p>Tipo de evaluación:</p>
                     {(() => {
@@ -135,16 +135,16 @@ const DatosEntregable = ({entregable, setEntregable, active, setActive,cero}) =>
                 </div>
                 
             </div>
-            <div class="row DATOS">
+            <div class="row ">
                 <p>Descripción:</p>
                 <div className = "col-md-12 mb-5">
-                    <textarea onChange={handleChange} class="form-control" id="descripcion" name="descripcion" placeholder="Descripción" rows={4} value={entregable && entregable.descripcion} ></textarea>
+                    <textarea onChange={handleChange} class="form-control form-control2" id="descripcion" name="descripcion" placeholder="Descripción" rows={4} value={entregable && entregable.descripcion} ></textarea>
                 </div>
             </div>
-            <div class="row INSERTAR-BOTONES">                            
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button" onClick={()=>{navigate("../preparacion/entregables")}}><span>Cancelar</span></button>
-                    <button class="btn btn-primary fs-4 fw-bold mt-3 SIGUIENTE" type="button" onClick={()=>{cargaDatos()}}><span>Siguiente</span></button>
+            <div class="row ">                            
+                <div class="INSERTAR-BOTONES">
+                <button class="btn SIGUIENTE" title="Siguiente página" type="button" onClick={()=>{cargaDatos()}}><span>Siguiente</span></button>
+                    <button class="btn CANCELAR" title="Cancelar" type="button" onClick={()=>{navigate("../preparacion/entregables")}}><span>Cancelar</span></button>
                 </div>
             </div>
 

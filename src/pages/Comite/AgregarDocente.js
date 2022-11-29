@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {  useNavigate } from 'react-router-dom';
 import '../../stylesheets/Comite.css'
+import '../../stylesheets/General.css'
 import axios from 'axios';
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
@@ -126,18 +127,16 @@ function ListarDocentesNoEstan()  {
 
   return(
       <div className="CONTAINERCOMITE">
-          <p className="HEADER-TEXT1">Agregar docentes</p>
-          <p class="HEADER-TEXT2">Búsqueda de docentes </p>
+          <h1>Agregar docentes</h1>
+          <h2>Búsqueda de docentes </h2>
           <div class="row">
-            <div class="col-12 FILTRO-LISTAR-BUSCAR" >
+            <div class="col-8" >
                 <p>Ingrese el nombre del docente</p>
-                <div class="input-group">
-                    <input size="12" type="text" value={search} class="form-control" name="search" placeholder="Nombre del docente" aria-label="serach" onChange={buscador}/>
-                </div>
+                <input size="12" type="search" value={search} class="form-control icon-search" name="search" placeholder="Nombre del docente" aria-label="serach" onChange={buscador}/>
             </div>
           </div>
 
-        <p class="HEADER-TEXT2 mt-5" >Lista de docentes no asignados</p>
+        <h2>Lista de docentes no asignados</h2>
         <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
         <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
         <div class = "row LISTAR-TABLE">
@@ -189,9 +188,9 @@ function ListarDocentesNoEstan()  {
             </div>
           </ModalConfirmación>
 
-            <div class="row INSERTAR-BOTONES">                            
-              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../docente")}}><span>Cancelar</span></button>
+            <div class="row">                            
+              <div class="INSERTAR-BOTONES">
+              <button class="btn CANCELAR" title='Cancelar' type="button" onClick={()=>{navigate("../docente")}}><span>Cancelar</span></button>
               </div>
           </div>
           
