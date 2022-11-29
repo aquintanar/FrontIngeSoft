@@ -152,7 +152,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
     console.log(response.data);
     setTemaSeleccionadoFeedback({
       idTemaTesis: parseInt(response.data[0].idTemaTesis),
-      idEstadoTemaTesis: parseInt(response.data[0].idEstadoTemaTesis),
+      idEstadoTemaTesis: 2,
       idAsesor: parseInt(response.data[0].idAsesor),
       idAlumno: parseInt(response.data[0].idAlumno),
       tituloTesis: response.data[0].tituloTesis,
@@ -163,7 +163,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
       PalabraClave1: response.data[0].PalabraClave1,
       PalabraClave2: response.data[0].PalabraClave2,
       feedback: response.data[0].feedback,
-      fidCurso:globalidcur,
+      fidCurso:parseInt(globalidcur),
     });
     console.log(temaSeleccionadoFeedback);
   };
@@ -219,8 +219,8 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
       })
     }
     const observar=async()=>{
-      
-      await axios.put("https://localhost:7012/api/TemaTesis/ModifyTemaTesis",temaSeleccionadoFeedback)
+      temaSeleccionadoFeedback.idAlumno=0;
+      await axios.put("https://localhost:7012/api/TemaTesis/ModifyTemaTesisSinAlumno",temaSeleccionadoFeedback)
       .then(response=>{
         closeEditModal();
         openGuardadoModal();

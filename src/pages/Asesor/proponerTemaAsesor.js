@@ -544,7 +544,7 @@ const guardarPalabra=async(element)=>{
             </div>
             <div className = "form-group DATOS row mt-3">
                 <p for="Estado" className="col-md-2 col-form-label"> Retroalimentación:</p>
-                <textarea className="form-control" id="motivoRechazo" name="motivoRechazo" rows={2} disabled></textarea>
+                <textarea value={temaTesis && temaTesis.feedback} className="form-control" id="motivoRechazo" name="motivoRechazo" rows={2} disabled></textarea>
             </div>
         <div className="form-group row mt-3">
           <ModalPregunta

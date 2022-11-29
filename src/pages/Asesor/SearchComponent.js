@@ -175,6 +175,7 @@ const ListarTemasTesis = () =>{
                                             case "Publicado" : return <td class = "text-success">{temasTesis.estadoTema}</td> ;
                                             case "Observado" : return <td class = "text-danger">{temasTesis.estadoTema}</td> ;
                                             case "Sustentado" : return <td class = "text-success">{temasTesis.estadoTema}</td> ;
+                                            case "En Proceso" : return <td class="text-warning">{temasTesis.estadoTema} </td>;
                                             default: return <td>ERROR</td>
                                         }
                                     }) ()}
