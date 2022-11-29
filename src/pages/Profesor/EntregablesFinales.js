@@ -81,14 +81,11 @@ else{
   return(
       <div className='CONTAINERASESOR'>
           <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
-      <h1 className='HEADER-TEXT1'>Entregables Finales</h1>
-      <h2 className='HEADER-TEXT2'>Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
-      <div class="col col-7 FILTRO-LISTAR-BUSCAR" >
-            <p>Filtrar por nombre</p>
-            <div class="input-group mb-2 ">
-                <input size="10" type="text" value={search1} class="form-control" name="search1" placeholder="Nombre de Entregable" aria-label="serach" onChange={buscador1}/>
-            </div>
-          
+      <h1>Entregables Finales</h1>
+      <h2 >Alumno - { location.state.apellidoPat }  {location.state.apellidoMat}, {location.state.nombres}</h2>
+      <div class="col col-7" >
+            <p>Ingresar nombre del entregable</p>
+                <input size="10" type="search" value={search1} class="form-control icon-search" name="search1" placeholder="Nombre de Entregable" aria-label="serach" onChange={buscador1}/>
         </div>
       <div>
       <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
@@ -135,10 +132,12 @@ else{
                 </td>
                 <td> 
                   <button class="btn btn-lg navbar-toggle" onClick={() =>navigate("entregableFinalSeleccionado",{state:{idVersion:dato.idVersionAntigua,idAlumno: location.state.idAlumno,tituloDoc:dato.nombre,notaVersion: dato.notaVersionMasReciente,
-    idEntregable: dato.idEntregable,estado:dato.estadoMasReciente,fechaE:dato.fechaSubida,fechaL:dato.fechaLimite, nombreEntregable:dato.tipoEntregable,comentarios:dato.comentarios,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoPat}})}>{dato.notaVersionMasReciente}</button>
+    idEntregable: dato.idEntregable,estado:dato.estadoMasReciente,fechaE:dato.fechaSubida,fechaL:dato.fechaLimite, nombreEntregable:dato.tipoEntregable,comentarios:dato.comentarios,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoPat}})}>
+                    {dato.notaVersionMasReciente==="null" ?  "No tiene" : dato.notaVersionMasReciente}
+                    </button>
                 </td> 
                   <td>
-                  <button class="btn BTN-ACCIONES"  onClick={() =>navigate("historialVersiones",{state:{idVersion:dato.idVersionAntigua,idAlumno: location.state.idAlumno,tituloDoc:dato.nombre,notaVersion: dato.notaVersionMasReciente,
+                  <button class="btn BTN-ACCIONES"   title='Visualizar historial de entregable' onClick={() =>navigate("historialVersiones",{state:{idVersion:dato.idVersionAntigua,idAlumno: location.state.idAlumno,tituloDoc:dato.nombre,notaVersion: dato.notaVersionMasReciente,
     idEntregable: dato.idEntregable,estado:dato.estadoMasReciente,fechaE:dato.fechaSubida,fechaL:dato.fechaLimite, nombreEntregable:dato.tipoEntregable,comentarios:dato.comentarios,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoPat}})} > <FaIcons.FaBars/></button>
                   </td>
               </tr>

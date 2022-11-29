@@ -544,11 +544,12 @@ const {
      </div>
    </div>
    
-        <h4>Nota asignada: {suma}</h4>
-        <h4>Documentos Enviados:</h4>
+        
         <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
        tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}})} >
         Agregar Documentos de Retroalimentación</p>
+        <h4 style={{marginTop:"8px"}}>Nota asignada: {suma}</h4>
+        <h4>Documentos enviados:</h4>
         <PreviewList>
 {((location.state.idVersion >= 0) ? 
 
@@ -563,7 +564,7 @@ documentosVersionDocente.map((documentos) => {
          );
              }): " ")} </PreviewList>
    <div className = "">
-              <div className = "col-12">
+              <div className = "col-12" style={{marginTop:"8px"}}>
                  <p>Comentarios Generales</p>
                  <div className="input-group-lg">
                      <textarea className="form-control form-control2" name="comentarios" placeholder="Comentarios" aria-label="comentarios"  
@@ -571,10 +572,9 @@ documentosVersionDocente.map((documentos) => {
                  </div>
              </div>
          </div>
-         <br></br>
       <div className="row">                            
               <div className="INSERTAR-BOTONES ">      
-              <button onClick={()=>openAprobarModal()} className="btn GUARDAR"  type="button">Guardar</button>
+              <button onClick={()=>openAprobarModal()} className="btn GUARDAR"  type="button"><span>Guardar</span></button>
               </div>
         </div>
         </div>
