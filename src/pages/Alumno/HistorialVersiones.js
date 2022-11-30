@@ -86,9 +86,18 @@ function HistorialVersiones(){
                     <button class="btn btn-lg navbar-toggle">{dato.fechaModificacion}</button>
                   </td>
                   
-                  <td> 
-                    <button class="btn btn-lg navbar-toggle">{dato.fechaPresentacionAlumno}</button>
-                  </td> 
+                  {(() => {
+                                        switch(dato.estadoEntregable){
+                                          case "Por Entregar" : return <td>{dato.fechaPresentacionAlumno}</td> ;
+                                          case "Enviado para retroalimentacion": return <td>{dato.fechaPresentacionAlumno}</td> ;
+                                          case "Con retroalimentacion" : return <td>{dato.fechaEntregaAsesor}</td> ;
+                                          case "Entregado a docente" : return <td>{dato.fechaEntregaAsesor}</td> ;
+                                          case "Calificado por el docente" : return <td >{dato.fechaLimite}</td> ;
+                                          case "Entregado a jurado" : return <td >{dato.fechaLimite}</td> ;
+                                          case "Sustentado" : return <td >{dato.fechaLimite}</td> ;  
+                                            default: return <td >{dato.fechaLimite}</td> ;
+                                        }
+                    }) ()}
                   <td>
                   {(() => {
                                         switch(dato.estadoEntregable){
@@ -97,7 +106,8 @@ function HistorialVersiones(){
                                           case "Con retroalimentacion" : return <td class = "text-success">Con retroalimentacion</td> ;
                                           case "Entregado a docente" : return <td class = "text-primary">Entregado a docente</td> ;
                                           case "Calificado por el docente" : return <td class = "text-success">Calificado por el docente</td> ;
-                                            
+                                          case "Entregado a jurado" : return <td class = "text-success">Entregado a jurado</td> ;
+                                          case "Sustentado" : return <td class = "text-success">Sustentado</td> ;  
                                             default: return <td class = "text-black">Por Entregar</td> ;
                                         }
                     }) ()}
