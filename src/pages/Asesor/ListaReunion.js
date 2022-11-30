@@ -32,8 +32,8 @@ function ListaReunion(alumno, setAlumno)  {
     const [reunionSeleccionada, setReunionSeleccionada] = useState({
         idReunionAlumnoAsesor: 0,
         idAlumno: 0,
-        idAsesor: 2,
-        idCurso: 1,
+        idAsesor: localStorage.getItem('IDUSUARIO') ,
+        idCurso: parseInt(localStorage.getItem('idCurso')),
         nombre: '',
         descripcion: '',
         fechaHoraInicio: new Date(),

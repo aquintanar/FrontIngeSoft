@@ -44,7 +44,7 @@ function DatoReunion()  {
         idReunionAlumnoAsesor: 0,
         idAlumno: 0,
         idAsesor: localStorage.getItem('IDUSUARIO') ,
-        idCurso: 1,
+        idCurso: parseInt(localStorage.getItem('idCurso')),
         nombre: '',
         descripcion: '',
         fechaHoraInicio: new Date(),
