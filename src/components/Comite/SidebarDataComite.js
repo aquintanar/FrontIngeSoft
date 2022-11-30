@@ -61,11 +61,7 @@ export const SidebarData = [
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
         subNav: [
-            {
-                title: 'Gestión de jurados',
-                path: '',
-                icon: <BsIcons.BsFileEarmarkPerson />
-            },
+           
             {
                 title: 'Sistema de evaluación',
                 path: 'sistEvaluacion', 
