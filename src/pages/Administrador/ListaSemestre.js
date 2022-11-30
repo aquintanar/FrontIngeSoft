@@ -8,6 +8,8 @@ import {makeStyles, createTheme} from '@material-ui/core/styles';
 import {  Modal, Button} from '@material-ui/core';
 import {  useNavigate } from 'react-router-dom';
 import * as BsIcons from 'react-icons/bs';
+import { ModalConfirmación} from '../../components/Modals';
+import useModal from '../../hooks/useModals';
 //import './DatosEspecilidad.css';
 
 const url= "https://localhost:7012/api/Semestre/";
@@ -66,6 +68,7 @@ function ListaSemestre()  {
   const [fac, setFac] = useState(0);
   const [currentPage,SetCurrentPage]=useState(0);
   let navigate = useNavigate();
+  const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
 
   const [semestreSeleccionada, setSemestreSeleccionada]=useState({
     idSemestre: 0,
