@@ -19,7 +19,7 @@ import PortafolioEntregablesTesis1 from './pages/Alumno/PortafolioEntregablesTes
 import EntregablesParcialesTesis1 from './pages/Alumno/EntregablesParcialesTesis1';
 import EntregableParcialSeleccionadoTesis1 from './pages/Alumno/EntragableParcialSeleccionadoTesis1';
 import ProponerTemaAlumno from './pages/Alumno/proponerTemaAlumno';
-
+import HistorialVersiones from './pages/Alumno/HistorialVersiones';
 function Alumno() {
     return (
         <div>    
@@ -32,6 +32,7 @@ function Alumno() {
               <Route path='gestion/gesPortafolio' exact element= {<PortafolioEntregables/>}/>
               <Route path='gestion/gesPortafolio/AvancesSemanales' exact element= {<AvancesSemanales/>}/>
               <Route path='gestion/gesPortafolio/EntregablesParciales' exact element= {<EntregablesParciales/>}/>
+              <Route path='gestion/gesPortafolio/entregablesParciales/historialVersiones' exact element= {<HistorialVersiones/>}/>
               <Route path='gestion/gesPortafolio/EntregablesEvaluaciones' exact element= {<EntregablesParciales/>}/>
               <Route path='gestion/gesPortafolio/PortafolioEntregablesTesis1' exact element= {<PortafolioEntregablesTesis1/>}/>
               <Route path='gestion/gesPortafolio/PortafolioEntregablesTesis1/EntregablesParcialesTesis1' exact element= {<EntregablesParcialesTesis1/>}/>

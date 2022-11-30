@@ -218,12 +218,13 @@ const  getDataV = async() => {
       fechaModificacion:new Date(response.data[0].fechaModificacion).toISOString(),
       notaVersion: parseInt(response.data[0].notaVersion),
     });
+
     setVersionSeleccionadaModA({
       idVersion: parseInt(response.data[0].idVersion),
       fidEntregable: parseInt(response.data[0].fidEntregable),
       linkDoc: response.data[0].linkDoc,
       fechaSubida: new Date(response.data[0].fechaSubida).toISOString(),
-      fidEstadoEntregable:7,
+      fidEstadoEntregable:parseInt(response.data[0].fidEstadoEntregable),
       documentosAlumno:response.data[0].documentosAlumno,
       documentosRetroalimentacion:response.data[0].documentosRetroalimentacion,
       estado:1,
@@ -233,6 +234,10 @@ const  getDataV = async() => {
       notaVersion: parseInt(response.data[0].notaVersion),
     });
   };
+
+
+
+
 
 
 

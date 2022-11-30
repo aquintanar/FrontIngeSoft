@@ -183,7 +183,7 @@ const getEntregableID = async () => {
                                           case 4 : return <td class = "text-primary">Entregado a docente</td> ;
                                           case 5 : return <td class = "text-success">Calificado por el docente</td> ;
                                           case 6 : return <td class = "text-success">Entregado a Jurado</td> ;
-                                          case 7 : return <td class = "text-success">Calificado por el jurado</td> ;  
+                                          case 7 : return <td class = "text-success">Sustentado</td> ;  
                                             default: return <td class = "text-black">Por Entregar</td> ;
                                         }
                                     }) ()}

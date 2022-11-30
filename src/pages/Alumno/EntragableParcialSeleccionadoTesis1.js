@@ -250,7 +250,7 @@ var i=0;
 
 
         {
-          col1: `${location.state.estado==7?"Calificado por el jurado":(location.state.estado==6?"Entregado a jurado":(location.state.estado==5?"Calificado por el docente":(location.state.estado==4?"Entregado a docente":(location.state.estado==3?"Con retroalimentacion":(location.state.estado==2?"Enviado para retroalimentacion":"Por Entregar")))))}`,
+          col1: `${location.state.estado==7?"Sustentado":(location.state.estado==6?"Entregado a jurado":(location.state.estado==5?"Calificado por el docente":(location.state.estado==4?"Entregado a docente":(location.state.estado==3?"Con retroalimentacion":(location.state.estado==2?"Enviado para retroalimentacion":"Por Entregar")))))}`,
    //       col1: `${location.state.estado==5?"Calificado":"Sin Calificar"}`,
        //   col2: `${calificado}`,
           col3: `${location.state.fechaL}`,

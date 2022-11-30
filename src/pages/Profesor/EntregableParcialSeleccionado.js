@@ -218,7 +218,7 @@ const  getDataV = async() => {
       fidEntregable: parseInt(response.data[0].fidEntregable),
       linkDoc: response.data[0].linkDoc,
       fechaSubida: new Date(response.data[0].fechaSubida).toISOString(),
-      fidEstadoEntregable:5,
+      fidEstadoEntregable:parseInt(response.data[0].fidEstadoEntregable),
       documentosAlumno:response.data[0].documentosAlumno,
       documentosRetroalimentacion:response.data[0].documentosRetroalimentacion,
       estado:1,

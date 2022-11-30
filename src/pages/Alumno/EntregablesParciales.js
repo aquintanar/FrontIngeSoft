@@ -170,10 +170,13 @@ const getEntregableID = async () => {
             </thead>
             <tbody >
               {filtrado.map(entregables => (
-                <tr style={{cursor:'pointer'}} onClick={() =>crearVersion(entregables.idVersionAntigua,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersionMasReciente,entregables.estadoMasReciente,entregables.fechaModificacionMasReciente,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)} key={entregables.idEntregable}>
-                    <td>{entregables.nombre}</td>
-                    <td>{entregables.fechaLimite}</td>
-                    <td>{entregables.fechaEntregaAsesor} </td>
+                <tr  key={entregables.idEntregable}>
+                  <td>
+<button class="btn btn-lg navbar-toggle" onClick={() =>crearVersion(entregables.idVersionAntigua,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersionMasReciente,entregables.estadoMasReciente,entregables.fechaModificacionMasReciente,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)}>{entregables.nombre}</button>
+</td>
+                    <td><button class="btn btn-lg navbar-toggle" onClick={() =>crearVersion(entregables.idVersionAntigua,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersionMasReciente,entregables.estadoMasReciente,entregables.fechaModificacionMasReciente,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)}>{entregables.fechaLimite}</button></td>
+                    <td><button class="btn btn-lg navbar-toggle" onClick={() =>crearVersion(entregables.idVersionAntigua,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersionMasReciente,entregables.estadoMasReciente,entregables.fechaModificacionMasReciente,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)}>{entregables.fechaEntregaAsesor}</button></td>
+
                     <td>  
                            {(() => {
                                         switch(entregables.estadoMasReciente){
@@ -183,13 +186,16 @@ const getEntregableID = async () => {
                                           case 4 : return <td class = "text-primary">Entregado a docente</td> ;
                                           case 5 : return <td class = "text-success">Calificado por el docente</td> ;
                                           case 6 : return <td class = "text-success">Entregado a Jurado</td> ;
-                                          case 7 : return <td class = "text-success">Calificado por el jurado</td> ;  
+                                          case 7 : return <td class = "text-success">Sustentado</td> ;  
                                             default: return <td class = "text-black">Por Entregar</td> ;
                                         }
                                     }) ()}
                     </td>
 
-                    <td>Ver Historial</td>                    
+                    <td>
+                    <button class="btn BTN-ACCIONES"  onClick={() =>navigate("historialVersiones",{state:{idVersion:entregables.idVersionAntigua,idAlumno: location.state.idAlumno,tituloDoc:entregables.nombre,notaVersion: entregables.notaVersionMasReciente,
+      idEntregable: entregables.idEntregable,estado:entregables.estadoMasReciente,fechaE:entregables.fechaSubida,fechaL:entregables.fechaLimite, nombreEntregable:entregables.tipoEntregable,comentarios:entregables.comentarios}})} > <FaIcons.FaBars/></button>
+                    </td>                 
                 </tr>
               ))}
             </tbody>
