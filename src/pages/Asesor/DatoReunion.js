@@ -26,7 +26,7 @@ import { AsesorContext } from './AsesorContext';
 
 const url= "https://localhost:7012/api/ReunionAlumnoAsesor/";
 
-
+var x =4;
 function DatoReunion()  {
     const asesor = useContext(AsesorContext);
     let navigate = useNavigate();
@@ -91,7 +91,7 @@ function DatoReunion()  {
             console.log("modificar registrar", asesor.tipo, asesor.reunion)
             setStartDate(new Date(reunion.fechaHoraInicio));
             console.log(startDate)
-
+            console.log(reunion)
             console.log("fin modificar")
             //const response = await axios.get(url+"GetFacultadesById?id_facultad="+parseInt(id));
         }
@@ -168,81 +168,79 @@ function DatoReunion()  {
         <div class=" CONTAINERALUMNO"> 
 
 
-            <p class="HEADER-TEXT1">{asesor.tipo ? "Registrar reunión" : "Modificar reunión"}</p>
+            <h1>{asesor.tipo ? "Registrar reunión" : "Modificar reunión"}</h1>
 
             <div class="row">
-                <div class="col-6 DATOS" >
-                    <div class="text-start fs-6  mb-1 fw-normal "><p>Alumno</p></div>
-                    <div class="input-group mb-2 ">
+                <div class="col-6 " >
+                    <p>Alumno</p>
+                    
                             <select select class="form-select Cursor" aria-label="Default select example" selected value = {reunion && reunion.idAlumno} onChange= {cambioSelectAlumno} >  
                                 <option selected value = "0">Ninguno</option>
                                 {alumnos.map(elemento=>(
                                     <option key={elemento.idAlumno} value={elemento.idAlumno}>{elemento.nombres} {elemento.apePat} {elemento.apeMat}</option>  
                                 ))}
                             </select>
-                    </div>
+                    
                 </div>
 
-                <div class="col-3 DATOS" >
-                    <div class="text-start fs-6  mb-1 fw-normal "><p>Cantidad de participantes</p></div>
-                    <div class="input-group mb-2 ">
+                <div class="col-3 " >
+                    <p>Cantidad de participantes</p>
+                    
                         <input type="number" min="2" class="form-control" name="cantParticipantes" placeholder="Cantidad de participantes" aria-label="cantParticipantes"  
                             onChange={handleChange} value={reunion && reunion.cantParticipantes}/>
-                    </div>
+                    
                 </div>
 
                 {asesor.tipo ? null : 
-                <div class="col-3 DATOS" >
-                    <div class="text-start fs-6  mb-1 fw-normal "><p>Estado</p></div>
-                    <div class="input-group mb-2 ">
+                <div class="col-3 " >
+                    <p>Estado</p>
+                    
                             <select select class="form-select Cursor" aria-label="Default select example" selected value = {reunion && reunion.estadoReunion} onChange= {cambioSelectEstado} >  
                                 <option  value = {1}>Asistió</option>
                                 <option value = {2}>Tardanza</option>
                                 <option  value = {3}>No asistió</option>
                                 <option  value = {4}>Pendiente</option>
                             </select>
-                    </div>
+                    
                 </div>}
 
 
             </div>
             
             <div class="row">
-                <div class="col-6 DATOS1" >
-                    <div class="text-start fs-6  mb-1 fw-normal "><p>Título de la reunión</p></div>
+                <div class="col-6" >
+                    <p>Título de la reunión</p>
                     <div class="input-group mb-2 ">
-                        <textarea class="form-control TEXTAREA2" name="nombre" placeholder="Título" aria-label="nombre"  
+                        <textarea class="form-control form-control2" name="nombre" placeholder="Título" aria-label="nombre"  
                             onChange={handleChange} value={reunion && reunion.nombre}/>
                     </div>
                 </div>
 
-                <div class="col-6 DATOS1" >
-                    <div class="text-start fs-6  mb-1 fw-normal "><p>Enlace de la reunión</p></div>
-                    <div class="input-group mb-2 ">
-                        <textarea class="form-control" name="enlace" placeholder="Enlace" aria-label="enlace"  
+                <div class="col-6 " >
+                    <p>Enlace de la reunión</p>
+                    
+                        <textarea class="form-control form-control2" name="enlace" placeholder="Enlace" aria-label="enlace"  
                                 onChange={handleChange} value={reunion && reunion.enlace}/>
-                    </div>
+                    
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-6 DATOS1" >
-                    <div class="text-start fs-6  mb-1 fw-normal "><p>Descripción de la reunión</p></div>
-                    <div class="input-group mb-2 ">
-                        <textarea class="form-control" name="descripcion" placeholder="Descripción" aria-label="descripcion"  
+                <div class="col-6 " >
+                    <p>Descripción de la reunión</p>
+                        <textarea class="form-control form-control2" name="descripcion" placeholder="Descripción" aria-label="descripcion"  
                             onChange={handleChange} value={reunion && reunion.descripcion}/>
-                    </div>
                 </div>
             
                 <div class="col-4 DATOS" >
-                    <div class="text-start fs-6  mb-1 fw-normal "><p>Fecha de la reunión</p></div>
+                    <p>Fecha de la reunión</p>
                     <DateTimePicker onChange={setStartDate} value={startDate} />
                 </div>
 
             </div>
 
-            <div class="row INSERTAR-BOTONES">                            
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <div class="">                            
+                <div class="INSERTAR-BOTONES">
                     <button class="btn btn-primary fs-4 fw-bold GUARDAR" type="button" onClick={()=>peticionSelecter()}><span>Guardar</span></button>
                     <button class="btn btn-primary fs-4 fw-bold   CANCELAR" type="button" onClick={()=>{navigate("../reunion")}}><span>Cancelar</span></button>
                 </div>

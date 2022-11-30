@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useTable } from 'react-table';
 import * as BsIcons from 'react-icons/bs';
 import '../../stylesheets/Asesor.css'
+import '../../stylesheets/General.css'
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
@@ -122,7 +123,7 @@ function ListaReunion(alumno, setAlumno)  {
             filtrado=filtrado.filter((dato)=>dato.estadoReunion===fil) ;
           }
           else if(fil && fol){
-            filtrado=filtrado.filter((dato)=>dato.estadoReunion===fil) ;
+            filtrado=data.filter((dato)=>dato.estadoReunion===fil) ;
             filtrado=filtrado.filter((dato)=>dato.idAlumno===fol) ;
           }
           else if(fol && fechas){       
@@ -268,7 +269,7 @@ function ListaReunion(alumno, setAlumno)  {
         console.log(value);
         peticionListAlumAs();
         console.log("fin");
-        
+        console.log(filtrado);
 
     },[])
 
@@ -276,22 +277,20 @@ function ListaReunion(alumno, setAlumno)  {
   return (      
     <div>   
         <div class=" CONTAINERASESOR">    
-          <p class="HEADER-TEXT1">Reuniones</p>
+          <h1>Reuniones</h1>
         </div>
         <div class=" CONTAINERASESOR2"> 
-        <p class="HEADER-TEXT2">Búsqueda de reuniones</p>
+        <h2>Búsqueda de reuniones</h2>
 
         <div class="row">
-            <div class="col-6 DATOS" >
-                <div class="text-start fs-6  mb-1 fw-normal "><p>Ingresar nombre de la reunión</p></div>
-                <div class="input-group mb-2 ">
-                    <input size="20" type="text" value={search} class="form-control" name="search" placeholder="Reunión" aria-label="serach" onChange={buscador}/>
-                </div>
+            <div class="col-6 " >
+                <p>Ingresar nombre de la reunión</p>
+                <input size="20" type="search" value={search} class="form-control icon-search" name="search" placeholder="Reunión" aria-label="serach" onChange={buscador}/>
             </div>
 
-            <div class="col-6 DATOS" >
-                <div class="text-start fs-6  mb-1 fw-normal "><p>Alumno</p></div>
-                <div class="input-group mb-2 ">
+            <div class="col-5 " >
+                <p>Alumno</p>
+                <div class="input-group">
                         <select select class="form-select Cursor" aria-label="Default select example"  onChange= {cambioSelectAlumno} >  
                             <option selected value = "0">Todos</option>
                             {alumnos.map(elemento=>(
@@ -303,13 +302,13 @@ function ListaReunion(alumno, setAlumno)  {
         </div>
 
         <div class="row">
-              <div class="col-4 FILTRO-FECHA DATOS" >
+              <div class="col-4 FILTRO-FECHA " >
                   <p>Rango de Fechas</p>
                   <DateRangePicker onChange={setFechas} value={fechas} />
               </div>
-              <div class="col-4 DATOS" >
-                <div class=" fs-5 fw-normal  mb-1 "><p>Estado</p></div>
-                <select select class="form-select Cursor" aria-label="Default select example" onChange= {cambioSelect}>
+              <div class="col-4 " >
+                <p>Estado</p>
+                <select select class="form-select " aria-label="Default select example" onChange= {cambioSelect}>
                     <option key="0" selected value = "0">Todos</option>
                     <option key="1" value="1">Asitió</option>
                     <option key="2" value="2">Tardanza</option>
@@ -320,7 +319,7 @@ function ListaReunion(alumno, setAlumno)  {
         </div>
 
 
-        <p class="HEADER-TEXT2">Lista de reuniones</p>
+        <h2>Lista de reuniones</h2>
         <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
         <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
 
@@ -359,8 +358,12 @@ function ListaReunion(alumno, setAlumno)  {
 
                         <td class = "text-center">{reunion.cantParticipantes}</td>
                         <td>
-                        <button class="btn BTN-ACCIONES" onClick={()=>{ abrirDato(0, reunion); navigate("datoReunion/")}}> <FaIcons.FaEdit /></button>
-                        <button  class=" btn BTN-ACCIONES" onClick={()=>seleccionarReunion(reunion)}> <BootIcons.BsTrash /></button>
+                          <button class="btn BTN-ACCIONES" title='Modificar reunión' onClick={()=>{ abrirDato(0, reunion); navigate("datoReunion/")}}> <FaIcons.FaEdit /></button>
+                          { reunion.estadoReunion == 4 ? 
+                                <button  class=" btn BTN-ACCIONES" title='Eliminar reunión' onClick={()=>seleccionarReunion(reunion)}> <BootIcons.BsTrash /></button> 
+                                : null
+                          }
+                          
                         </td>
                     </tr>
                   ))}
@@ -369,8 +372,8 @@ function ListaReunion(alumno, setAlumno)  {
             </div>
         </div>
 
-        <div className='LISTAR-ESPECIALIDADES-BOTON'>
-            <button className='btn btn-primary fs-4 fw-bold mb-3' onClick={()=>{ abrirDato(1, []); navigate("datoReunion/")}} ><span>Registrar</span></button>
+        <div className='INSERTAR-BOTONES '>
+            <button className='btn REGISTRAR' onClick={()=>{ abrirDato(1, []); navigate("datoReunion/")}} ><span>Registrar</span></button>
         </div> 
 
         <ModalPregunta
