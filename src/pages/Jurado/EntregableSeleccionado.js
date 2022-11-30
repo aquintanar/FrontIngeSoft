@@ -522,10 +522,17 @@ const {
              }): " ")} </PreviewList>
  
 
-        <div className='row'>
-          <p className="HEADER-TEXT2">Nota Asignada : </p>
-          <input onChange={(e) => handleChangeNota(e)}  type="text" class="form-control" name="notaVersion" placeholder="Nota" />
+ <div class=" row" >
+            <div class="col-3">
+            <p className="HEADER-TEXT3">Nota: </p>
+            </div>
+            <div class="col-3">
+                    <input type="number" min={1} max={20} class="form-control" name="notaVersion" placeholder="Nota"  
+                          onChange={(e) => handleChangeNota(e)} />
+            </div>
         </div>
+        <br></br> 
+        <br></br> 
      
    <div className = "DATOS">
              <div className = "col-12">

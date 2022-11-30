@@ -46,7 +46,7 @@ function AsignarJurado()  {
       setSearch(e.target.value);
   }
   if(!search ){//sin filtro
-    filtrado=as.concat(jur);
+    filtrado=as.concat(doc).concat(jur);
     jurados.forEach((jura)=>{
       for(let index in filtrado){
         if(filtrado[index].idUsuario===jura.idUsuario){
@@ -59,7 +59,7 @@ function AsignarJurado()  {
   }
   else{
         if(search){//filtro por nombre
-          filtrado=as.concat(jur);
+          filtrado=as.concat(doc).concat(jur);
           jurados.forEach((jura)=>{
             for(let index in filtrado){
               if(filtrado[index].idUsuario===jura.idUsuario){
