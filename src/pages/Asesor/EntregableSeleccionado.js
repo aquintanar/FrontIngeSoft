@@ -229,7 +229,29 @@ const  getDataV = async() => {
   };
 
 
+  const handleChangeNota= (e)=>{
+    const {name, value}=e.target;
 
+    setVersionSeleccionadaA(prevState=>({
+    ...prevState,
+    [name]: parseInt(value)
+  }))
+  setVersionSeleccionadaC(prevState=>({
+    ...prevState,
+    [name]: parseInt(value)
+  }))
+  setVersionSeleccionadaMod(prevState=>({
+    ...prevState,
+    [name]: parseInt(value)
+  }))
+  setVersionSeleccionadaModA(prevState=>({
+    ...prevState,
+    [name]: parseInt(value)
+  }))
+  console.log(versionSeleccionadaA);
+  console.log(versionSeleccionadaC);
+  console.log(versionSeleccionadaMod);
+  }
 const handleChange= (nombre,e)=>{
     const {name, value}=e.target;
     if(/[0-9]/.test(value)){
@@ -295,7 +317,7 @@ const handleChange= (nombre,e)=>{
   }
   const modificarDetNota=()=>{
    
-    setSuma(suma+(detNotaSeleccionadoModificar.puntaje)-detNotaSeleccionado.puntaje);
+    setSuma(suma+(detNotaSeleccionadoModificar.puntaje));
     peticionEditDetalleNota();
   
 }
@@ -505,9 +527,7 @@ const {
                   <th style={{width: 100}}>Rubro</th>
                   <th style ={{width: 450}}>Nivel Deseado</th>
                   <th style = {{width:100}}>Puntaje Máximo</th>
-                  <th style = {{width:100}}>Puntaje</th>
-                  <th style = {{width:100}}>Comentarios</th>
-                  <th style = {{width:100}}>Acciones</th>
+    
               </tr>
             </thead>
             <tbody >
@@ -515,19 +535,7 @@ const {
                 <tr key={rubrica.idDetalleRubrica}>
                     <td >{rubrica.rubro}</td>
                     <td >{rubrica.nivelDeseado}</td>                    
-                    <td>{rubrica.puntajeMaximo}</td>
-                    <td> <input onChange={(e) => handleChange(`${rubrica.idDetalleRubrica}`, e)} type="text" class="form-control" name="puntaje" placeholder="Puntaje" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
-                    /> </td>
-                    <td>
-                    <button class="btn BTN-ACCIONES" onClick={()=>abrirPost(setTitulo(rubrica.rubro))}> <FaIcons.FaCommentAlt /></button>
-                    </td>
-                    <td>
-                    
-                    <button type="button" className='btn btn-light' onClick={()=>{openPostModal()}}>Insertar</button>
-                    
-                    <button type="button" className='btn btn-light' onClick={()=>{openEditDetNotaModal()}}>Modificar</button>
-                     </td>
-                    
+                    <td>{rubrica.puntajeMaximo}</td>                   
                     
                     
                 </tr>
@@ -536,10 +544,20 @@ const {
           </table>
         </div>
       </div>
-      <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
+      <div class=" row" >
+            <div class="col-3">
+            <p className="HEADER-TEXT3">Nota: </p>
+            </div>
+            <div class="col-3">
+                    <input type="number" min={1} max={20} class="form-control" name="notaVersion" placeholder="Nota"  
+                          onChange={(e) => handleChangeNota(e)} />
+            </div>
+        </div>
+        <br></br> 
+        <br></br> 
+        <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
           tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}})} >
            Agregar Documentos de Retroalimentación</p>
-      <p className="HEADER-TEXT2">Nota Asignada : {suma}</p>
       <p className="HEADER-TEXT3">Documentos Enviados:</p>
            <PreviewList>
 {((location.state.idVersion >= 0) ? 
