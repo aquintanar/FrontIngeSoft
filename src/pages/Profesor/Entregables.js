@@ -13,6 +13,7 @@ function Entregables(){
   const [search1, setSearch1] = useState("");
   const [data, setData] = useState([]);
   const [entregable,setEntregable]=useState([]);
+  const [entregableSA,setEntregableSA]=useState([]);
   const [dataE, setDataE] = useState([]);
   useEffect(() => {
     getData();
@@ -28,14 +29,19 @@ function Entregables(){
       setData(dataEnt);
       console.log(data)
       var i=0;
-      var j=0;
+      var j=0;var n=0;
       for(i=0;i<dataEnt.length;i++){
         if(dataEnt[i].estadoMasReciente==4 || dataEnt[i].estadoMasReciente==5  && dataEnt[i].responsableEvaluar=="Docente"){
             entregable[j]=dataEnt[i];
             j++;
         }
+        if(dataEnt[i].responsableEvaluar=="Docente" && dataEnt[i].responsableSubir=="null"){
+          entregableSA[n]=dataEnt[i];
+          n++;
+      }
       }
       setEntregable(entregable);
+      setEntregableSA(entregableSA);
       console.log(entregable);
     })();
   };
@@ -55,11 +61,11 @@ function Entregables(){
   let filtrado =[];
 
   if(!search1){//sin filtro
-    filtrado=entregable;
+    filtrado=entregable.concat(entregableSA);
   }
   else{
  
-    filtrado=entregable.filter((dato)=>dato.nombre.toLowerCase().includes(search1.toLocaleLowerCase()));
+    filtrado=entregable.concat(entregableSA).filter((dato)=>dato.nombre.toLowerCase().includes(search1.toLocaleLowerCase()));
   
   }
   filtrado = filtrado.slice(currentPage,currentPage+5);
