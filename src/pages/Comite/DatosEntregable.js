@@ -47,7 +47,7 @@ const DatosEntregable = ({entregable, setEntregable, active, setActive,cero}) =>
     const infoCurso = async () => {
         const response = await axios
           .get(
-            "https://localhost:7012/api/Curso/BuscarCursoXId",
+            "http://34.195.33.246/api/Curso/BuscarCursoXId",
             { params: { idCurso: localStorage.getItem("idCurso") } },
             {
               _method: "GET",

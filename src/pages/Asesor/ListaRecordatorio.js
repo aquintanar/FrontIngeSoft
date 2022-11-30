@@ -36,7 +36,7 @@ const ListaRecordatorio = () => {
   const peticionGet = async () => {
     await axios
       .get(
-        "https://localhost:7012/api/Alumno/ListAlumnosXIdAsesor?idAsesor=2",
+        "http://34.195.33.246/api/Alumno/ListAlumnosXIdAsesor?idAsesor=2",
         {
           _method: "GET",
         }

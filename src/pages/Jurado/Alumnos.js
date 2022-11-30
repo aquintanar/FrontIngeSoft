@@ -24,7 +24,7 @@ function Alumnos() {
  
     async function getDataI() {
       (async () => {
-        const result = await axios(`https://localhost:7012/api/Alumno/ListAlumnosXIdJurado?idJurado=${localStorage.getItem('IDUSUARIO')}`);
+        const result = await axios(`http://34.195.33.246/api/Alumno/ListAlumnosXIdJurado?idJurado=${localStorage.getItem('IDUSUARIO')}`);
         //const result = await axios("http://44.210.195.91/api/Alumno/ListAlumnosXIdCurso?idCurso=1");
         setDataI(result.data);
       })();
@@ -32,7 +32,7 @@ function Alumnos() {
 
     async function getCurso() {
       (async () => {
-        const result = await axios(`https://localhost:7012/api/Curso/BuscarCursoXId?idCurso=${localStorage.getItem('idCurso')}`);
+        const result = await axios(`http://34.195.33.246/api/Curso/BuscarCursoXId?idCurso=${localStorage.getItem('idCurso')}`);
         //const result = await axios("http://44.210.195.91/api/Curso/BuscarCursoXId?idCurso=");
         setCurso(result.data[0]);
       })();

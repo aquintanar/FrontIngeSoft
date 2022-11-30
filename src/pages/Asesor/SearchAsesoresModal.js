@@ -1,13 +1,13 @@
 import React ,{useState , useEffect} from "react";
 import { render } from 'react-dom';
 import './proponerTemaAsesor.css';
-const urlAsesor= "https://localhost:7012/api/Asesor/";
+const urlAsesor= "http://34.195.33.246/api/Asesor/";
 
 const SearchAsesoresModal = ( {show ,setShow, asesorTesis, setAsesor} ) =>{
     //setear los hooks useState
     const[Asesores , setAsesores] = useState([]);
     const[search , setSearch] = useState("");
-    const URL = "https://localhost:7012/api/Asesor/GetAsesores";
+    const URL = "http://34.195.33.246/api/Asesor/GetAsesores";
     //local
         //http://34.195.33.246/
         //EC2

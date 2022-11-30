@@ -18,30 +18,30 @@ let navigate = useNavigate();
 const getInformacion = async() => {
 
 
-  const urlTema  = 'https://localhost:7012/api/TemaTesis/GetTemaTesisXIdCursoXIdAlumno?idCurso='+localStorage.getItem('idCurso')+'&idAlumno='+localStorage.getItem('IDUSUARIO');
+  const urlTema  = 'http://34.195.33.246/api/TemaTesis/GetTemaTesisXIdCursoXIdAlumno?idCurso='+localStorage.getItem('idCurso')+'&idAlumno='+localStorage.getItem('IDUSUARIO');
   const responseTema = await fetch(urlTema);
   const dataTema= await responseTema.json();
   console.log(dataTema);
   setTema(dataTema);
 
 
-  const urlAsesor  = 'https://localhost:7012/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno='+localStorage.getItem('IDUSUARIO')+'&idCurso='+localStorage.getItem('idCurso');
+  const urlAsesor  = 'http://34.195.33.246/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno='+localStorage.getItem('IDUSUARIO')+'&idCurso='+localStorage.getItem('idCurso');
   const responseAsesor = await fetch(urlAsesor);
   const dataAsesor = await responseAsesor.json();
   console.log(dataAsesor);
   setAsesor(dataAsesor);
-  const urlAlumno  = 'https://localhost:7012/api/Alumno/GetAlumnoXId?idAlumno='+localStorage.getItem('IDUSUARIO');
+  const urlAlumno  = 'http://34.195.33.246/api/Alumno/GetAlumnoXId?idAlumno='+localStorage.getItem('IDUSUARIO');
   const responseAlumno  = await fetch(urlAlumno);
   const dataAlumno   = await responseAlumno  .json();
   console.log(dataAlumno);
   setAlumno(dataAlumno);
-  const urlCurso  = 'https://localhost:7012/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
+  const urlCurso  = 'http://34.195.33.246/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
   const responseCurso  = await fetch(urlCurso);
   const dataCurso  = await responseCurso .json();
   console.log(dataCurso);
   setCurso(dataCurso);
 
-  const urlDocente  = 'https://localhost:7012/api/Docente/ListDocentesXIdCurso?idCurso='+localStorage.getItem('idCurso');
+  const urlDocente  = 'http://34.195.33.246/api/Docente/ListDocentesXIdCurso?idCurso='+localStorage.getItem('idCurso');
   const responseDocente  = await fetch(urlDocente);
   const dataDocente  = await responseDocente .json();
   console.log(dataDocente);

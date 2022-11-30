@@ -17,9 +17,9 @@ import "../../stylesheets/Calendar.css";
 import "../../stylesheets/DatePicker.css";
 import { Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 
-const url = "https://localhost:7012/api/Semestre/";
+const url = "http://34.195.33.246/api/Semestre/";
 const urlFacu = "http://34.195.33.246/api/Facultad/";
-const urlEsp = "https://localhost:7012/api/Especialidad/";
+const urlEsp = "http://34.195.33.246/api/Especialidad/";
 const urlUser = "http://34.195.33.246/api/Asesor/";
 const urlComi = "http://34.195.33.246/api/ComiteTesis/";
 const urlSemComi = "http://34.195.33.246/api/SemestreXComiteTesis/";

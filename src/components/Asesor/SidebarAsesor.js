@@ -61,7 +61,7 @@ const Sidebar = () => {
   const showSidebar = () => setSidebar(sidebar);
   const peticionGet=async()=>{
     let idas = window.localStorage.getItem("IDUSUARIO")
-    const response =await axios.get("https://localhost:7012/api/Asesor/GetAsesorXId?idAsesor="+idas)
+    const response =await axios.get("http://34.195.33.246/api/Asesor/GetAsesorXId?idAsesor="+idas)
     .then(response=>{
       console.log();
       setNombre(response.data[0].nombres +" " + response.data[0].apePat)

@@ -12,9 +12,9 @@ import { ModalConfirmación} from '../../components/Modals';
 import useModal from '../../hooks/useModals';
 //import './DatosEspecilidad.css';
 
-const url= "https://localhost:7012/api/Semestre/";
-const urlFacu= "https://localhost:7012/api/Facultad/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
+const url= "http://34.195.33.246/api/Semestre/";
+const urlFacu= "http://34.195.33.246/api/Facultad/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
 
 /*
 

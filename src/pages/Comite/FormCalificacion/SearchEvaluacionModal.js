@@ -2,7 +2,7 @@ import React ,{useState , useEffect} from "react";
 import axios from 'axios';
 import '../../Asesor/proponerTemaAsesor.css';
 
-const URL= "https://localhost:7012/api/Entregable/ListEntregablesXIdCurso?idCurso=";
+const URL= "http://34.195.33.246/api/Entregable/ListEntregablesXIdCurso?idCurso=";
 //const URL= "http://34.195.33.246/api/Entregable/ListEntregablesXIdCurso?idCurso=";
 //const URL= "http//44.210.195.91/api/Entregable/ListEntregablesXIdCurso?idCurso=";
 

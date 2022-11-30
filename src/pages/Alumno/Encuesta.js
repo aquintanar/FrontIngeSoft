@@ -3,14 +3,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../../stylesheets/Asesor.css'
-const url1= "https://localhost:7012/api/Entregable/";
+const url1= "http://34.195.33.246/api/Entregable/";
 //const url1= "http://44.210.195.91/api/Entregable/";
-const url2= "https://localhost:7012/api/Curso/";
+const url2= "http://34.195.33.246/api/Curso/";
 //const url2= "http://44.210.195.91/api/Curso/";
-const urlPregunta = "https://localhost:7012/api/PreguntaEncuesta/"
-const urlDetallePreguntaEncuesta = "https://localhost:7012/api/DetallePreguntaEncuesta/"
+const urlPregunta = "http://34.195.33.246/api/PreguntaEncuesta/"
+const urlDetallePreguntaEncuesta = "http://34.195.33.246/api/DetallePreguntaEncuesta/"
 
-//https://localhost:7012/api/PreguntaEncuesta/BuscarPreguntaEncuestaXIdEncuesta?idEncuesta=3
+//http://34.195.33.246/api/PreguntaEncuesta/BuscarPreguntaEncuestaXIdEncuesta?idEncuesta=3
 const Encuesta = () => {
     let navigate = useNavigate();
     const [preguntaActual , setPreguntaActual] = useState(0) ; 
@@ -30,7 +30,7 @@ const Encuesta = () => {
     const buscarAsesor = async()=>{
         let idcur = window.localStorage.getItem("idCurso");
         let idalum = window.localStorage.getItem("IDUSUARIO");
-        axios.get("https://localhost:7012/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno="+idalum+"&idCurso="+idcur)
+        axios.get("http://34.195.33.246/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno="+idalum+"&idCurso="+idcur)
         .then((response)=>{
             console.log("ESTA ES LA LISTA DE ASESORES");
             console.log(response.data);
@@ -85,7 +85,7 @@ const Encuesta = () => {
     let pregs = [] ;
     const buscarEncuesta=async()=>{
         let idCur = window.localStorage.getItem("idCurso");
-        await axios.get("https://localhost:7012/api/Encuesta/BuscarEncuestaXIdCurso?idCurso="+idCur)
+        await axios.get("http://34.195.33.246/api/Encuesta/BuscarEncuestaXIdCurso?idCurso="+idCur)
         .then((response)=>{
             console.log("LA ENCUESTA");
             console.log(response.data);

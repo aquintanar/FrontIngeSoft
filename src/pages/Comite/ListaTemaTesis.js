@@ -97,7 +97,7 @@ function ListaTemaTesis() {
     data.forEach(function (tema, index) {
       axios
         .put(
-          "https://localhost:7012/api/TemaTesis/PublicarTemaTesis?idTemaTesis=" +
+          "http://34.195.33.246/api/TemaTesis/PublicarTemaTesis?idTemaTesis=" +
             tema.idTemaTesis
         )
         //axios.put("http://44.210.195.91/api/TemaTesis/PublicarTemaTesis?idTemaTesis="+tema.idTemaTesis)
@@ -145,7 +145,7 @@ function ListaTemaTesis() {
 
   async function getData() {
     const response = await fetch(
-      "https://localhost:7012/api/TemaTesis/GetTemaTesis"
+      "http://34.195.33.246/api/TemaTesis/GetTemaTesis"
     );
     //const response = await fetch("http://44.210.195.91/api/TemaTesis/GetTemaTesis");
     const data = await response.json();
@@ -156,7 +156,7 @@ function ListaTemaTesis() {
     let idCur = window.localStorage.getItem("idCurso");
     let response = await axios
       .get(
-        "https://localhost:7012/api/TemaTesis/GetTemaTesisXIdCurso?idCurso=" +
+        "http://34.195.33.246/api/TemaTesis/GetTemaTesisXIdCurso?idCurso=" +
           idCur,
         {
           _method: "GET",
@@ -329,7 +329,7 @@ function ListaTemaTesis() {
     let idCur = window.localStorage.getItem("idCurso");
     await axios
       .put(
-        "https://localhost:7012/api/Curso/modificarAceptandoTemas?idCurso=" +
+        "http://34.195.33.246/api/Curso/modificarAceptandoTemas?idCurso=" +
           idCur +
           "&asignandoTemas=" +
           !toggleButton

@@ -8,10 +8,10 @@ import useModal from "../../hooks/useModals";
 import { Button } from "@material-ui/core";
 import { ModalPregunta, ModalConfirmación } from "../../components/Modals";
 
-const urlAs = "https://localhost:7012/api/Alumno/";
-const urlEsp = "https://localhost:7012/api/Especialidad/";
-const urlAsXCurso = "https://localhost:7012/api/AlumnoXCurso/";
-//https://localhost:7012/api/Alumno/
+const urlAs = "http://34.195.33.246/api/Alumno/";
+const urlEsp = "http://34.195.33.246/api/Especialidad/";
+const urlAsXCurso = "http://34.195.33.246/api/AlumnoXCurso/";
+//http://34.195.33.246/api/Alumno/
 
 function ListarAlumnosNoEstan() {
   let navigate = useNavigate();

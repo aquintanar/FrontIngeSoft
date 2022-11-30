@@ -19,7 +19,7 @@ const urlFacu= "http://44.210.195.91/api/Facultad/";
 */
 function EntregablesParciales()  {
   const location = useLocation();
-    const url = "https://localhost:7012/";
+    const url = "http://34.195.33.246/";
     const [data, setData]=useState([]);
     const [curso,setCurso]=useState(0);
     const [entregables , SetEntregables] = useState([]);

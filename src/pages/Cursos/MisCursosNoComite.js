@@ -10,10 +10,10 @@ import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
-const urlSem= "https://localhost:7012/api/Semestre/";
-const urlFac= "https://localhost:7012/api/Facultad/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
-const urlCur= "https://localhost:7012/api/Curso/";
+const urlSem= "http://34.195.33.246/api/Semestre/";
+const urlFac= "http://34.195.33.246/api/Facultad/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
+const urlCur= "http://34.195.33.246/api/Curso/";
 
 function GestionarCurso()  {
     let navigate = useNavigate();
@@ -243,7 +243,7 @@ function GestionarCurso()  {
     },[])
     const petitionCursoDocente= async()=>{
       let idUs = window.localStorage.getItem("IDUSUARIO");
-        await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdDocente?idDocente="+idUs)
+        await axios.get("http://34.195.33.246/api/Curso/ListarCursosXIdDocente?idDocente="+idUs)
         .then(response=>{
           console.log("CURSOS DE DOCENTE");
           console.log(response.data);
@@ -254,7 +254,7 @@ function GestionarCurso()  {
     };
     const petitionCursoComite = async()=>{
       let idUs = window.localStorage.getItem("IDUSUARIO");
-        await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdComiteTesis?idComiteTesis="+idUs)
+        await axios.get("http://34.195.33.246/api/Curso/ListarCursosXIdComiteTesis?idComiteTesis="+idUs)
         .then(response=>{
           console.log(response.data);
           setData(response.data);
@@ -264,7 +264,7 @@ function GestionarCurso()  {
     }
     const petitionCursoAsesor = async()=>{
       let idUs = window.localStorage.getItem("IDUSUARIO");
-        await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdAsesor?idAsesor="+idUs)
+        await axios.get("http://34.195.33.246/api/Curso/ListarCursosXIdAsesor?idAsesor="+idUs)
         .then(response=>{
           console.log(response.data);
           setData(response.data);
@@ -274,7 +274,7 @@ function GestionarCurso()  {
     }
     const petitionCursoAlumno= async()=>{
       let idUs = window.localStorage.getItem("IDUSUARIO");
-        await axios.get("https://localhost:7012/api/Curso/ListarCursosXIdAlumno?idAlumno="+idUs)
+        await axios.get("http://34.195.33.246/api/Curso/ListarCursosXIdAlumno?idAlumno="+idUs)
         .then(response=>{
           console.log(response.data);
           setData(response.data);

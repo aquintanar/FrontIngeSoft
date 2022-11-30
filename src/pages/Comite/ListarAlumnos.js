@@ -11,9 +11,9 @@ import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 import { AppStream } from 'aws-sdk';
 
-const urlAs= "https://localhost:7012/api/Alumno/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
-const urlAsXCurso="https://localhost:7012/api/AlumnoXCurso/";
+const urlAs= "http://34.195.33.246/api/Alumno/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
+const urlAsXCurso="http://34.195.33.246/api/AlumnoXCurso/";
 
 function ListarAlumnos()  {
   let idCursoGlobal = localStorage.getItem("idCurso");    

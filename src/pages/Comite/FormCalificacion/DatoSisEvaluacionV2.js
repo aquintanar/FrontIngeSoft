@@ -12,7 +12,7 @@ import * as RiIcons  from "react-icons/ri";
 import {ModalConfirmación, ModalPregunta} from '../../../components/Modals';
 import ModalBuscarEvaluacion from './ModalBuscarEvaluacion';
 
-const url = "https://localhost:7012/"
+const url = "http://34.195.33.246/"
 // const url = "http://34.195.33.246/"
 
 const urlNota = url + "api/Nota/";

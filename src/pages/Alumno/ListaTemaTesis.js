@@ -14,7 +14,7 @@ import "../../stylesheets/Comite.css";
 import * as BsIcons from "react-icons/bs";
 import useModal from "../../hooks/useModals";
 
-const urlCurso= "https://localhost:7012/api/Curso/";
+const urlCurso= "http://34.195.33.246/api/Curso/";
 const themeX = createTheme({
   palette: {
     type: "dark",
@@ -73,7 +73,7 @@ function ListaTemaTesis() {
     data.forEach(function (tema, index) {
       axios
         .put(
-          "https://localhost:7012/api/TemaTesis/PublicarTemaTesis?idTemaTesis=" +
+          "http://34.195.33.246/api/TemaTesis/PublicarTemaTesis?idTemaTesis=" +
             tema.idTemaTesis
         )
         //axios.put("http://44.210.195.91/api/TemaTesis/PublicarTemaTesis?idTemaTesis="+tema.idTemaTesis)
@@ -127,7 +127,7 @@ function ListaTemaTesis() {
 
   async function getData() {
     let idcur = window.localStorage.getItem("idCurso");
-    const response = await axios.get("https://localhost:7012/api/TemaTesis/GetTemaTesisXIdCurso?idCurso="+idcur)
+    const response = await axios.get("http://34.195.33.246/api/TemaTesis/GetTemaTesisXIdCurso?idCurso="+idcur)
     .then((response)=>{
       let filtro = [];
       console.log(response.data);
@@ -197,7 +197,7 @@ function ListaTemaTesis() {
     });
     console.log(temaSolicitar);
 
-    let url  = "https://localhost:7012/api/TemaTesis/PostSolicitudTemaTesis?fidTemaTesis="+row.idTemaTesis+"&fidAlumno="+localStorage.getItem("IDUSUARIO")
+    let url  = "http://34.195.33.246/api/TemaTesis/PostSolicitudTemaTesis?fidTemaTesis="+row.idTemaTesis+"&fidAlumno="+localStorage.getItem("IDUSUARIO")
     
     await axios.post(url,
       {

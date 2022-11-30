@@ -8,10 +8,10 @@ import { type } from '@testing-library/user-event/dist/type';
 const urlAs= "http://34.195.33.246/api/Alumno/";
 const urlEsp= "http://34.195.33.246/api/Especialidad/";
 */
-const urlAs= "https://localhost:7012/api/Alumno/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
-const urlAse = "https://localhost:7012/api/Asesor/";
-const urlJur = "https://localhost:7012/api/Jurado/";
+const urlAs= "http://34.195.33.246/api/Alumno/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
+const urlAse = "http://34.195.33.246/api/Asesor/";
+const urlJur = "http://34.195.33.246/api/Jurado/";
 let idCur = 0;
 let idAs = 0;
 let idEs = 0;

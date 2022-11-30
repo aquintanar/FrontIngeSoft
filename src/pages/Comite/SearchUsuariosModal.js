@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 //import './proponerTemaAsesor.css';
 import '../Asesor/proponerTemaAsesor.css';
 
-const URL= "https://localhost:7012/api/Alumno/GetAlumnos";
+const URL= "http://34.195.33.246/api/Alumno/GetAlumnos";
 
 
 const SearchUsuariosModal = ( {show ,setShow, al, setAl,idAlum,setIdAlum} ) =>{
@@ -20,7 +20,7 @@ const SearchUsuariosModal = ( {show ,setShow, al, setAl,idAlum,setIdAlum} ) =>{
         //hacer axios aca carga tabla con setAsesores
     const showData = async() => {
         let idcur = window.localStorage.getItem("idCurso");
-        const response = await axios.get("https://localhost:7012/api/Alumno/GetAlumnosxCurso?idCurso="+idcur)
+        const response = await axios.get("http://34.195.33.246/api/Alumno/GetAlumnosxCurso?idCurso="+idcur)
         .then((response)=>{
             console.log(response.data);
             setAlumnos(response.data)

@@ -4,7 +4,7 @@ import "../stylesheets/BarraVolver.css";
 import { useNavigate,useParams } from 'react-router-dom';
 import axios from "axios";
 export function BarraVolver() {
-  const url = "https://localhost:7012/";
+  const url = "http://34.195.33.246/";
   const [clicked, setClicked] = useState(false);
   const [anhio, setAnhio] = useState([]);
   let navigate = useNavigate();

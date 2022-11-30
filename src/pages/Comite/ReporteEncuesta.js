@@ -165,7 +165,7 @@ const ReporteEncuesta = () => {
     let idCurso = window.localStorage.getItem("idCurso");
     const response = await axios
       .get(
-        "https://localhost:7012/api/Encuesta/BuscarEncuestaXIdCurso?idCurso=" +
+        "http://34.195.33.246/api/Encuesta/BuscarEncuestaXIdCurso?idCurso=" +
           idCurso /* cambiar esto por idCurso, se esta poniendo para la prueba*/,
         {
           _method: "GET",
@@ -183,7 +183,7 @@ const ReporteEncuesta = () => {
   const petitionGet2 = async (e) => {
     let response = await await axios
       .get(
-        "https://localhost:7012/api/DetallePreguntaEncuesta/BuscarDetallePreguntaEncuestaXIdEncuesta?idEncuesta=" +
+        "http://34.195.33.246/api/DetallePreguntaEncuesta/BuscarDetallePreguntaEncuestaXIdEncuesta?idEncuesta=" +
           e
       )
       .then((response) => {

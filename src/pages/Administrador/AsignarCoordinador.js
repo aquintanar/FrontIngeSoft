@@ -23,15 +23,15 @@ var coordRegist;
 var datos;
 
 const URLPOST =
-  "https://localhost:7012/api/ComiteXEspecialidad/PostComiteXEspecialidad";
+  "http://34.195.33.246/api/ComiteXEspecialidad/PostComiteXEspecialidad";
 const URLGET =
-  "https://localhost:7012/api/ComiteTesis/GetComiteTesisXIdEspecialidad";
+  "http://34.195.33.246/api/ComiteTesis/GetComiteTesisXIdEspecialidad";
 
 const URLDELETE =
-  "https://localhost:7012/api/ComiteXEspecialidad/DeleteComiteXEspecialidad";
+  "http://34.195.33.246/api/ComiteXEspecialidad/DeleteComiteXEspecialidad";
 
 const URLESPECIALIDAD =
-  "https://localhost:7012/api/Especialidad/GetEspecialidadXId";
+  "http://34.195.33.246/api/Especialidad/GetEspecialidadXId";
 const AsignarCoordinador = () => {
   const [selectCoord, setSelectCoord] = useState([]);
   const [selecEsp, setSelecEsp] = useState([]);
@@ -64,7 +64,7 @@ const AsignarCoordinador = () => {
   const verificarDisponibilidad = async(doc1)=>{
     let idComit = doc1.idComiteTesis;
     try{
-      const response = await axios.get("https://localhost:7012/api/ComiteXEspecialidad/ListarComitexEspecialidad_x_idComite?idComite="+idComit)
+      const response = await axios.get("http://34.195.33.246/api/ComiteXEspecialidad/ListarComitexEspecialidad_x_idComite?idComite="+idComit)
       .then((response)=>{
         if(Object.keys(response.data).length==0){
           console.log("ESTOY LIBRE")

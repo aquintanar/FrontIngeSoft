@@ -13,7 +13,7 @@ import "../../stylesheets/General.css";
 import useModal from "../../hooks/useModals";
 import { ModalPregunta, ModalConfirmación } from "../../components/Modals";
 
-const url = "https://localhost:7012/api/Facultad/";
+const url = "http://34.195.33.246/api/Facultad/";
 
 /*
 const url= "http://44.210.195.91/api/Facultad/";

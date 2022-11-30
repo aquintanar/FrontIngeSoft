@@ -24,8 +24,8 @@ import DatePicker from "react-date-picker";
 import { AsesorContext } from './AsesorContext';
 
 
-const url= "https://localhost:7012/api/ReunionAlumnoAsesor/";
-const urlAlum = "https://localhost:7012/api/Alumno/";
+const url= "http://34.195.33.246/api/ReunionAlumnoAsesor/";
+const urlAlum = "http://34.195.33.246/api/Alumno/";
 
 var x =4;
 function DatoReunion()  {

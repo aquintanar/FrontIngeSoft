@@ -6,7 +6,7 @@ import * as BsIcons from 'react-icons/bs';
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 
-const urlSolicitud = "https://localhost:7012/api/SolicitudTemaXAlumno/"
+const urlSolicitud = "http://34.195.33.246/api/SolicitudTemaXAlumno/"
 const SolicitudesTema = () =>{
     let filtrado = []
     const [currentPage,SetCurrentPage] = useState(0);
@@ -29,7 +29,7 @@ const SolicitudesTema = () =>{
     }
     filtrado = filtrado.slice(currentPage,currentPage+5);
     const aceptarSolicitud=async (id , idAlumno , idTemaTesis , idAs)=>{
-        let urlAceptar  = "https://localhost:7012/api/SolicitudTemaXAlumno/AceptarSolicitud?idSolicitud="+id
+        let urlAceptar  = "http://34.195.33.246/api/SolicitudTemaXAlumno/AceptarSolicitud?idSolicitud="+id
         await axios.put(urlAceptar,
           {
           _method: 'PUT'
@@ -41,7 +41,7 @@ const SolicitudesTema = () =>{
           console.log(error.message);
         })
         console.log(idAlumno)
-        let urlActualizar = "https://localhost:7012/api/TemaTesis/AsignarTemaTesisUno?idTemaTesis="+idTemaTesis+"&idAlumno="+idAlumno+"&idAsesor="+idAs
+        let urlActualizar = "http://34.195.33.246/api/TemaTesis/AsignarTemaTesisUno?idTemaTesis="+idTemaTesis+"&idAlumno="+idAlumno+"&idAsesor="+idAs
         await axios.put(urlActualizar,
             {
             _method: 'PUT'
@@ -57,7 +57,7 @@ const SolicitudesTema = () =>{
 
       }
       const rechazarSolicitud=async (id)=>{
-        let urlRechazar  = "https://localhost:7012/api/SolicitudTemaXAlumno/RechazarSolicitud?idSolicitud="+id
+        let urlRechazar  = "http://34.195.33.246/api/SolicitudTemaXAlumno/RechazarSolicitud?idSolicitud="+id
         console.log(urlRechazar)
         await axios.put(urlRechazar,
           {

@@ -13,11 +13,11 @@ const urlAs= "http://34.195.33.246/api/Asesor/";
 const urlEsp= "http://34.195.33.246/api/Especialidad/";
 const urlAsXCurso="http://34.195.33.246/api/AsesorXCurso/";
 */
-const urlAs= "https://localhost:7012/api/Asesor/";
-const urlDoc= "https://localhost:7012/api/Docente/";
-const urlAl= "https://localhost:7012/api/Alumno/";
-const urljurado="https://localhost:7012/api/Jurado/";
-const urlJuradoxAlumno="https://localhost:7012/api/JuradoXAlumno/";
+const urlAs= "http://34.195.33.246/api/Asesor/";
+const urlDoc= "http://34.195.33.246/api/Docente/";
+const urlAl= "http://34.195.33.246/api/Alumno/";
+const urljurado="http://34.195.33.246/api/Jurado/";
+const urlJuradoxAlumno="http://34.195.33.246/api/JuradoXAlumno/";
 
 let idEs=0;
 

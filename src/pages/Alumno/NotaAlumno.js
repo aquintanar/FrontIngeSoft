@@ -11,7 +11,7 @@ import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 import * as BsIcons from 'react-icons/bs';
 import { useContext } from 'react';
 import { UserContext } from '../../UserContext'
-const urlNota= "https://localhost:7012/api/Nota/";
+const urlNota= "http://34.195.33.246/api/Nota/";
 
 
 
@@ -21,7 +21,7 @@ var longitud=0;
 const idAlumno = localStorage.getItem('IDUSUARIO');
 
 function NotaAlumno()  {
-  const urlCodigo = "https://localhost:7012/";
+  const urlCodigo = "http://34.195.33.246/";
 
 
 
@@ -87,7 +87,7 @@ const peticionNotasEntregables = async() => {
         SetNotaFinal(((2*(index/result.data.length))+(3*(indexAvance/resultAvance.data.length))+(3*(indexEntregable/resultEntregable.data.length))+(2*(indexExposicion/resultExposicion.data.length)))/10)
         console.log(notaFinal);
       })();
-      const urlCurso = 'https://localhost:7012/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
+      const urlCurso = 'http://34.195.33.246/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
       const responseCurso = await fetch(urlCurso);
       const dataCurso = await responseCurso.json();
       SetCursos(dataCurso);

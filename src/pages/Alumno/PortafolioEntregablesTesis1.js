@@ -21,7 +21,7 @@ const getTipoEntregables = async() => {
 
 
 
-    const urlCurso  = 'https://localhost:7012/api/Curso/ListarCursosXIdAlumnoYNumTesis?idAlumno='+localStorage.getItem('IDUSUARIO')+'&numTesis=1';
+    const urlCurso  = 'http://34.195.33.246/api/Curso/ListarCursosXIdAlumnoYNumTesis?idAlumno='+localStorage.getItem('IDUSUARIO')+'&numTesis=1';
     const responseCurso = await fetch(urlCurso);
     const dataCurso = await responseCurso.json();
     console.log(dataCurso);
@@ -37,7 +37,7 @@ const getTipoEntregables = async() => {
     setcursoAprobado(cursoAprobado);
 
 
-    const urlAsesor  = 'https://localhost:7012/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno='+localStorage.getItem('IDUSUARIO')+'&idCurso='+cursoAprobado[0].idCurso;
+    const urlAsesor  = 'http://34.195.33.246/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno='+localStorage.getItem('IDUSUARIO')+'&idCurso='+cursoAprobado[0].idCurso;
     const response = await fetch(urlAsesor);
     const data = await response.json();
     console.log(data);
@@ -45,7 +45,7 @@ const getTipoEntregables = async() => {
     setAsesor(data);
 
   SetCursos(dataCurso);
-  const urlTipo  = 'https://localhost:7012/api/TipoEntregable/ListTipoEntregableXNumTesis?numTesis='+cursoAprobado[0].numTesis;
+  const urlTipo  = 'http://34.195.33.246/api/TipoEntregable/ListTipoEntregableXNumTesis?numTesis='+cursoAprobado[0].numTesis;
   const responseTipo = await fetch(urlTipo);
   const dataTipo = await responseTipo.json();
   console.log(dataTipo);

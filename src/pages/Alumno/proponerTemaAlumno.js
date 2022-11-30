@@ -11,11 +11,11 @@ import {  useNavigate, useParams } from 'react-router-dom';
 import {ToastContainer,toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 //http://34.195.33.246/api/
-//https://localhost:7012/api/
-const urlCoAsesor= "https://localhost:7012/api/TemaTesisXAsesor/";
-const urlTemaTesis= "https://localhost:7012/api/TemaTesis/";
-const urlAs = "https://localhost:7012/api/Alumno/";
-const urlPalabra = "https://localhost:7012/api/PalabraClave/";
+//http://34.195.33.246/api/
+const urlCoAsesor= "http://34.195.33.246/api/TemaTesisXAsesor/";
+const urlTemaTesis= "http://34.195.33.246/api/TemaTesis/";
+const urlAs = "http://34.195.33.246/api/Alumno/";
+const urlPalabra = "http://34.195.33.246/api/PalabraClave/";
 
 const ProponerTemaAlumno = () => {
   let navigate = useNavigate();
@@ -193,7 +193,7 @@ const [alumno, setAlumno] = useState({
   const verPeriodoRecepcion = async () => {
     let idcur = window.localStorage.getItem("idCurso");
     await axios
-      .get("https://localhost:7012/api/Curso/BuscarCursoXId?idCurso=" + idcur)
+      .get("http://34.195.33.246/api/Curso/BuscarCursoXId?idCurso=" + idcur)
       .then((response) => {
         console.log(response.data);
         if (response.data[0].aceptandoTemas == 0) {
@@ -401,7 +401,7 @@ const guardarPalabra=async(element)=>{
   const ListarAreas1 = async () => {
     let idcur = window.localStorage.getItem("idCurso");
     await axios
-      .get("https://localhost:7012/api/Curso/BuscarCursoXId?idCurso=" + idcur)
+      .get("http://34.195.33.246/api/Curso/BuscarCursoXId?idCurso=" + idcur)
       .then((response) => {
         console.log(response.data);
         console.log("SE HA SETEADO LA ESPECIALIDAD");
@@ -415,7 +415,7 @@ const guardarPalabra=async(element)=>{
   const ListarAreas2 = async (e) => {
     console.log(e);
     await axios
-      .get("https://localhost:7012/api/Area/GetAreaXEspecialidad?idEspecialidad=" + e)
+      .get("http://34.195.33.246/api/Area/GetAreaXEspecialidad?idEspecialidad=" + e)
       .then((response) => {
         setAreaSeleccionada(response.data);
         if(response.data[0] !== undefined && id===0){          

@@ -6,8 +6,8 @@ import axios from "axios";
 import * as BsIcons from 'react-icons/bs';
 import {ToastContainer,toast} from 'react-toastify';
 
-const urlTemaTesis= "https://localhost:7012/api/TemaTesis/";
-const urlCurso= "https://localhost:7012/api/Curso/";
+const urlTemaTesis= "http://34.195.33.246/api/TemaTesis/";
+const urlCurso= "http://34.195.33.246/api/Curso/";
 const ListarTemasTesis = () =>{
     //setear los hooks useState
     let navigate = useNavigate();
@@ -42,7 +42,7 @@ const ListarTemasTesis = () =>{
     const verPeriodoRecepcion = async () => {
         let idcur = window.localStorage.getItem("idCurso");
         await axios
-          .get("https://localhost:7012/api/Curso/BuscarCursoXId?idCurso=" + idcur)
+          .get("http://34.195.33.246/api/Curso/BuscarCursoXId?idCurso=" + idcur)
           .then((response) => {
             console.log(response.data);
             if (response.data[0].aceptandoTemas == 0) {

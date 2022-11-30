@@ -17,9 +17,9 @@ import { isCursorAtStart } from "@testing-library/user-event/dist/utils";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const url1= "https://localhost:7012/api/Entregable/";
-const urlCurso = "https://localhost:7012/api/Curso/"
-const urlEncuesta = "https://localhost:7012/api/Encuesta/"
+const url1= "http://34.195.33.246/api/Entregable/";
+const urlCurso = "http://34.195.33.246/api/Curso/"
+const urlEncuesta = "http://34.195.33.246/api/Encuesta/"
 const AddEncuesta = () => {
     const [encuestaSeleccionada, setEncuestaSeleccionada]=useState({
         idEncuesta: 0 , 
@@ -62,7 +62,7 @@ const AddEncuesta = () => {
 
     const peticionGetEncuesta = async()=>{
         let idcur = window.localStorage.getItem("idCurso");
-        await axios.get("https://localhost:7012/api/Encuesta/BuscarEncuestaXIdCurso?idCurso="+idcur)
+        await axios.get("http://34.195.33.246/api/Encuesta/BuscarEncuestaXIdCurso?idCurso="+idcur)
         .then(response => {
             setData(response.data);
         }).catch(error => {
@@ -72,7 +72,7 @@ const AddEncuesta = () => {
 
     const petitionCursos = async()=>{
         let idcur = window.localStorage.getItem("idCurso");
-        const response=await axios.get("https://localhost:7012/api/Curso/BuscarCursoXId?idCurso="+ idcur)
+        const response=await axios.get("http://34.195.33.246/api/Curso/BuscarCursoXId?idCurso="+ idcur)
         .then((response)=>{
             SetCursos(response.data);
         }).catch(()=>{
@@ -94,7 +94,7 @@ const AddEncuesta = () => {
       };
     const petitionEncuesta = async()=> {
         let idcur = window.localStorage.getItem("idCurso");
-        await axios.get("https://localhost:7012/api/Encuesta/BuscarEncuestaXIdCurso?idCurso="+idcur)
+        await axios.get("http://34.195.33.246/api/Encuesta/BuscarEncuestaXIdCurso?idCurso="+idcur)
         .then(response => {
             SetEncuestas(response.data);
         }).catch(error => {
@@ -130,7 +130,7 @@ const AddEncuesta = () => {
       }
       const buscarEncuestaxCurso = async()=>{
         let idcur = window.localStorage.getItem("idCurso");
-        await axios.get("https://localhost:7012/api/Encuesta/BuscarEncuestaXIdCurso?idCurso="+idcur)
+        await axios.get("http://34.195.33.246/api/Encuesta/BuscarEncuestaXIdCurso?idCurso="+idcur)
         .then((response)=>{
             console.log(response.data);
             console.log(Object.keys(response.data).length)
@@ -166,7 +166,7 @@ const AddEncuesta = () => {
         deleteEncuesta(e);
     }
     const deleteEncuesta = async(e)=>{
-        axios.delete("https://localhost:7012/api/Encuesta/EliminarEncuesta?idEncuesta="+e)
+        axios.delete("http://34.195.33.246/api/Encuesta/EliminarEncuesta?idEncuesta="+e)
         .then(()=>{
 
         }).catch(()=>{

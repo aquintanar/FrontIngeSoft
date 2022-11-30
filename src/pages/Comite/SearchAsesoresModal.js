@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 //import './proponerTemaAsesor.css';
 import '../Asesor/proponerTemaAsesor.css';
 
-const URL= "https://localhost:7012/api/Alumno/GetAlumnos";
+const URL= "http://34.195.33.246/api/Alumno/GetAlumnos";
 
 
 const SearchAsesoresModal = ( {show1 ,setShow1, ase, setAse,conf,setConf} ) =>{
@@ -13,7 +13,7 @@ const SearchAsesoresModal = ( {show1 ,setShow1, ase, setAse,conf,setConf} ) =>{
     const[search , setSearch] = useState("");
     const showData = async() => {
         let idcur = window.localStorage.getItem("idCurso");
-        const response = await axios.get("https://localhost:7012/api/Asesor/ListAsesoresXIdCurso?idCurso="+idcur)
+        const response = await axios.get("http://34.195.33.246/api/Asesor/ListAsesoresXIdCurso?idCurso="+idcur)
         .then((response)=>{
             setAlumnos(response.data)
         }).catch(()=>{

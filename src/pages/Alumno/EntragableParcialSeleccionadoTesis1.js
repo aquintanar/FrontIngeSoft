@@ -26,7 +26,7 @@ import {
 function EntregableSeleccionadoTesis1(){
     var aux=0;
     let navigate = useNavigate();
-    const url = "https://localhost:7012/";
+    const url = "http://34.195.33.246/";
     const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
 
 const [isOpenGuardadoModalArchivo, openGuardadoModalArchivo ,closeGuardadoModalArchivo ] = useModal();

@@ -19,7 +19,7 @@ function PortafolioEntregables()  {
   const [cursos , SetCursos] = useState([]);
   const [tipoEntregables, setTipoEntregables]=useState([]);
   const getAsesor = async() => {
-    const urlAsesor  = 'https://localhost:7012/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno='+localStorage.getItem('IDUSUARIO')+'&idCurso='+localStorage.getItem('idCurso');
+    const urlAsesor  = 'http://34.195.33.246/api/Asesor/ListAsesoresXAlumnoXCurso?idAlumno='+localStorage.getItem('IDUSUARIO')+'&idCurso='+localStorage.getItem('idCurso');
     const response = await fetch(urlAsesor);
     const data = await response.json();
     console.log(data);
@@ -40,13 +40,13 @@ const getTipoEntregables = async() => {
 
 
 
-  const urlCurso = 'https://localhost:7012/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
+  const urlCurso = 'http://34.195.33.246/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
   const responseCurso = await fetch(urlCurso);
   const dataCurso = await responseCurso.json();
   console.log(dataCurso);
   
   SetCursos(dataCurso);
-  const urlAsesor  = 'https://localhost:7012/api/TipoEntregable/ListTipoEntregableXNumTesis?numTesis='+dataCurso[0].numTesis;
+  const urlAsesor  = 'http://34.195.33.246/api/TipoEntregable/ListTipoEntregableXNumTesis?numTesis='+dataCurso[0].numTesis;
   const response = await fetch(urlAsesor);
   const data = await response.json();
   console.log(data);

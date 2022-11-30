@@ -21,13 +21,13 @@ const PWD_REGEX = /^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const NAME_REGEX = /^[a-zA-ZÑñà-úÀ-Ú]{1,50}$/;
 const CODIGO_REGEX = /^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/;
 
-const REGISTERALUMNO_URL = "https://localhost:7012/api/Alumno/PostAlumno";
+const REGISTERALUMNO_URL = "http://34.195.33.246/api/Alumno/PostAlumno";
 const REGISTERADMIN_URL =
-  "https://localhost:7012/api/Administrador/PostAdministrador";
-const REGISTERASESOR_URL = "https://localhost:7012/api/Asesor/PostAsesor";
-const REGISTERDOCENTE_URL = "https://localhost:7012/api/Docente/PostDocente";
+  "http://34.195.33.246/api/Administrador/PostAdministrador";
+const REGISTERASESOR_URL = "http://34.195.33.246/api/Asesor/PostAsesor";
+const REGISTERDOCENTE_URL = "http://34.195.33.246/api/Docente/PostDocente";
 const REGISTERCOMITE_URL =
-  "https://localhost:7012/api/ComiteTesis/PostComiteTesis";
+  "http://34.195.33.246/api/ComiteTesis/PostComiteTesis";
 
 const Register = () => {
   const userRef = useRef();
@@ -199,7 +199,7 @@ const Register = () => {
     credenciales.codigo=random_string;
     try {
       let response = await axios
-        .post('https://localhost:7012/api/Directorio/PostDirectorio', credenciales, {
+        .post('http://34.195.33.246/api/Directorio/PostDirectorio', credenciales, {
           _method: "POST",
         })
         .then((response) => {
@@ -230,7 +230,7 @@ const Register = () => {
   const ListarEsp = async (e) => {
     try {
       let response = await axios
-        .get("https://localhost:7012/api/Especialidad/GetEspecialidades", {
+        .get("http://34.195.33.246/api/Especialidad/GetEspecialidades", {
           _method: "POST",
         })
         .then((response) => {

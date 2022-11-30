@@ -11,11 +11,11 @@ import {  Button} from '@material-ui/core';
 const urlAs= "http://34.195.33.246/api/Alumno/";
 const urlEsp= "http://34.195.33.246/api/Especialidad/";
 */
-const urlAs= "https://localhost:7012/api/Alumno/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
-const urlAse = "https://localhost:7012/api/Asesor/";
-const urlJur = "https://localhost:7012/api/Jurado/";
-const urlJuradoxAlumno = "https://localhost:7012/api/JuradoXAlumno/";
+const urlAs= "http://34.195.33.246/api/Alumno/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
+const urlAse = "http://34.195.33.246/api/Asesor/";
+const urlJur = "http://34.195.33.246/api/Jurado/";
+const urlJuradoxAlumno = "http://34.195.33.246/api/JuradoXAlumno/";
 
 let idEs = 0;
 

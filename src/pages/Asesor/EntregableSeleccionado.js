@@ -140,7 +140,7 @@ const cargarDocumentos=async()=>{
  
   if(location.state.idVersion!=null){
     (async () => {
-    const urlDocumentos  = `https://localhost:7012/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${location.state.idVersion}`
+    const urlDocumentos  = `http://34.195.33.246/api/DocumentoVersion/BuscarDocumentoVersionXIdVersion?idVersion=${location.state.idVersion}`
     const responseDocumentos  = await fetch(urlDocumentos)
     const dataDocumentos = await responseDocumentos.json()
     setDocumentosVersion(dataDocumentos)
@@ -168,7 +168,7 @@ const cargarDocumentos=async()=>{
 }
 //
 const  getDataV = async() => {
-    const response= await axios(`https://localhost:7012/api/Version/ListVersionXId?idVersion=${location.state.idVersion}`);
+    const response= await axios(`http://34.195.33.246/api/Version/ListVersionXId?idVersion=${location.state.idVersion}`);
     setDataV(response.data);
     console.log(response.data);
     setVersionSeleccionadaC({
@@ -323,7 +323,7 @@ const handleChange= (nombre,e)=>{
   
 }
   const peticionPost=async()=>{
-    await axios.post("https://localhost:7012/api/DetalleNotaRubrica/PostDetalleNotaRubrica",detNotaSeleccionado,{
+    await axios.post("http://34.195.33.246/api/DetalleNotaRubrica/PostDetalleNotaRubrica",detNotaSeleccionado,{
         _method: 'POST'
       })
     .then(response=>{
@@ -344,7 +344,7 @@ const handleChange= (nombre,e)=>{
 
   }
   const peticionEditDetalleNota=async()=>{
-    await axios.put("https://localhost:7012/api/DetalleNotaRubrica/ModifyDetalleNotaRubrica",detNotaSeleccionadoModificar)
+    await axios.put("http://34.195.33.246/api/DetalleNotaRubrica/ModifyDetalleNotaRubrica",detNotaSeleccionadoModificar)
     .then(response=>{
       closeEditDetNotaModal();
       openGuardadoModal();
@@ -353,14 +353,14 @@ const handleChange= (nombre,e)=>{
     })
   }
   const peticionC=async()=>{
-    await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionadaC,{
+    await axios.post("http://34.195.33.246/api/Version/PostVersion",versionSeleccionadaC,{
       _method: 'POST'
     })
     .then(response=>{  
     }).catch(error =>{
       console.log(error.message);
     })
-    await axios.put("https://localhost:7012/api/Version/modifyVersionDiscreto",versionSeleccionadaMod)
+    await axios.put("http://34.195.33.246/api/Version/ModifyVersionDiscreto",versionSeleccionadaMod)
     .then(response=>{
       closeEditModal();
       openGuardadoModal();
@@ -369,14 +369,14 @@ const handleChange= (nombre,e)=>{
     })
   }
   const peticionA=async()=>{
-    await axios.post("https://localhost:7012/api/Version/PostVersion",versionSeleccionadaA,{
+    await axios.post("http://34.195.33.246/api/Version/PostVersion",versionSeleccionadaA,{
       _method: 'POST'
     })
     .then(response=>{
     }).catch(error =>{
       console.log(error.message);
     })
-    await axios.put("https://localhost:7012/api/Version/modifyVersionDiscreto",versionSeleccionadaModA)
+    await axios.put("http://34.195.33.246/api/Version/ModifyVersionDiscreto",versionSeleccionadaModA)
     .then(response=>{
       closeEditModal();
       openGuardadoModal();
@@ -404,7 +404,7 @@ const handleChange= (nombre,e)=>{
   }
   async function getData() {
     (async () => {
-      const result = await axios(`https://localhost:7012/api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
+      const result = await axios(`http://34.195.33.246/api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
       //const result = await axios(`http://44.210.195.91/api/DetalleRubrica/ListDetalleRubricaXIdEntregable?idEntregable=${location.state.idEntregable}`);
       setData(result.data);
       console.log(data);

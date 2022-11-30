@@ -9,7 +9,7 @@ import '../../../stylesheets/Comite.css'
 import "../../../stylesheets/General.css";
 import {ModalConfirmación, ModalPregunta} from '../../../components/Modals';
 
-const url = "https://localhost:7012/api/"
+const url = "http://34.195.33.246/api/"
 // const url = "http://34.195.33.246/api/"
 
 const urlArea= url + "Area/";

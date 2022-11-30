@@ -177,7 +177,7 @@ const CrearCuentaAlumno = () => {
     try {
       let response = await axios
         .post(
-          "https://localhost:7012/api/Alumno/PostAlumno",
+          "http://34.195.33.246/api/Alumno/PostAlumno",
           UsuarioSeleccionado,
           {
             _method: "POST",
@@ -197,7 +197,7 @@ const CrearCuentaAlumno = () => {
     try {
       let response = await axios
         .get(
-          "https://localhost:7012/api/Curso/BuscarCursoXId?idCurso="+idCu,
+          "http://34.195.33.246/api/Curso/BuscarCursoXId?idCurso="+idCu,
           {
             _method: "GET",
           }
@@ -218,7 +218,7 @@ const CrearCuentaAlumno = () => {
   const ListarEsp = async (e) => {
     try {
       let response = await axios
-        .get("https://localhost:7012/api/Especialidad/GetEspecialidades", {
+        .get("http://34.195.33.246/api/Especialidad/GetEspecialidades", {
           _method: "POST",
         })
         .then((response) => {

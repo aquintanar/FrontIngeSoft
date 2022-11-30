@@ -34,7 +34,7 @@ const UploadAsesor = ({ label, files,linkDoc,tituloDoc, nombreArchivo,idAlumno,i
   var titulo = "";
   var link= "";
   var idVersionPrueba=0;
-  const url = "https://localhost:7012/";
+  const url = "http://34.195.33.246/";
 const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
 const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
 const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
@@ -380,7 +380,7 @@ const guarda=async()=>{
 
 const peticionPut=async()=>{
   /*
-  await axios.put(url+"api/Version/modifyVersionDiscreto",versionSeleccionada,{
+  await axios.put(url+"api/Version/ModifyVersionDiscreto",versionSeleccionada,{
     _method: 'PUT'
   })
   .then(response=>{

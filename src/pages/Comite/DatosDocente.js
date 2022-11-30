@@ -10,10 +10,10 @@ import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
-//https://localhost:7012/api/
+//http://34.195.33.246/api/
 //http://34.195.33.246/
-const urlAs= "https://localhost:7012/api/Docente/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
+const urlAs= "http://34.195.33.246/api/Docente/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
 let idCur = 0;
 let idAs = 0;
 let idEs = 0;

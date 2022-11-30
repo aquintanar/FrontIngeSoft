@@ -33,7 +33,7 @@ function EntregablesParciales(){
  
     async function getData() {
       (async () => {
-        const result = await axios(`https://localhost:7012/api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso=${location.state.idCurso}&idTipoEntregable=1&idAlumno=${location.state.idAlumno}`);
+        const result = await axios(`http://34.195.33.246/api/Entregable/ListEntregablesXIdCursoYIdTipoEntregableYIdAlumno?idCurso=${location.state.idCurso}&idTipoEntregable=1&idAlumno=${location.state.idAlumno}`);
         //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
         setData(result.data);
         console.log(data);
@@ -49,7 +49,7 @@ function EntregablesParciales(){
     };
     async function getDataE() {
       (async () => {
-        const result = await axios(`https://localhost:7012/api/Entregable/BuscarEntregableXId?idEntregable=4`);
+        const result = await axios(`http://34.195.33.246/api/Entregable/BuscarEntregableXId?idEntregable=4`);
         //const result = await axios(`http://44.210.195.91/api/Version/ListVersionesXIdAlumnoYIdTipoEntregable?idAlumno=${location.state.idAlumno}&idTipoEntregable=2`);
         setDataE(result.data);
         console.log(data)
@@ -63,7 +63,7 @@ function EntregablesParciales(){
 
   //Listar facultades combo box--
   const petitionEstadoEntregable=async()=>{
-    await axios.get("https://localhost:7012/api/EstadoEntregable/ListEstadoEntregable")
+    await axios.get("http://34.195.33.246/api/EstadoEntregable/ListEstadoEntregable")
     .then(response=>{
       setEstadoEnt(response.data);
     }).catch(error =>{

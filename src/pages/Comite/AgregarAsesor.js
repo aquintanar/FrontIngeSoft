@@ -14,9 +14,9 @@ const urlAs= "http://34.195.33.246/api/Asesor/";
 const urlEsp= "http://34.195.33.246/api/Especialidad/";
 const urlAsXCurso="http://34.195.33.246/api/AsesorXCurso/";
 */
-const urlAs= "https://localhost:7012/api/Asesor/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
-const urlAsXCurso="https://localhost:7012/api/AsesorXCurso/";
+const urlAs= "http://34.195.33.246/api/Asesor/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
+const urlAsXCurso="http://34.195.33.246/api/AsesorXCurso/";
 
 function ListarAsesoresNoEstan()  {
   let navigate = useNavigate();

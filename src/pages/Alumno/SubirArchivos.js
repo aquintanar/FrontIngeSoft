@@ -27,7 +27,7 @@ const [files, setFiles] = useState([]);
 const [subTitulo,setSubtitulo] = useState("Agregar Entrega");
 var documents="22";
 
-const url = "https://localhost:7012/";
+const url = "http://34.195.33.246/";
 const [versionSeleccionada, setVersionSeleccionada]=useState({
     idVersion: 0,
     linkDoc: '',

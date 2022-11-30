@@ -129,7 +129,7 @@ const Tesis = () => {
     var idCurso = window.localStorage.getItem("idCurso");
     const response = await axios /* NO OLVIDAR CAMBIAR EL ID DEL CURSO */
       .get(
-        "https://localhost:7012/api/Curso/ReporteNotasAlumnosXCurso?idCurso=" +
+        "http://34.195.33.246/api/Curso/ReporteNotasAlumnosXCurso?idCurso=" +
           idCurso,
         {
           _method: "GET",

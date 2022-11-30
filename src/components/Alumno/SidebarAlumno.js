@@ -52,7 +52,7 @@ const SidebarWrap = styled.div`
 `;
 var numTesis = 0;
 const Sidebar = () => {
-  const url = "https://localhost:7012/";
+  const url = "http://34.195.33.246/";
   const {logout, isAuthenticated}=useAuth0();
   const [sidebar, setSidebar] = useState(true);
   const {value,setValue} = useContext(UserContext);
@@ -88,7 +88,7 @@ const Sidebar = () => {
 
 
 
-    const urlCurso = 'https://localhost:7012/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
+    const urlCurso = 'http://34.195.33.246/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
     const responseCurso = await fetch(urlCurso);
     const dataCurso = await responseCurso.json();
     console.log(dataCurso);

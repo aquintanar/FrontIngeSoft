@@ -10,17 +10,17 @@ import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import {ModalPregunta, ModalConfirmación} from '../../components/Modals';
 
-//https://localhost:7012/api/
+//http://34.195.33.246/api/
 //http://34.195.33.246/
 /*
-const urlAs= "https://localhost:7012/api/Docente/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
-const urlAsXCurso="https://localhost:7012/api/DocenteXCurso/";
+const urlAs= "http://34.195.33.246/api/Docente/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
+const urlAsXCurso="http://34.195.33.246/api/DocenteXCurso/";
 */
-//https://localhost:7012/api/Alumno/
-const urlAs= "https://localhost:7012/api/Docente/";
-const urlEsp= "https://localhost:7012/api/Especialidad/";
-const urlAsXCurso="https://localhost:7012/api/DocenteXCurso/";
+//http://34.195.33.246/api/Alumno/
+const urlAs= "http://34.195.33.246/api/Docente/";
+const urlEsp= "http://34.195.33.246/api/Especialidad/";
+const urlAsXCurso="http://34.195.33.246/api/DocenteXCurso/";
 
 function ListarDocentesNoEstan()  {
   let navigate = useNavigate();
@@ -83,7 +83,7 @@ function ListarDocentesNoEstan()  {
         console.log(idCursoGlobal);
         console.log(asesorSeleccionado.idUsuario);
         let idcom = idas+1;
-        await axios.post("https://localhost:7012/api/ComiteXCurso/PostComiteXCurso?idComiteTesis="+idcom+"&idCurso="+idCursoGlobal)
+        await axios.post("http://34.195.33.246/api/ComiteXCurso/PostComiteXCurso?idComiteTesis="+idcom+"&idCurso="+idCursoGlobal)
         .then(response=>{
           console.log(response.data);
         }).catch(error =>{

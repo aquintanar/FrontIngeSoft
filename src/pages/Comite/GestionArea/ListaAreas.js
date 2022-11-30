@@ -13,7 +13,7 @@ import * as AntIcons from "react-icons/ai";
 import {ModalConfirmación, ModalPregunta} from '../../../components/Modals';
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-const url = "https://localhost:7012/"
+const url = "http://34.195.33.246/"
 // const url = "http://34.195.33.246/"
 
 const urlArea= url + "api/Area/";
@@ -80,7 +80,7 @@ function ListaAreas()  {
     }
     const peticionGetInfo=async()=>{
         let idcur = window.localStorage.getItem("idCurso");
-        let response=await axios.get("https://localhost:7012/api/Curso/BuscarCursoXId?idCurso="+idcur)
+        let response=await axios.get("http://34.195.33.246/api/Curso/BuscarCursoXId?idCurso="+idcur)
         .then((response)=>{
             console.log("ESTE ES EL CURSO");
             infoCurso.idEspec = response.data[0].idEspecialidad;
