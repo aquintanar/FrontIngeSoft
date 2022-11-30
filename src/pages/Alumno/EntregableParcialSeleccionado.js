@@ -255,8 +255,9 @@ else if(location.state.estado==7){
         setSubtitulo("Modificar ")
       }
     }
-    const seleccionarTipoCalificado =()=>{
-      if(location.state.notaVersion>=0){
+    const seleccionarTipoCalificado =async()=>{
+      const result = await axios(url+`api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
+      if(result.data.length>0){
         getDetallesNotaRubrica();
         aux=1;
       }
@@ -377,9 +378,10 @@ else if(location.state.estado==7){
               
             );
                 }): " ")} </PreviewList>
-        <p class="HEADER-TEXT6"  type='button' onClick={() =>crearDocumento()} >
-            {documentosVersion.length==0?"Agregar "+location.state.nombreEntregable:"Modificar "+location.state.nombreEntregable}</p>
-          
+
+            {documentosVersion.length>0?<p class="HEADER-TEXT6"  type='button' onClick={() =>crearDocumento()} >Modificar {location.state.nombreEntregable}</p>:<p class="HEADER-TEXT6"  type='button' onClick={() =>crearDocumento()} >Agregar {location.state.nombreEntregable}</p>
+}    
+
         
             <p class="HEADER-TEXT5">{location.state.idRubrica>0?"Rúbrica de Evaluación":" "} </p>
         <div class = "row LISTAR-TABLA">

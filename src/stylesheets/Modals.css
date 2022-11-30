@@ -24,8 +24,8 @@
 .modal__dialog_comentario {
     background: #042354;
     padding: 10px;
-    width: 600px;
-    height: 500px;
+    width: 500px;
+    height: 350px;
     position: fixed;
     top: 40%;
     left: 50%;

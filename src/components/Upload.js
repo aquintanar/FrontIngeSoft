@@ -420,15 +420,18 @@ const seleccionarDocumentoVersion=(documentos)=>{
 //<span>{convertBytesToKB(fileObj.size)} kb</span> 
   return (
     <>
-      <FileUploadContainer>
-      {((documentosVersion.length==0) ? <div align = "center">
+      <FileUploadContainer>         
+        
+        
+        {documentosVersion.length>0?" ": <div align = "center">
         <img width="140px" float= "left" top="1000px"  src={require('../imagenes/subida.png')} alt="archivo"></img>
          
         <center>
         <p class="HEADER-TEXT2" >Seleccione o suelte un archivo</p></center>
         <p class="HEADER-TEXT4">Los archivos guardados, no pueden superar 1 MB de tamaño</p>
-         <p class="HEADER-TEXT9">{idAlumno}</p></div>:
-      " " )}
+         <p class="HEADER-TEXT9">{idAlumno}</p></div>
+}    
+
         <FormField
           type="file"
           ref={fileInputField}

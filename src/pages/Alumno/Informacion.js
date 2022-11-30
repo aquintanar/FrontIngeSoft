@@ -35,7 +35,13 @@ const getInformacion = async() => {
   const dataAlumno   = await responseAlumno  .json();
   console.log(dataAlumno);
   setAlumno(dataAlumno);
-  const urlDocente  = 'https://localhost:7012/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
+  const urlCurso  = 'https://localhost:7012/api/Curso/BuscarCursoXId?idCurso='+localStorage.getItem('idCurso');
+  const responseCurso  = await fetch(urlCurso);
+  const dataCurso  = await responseCurso .json();
+  console.log(dataCurso);
+  setCurso(dataCurso);
+
+  const urlDocente  = 'https://localhost:7012/api/Docente/ListDocentesXIdCurso?idCurso='+localStorage.getItem('idCurso');
   const responseDocente  = await fetch(urlDocente);
   const dataDocente  = await responseDocente .json();
   console.log(dataDocente);
@@ -46,6 +52,7 @@ const getInformacion = async() => {
  const [asesor, setAsesor]=useState([]);
  const [docente, setDocente]=useState([]);
  const [alumno, setAlumno]=useState([]);
+ const [curso, setCurso]=useState([]);
  const [tema, setTema]=useState([]);
 useEffect(()=>{
   getInformacion();
@@ -91,14 +98,17 @@ useEffect(()=>{
  
 
         <p class="HEADER-TEXT2-INF">Docente</p>
-        {docente.map(docente => (   
+        {docente.length>0?asesor.map(docente => (    
        <td>      
-       <p class="HEADER-TEXT11"> {docente.idDocente>0?docente.nombresDocente:"Sin docente asigando"}  {docente.idDocente>0?docente.apePatDocente:""} {docente.idDocente>0?docente.apeMatDocente:""}</p>
-       <p class="HEADER-TEXT11">{docente.idDocente>0?docente.correoDocente:""}  </p>
-</td>
+       <p class="HEADER-TEXT11">{docente.nombres}, {docente.apePat} {docente.apeMat}  </p>
+       <p class="HEADER-TEXT11">{docente.correo}  </p>
+       </td>
        
        
- ))}
+ )):<p class="HEADER-TEXT11">Sin docente asignado  </p>
+}    
+
+
         
 
 
