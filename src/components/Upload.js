@@ -228,19 +228,8 @@ if(tamanho>1000){
   abrirPostArchivoTamanho();
 }
 else{
-  console.log("Hola");
-  var tempoTranscurrido = Date.now();
-var tiempoHoy = new Date(tempoTranscurrido);
-console.log(tempoTranscurrido);
-console.log(tiempoHoy);
-console.log(fechaPresentacionAlumno);
-let tiempoPresentacion = Date.parse(fechaPresentacionAlumno);
-console.log(tiempoPresentacion);
-if(tiempoHoy>tiempoPresentacion){
-console.log("si");
-abrirPostFechas();
-}
-else{
+
+
 
 if(idVersion>0){
   setDocumentoVersionNuevo({
@@ -307,7 +296,7 @@ else{
   });
     openPostModal();
   }
-}
+
 }
 }
 console.log(archivo);

@@ -1,6 +1,6 @@
 import React from 'react'
 import {useState , useEffect} from "react";
-import {ModalConfirmación, ModalComentario,ModalArchivoTamanho} from '../../components/Modals';
+import {ModalConfirmación, ModalComentario,ModalArchivoTamanho,ModalFechas} from '../../components/Modals';
 import useModal from '../../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import { BrowserRouter as Router , Routes, Route, Link, useLocation } from 'react-router-dom';
@@ -30,6 +30,7 @@ function EntregableSeleccionado(){
     const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
 
 const [isOpenGuardadoModalArchivo, openGuardadoModalArchivo ,closeGuardadoModalArchivo ] = useModal();
+const [isOpenGuardadoModalFechas, openGuardadoModalFechas ,closeGuardadoModalFechas ] = useModal();
     const location = useLocation();
     const [subTitulo,setSubtitulo] = useState("Agregar ");
     const [calificado,setCalificado] = useState("No Calificado");
@@ -81,6 +82,15 @@ const [isOpenGuardadoModalArchivo, openGuardadoModalArchivo ,closeGuardadoModalA
   }
   const abrirPostArchivo=()=>{
     openGuardadoModalArchivo();
+   // navigate("../gestion");     
+  }
+
+  const cerrarPostFechas=()=>{
+    closeGuardadoModalFechas();
+   // navigate("../gestion");
+  }
+  const abrirPostFechas=()=>{
+    openGuardadoModalFechas();
    // navigate("../gestion");     
   }
   const cargarVersion=async()=>{
@@ -244,8 +254,21 @@ else if(location.state.estado==6){
 else if(location.state.estado==7){
   abrirPostArchivo();
 }  
-  else{navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
-        tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion,fechaPresentacionAlumno:location.state.fechaPresentacionAlumno}}) }     })();
+  else{
+      var tempoTranscurrido = Date.now();
+var tiempoHoy = new Date(tempoTranscurrido);
+console.log(tempoTranscurrido);
+console.log(tiempoHoy);
+console.log(location.state.fechaPresentacionAlumno);
+let tiempoPresentacion = Date.parse(location.state.fechaPresentacionAlumno);
+console.log(tiempoPresentacion);
+if(tiempoHoy>tiempoPresentacion){
+console.log("si");
+abrirPostFechas();
+}
+ else {           
+        navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
+        tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion,fechaPresentacionAlumno:location.state.fechaPresentacionAlumno}}) } }    })();
      }
     
 
@@ -492,6 +515,20 @@ documentosVersionAsesor.map((documentos) => {
                 </div>
               </div>
             </ModalArchivoTamanho>
+
+            <ModalFechas
+              isOpen={isOpenGuardadoModalFechas} 
+              closeModal={closeGuardadoModalFechas}
+              procedimiento= "No se puede ingresar documentos pasada la fecha válida"
+            >
+
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+              <div class="align-text-bottom">
+              <Button class="btn btn-success btn-lg"  onClick={()=>cerrarPostFechas()}><span>Entendido</span></Button>
+                </div>
+              </div>
+            </ModalFechas>
+            
         </div>
         </div>
     );
