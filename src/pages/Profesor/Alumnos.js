@@ -1,6 +1,8 @@
 import React, { useMemo,useState, useEffect } from 'react';
 import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom';
 import  '../../stylesheets/Profesor.css';
+import  '../../stylesheets/General.css';
+import * as Heroicons from "react-icons/hi";
 import { useTable ,useFilters,setFilter} from 'react-table';
 import axios from 'axios';
 import {  useNavigate ,useLocation} from 'react-router-dom';
@@ -41,8 +43,8 @@ function Alumnos() {
     const columns = React.useMemo(
         () => [
           {
-            Header: 'Apellido(s) / Nombre',
-            accessor: d => `${d.apePat} ${d.nombres}`, // accessor is the "key" in the data
+            Header: 'Nombre',
+            accessor: d => `${d.nombres} ${d.apePat} ${d.apeMat}`, // accessor is the "key" in the data
             Cell: ({ value }) => (
               <button class="btn btn-lg navbar-toggle"> {value}
               </button>
@@ -97,8 +99,8 @@ function Alumnos() {
           console.log(a)
           return a.toLowerCase().includes(search1.toLocaleLowerCase());
         }) ;
-      if(search2)
-        data=data.filter((dato)=>dato.codigoPucp.includes(search2)) ;
+      else if(search2)
+        data=dataI.filter((dato)=>dato.codigoPucp.includes(search2)) ;
     }
   }
     data = data.slice(currentPage,currentPage+4);
@@ -145,9 +147,16 @@ function Alumnos() {
         </div>
 
           <div className="ContenidoPrincipal">
-            <h2>Seleccione un alumno para ver su portafolio de entregables/asignarle un jurado:</h2>
-        <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
-        <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
+
+            <div class ="row">
+              <div class ="col-11">
+                <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
+                <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
+              </div>
+              <div style={{alignContent:"center", marginTop:"7px" }} class="col-1 BTN-INFORMATION" title="Seleccione un alumno para ver su portafolio de entregables/asignarle un jurado.">
+                <Heroicons.HiInformationCircle/> 
+              </div>
+            </div>
         <table   {...getTableProps()} style={{minWidth: 650, borderCollapse: 'separate',
     borderSpacing: '0px 10px'}}>
          <thead>
