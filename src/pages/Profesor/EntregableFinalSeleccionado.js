@@ -362,6 +362,10 @@ const handleChange= (nombre,e)=>{
     }).catch(error =>{
       console.log(error.message);
     })
+    await axios(`https://localhost:7012/api/Entregable/CalcularPuntajeEntregableXAlumno?idEntregable=${location.state.idEntregable}&idAlumno=${location.state.idAlumno}`)
+    .catch(error =>{
+      console.log(error.message);
+    })
   }
   const peticionComentario=()=>{
     console.log("comentarios");
