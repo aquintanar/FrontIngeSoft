@@ -35,12 +35,20 @@ function ListarAlumnos()  {
   }
   else{
       if(search && observado){
-        filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+        filtrado = as.filter((dato) =>{
+          let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+          console.log(a)
+          return a.toLowerCase().includes(search.toLocaleLowerCase());
+        } );
         filtrado=filtrado.filter((dato)=>dato.tieneTema===(observado===1?1:0)) ;
       }
       else{
         if(search)//filtro por nombre
-          filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+          filtrado = as.filter((dato) =>{
+            let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+            console.log(a)
+            return a.toLowerCase().includes(search.toLocaleLowerCase());
+          } );
         if(observado)
           filtrado=as.filter((dato)=>dato.tieneTema===(observado===1?1:0)) ;
       }
@@ -119,8 +127,8 @@ function ListarAlumnos()  {
           <h2>Búsqueda de alumnos </h2>
           <div class="row">
             <div class="col-8 " >
-                <p>Ingrese el nombre del alumno</p>
-                <input size="10" type="search" value={search} class="form-control icon-search" name="search" placeholder="Nombre del alumno" aria-label="serach" onChange={buscador}/>
+                <p>Ingrese el nombre o correo del alumno</p>
+                <input size="10" type="search" value={search} class="form-control icon-search" name="search" placeholder="Nombre o correo del alumno" aria-label="serach" onChange={buscador}/>
             </div>
             <div class="col-4" >
                 <p> ¿Tiene tema?</p>

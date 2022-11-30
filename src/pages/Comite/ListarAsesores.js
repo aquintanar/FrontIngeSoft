@@ -45,9 +45,11 @@ function ListarAsesores() {
   } else {
     if (search && selEsp && tieneAlumn && observado) {
       //ambos filtros
-      filtrado = as.filter((dato) =>
-        dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())
-      );
+      filtrado = as.filter((dato) =>{
+        let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+        console.log(a)
+        return a.toLowerCase().includes(search.toLocaleLowerCase());
+      } );
       filtrado = filtrado.filter((dato) => dato.idEspecialidad === selEsp);
       filtrado = filtrado.filter(
         (dato) => dato.estaObservado === (observado === 1 ? 1 : 0)
@@ -58,9 +60,11 @@ function ListarAsesores() {
         filtrado = filtrado.filter((dato) => dato.cantAsesorados === 0);
     } else {
       if (search && selEsp && tieneAlumn) {
-        filtrado = as.filter((dato) =>
-          dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())
-        );
+        filtrado = as.filter((dato) =>{
+          let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+          console.log(a)
+          return a.toLowerCase().includes(search.toLocaleLowerCase());
+        } );
         filtrado = filtrado.filter((dato) => dato.idEspecialidad === selEsp);
         if (tieneAlumn === 1)
           filtrado = filtrado.filter((dato) => dato.cantAsesorados > 0);
@@ -76,9 +80,11 @@ function ListarAsesores() {
         if (tieneAlumn === 2)
           filtrado = filtrado.filter((dato) => dato.cantAsesorados === 0);
       } else if (tieneAlumn && observado && search) {
-        filtrado = as.filter((dato) =>
-          dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())
-        );
+        filtrado = as.filter((dato) =>{
+          let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+          console.log(a)
+          return a.toLowerCase().includes(search.toLocaleLowerCase());
+        } );
         filtrado = filtrado.filter(
           (dato) => dato.estaObservado === (observado === 1 ? 1 : 0)
         );
@@ -87,18 +93,22 @@ function ListarAsesores() {
         if (tieneAlumn === 2)
           filtrado = filtrado.filter((dato) => dato.cantAsesorados === 0);
       } else if (observado && search && selEsp) {
-        filtrado = as.filter((dato) =>
-          dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())
-        );
+        filtrado = as.filter((dato) =>{
+          let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+          console.log(a)
+          return a.toLowerCase().includes(search.toLocaleLowerCase());
+        } );
         filtrado = filtrado.filter((dato) => dato.idEspecialidad === selEsp);
         filtrado = filtrado.filter(
           (dato) => dato.estaObservado === (observado === 1 ? 1 : 0)
         );
       } else {
         if (search && selEsp) {
-          filtrado = as.filter((dato) =>
-            dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())
-          );
+          filtrado = as.filter((dato) =>{
+            let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+            console.log(a)
+            return a.toLowerCase().includes(search.toLocaleLowerCase());
+          } );
           filtrado = filtrado.filter((dato) => dato.idEspecialidad === selEsp);
         } else if (search && tieneAlumn) {
           filtrado = as.filter((dato) =>
@@ -109,9 +119,11 @@ function ListarAsesores() {
           if (tieneAlumn === 2)
             filtrado = filtrado.filter((dato) => dato.cantAsesorados === 0);
         } else if (search && observado) {
-          filtrado = as.filter((dato) =>
-            dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())
-          );
+          filtrado = as.filter((dato) =>{
+            let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+            console.log(a)
+            return a.toLowerCase().includes(search.toLocaleLowerCase());
+          } );
           filtrado = filtrado.filter(
             (dato) => dato.estaObservado === (observado === 1 ? 1 : 0)
           );
@@ -139,9 +151,11 @@ function ListarAsesores() {
             filtrado = as.filter((dato) => dato.idEspecialidad === selEsp);
           if (search)
             //filtro por nombre
-            filtrado = as.filter((dato) =>
-              dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())
-            );
+            filtrado = as.filter((dato) =>{
+              let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+              console.log(a)
+              return a.toLowerCase().includes(search.toLocaleLowerCase());
+            } );
           if (tieneAlumn) {
             if (tieneAlumn === 1)
               filtrado = as.filter((dato) => dato.cantAsesorados > 0);
@@ -261,14 +275,14 @@ function ListarAsesores() {
 
       <div class="row">
         <div class="col-7 ">
-          <p>Ingrese el nombre del asesor</p>
+          <p>Ingrese el nombre o correo  del asesor</p>
             <input
               size="10"
               type="search"
               value={search}
               class="form-control icon-search"
               name="search"
-              placeholder="Nombre del asesor"
+              placeholder="Nombre o correo del asesor"
               aria-label="serach"
               onChange={buscador}
             />
@@ -355,6 +369,7 @@ function ListarAsesores() {
               <tr class>
                 <th style={{ width: 275 }}>Nombre</th>
                 <th style={{ width: 150 }}>Correo</th>
+                <th style={{ width: 150 }}>Especialidad</th>
                 <th style={{ width: 100 }}>Acciones</th>
               </tr>
             </thead>
@@ -365,6 +380,7 @@ function ListarAsesores() {
                     {asesor.nombres + " " + asesor.apePat + " " + asesor.apeMat}
                   </td>
                   <td>{asesor.correo}</td>
+                  <td>{asesor.nombre}</td>
                   <td>
                     <button
                       class="btn BTN-ACCIONES" title="Ver perfil"

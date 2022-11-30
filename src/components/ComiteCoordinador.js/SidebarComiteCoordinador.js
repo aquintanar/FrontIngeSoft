@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate  } from 'react-router-dom';
+import * as TbGridDots from 'react-icons/tb';
+import { Link, useNavigate } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import { SidebarData } from './SidebarDataComiteCoordinador';
 import SubMenu from './SubMenuComiteCoordinador';
@@ -58,14 +59,20 @@ const SidebarComiteCoordinador = () => {
     e.preventDefault();
     navigate('/')
   }
+  const cambiarRol = () => {
+    navigate("/Opciones");
+  }
 
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <Nav>
-            <NavIcon to='#'>
-              {showSidebar}
-            </NavIcon> 
+            <div >
+              <h1 style={{display:"inline-block" }} className='nombreUsuario'>{localStorage.getItem("NOMBREPERFIL")}</h1>
+              <button title="Cambiar rol" style={{ backgroundColor:"#042354", border:"none", marginLeft:"13px", marginBottom:"15px" }}  class="BTN-LOGOUT" onClick={()=>cambiarRol()}>
+                  <TbGridDots.TbGridDots />
+                </button>
+            </div>
             <div>
               <button title="Cerrar sesión" style={{ backgroundColor:"#042354", border:"none" }} class="BTN-LOGOUT" onClick={()=>logout()}>
                  <FaIcons.FaDoorOpen />

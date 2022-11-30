@@ -250,6 +250,7 @@ const CrearCuentaAlumno = () => {
   };
   return (
     <div class="CONTAINERADMIN">
+    <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
       <div class="row">
         <p class="HEADER-TEXT1">Crear Cuenta de Alumno</p>
         <p>
@@ -272,7 +273,6 @@ const CrearCuentaAlumno = () => {
               aria-describedby="namenote"
               onFocus={() => setNameFocus(true)}
               onBlur={() => setNameFocus(false)}
-              className="INPUTNOMBRE"
             />
             <p id="namenote" className={"INFOTEXT"}>
               <FontAwesomeIcon icon={faInfoCircle} />
@@ -289,7 +289,6 @@ const CrearCuentaAlumno = () => {
               aria-describedby="apePnote"
               onFocus={() => setApellidoPFocus(true)}
               onBlur={() => setApellidoPFocus(false)}
-              className="INPUTAPEP"
             />
             <p id="apePnote" className={"INFOTEXT"}>
               <FontAwesomeIcon icon={faInfoCircle} />
@@ -306,7 +305,6 @@ const CrearCuentaAlumno = () => {
               aria-describedby="apeMnote"
               onFocus={() => setApellidoMFocus(true)}
               onBlur={() => setApellidoMFocus(false)}
-              className="INPUTAPEM"
             />
             <p id="apeMnote" className={"INFOTEXT"}>
               <FontAwesomeIcon icon={faInfoCircle} />
@@ -324,7 +322,6 @@ const CrearCuentaAlumno = () => {
               aria-describedby="uidnote"
               onFocus={() => setUserFocus(true)}
               onBlur={() => setUserFocus(false)}
-              className="INPUTCORR"
             />
             <p id="uidnote" className={"INFOTEXT"}>
               <FontAwesomeIcon icon={faInfoCircle} />
@@ -345,7 +342,6 @@ const CrearCuentaAlumno = () => {
               aria-describedby="pwdnote"
               onFocus={() => setPwdFocus(true)}
               onBlur={() => setPwdFocus(false)}
-              className="INPUTCONTR"
             />
             <p id="pwdnote" className={"INFOTEXT"}>
               <FontAwesomeIcon icon={faInfoCircle} />
@@ -366,7 +362,6 @@ const CrearCuentaAlumno = () => {
               aria-describedby="confirmnote"
               onFocus={() => setMatchFocus(true)}
               onBlur={() => setMatchFocus(false)}
-              className="INPUTCONTR2"
             />
             <p id="confirmnote" className={"INFOTEXT"}>
               <FontAwesomeIcon icon={faInfoCircle} />
@@ -383,7 +378,6 @@ const CrearCuentaAlumno = () => {
               aria-describedby="codigonote"
               onFocus={() => setCodigoPUCPFocus(true)}
               onBlur={() => setCodigoPUCPFocus(false)}
-              className="INPUTCOD"
             />
             <p id="codigonote" className={"INFOTEXT"}>
               <FontAwesomeIcon icon={faInfoCircle} />

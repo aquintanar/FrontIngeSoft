@@ -1,7 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import * as AiIcons from 'react-icons/ai';
 import * as FaIcons from 'react-icons/fa';
 import { SidebarData } from './SidebarDataAlumno';
 import { SidebarDataTesis2 } from './SidebarDataAlumnoTesis2';
@@ -117,7 +116,7 @@ const Sidebar = () => {
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
           <Nav>
-            <h1 className='nombreUsuario'>{nombre}</h1>
+            <h1 className='nombreUsuario'>{localStorage.getItem("NOMBREPERFIL")}</h1>
             <NavIcon to='#'>
               {showSidebar}
             </NavIcon> 

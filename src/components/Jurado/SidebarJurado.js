@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as AiIcons from 'react-icons/ai';
 import * as FaIcons from 'react-icons/fa';
+import * as TbGridDots from 'react-icons/tb';
 import { SidebarData } from './SidebarDataJurado';
 import SubMenu from './SubMenuJurado';
 import { IconContext } from 'react-icons/lib';
@@ -52,6 +53,7 @@ const SidebarWrap = styled.div`
 `;
 
 const Sidebar = () => {
+  let navigate = useNavigate();
   const {logout, isAuthenticated}=useAuth0();
   const [sidebar, setSidebar] = useState(true);
   const {value,setValue} = useContext(UserContext);
@@ -78,6 +80,9 @@ const Sidebar = () => {
     setValue(variable);
     console.log("SOY VALUE ACTUALMENTE"+value);
   }
+  const cambiarRol = () => {
+    navigate("/Opciones");
+  }
 
   guardarLocalStorage();
   obtenerLocalStorage();
@@ -86,13 +91,18 @@ const Sidebar = () => {
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <Nav>
-          <h1 className='nombreUsuario'>{nombre}</h1>
-            <NavIcon to='#'>
-              {showSidebar}
-            </NavIcon> 
-            <div>
+          <div >
+            <h1 style={{display:"inline-block" }} className='nombreUsuario'>{localStorage.getItem("NOMBREPERFIL")}</h1>
+            <button title="Cambiar rol" style={{ backgroundColor:"#042354", border:"none", marginLeft:"13px", marginBottom:"15px" }}  class="BTN-LOGOUT" onClick={()=>cambiarRol()}>
+                 <TbGridDots.TbGridDots />
+              </button>
+          </div>
+          <div>
+              <button title="Cerrar sesión" style={{ backgroundColor:"#042354", border:"none" }} class="BTN-LOGOUT" onClick={()=>logout()}>
+                 <FaIcons.FaDoorOpen />
+              </button>
               <img src={logo}  class="mx-4 logo"></img>
-            </div>  
+            </div>    
         </Nav>
         <SidebarNav sidebar={sidebar}>
             <SidebarWrap>

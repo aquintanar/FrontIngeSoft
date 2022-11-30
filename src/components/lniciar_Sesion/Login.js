@@ -181,6 +181,7 @@ function Login() {
         )
         .then((response) => {
           console.log(response.data);
+          localStorage.setItem("NOMBREPERFIL",response.data.usuarios[0].nombres + " " + response.data.usuarios[0].apePat + " "+ response.data.usuarios[0].apeMat);
           buscarEspecialidad(response.data.usuarios[0].fidEspecialidad);
           if (response.data.cant === 1) {
             console.log("ESTOY PASANDO POR RESPONSE==1");

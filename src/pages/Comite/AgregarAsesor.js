@@ -45,99 +45,133 @@ function ListarAsesoresNoEstan()  {
   const buscador = e=>{
       setSearch(e.target.value);
   }
-  if(!search && !selEsp && !tieneAlumn && !observado){//sin filtro
-    filtrado=as;
-  }
-  else{
-    if(search && selEsp && tieneAlumn && observado){//ambos filtros
-      filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
-      filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ;
-      filtrado=filtrado.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
-      if(tieneAlumn===1)
-        filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
-      if(tieneAlumn===2)
-        filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
-    }
-    else{
-      if(search && selEsp && tieneAlumn){
-        filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
-        filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ;
-        if(tieneAlumn===1)
-          filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
-        if(tieneAlumn===2)
-          filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
-      }
-      else if(selEsp && tieneAlumn && observado){
-        filtrado=as.filter((dato)=>dato.idEspecialidad===selEsp) ;
-        filtrado=filtrado.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
-        if(tieneAlumn===1)
-          filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
-        if(tieneAlumn===2)
-          filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
-      }
-      else if(tieneAlumn && observado && search){
-        filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
-        filtrado=filtrado.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
-        if(tieneAlumn===1)
-          filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
-        if(tieneAlumn===2)
-          filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
-      }
-      else if(observado && search && selEsp){
-        filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
-        filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ;
-        filtrado=filtrado.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
-      }
-      else{
-        if(search && selEsp){
-          filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
-          filtrado=filtrado.filter((dato)=>dato.idEspecialidad===selEsp) ;
-        }
-        else if(search  && tieneAlumn ){
-          filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
-          if(tieneAlumn===1)
-            filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
-          if(tieneAlumn===2)
-            filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
-
-        }
-        else if(search  && observado){
-          filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
-          filtrado=filtrado.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
-        }
-        else if(selEsp && tieneAlumn ){
-          filtrado=as.filter((dato)=>dato.idEspecialidad===selEsp) ;
-          if(tieneAlumn===1)
-            filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
-          if(tieneAlumn===2)
-            filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
-          
-        }
-        else if(selEsp  && observado){
-          filtrado=as.filter((dato)=>dato.idEspecialidad===selEsp) ;
-          filtrado=filtrado.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
-        }
-        else if(tieneAlumn && observado){
-          filtrado=as.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
-          if(tieneAlumn===1)
-            filtrado=filtrado.filter((dato)=>dato.cantAsesorados>0) ;
-          if(tieneAlumn===2)
-            filtrado=filtrado.filter((dato)=>dato.cantAsesorados===0) ;
-          
-        }
-        else{
-          if(selEsp)
-            filtrado=as.filter((dato)=>dato.idEspecialidad===selEsp) ;
-          if(search)//filtro por nombre
-            filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
-          if(tieneAlumn){
-            if(tieneAlumn===1)
-             filtrado=as.filter((dato)=>dato.cantAsesorados>0) ;
-            if(tieneAlumn===2)
-              filtrado=as.filter((dato)=>dato.cantAsesorados===0) ;
+  if (!search && !selEsp && !tieneAlumn && !observado) {
+    //sin filtro
+    filtrado = as;
+  } else {
+    if (search && selEsp && tieneAlumn && observado) {
+      //ambos filtros
+      filtrado = as.filter((dato) =>{
+        let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+        console.log(a)
+        return a.toLowerCase().includes(search.toLocaleLowerCase());
+      } );
+      filtrado = filtrado.filter((dato) => dato.idEspecialidad === selEsp);
+      filtrado = filtrado.filter(
+        (dato) => dato.estaObservado === (observado === 1 ? 1 : 0)
+      );
+      if (tieneAlumn === 1)
+        filtrado = filtrado.filter((dato) => dato.cantAsesorados > 0);
+      if (tieneAlumn === 2)
+        filtrado = filtrado.filter((dato) => dato.cantAsesorados === 0);
+    } else {
+      if (search && selEsp && tieneAlumn) {
+        filtrado = as.filter((dato) =>{
+          let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+          console.log(a)
+          return a.toLowerCase().includes(search.toLocaleLowerCase());
+        } );
+        filtrado = filtrado.filter((dato) => dato.idEspecialidad === selEsp);
+        if (tieneAlumn === 1)
+          filtrado = filtrado.filter((dato) => dato.cantAsesorados > 0);
+        if (tieneAlumn === 2)
+          filtrado = filtrado.filter((dato) => dato.cantAsesorados === 0);
+      } else if (selEsp && tieneAlumn && observado) {
+        filtrado = as.filter((dato) => dato.idEspecialidad === selEsp);
+        filtrado = filtrado.filter(
+          (dato) => dato.estaObservado === (observado === 1 ? 1 : 0)
+        );
+        if (tieneAlumn === 1)
+          filtrado = filtrado.filter((dato) => dato.cantAsesorados > 0);
+        if (tieneAlumn === 2)
+          filtrado = filtrado.filter((dato) => dato.cantAsesorados === 0);
+      } else if (tieneAlumn && observado && search) {
+        filtrado = as.filter((dato) =>{
+          let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+          console.log(a)
+          return a.toLowerCase().includes(search.toLocaleLowerCase());
+        } );
+        filtrado = filtrado.filter(
+          (dato) => dato.estaObservado === (observado === 1 ? 1 : 0)
+        );
+        if (tieneAlumn === 1)
+          filtrado = filtrado.filter((dato) => dato.cantAsesorados > 0);
+        if (tieneAlumn === 2)
+          filtrado = filtrado.filter((dato) => dato.cantAsesorados === 0);
+      } else if (observado && search && selEsp) {
+        filtrado = as.filter((dato) =>{
+          let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+          console.log(a)
+          return a.toLowerCase().includes(search.toLocaleLowerCase());
+        } );
+        filtrado = filtrado.filter((dato) => dato.idEspecialidad === selEsp);
+        filtrado = filtrado.filter(
+          (dato) => dato.estaObservado === (observado === 1 ? 1 : 0)
+        );
+      } else {
+        if (search && selEsp) {
+          filtrado = as.filter((dato) =>{
+            let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+            console.log(a)
+            return a.toLowerCase().includes(search.toLocaleLowerCase());
+          } );
+          filtrado = filtrado.filter((dato) => dato.idEspecialidad === selEsp);
+        } else if (search && tieneAlumn) {
+          filtrado = as.filter((dato) =>
+            dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())
+          );
+          if (tieneAlumn === 1)
+            filtrado = filtrado.filter((dato) => dato.cantAsesorados > 0);
+          if (tieneAlumn === 2)
+            filtrado = filtrado.filter((dato) => dato.cantAsesorados === 0);
+        } else if (search && observado) {
+          filtrado = as.filter((dato) =>{
+            let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+            console.log(a)
+            return a.toLowerCase().includes(search.toLocaleLowerCase());
+          } );
+          filtrado = filtrado.filter(
+            (dato) => dato.estaObservado === (observado === 1 ? 1 : 0)
+          );
+        } else if (selEsp && tieneAlumn) {
+          filtrado = as.filter((dato) => dato.idEspecialidad === selEsp);
+          if (tieneAlumn === 1)
+            filtrado = filtrado.filter((dato) => dato.cantAsesorados > 0);
+          if (tieneAlumn === 2)
+            filtrado = filtrado.filter((dato) => dato.cantAsesorados === 0);
+        } else if (selEsp && observado) {
+          filtrado = as.filter((dato) => dato.idEspecialidad === selEsp);
+          filtrado = filtrado.filter(
+            (dato) => dato.estaObservado === (observado === 1 ? 1 : 0)
+          );
+        } else if (tieneAlumn && observado) {
+          filtrado = as.filter(
+            (dato) => dato.estaObservado === (observado === 1 ? 1 : 0)
+          );
+          if (tieneAlumn === 1)
+            filtrado = filtrado.filter((dato) => dato.cantAsesorados > 0);
+          if (tieneAlumn === 2)
+            filtrado = filtrado.filter((dato) => dato.cantAsesorados === 0);
+        } else {
+          if (selEsp)
+            filtrado = as.filter((dato) => dato.idEspecialidad === selEsp);
+          if (search)
+            //filtro por nombre
+            filtrado = as.filter((dato) =>{
+              let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+              console.log(a)
+              return a.toLowerCase().includes(search.toLocaleLowerCase());
+            } );
+          if (tieneAlumn) {
+            if (tieneAlumn === 1)
+              filtrado = as.filter((dato) => dato.cantAsesorados > 0);
+            if (tieneAlumn === 2)
+              filtrado = as.filter((dato) => dato.cantAsesorados === 0);
           }
-          if(observado)
-          filtrado=as.filter((dato)=>dato.estaObservado===(observado===1?1:0)) ;
+          if (observado)
+            filtrado = as.filter(
+              (dato) => dato.estaObservado === (observado === 1 ? 1 : 0)
+            );
         }
       }
     }
@@ -253,8 +287,8 @@ function ListarAsesoresNoEstan()  {
           <h2>Búsqueda de asesores </h2>
           <div class="row">
             <div class="col-8" >
-                <p>Ingrese el nombre del asesor</p>
-                <input size="10" type="search" value={search} class="form-control icon-search" name="search" placeholder="Nombre del asesor" aria-label="serach" onChange={buscador}/>
+                <p>Ingrese el nombre o correo del asesor</p>
+                <input size="10" type="search" value={search} class="form-control icon-search" name="search" placeholder="Nombre o correo del asesor" aria-label="serach" onChange={buscador}/>
             </div>
             <div class="col-4 " >
                 <p>Seleccione especialidad</p>
@@ -293,6 +327,7 @@ function ListarAsesoresNoEstan()  {
                 <tr class>
                     <th style ={{width: 275}}>Nombre</th>
                     <th style ={{width: 150}}>Correo</th>
+                    <th style ={{width: 150}}>Especialidad</th>
                     <th style = {{width:100}}>Acciones</th>
                 </tr>
               </thead>
@@ -301,6 +336,7 @@ function ListarAsesoresNoEstan()  {
                   <tr key={asesor.idUsuario}>
                       <td >{asesor.nombres + " " + asesor.apePat+ " " + asesor.apeMat}</td>
                       <td >{asesor.correo}</td>
+                      <td >{asesor.nombre}</td>
                       <td>
                       <div class="LISTAR-TABLE-BOTON"> 
                       <button class=" btn btn-primary fw-bold" onClick={()=>seleccionarAsesor(asesor)}> <span>Seleccionar</span></button>

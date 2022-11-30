@@ -3,7 +3,6 @@ import "../Pagina.css";
 import "../stylesheets/BarraVolver.css";
 import { useNavigate,useParams } from 'react-router-dom';
 import axios from "axios";
-import { Navigate } from "react-router-dom";
 export function BarraVolver() {
   const url = "https://localhost:7012/";
   const [clicked, setClicked] = useState(false);
@@ -55,10 +54,10 @@ export function BarraVolver() {
           src={require("../imagenes/casa.png")}
           alt="casa"
         ></img>
-        <h4 className="volver"><div onClick={()=>volverCursos()}>Volver a mis cursos</div></h4>
+        <h4 className="volver" style={{cursor:"pointer"}}><div onClick={()=>volverCursos()}>Volver a mis cursos</div></h4>
       </div>
       <div>
-        <h4 className="titulo-info">{anhio + "-" + sem + " " + nom }</h4>
+        <h4 className="titulo-info">{anhio + "-" + sem + " " + nom + " " +esp}</h4>
       </div>
     </div>
   );

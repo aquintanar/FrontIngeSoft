@@ -45,7 +45,8 @@ function ListaEntregables()  {
     const [fil, setFil] = useState(0);
     const [fechas, setFechas] = useState([new Date(),new Date()]);
     const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
-    const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();    
+    const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
+    const [numTesis, setNumTesis] = useState([]);    
 
     let filtrado =[];
     
@@ -133,12 +134,29 @@ function ListaEntregables()  {
         openDeleteModal();
     }
 
-
+    const infoCurso = async () => {
+      const response = await axios
+        .get(
+          "https://localhost:7012/api/Curso/BuscarCursoXId",
+          { params: { idCurso: localStorage.getItem("idCurso") } },
+          {
+            _method: "GET",
+          }
+        )
+        .then((response) => {
+          setNumTesis(response.data[0].numTesis);
+          
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    };
     //Listar entregable tabla--
     const peticionGet=async()=>{
       await axios.get(url1+"ListEntregablesXIdCurso?idCurso="+localStorage.getItem('idCurso'))
       .then(response=>{
         setData(response.data);
+        
       }).catch(error =>{
         console.log(error.message);
       })
@@ -155,6 +173,7 @@ function ListaEntregables()  {
 
     useEffect(()=>{
       peticionGet();
+      infoCurso();
       setFechas(0);
     },[])
 
@@ -181,12 +200,28 @@ function ListaEntregables()  {
 
               <div class="col-lg-3 " >
                 <p>Tipo</p>
-                <select select class="form-select" aria-label="Default select example" onChange= {cambioSelect}>
-                    <option key="0" selected value = "0">Todos</option>
-                    <option key="1" value="1">Entregable Parcial</option>
-                    <option key="2" value="2">Entregable</option>
-                    <option key="3" value="3">Exposición</option>
-                </select>
+                {(() => {
+                  switch(numTesis){
+                    case 1 : return <select select class="form-select  "  aria-label="Default select example" onChange={cambioSelect} 
+                    id="fidTipoEntregable" name="fidTipoEntregable" >  
+                        <option key={0} selected value={0}>Todos</option>
+                        <option key={1} value={1}>Entregable parcial</option>
+                        <option key={2} value={2}>Entregable</option>
+                        <option key={3} value={3}>Exposición</option>
+                        <option key={4} value={4}>Entregable Final</option>
+                    </select>;
+                    case 2: return <select select class="form-select  "  aria-label="Default select example" onChange={cambioSelect} 
+                    id="fidTipoEntregable" name="fidTipoEntregable" >  
+                        <option key={0} selected value={0}>Todos</option>
+                        <option key={5} value={5}>Exposiciones</option>
+                        <option key={6} value={6}>Exposición Parcial</option>
+                        <option key={7} value={7}>Exposición Final</option>
+                        <option key={8} value={8}>Documento Parcial</option>
+                        <option key={9} value={9}>Documento Final</option>
+                    </select>;
+                    
+                  }
+                }) ()}
               </div>
         </div>
   

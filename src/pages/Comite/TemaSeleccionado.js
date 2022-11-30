@@ -20,7 +20,7 @@ const TemaSeleccionado = () => {
   //const url="http://44.210.195.91/api/TemaTesis/GetTemaTesis";
   let navigate = useNavigate();
   let {id} = useParams();
-  let color;
+  let color ="text-success font-weight-bold";
   let esp;
   const location = useLocation();
   const globalidcur = window.localStorage.getItem("idCurso");
@@ -99,9 +99,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
   feedback: " ",
   fidCurso:0,
 });
-  if(location.state.estado==="Aprobado"){
-    color="text-success font-weight-bold"
-  }
+
   const getAreas = async()=>{
     const response = await axios.get("https://localhost:7012/api/Area/GetAreaXEspecialidad?idEspecialidad="+esp,{
       _method:'GET'
@@ -282,6 +280,9 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
           titulo : elemento.tituloTesis,
           descripcion: elemento.descripcion,
           observacionesYEntregables: elemento.observacionesYEntregables,
+          estadoTema : elemento.estadoTema,
+          nombresAlumno: elemento.nombresAlumno,
+          apePatAlumno: elemento.apePatAlumno
         })
         setAse({
           idAsesor: elemento.idAsesor,
@@ -298,7 +299,10 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
         ApePatAsesor : "",
         titulo : "",
         descripcion: "",
-        observacionesYEntregables: ""
+        observacionesYEntregables: "",
+        estadoTema: "Por Revisar",
+        nombresAlumno: "",
+        apePatAlumno: ""
       }) 
       const handleChange=e=>{
         const {name, value}=e.target;
@@ -319,6 +323,28 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
           console.log(error.message);
         })
       }
+
+      if(temaCambiar.motivoRechazo==="Aprobado"){
+        color="text-success font-weight-bold"
+      }
+      else if(temaCambiar.motivoRechazo==="Publicado"){
+        color="text-success font-weight-bold "; 
+      }
+      else if(temaCambiar.motivoRechazo==="En Proceso"){
+        color="text-info font-weight-bold "; 
+      }
+      else if(temaCambiar.motivoRechazo==="Observado"){
+        color="text-warning font-weight-bold "; 
+      }
+      else if(temaCambiar.motivoRechazo==="Rechazado"){
+        color="text-danger font-weight-bold "; 
+      }
+      else if(temaCambiar.motivoRechazo==="Por Revisar"){
+        color="text-secondary font-weight-bold"
+      }
+      else if(temaCambiar.motivoRechazo==="Sustentado"){
+        color="text-dark font-weight-bold"
+      }
       
     return (
       <div className="CONTAINERCOMITE">
@@ -330,7 +356,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
               <div className="col-100% DATOS" >
                   <div className="text-start fs-7 fw-normal  mb-1">Título de tesis</div>
                   <div className="input-group mb-4 ">
-                      <input type="text" disabled={location.state.estado=="Por Revisar"?false:true}  className="form-control" name="titulo" placeholder="Titulo" 
+                      <input type="text" disabled={temaCambiar.estadoTema && temaCambiar.estadoTema=="Por Revisar"?false:true}  className="form-control" name="titulo" placeholder="Titulo" 
                          value={ temaCambiar && temaCambiar.titulo } onChange={handleChange}/>
                   </div>
               </div>
@@ -342,7 +368,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
                       <input type="text" disabled={true}  className="form-control" name="titulo" placeholder="Asesor" 
                          value={ase.nombres + ' ' + ase.apePat} />
                           {(() => {
-                          switch(location.state.estado){
+                          switch(temaCambiar.estadoTema){
                             case "Por Revisar" : return  <div class="INSERTAR-BOTONES">
                             <button type="button" onClick={() => {setShow1(true)}} class=" btn btn-primary fs-4 ms-3 mt-2 fw-bold BUSCAR" >
                                 ...
@@ -356,7 +382,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
               <div className="col-6" >
               <div className="text-start fs-7 fw-normal  mb-1">Área</div>
                   <div className="input-group mb-4 ">
-                    <select select class="form-select Cursor"  disabled={location.state.estado=="Por Revisar"?false:true}  
+                    <select select class="form-select Cursor"  disabled={temaCambiar.estadoTema && temaCambiar.estadoTema=="Por Revisar"?false:true}  
                         onChange= {cambioSelect} name="titulo" placeholder="Área" selected value = {temaCambiar && temaCambiar.idArea}  >
                       {espec.map(elemento=>
                           <option key={elemento.idArea} value={elemento.idArea}>{elemento.nombre}</option>  
@@ -373,10 +399,10 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
                   <div class="text-start fs-7 fw-normal ">Alumno</div>
                   <div class=" input-group input-group-lg mb-4">
                       <input type="text"   disabled="true" onChange={(e) =>handleChangeAlum(e)} class="form-control" name="alumno" placeholder="Alumno" aria-label="alumno" aria-describedby="inputGroup-sizing-lg" 
-                         value={location.state.nombresAlumno + " " +location.state.apePatAlumno}/>
+                         value={temaCambiar.nombresAlumno+ " " +temaCambiar.apePatAlumno}/>
                  
                   {(() => {
-                        switch(location.state.estado){
+                        switch(temaCambiar.estadoTema){
                           case "Publicado" : return  <div class="INSERTAR-BOTONES">
                           <button type="button" onClick={() => {setShow(true)}} class=" btn btn-primary fs-4 ms-3 mt-2 fw-bold BUSCAR" >
                               ...
@@ -396,7 +422,7 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
           <div className = "col-lg-12">
                   <div class="text-start fs-7 fw-normal ">Tema de tesis</div>
                   <div class="input-group input-group-lg mb-3">
-                      <input type="text" disabled={location.state.estado=="Por Revisar"?false:true}  class="form-control" name="descripcion" placeholder="Descripcion" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
+                      <input type="text" disabled={temaCambiar.estadoTema && temaCambiar.estadoTema=="Por Revisar"?false:true}  class="form-control" name="descripcion" placeholder="Descripcion" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
                          value={temaCambiar && temaCambiar.descripcion} onChange={handleChange}/>
                   </div>
               </div>    
@@ -404,20 +430,39 @@ const [temaSeleccionadoFeedback, setTemaSeleccionadoFeedback]=useState({
                <div className = "col-lg-12">
                   <div class="text-start fs-7 fw-normal ">Observaciones y entregables</div>
                   <div class="input-group input-group-lg mb-3">
-                      <input type="text" disabled={location.state.estado=="Por Revisar"?false:true}  class="form-control" name="observacionesYEntregables" placeholder="Descripcion" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
+                      <input type="text" disabled={temaCambiar.estadoTema && temaCambiar.estadoTema=="Por Revisar"?false:true}  class="form-control" name="observacionesYEntregables" placeholder="Descripcion" aria-label="descripcion" aria-describedby="inputGroup-sizing-lg" 
                          value={ temaCambiar && temaCambiar.observacionesYEntregables} onChange={handleChange}/>
                   </div>
               </div>      
           </div>             
         
           <div className = "row DATOS">
-              <p display="inline">Estado de Aprobación: <span style={{fontWeight: 'bold'}} className={color}>{location.state.estado }</span></p>
+              {(() => {
+                switch(temaCambiar.estadoTema){
+                  case "Publicado" : 
+                    return  <p display="inline">Estado de Aprobación: <span style={{fontWeight: 'bold'}} className="text-primary">{temaCambiar.estadoTema }</span></p>
+                  case "Por Revisar" : 
+                    return  <p display="inline">Estado de Aprobación: <span style={{fontWeight: 'bold'}} className="text-secondary">{temaCambiar.estadoTema }</span></p>
+                  case "Aprobado" : 
+                    return  <p display="inline">Estado de Aprobación: <span style={{fontWeight: 'bold'}} className="text-success">{temaCambiar.estadoTema }</span></p>
+                  case "Rechazado" : 
+                    return  <p display="inline">Estado de Aprobación: <span style={{fontWeight: 'bold'}} className="text-danger">{temaCambiar.estadoTema }</span></p>
+                  case "Observado" : 
+                    return  <p display="inline">Estado de Aprobación: <span style={{fontWeight: 'bold'}} className="text-warning">{temaCambiar.estadoTema }</span></p>
+                  case "En Proceso" : 
+                    return  <p display="inline">Estado de Aprobación: <span style={{fontWeight: 'bold'}} className="text-info">{temaCambiar.estadoTema }</span></p>
+                  case "Sustentado" : 
+                    return  <p display="inline">Estado de Aprobación: <span style={{fontWeight: 'bold'}} className="text-dark">{temaCambiar.estadoTema }</span></p>
+                  default: return <br></br> ;
+                }
+              }) ()}
+              
             
             </div>    
           <div className="row">                            
               <div className="LISTAR-BOTON">
               {(() => {
-                        switch(location.state.estado){
+                        switch(temaCambiar.estadoTema){
                           case "Publicado" : return  <button onClick={()=>openAsignadoModal()} class="btn btn-primary fs-4 fw-bold mb-3 me-3 "  type="button">Asignar Alumno</button>;
                           case "Por Revisar" : 
                           return <div>

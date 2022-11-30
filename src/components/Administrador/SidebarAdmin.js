@@ -65,9 +65,7 @@ const Sidebar = () => {
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <Nav>
-            <NavIcon to='#'>
-              {showSidebar}
-            </NavIcon> 
+            <h1 className='nombreUsuario'>{localStorage.getItem("NOMBREPERFIL")}</h1>
             <div>
               <button title="Cerrar sesión" style={{ backgroundColor:"#042354", border:"none" }} class="BTN-LOGOUT" onClick={()=>logout()}>
                  <FaIcons.FaDoorOpen />

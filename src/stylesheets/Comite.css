@@ -305,6 +305,7 @@ Estilos de listar temas
 
 .OTRO{
     font-size: 12px;
+    text-align: left;
 }
 /*
 
@@ -425,11 +426,21 @@ REPORTE DE TESIS SUSTENTADAS
 
 
 .toggle{
+    background-color: #ababab;
+    height:30px;
+    width:60px;
+    border-radius: 30px;
+    display:flex;
+    cursor: pointer;
+
+}
+.toggle2{
     background-color: #042354;
     height:30px;
     width:60px;
     border-radius: 30px;
     display:flex;
+    cursor: pointer;
 
 }
 .toggle_left{
@@ -438,6 +449,7 @@ REPORTE DE TESIS SUSTENTADAS
     background-color: white;
     border-radius: 20px;
     margin: 5px;
+    cursor: pointer;
 }
 .toggle_right{
     height:20px;
@@ -445,6 +457,7 @@ REPORTE DE TESIS SUSTENTADAS
     background-color: white;
     border-radius: 20px;
     margin: 5px 2px 5px 33px;
+    cursor: pointer;
 }
 .PERIODO_RECEPCION{
     display: flex;

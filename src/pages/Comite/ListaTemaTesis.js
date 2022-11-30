@@ -11,9 +11,9 @@ import ToolkitProvider, {
   Search,
 } from "react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit";
 import "../../stylesheets/Comite.css";
+import "../../stylesheets/General.css";
 import * as BsIcons from "react-icons/bs";
 import useModal from "../../hooks/useModals";
-import { Ellipsis } from "react-bootstrap/esm/PageItem";
 import * as FileSaver from "file-saver";
 import XLSX from "sheetjs-style";
 
@@ -63,10 +63,11 @@ function ListaTemaTesis() {
   const fileExtension = ".xlsx";
   var registro = function () {
     this.Titulo = "";
-    this.Descripcion = "";
+    this.Tema = "";
     this.Estado = "";
     this.Alumno = "";
     this.Asesor = "";
+    this.Observaciones = "";
   };
   const exportToExcel = async () => {
     var dataRegistro = [];
@@ -75,7 +76,9 @@ function ListaTemaTesis() {
       if (data[i].estadoTema == "Por Revisar") {
         var reg = new registro();
         reg.Titulo = data[i].tituloTesis;
-        reg.Descripcion = data[i].descripcion;
+        reg.Asesor = data[i].apePatAsesor + " " + data[i].nombresAsesor;
+        reg.Tema = data[i].descripcion;
+        reg.Observaciones = data[i].observaciones;
         reg.Estado = data[i].estadoTema;
         dataRegistro.push(reg);
       }
@@ -160,6 +163,7 @@ function ListaTemaTesis() {
         }
       )
       .then((response) => {
+        console.log("qqqqqqqqqqqq");
         console.log(response.data);
         setData(response.data);
       })
@@ -249,6 +253,7 @@ function ListaTemaTesis() {
         backgroundColor: "#042354",
         color: "white",
       },
+      width:"2px",
     },
 
     {
@@ -340,7 +345,8 @@ function ListaTemaTesis() {
     <div className="CONTAINERCOMITE">
       <div>
         <h2 className="HEADER-TEXT1">Temas de Tesis</h2>
-        <h2 className="HEADER-TEXT2"> Lista de Propuestas </h2>
+        <h2>Búsqueda de tesis </h2>
+        
         <div className="LISTAR-TABLA">
           <ToolkitProvider
             keyField="idTemaTesis"
@@ -350,8 +356,28 @@ function ListaTemaTesis() {
           >
             {(props) => (
               <div>
-                <MySearch {...props.searchProps} />
-                <hr />
+                <div class="row">
+                  <div class ="col-8">
+                    <MySearch {...props.searchProps} />
+                  </div>
+                  <div class ="col-3 mt-3">
+                  <h5>Periodo de recepción:</h5>
+                  </div>
+                  <div class ="col-1 mt-4">
+                      {toggleButton ? (
+                      <div onClick={handeToogleClick} className="toggle2 ">
+                        <div className="toggle_left"></div>
+                      </div>
+                      ) : (
+                        <div onClick={handeToogleClick} className="toggle ">
+                          <div className="toggle_right"></div>
+                        </div>
+                      )}
+                  <p>{toggleButton ? <b>Abierto</b> : <b>Cerrado</b>}</p>
+                </div>
+                </div>
+                
+                <h2> Lista de Propuestas </h2>
                 <button onClick={previousPage} className="PAGINACION-BTN">
                   <BsIcons.BsCaretLeftFill />
                 </button>
@@ -372,33 +398,21 @@ function ListaTemaTesis() {
             )}
           </ToolkitProvider>
 
-          <div className="LISTAR-BOTON">
-            <div className="PERIODO_RECEPCION">
-              <p>Periodo de recepción de propuestas</p>
-              <div onClick={handeToogleClick} className="toggle ">
-                {toggleButton ? (
-                  <div className="toggle_left"></div>
-                ) : (
-                  <div className="toggle_right"></div>
-                )}
-              </div>
-              <p>{toggleButton ? <b>Abierto</b> : <b>Cerrado</b>}</p>
-            </div>
+          <div className="INSERTAR-BOTONES">
+            
             <button
-              className="btn btn-primary fs-4 fw-bold mb-3 "
+              className="btn btn-primary DESCARGAR fs-4 fw-bold mb-3 "
               onClick={() => exportToExcel()}
             >
               <span>Excel</span>
             </button>
             <button
               onClick={() => abrirCerrarModalGuardar()}
-              className="btn btn-primary fs-4 fw-bold mb-3"
+              className="btn btn-primary GUARDAR fs-4 fw-bold mb-3"
             >
               Publicar
             </button>
           </div>
-
-          <p> </p>
         </div>
       </div>
       <Modal

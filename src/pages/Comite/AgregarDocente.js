@@ -41,7 +41,11 @@ function ListarDocentesNoEstan()  {
     filtrado=as;
   }
   else{
-      filtrado=as.filter((dato)=>dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())) ;
+    filtrado = as.filter((dato) =>{
+      let a = dato.nombres + " " + dato.apePat + " " + dato.apeMat + " " + dato.correo
+      console.log(a)
+      return a.toLowerCase().includes(search.toLocaleLowerCase());
+    } );
   }
 
   const nextPage = () =>{
@@ -131,8 +135,8 @@ function ListarDocentesNoEstan()  {
           <h2>Búsqueda de docentes </h2>
           <div class="row">
             <div class="col-8" >
-                <p>Ingrese el nombre del docente</p>
-                <input size="12" type="search" value={search} class="form-control icon-search" name="search" placeholder="Nombre del docente" aria-label="serach" onChange={buscador}/>
+                <p>Ingrese el nombre o correo del docente</p>
+                <input size="12" type="search" value={search} class="form-control icon-search" name="search" placeholder="Nombre o correo del docente" aria-label="serach" onChange={buscador}/>
             </div>
           </div>
 

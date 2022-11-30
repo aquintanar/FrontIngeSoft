@@ -15,7 +15,7 @@ function Entregable() {
     const[active, setActive] = useState("datosEntregable");
     const[formato, setFormato] = useState("botonActivo1");
     let {id} = useParams();
-    const [cero,Setcero] = useState(1);
+    const [cero,Setcero] = useState(1); 
     const[entregable, setEntregable] = useState({
         idEntregable: 0,
         nombre: '',
@@ -62,6 +62,23 @@ function Entregable() {
         }
     }
 
+    const infoCurso = async () => {
+        const response = await axios
+          .get(
+            "https://localhost:7012/api/Curso/BuscarCursoXId",
+            { params: { idCurso: localStorage.getItem("idCurso") } },
+            {
+              _method: "GET",
+            }
+          )
+          .then((response) => {
+            response.data[0].numTesis === 1? entregable.fidTipoEntregable=1:entregable.fidTipoEntregable=5;
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      };
+
     const cargaRubricas=async()=>{
         if(id!=='0'){
             const response = await axios.get(url2+"ListDetalleRubricaXIdEntregable?idEntregable="+parseInt(id));
@@ -81,6 +98,7 @@ function Entregable() {
         cargaEntregable();
         cargaRubricas();
         verifica();
+        infoCurso();
     },[])
 
 
