@@ -110,7 +110,7 @@ const Opciones = () => {
                 className="BOTON-OPCIONES BOTON-COMITE"
                 onClick={handleSubmitComite}
               >
-                <span><b>COMITE</b></span>
+                <span><b>COMITÉ</b></span>
                 <FaIcons.FaUsers/>
               </button>
               <button

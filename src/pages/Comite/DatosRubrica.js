@@ -399,7 +399,7 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
             <div class="row ">                            
                 <div class="INSERTAR-BOTONES">
                     <button class="btn GUARDAR" title='Guardar entrega o presentación' type="button"  onClick={()=>peticionSelecter()}><span>Guardar</span></button>
-                    <button class="btn CANCELAR" title="Cancelar" type="button"  onClick={()=>{navigate("../preparacion/entregables")}}><span>Cancelar</span></button>
+                    <button class="btn CANCELAR" title="Cancelar" type="button"  onClick={()=>{navigate(-1)}}><span>Cancelar</span></button>
                 </div>
             </div>           
         </div>              

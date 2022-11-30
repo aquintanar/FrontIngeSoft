@@ -144,7 +144,7 @@ const DatosEntregable = ({entregable, setEntregable, active, setActive,cero}) =>
             <div class="row ">                            
                 <div class="INSERTAR-BOTONES">
                 <button class="btn SIGUIENTE" title="Siguiente página" type="button" onClick={()=>{cargaDatos()}}><span>Siguiente</span></button>
-                    <button class="btn CANCELAR" title="Cancelar" type="button" onClick={()=>{navigate("../preparacion/entregables")}}><span>Cancelar</span></button>
+                    <button class="btn CANCELAR" title="Cancelar" type="button" onClick={()=>{navigate(-1)}}><span>Cancelar</span></button>
                 </div>
             </div>
 

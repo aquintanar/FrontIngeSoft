@@ -327,7 +327,16 @@ function ListaSemestre()  {
           {bodyEliminar}
       </Modal>
       
-               
+      <ModalConfirmación
+        isOpen={isOpenConfirmModal} 
+        closeModal={closeConfirmModal}
+        procedimiento= "eliminado"
+      >
+        <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+          <Button class="btn btn-success btn-lg" onClick={closeConfirmModal}>Entendido</Button>
+        </div>
+      </ModalConfirmación>     
+
     </div>              
   )
 }
