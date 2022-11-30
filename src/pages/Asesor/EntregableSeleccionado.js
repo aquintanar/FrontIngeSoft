@@ -12,7 +12,7 @@ import '../../stylesheets/Asesor.css'
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
-import {ModalConfirmación, ModalPregunta,ModalComentario} from '../../components/Modals';
+import {ModalConfirmación, ModalPregunta,ModalComentario,ModalFechas} from '../../components/Modals';
 import {
   FileUploadContainer,
   FormField,
@@ -53,6 +53,7 @@ function EntregableSeleccionado(){
   const [isOpenAprobarModal, openAprobarModal ,closeAprobarModal ] = useModal();
   const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
   const [isOpenComentarioModal, openComentarioModal ,closeComentarioModal ] = useModal();
+  const [isOpenGuardadoModalFechas, openGuardadoModalFechas ,closeGuardadoModalFechas ] = useModal();
   const [titulo,setTitulo] = useState("");
   const [idDetalleRubrica,setIdDetalleRubrica] = useState("");
   const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
@@ -417,6 +418,33 @@ const handleChange= (nombre,e)=>{
     openComentarioModal();
    // navigate("../gestion");     
   }
+  const cerrarPostFechas=()=>{
+    closeGuardadoModalFechas();
+   // navigate("../gestion");
+  }
+  const abrirPostFechas=()=>{
+    openGuardadoModalFechas();
+   // navigate("../gestion");     
+  }
+  const crearDocumento =async()=>{
+    (async () => {
+
+
+    var tempoTranscurrido = Date.now();
+var tiempoHoy = new Date(tempoTranscurrido);
+console.log(tempoTranscurrido);
+console.log(tiempoHoy);
+console.log(location.state.fechaPresentacionAlumno);
+let tiempoPresentacion = Date.parse(location.state.fechaPresentacionAlumno);
+console.log(tiempoPresentacion);
+if(tiempoHoy>tiempoPresentacion){
+console.log("si");
+abrirPostFechas();
+}
+else {           
+      navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
+      tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion,fechaPresentacionAlumno:location.state.fechaPresentacionAlumno}}) } }    )();
+}
   const dataTablaIntermedia = React.useMemo(
     () => [
       {
@@ -555,10 +583,11 @@ const {
         </div>
         <br></br> 
         <br></br> 
-        <p class="HEADER-TEXT6"  type='button' onClick={() =>navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
-          tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}})} >
+        <h4 style={{marginTop:"8px"}}>Nota asignada: {suma}</h4>
+      <p class="HEADER-TEXT6"  type='button' onClick={() =>crearDocumento()}  >
            Agregar Documentos de Retroalimentación</p>
-      <p className="HEADER-TEXT3">Documentos Enviados:</p>
+
+      <h4>Documentos enviados:</h4>
            <PreviewList>
 {((location.state.idVersion >= 0) ? 
 
@@ -678,6 +707,18 @@ documentosVersionAsesor.map((documentos) => {
                 </div>
                 </div>
             </ModalComentario>
+            <ModalFechas
+              isOpen={isOpenGuardadoModalFechas} 
+              closeModal={closeGuardadoModalFechas}
+              procedimiento= "No se puede ingresar documentos pasada la fecha válida"
+            >
+
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+              <div class="align-text-bottom">
+              <Button class="btn btn-success btn-lg"  onClick={()=>cerrarPostFechas()}><span>Entendido</span></Button>
+                </div>
+              </div>
+            </ModalFechas>
         </div>
     );
 

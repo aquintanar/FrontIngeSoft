@@ -11,7 +11,7 @@ import '../../stylesheets/Asesor.css'
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
 import * as RiIcons  from "react-icons/ri";
-import {ModalConfirmación, ModalPregunta,ModalComentario} from '../../components/Modals';
+import {ModalConfirmación, ModalPregunta,ModalComentario,ModalFechas} from '../../components/Modals';
 import {
   FileUploadContainer,
   FormField,
@@ -50,6 +50,7 @@ function EntregableSeleccionado(){
   const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
   const [isOpenEditDetNotaModal, openEditDetNotaModal ,closeEditDetNotaModal ] = useModal();
   const [isOpenAprobarModal, openAprobarModal ,closeAprobarModal ] = useModal();
+  const [isOpenGuardadoModalFechas, openGuardadoModalFechas ,closeGuardadoModalFechas ] = useModal();
   const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
   const [isOpenComentarioModal, openComentarioModal ,closeComentarioModal ] = useModal();
   const [titulo,setTitulo] = useState("");
@@ -429,6 +430,33 @@ const handleChange= (nombre,e)=>{
     openComentarioModal();
    // navigate("../gestion");     
   }
+  const cerrarPostFechas=()=>{
+    closeGuardadoModalFechas();
+   // navigate("../gestion");
+  }
+  const abrirPostFechas=()=>{
+    openGuardadoModalFechas();
+   // navigate("../gestion");     
+  }
+  const crearDocumento =async()=>{
+    (async () => {
+
+
+    var tempoTranscurrido = Date.now();
+var tiempoHoy = new Date(tempoTranscurrido);
+console.log(tempoTranscurrido);
+console.log(tiempoHoy);
+console.log(location.state.fechaL);
+let tiempoPresentacion = Date.parse(location.state.fechaL);
+console.log(tiempoPresentacion);
+if(tiempoHoy>tiempoPresentacion){
+console.log("si");
+abrirPostFechas();
+}
+else {           
+      navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
+      tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion,fechaPresentacionAlumno:location.state.fechaPresentacionAlumno}}) } }    )();
+}
   const dataTablaIntermedia = React.useMemo(
     () => [
       {
