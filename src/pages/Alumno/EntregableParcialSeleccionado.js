@@ -245,7 +245,7 @@ else if(location.state.estado==7){
   abrirPostArchivo();
 }  
   else{navigate("subirArchivos",{state:{idVersion:location.state.idVersion,idAlumno:location.state.idAlumno,
-        tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion}}) }     })();
+        tituloDoc:location.state.tituloDoc,linkDoc:location.state.linkDoc,idEntregable:location.state.idEntregable,estado:location.state.estado,fechaE:location.state.fechaSubida,fechaL:location.state.fechaLim, nombreEntregable:location.state.nombreEntregable,comentarios:location.state.comentarios,tieneDocumento:documentosVersion,fechaPresentacionAlumno:location.state.fechaPresentacionAlumno}}) }     })();
      }
     
 
@@ -276,7 +276,7 @@ else if(location.state.estado==7){
           col1: `${location.state.estado==7?"Sustentado":(location.state.estado==6?"Entregado a jurado":(location.state.estado==5?"Calificado por el docente":(location.state.estado==4?"Entregado a docente":(location.state.estado==3?"Con retroalimentacion":(location.state.estado==2?"Enviado para retroalimentacion":"Por Entregar")))))}`,
    //       col1: `${location.state.estado==5?"Calificado":"Sin Calificar"}`,
        //   col2: `${calificado}`,
-          col3: `${location.state.fechaL}`,
+          col3: `${location.state.fechaPresentacionAlumno}`,
           col4: `${location.state.idVersion>0?location.state.fechaE:"Sin Modificación"}`,
         },
       ],
@@ -293,7 +293,7 @@ else if(location.state.estado==7){
      //     accessor: 'col2',
      //   },
         {
-          Header: 'Fecha límite',
+          Header: 'Fecha límite para presentar',
           accessor: 'col3',
         },
         {
@@ -440,7 +440,7 @@ else if(location.state.estado==7){
 
             <div class = "DATOS">
                 <div class = "col-12">
-                    <div><p>Retroalimentación Adjunta:{location.state.idEntregable} </p></div>
+                    <div><p>Retroalimentación Adjunta:</p></div>
                     <PreviewList>
 {((location.state.idVersion >= 0) ? 
 

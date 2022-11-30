@@ -14,7 +14,7 @@ import {
 import '../stylesheets/Alumno.css'
 import '../Pagina.css'
 import '../stylesheets/BarraVolver.css'
-import {ModalConfirmación, ModalPregunta,ModalArchivo,ModalArchivoTamanho} from './Modals';
+import {ModalConfirmación, ModalPregunta,ModalArchivo,ModalArchivoTamanho,ModalFechas} from './Modals';
 import useModal from '../hooks/useModals';
 import {  Button} from '@material-ui/core';
 import * as BootIcons  from "react-icons/bs";
@@ -27,7 +27,7 @@ const KILO_BYTES_PER_BYTE = 1000;
 var documents="22";
 const convertBytesToKB = (bytes) => Math.round(bytes / KILO_BYTES_PER_BYTE);
 
-const Upload = ({ label, files,linkDoc,tituloDoc, nombreArchivo,idAlumno,idEntregable,idVersion,estadoEntregable,tieneDocumento,setFiles, ...otherProps }) => {
+const Upload = ({ label, files,linkDoc,tituloDoc, nombreArchivo,idAlumno,idEntregable,idVersion,estadoEntregable,tieneDocumento,fechaPresentacionAlumno,setFiles, ...otherProps }) => {
   var archivo="";
   var tamanho=0;
   var urlInicial = "https://reactionando-s3-software.s3.amazonaws.com/";
@@ -43,6 +43,7 @@ const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
 const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
 const [isOpenGuardadoModalArchivo, openGuardadoModalArchivo ,closeGuardadoModalArchivo ] = useModal();
 const [isOpenGuardadoModalArchivoTamanho, openGuardadoModalArchivoTamanho ,closeGuardadoModalArchivoTamanho ] = useModal();
+const [isOpenGuardadoModalFechas, openGuardadoModalFechas ,closeGuardadoModalFechas ] = useModal();
 const [documentosVersion , setDocumentosVersion] = useState([]);
 const [documentosVersionAlumno , setDocumentosVersionAlumno ] = useState([]);
 const [documentosVersionNuevo , setDocumentosVersionNuevo] = useState([]);
@@ -176,6 +177,15 @@ const handleChange=e=>{
     setFiles((files) => files.filter((file) => file.file.name !== fileName));
 
   };
+
+  const cerrarPostFechas=()=>{
+    closeGuardadoModalFechas();
+   // navigate("../gestion");
+  }
+  const abrirPostFechas=()=>{
+    openGuardadoModalFechas();
+   // navigate("../gestion");     
+  }
   const cerrarPostArchivo=()=>{
     closeGuardadoModalArchivo();
    // navigate("../gestion");
@@ -219,6 +229,19 @@ if(tamanho>1000){
 }
 else{
   console.log("Hola");
+  var tempoTranscurrido = Date.now();
+var tiempoHoy = new Date(tempoTranscurrido);
+console.log(tempoTranscurrido);
+console.log(tiempoHoy);
+console.log(fechaPresentacionAlumno);
+let tiempoPresentacion = Date.parse(fechaPresentacionAlumno);
+console.log(tiempoPresentacion);
+if(tiempoHoy>tiempoPresentacion){
+console.log("si");
+abrirPostFechas();
+}
+else{
+
 if(idVersion>0){
   setDocumentoVersionNuevo({
     esRetroalimentacion : 0,
@@ -284,6 +307,7 @@ else{
   });
     openPostModal();
   }
+}
 }
 }
 console.log(archivo);
@@ -378,7 +402,7 @@ const guarda=async()=>{
 
 
 const peticionPut=async()=>{
-  await axios.put(url+"api/Version/modifyVersion",versionSeleccionada,{
+  await axios.put(url+"api/Version/ModifyVersion",versionSeleccionada,{
     _method: 'PUT'
   })
   .then(response=>{
@@ -630,6 +654,20 @@ const seleccionarDocumentoVersion=(documentos)=>{
                 </div>
               </div>
             </ModalArchivoTamanho>
+
+            <ModalFechas
+              isOpen={isOpenGuardadoModalFechas} 
+              closeModal={closeGuardadoModalFechas}
+              procedimiento= "No se puede ingresar documentos pasada la fecha válida"
+            >
+
+              <div align='center' class='d-grid gap-1 d-md-block justify-content-center sticky-sm-bottom'>
+              <div class="align-text-bottom">
+              <Button class="btn btn-success btn-lg"  onClick={()=>cerrarPostFechas()}><span>Entendido</span></Button>
+                </div>
+              </div>
+            </ModalFechas>
+            
 
       <div class="row INSERTAR-BOTONES">                            
         <div align = "center">

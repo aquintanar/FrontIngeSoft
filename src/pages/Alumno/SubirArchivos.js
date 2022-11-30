@@ -148,6 +148,7 @@ useEffect(() => {
           idVersion = {location.state.idVersion}    
           estadoEntregable = {location.state.estado}  
           tieneDocumento = {location.state.tieneDocumento}
+          fechaPresentacionAlumno = {location.state.fechaPresentacionAlumno}
           setFiles={setFiles}
           
           multiple

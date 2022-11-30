@@ -103,6 +103,25 @@ export const ModalArchivoTamanho = ({ isOpen, closeModal, procedimiento, childre
     )
 }
 
+export const ModalFechas = ({ isOpen, closeModal, procedimiento, children }) => {
+
+    const handleModalDialogClick = (e) => {
+        e.stopPropagation();
+    }
+
+    return (
+        <div className={`modal ${isOpen && 'modal-open'}`} onClick={closeModal}>
+            <div className="modal__dialog_archivo" onClick={handleModalDialogClick}>
+                <div align = "center">
+                    <div class="row">
+                        <p class= "text-white mt-5">{procedimiento} </p>
+                        {children} 
+                    </div>   
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export const ModalInsertar = ({ isOpen, closeModal, procedimiento,objeto, elemento, children }) => {
 

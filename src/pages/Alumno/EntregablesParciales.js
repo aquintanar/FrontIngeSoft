@@ -124,7 +124,7 @@ const getEntregableID = async () => {
     peticionEntregables();
     getEntregableID();
  },[])
- const crearVersion =async(idVersion,idEntregable,nombre,linkDoc,notaVersion,estadoMasReciente,fechaSubida,fechaLimite,tipoEntregable,comentarios)=>{
+ const crearVersion =async(idVersion,idEntregable,nombre,linkDoc,notaVersion,estadoMasReciente,fechaSubida,fechaLimite,tipoEntregable,comentarios,fechaPresentacionAlumno)=>{
   let idRubri = 0;
   (async () => {
     const result2 = await axios(url+`api/Rubrica/GetRubricaXIdEntregable?idEntregable=${idEntregable}`);
@@ -141,7 +141,7 @@ const getEntregableID = async () => {
      idRubri=result2.data[0].idRubrica;
    }
     navigate("entregableParcialSeleccionado",{state:{idVersion:idVersion,idAlumno: location.state.idAlumno,tituloDoc:nombre,linkDoc:linkDoc,notaVersion: notaVersion,
-      idEntregable: idEntregable,estado:estadoMasReciente,fechaE:fechaSubida,fechaL:fechaLimite, nombreEntregable:tipoEntregable,comentarios:comentarios,versionCreada: versionSeleccionada,idRubrica : idRubri}})  })();
+      idEntregable: idEntregable,estado:estadoMasReciente,fechaE:fechaSubida,fechaL:fechaLimite, nombreEntregable:tipoEntregable,comentarios:comentarios,versionCreada: versionSeleccionada,idRubrica : idRubri,fechaPresentacionAlumno:fechaPresentacionAlumno}})  })();
  }
 
 
@@ -172,10 +172,10 @@ const getEntregableID = async () => {
               {filtrado.map(entregables => (
                 <tr  key={entregables.idEntregable}>
                   <td>
-<button class="btn btn-lg navbar-toggle" onClick={() =>crearVersion(entregables.idVersionAntigua,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersionMasReciente,entregables.estadoMasReciente,entregables.fechaModificacionMasReciente,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)}>{entregables.nombre}</button>
+<button class="btn btn-lg navbar-toggle" onClick={() =>crearVersion(entregables.idVersionAntigua,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersionMasReciente,entregables.estadoMasReciente,entregables.fechaModificacionMasReciente,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios,entregables.fechaPresentacionAlumno)}>{entregables.nombre}</button>
 </td>
-                    <td><button class="btn btn-lg navbar-toggle" onClick={() =>crearVersion(entregables.idVersionAntigua,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersionMasReciente,entregables.estadoMasReciente,entregables.fechaModificacionMasReciente,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)}>{entregables.fechaLimite}</button></td>
-                    <td><button class="btn btn-lg navbar-toggle" onClick={() =>crearVersion(entregables.idVersionAntigua,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersionMasReciente,entregables.estadoMasReciente,entregables.fechaModificacionMasReciente,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios)}>{entregables.fechaEntregaAsesor}</button></td>
+                    <td><button class="btn btn-lg navbar-toggle" onClick={() =>crearVersion(entregables.idVersionAntigua,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersionMasReciente,entregables.estadoMasReciente,entregables.fechaModificacionMasReciente,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios,entregables.fechaPresentacionAlumno)}>{entregables.fechaLimite}</button></td>
+                    <td><button class="btn btn-lg navbar-toggle" onClick={() =>crearVersion(entregables.idVersionAntigua,entregables.idEntregable,entregables.nombre,entregables.linkDoc,entregables.notaVersionMasReciente,entregables.estadoMasReciente,entregables.fechaModificacionMasReciente,entregables.fechaLimite,entregables.tipoEntregable,entregables.comentarios,entregables.fechaPresentacionAlumno)}>{entregables.fechaEntregaAsesor}</button></td>
 
                     <td>  
                            {(() => {
