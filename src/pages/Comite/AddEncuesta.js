@@ -172,6 +172,7 @@ const AddEncuesta = () => {
         }).catch(()=>{
             
         })
+        window.location.reload(false);
     }
     return(
              

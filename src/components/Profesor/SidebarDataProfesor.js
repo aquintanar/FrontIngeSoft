@@ -36,5 +36,12 @@ export const SidebarData = [
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
     },
+    {
+        title: 'Agregar Encuestas ',
+        path: 'encuesta/anadirEncuesta',
+        icon: <BsIcons.BsFillFilePostFill />,
+        iconClosed: <IonIcons4.IoIosArrowDown />,
+        iconOpened: <IonIcons4.IoIosArrowUp />,
+    },
 ];
 

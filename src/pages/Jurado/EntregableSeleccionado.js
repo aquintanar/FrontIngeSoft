@@ -371,7 +371,7 @@ const handleChange= (nombre,e)=>{
     }).catch(error =>{
       console.log(error.message);
     })
-    await axios.put("https://localhost:7012/api/Version/ModifyVersion",versionSeleccionadaMod)
+    await axios.put("https://localhost:7012/api/Version/modifyVersionDiscreto",versionSeleccionadaMod)
     .then(response=>{
       closeEditModal();
       openGuardadoModal();
@@ -387,7 +387,7 @@ const handleChange= (nombre,e)=>{
     }).catch(error =>{
       console.log(error.message);
     })
-    await axios.put("https://localhost:7012/api/Version/ModifyVersion",versionSeleccionadaModA)
+    await axios.put("https://localhost:7012/api/Version/modifyVersionDiscreto",versionSeleccionadaModA)
     .then(response=>{
       closeEditModal();
       openGuardadoModal();

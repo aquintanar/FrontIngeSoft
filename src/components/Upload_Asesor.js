@@ -380,7 +380,7 @@ const guarda=async()=>{
 
 const peticionPut=async()=>{
   /*
-  await axios.put(url+"api/Version/ModifyVersion",versionSeleccionada,{
+  await axios.put(url+"api/Version/modifyVersionDiscreto",versionSeleccionada,{
     _method: 'PUT'
   })
   .then(response=>{

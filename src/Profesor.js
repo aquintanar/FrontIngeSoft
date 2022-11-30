@@ -22,7 +22,10 @@ import Entregable from "./pages/Comite/Entregable";
 import DatosRubrica from "./pages/Comite/DatosRubrica";
 import EntregablesFinales from "./pages/Profesor/EntregablesFinales";
 import EntregableFinalSeleccionado from './pages/Profesor/EntregableFinalSeleccionado';
-import Informacion from './pages/Profesor/Informacion'
+import Informacion from './pages/Profesor/Informacion';
+import AddEncuesta from "./pages/Comite/AddEncuesta";
+import EncuestaPreguntas from "./pages/Comite/EncuestaPreguntas";
+import DatosEncuesta from "./pages/Comite/DatosEncuesta";
 function Profesor() {
     return (
     <div>    
@@ -56,6 +59,9 @@ function Profesor() {
                   <Route path='entregables/menu/:id' exact element= {<Entregable/>}/>
                   <Route path='entregables/menu/:id/datosEntregable' exact element= {<DatosEntregable/>}/>
                   <Route path='entregables/menu/:id/datosRubrica' exact element= {<DatosRubrica/>}/>
+                  <Route path='encuesta/anadirEncuesta' exact element = {<AddEncuesta/>}/>
+                  <Route path='encuesta/anadirEncuesta/lista/:id' exact element= {<EncuestaPreguntas/>}/>
+                  <Route path='encuesta/anadirEncuesta/lista/:id/datosEncuesta' exact element= {<DatosEncuesta/>}/>
               </Routes>   
     </div>
     )

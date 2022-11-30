@@ -220,6 +220,7 @@ function DatosEncuesta({entregable, setEntregable, rubricas, SetRubricas,id,rubs
         }).catch(error =>{
         console.log(error.message);
         })
+        window.location.reload(false);
     }
 
 
