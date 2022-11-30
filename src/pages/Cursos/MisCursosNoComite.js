@@ -223,11 +223,11 @@ function GestionarCurso()  {
     }
     
     useEffect(()=>{
+        let tipoUsuario = window.localStorage.getItem("TIPOUSUARIO");
         petitionSem();
         petitionFacu();
         petitionEsp();
-        petitionCurso()
-        let tipoUsuario = window.localStorage.getItem("TIPOUSUARIO");
+        //petitionCurso()               //
         if(tipoUsuario=="DOCENTE"){
           petitionCursoDocente()
         }

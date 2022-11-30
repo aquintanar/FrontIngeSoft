@@ -47,7 +47,7 @@ function Asesor() {
                   <Route path='alumnos/alumnoSeleccionado/entregables/entregableSeleccionado/subirArchivos' exact element= {<SubirArchivos/>}/>
                   <Route path='alumnos/alumnoSeleccionado/avancesSemanales/avanceSemanalSeleccionado/subirArchivos' exact element= {<SubirArchivos/>}/>
                   <Route path='reunion' exact element= {<ListaReunion/>}/>
-                  <Route path='reunion/datoReunion' exact element= {<DatoReunion/>}/>
+                  <Route path='reunion/datoReunion/:id' exact element= {<DatoReunion/>}/>
                   <Route path='recordatorio' exact element={<ListaRecordatorio/>}/>
                   <Route path='recordatorio' exact element={<ListaRecordatorio/>}/>
                   <Route path='temaTesis/agregarTema/:id/solicitudes' exact element={<SolicitudesTema/>}/>

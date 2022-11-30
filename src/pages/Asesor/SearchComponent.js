@@ -124,28 +124,20 @@ const ListarTemasTesis = () =>{
     return (        
         <div class = "CONTAINER-ASESOR">
             <div class = "row">    
-                <p class="HEADER-TEXT1">Tema de tesis</p>
+                <h1>Tema de tesis</h1>
             </div>
-            <p class = "cambiar-color HEADER-TEXT2">Buscar tema de tesis</p>
-            <div class = "row DATOS">
-                <div class = "col-9">
-                
-                <div class="mb-3 row">
-                    <label  class="col-form-label FUENTE-LABEL">Título de tesis</label>
-                    <div class = "col-sm-12">
-                    <input value = {search} onChange = {searcher} type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder="Buscar por título de tesis"></input>
-                    </div>
+            <h2>Buscar tema de tesis</h2>
+            <div class = "row ">
+                <div class="col-6">
+                    <p>Ingresar título de tesis</p>
+                    <input value = {search} onChange = {searcher} type="search" class="form-control icon-search" id="exampleFormControlInput1" placeholder="Título de tesis"></input>
                 </div>
-
-                <div class="mb-3 row">
-                    <label  class="col-form-label FUENTE-LABEL">Palabra clave</label>
-                    <div class = "col-sm-12">
-                    <input value = {searchClav} onChange = {searcherClav} type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder=" Buscar por palabra clave"></input>
-                    </div>
-                </div>
+                <div class="col-6">
+                    <p>Ingresar palabra clave</p>
+                    <input value = {searchClav} onChange = {searcherClav} type="search" class="form-control icon-search" id="exampleFormControlInput1" placeholder="Palabra clave"></input>
                 </div>
             </div>
-            <p class="HEADER-TEXT2">Lista de tesis</p>
+            <h2>Lista de tesis</h2>
             <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
             <button onClick={nextPage} className="PAGINACION-BTN"><BsIcons.BsCaretRightFill/></button>
             <div class = "row LISTAR-TABLA">
@@ -180,7 +172,7 @@ const ListarTemasTesis = () =>{
                                         }
                                     }) ()}
                                     </td>
-                                    <td><button class="btn BTN-ACCIONES" onClick={()=>{navigate("agregarTema/"+temasTesis.idTemaTesis)}}> <FaIcons.FaEdit /></button></td>
+                                    <td><button class="btn BTN-ACCIONES" title="Modificar tema de tesis" onClick={()=>{navigate("agregarTema/"+temasTesis.idTemaTesis)}}> <FaIcons.FaEdit /></button></td>
                                     
                                 </tr>
 

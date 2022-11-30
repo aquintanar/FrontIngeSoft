@@ -68,19 +68,17 @@ const ListaRecordatorio = () => {
   return (
     <div>
       <div class=" CONTAINERASESOR">
-        <p class="HEADER-TEXT1">Recordatorios</p>
+        <h1>Recordatorios</h1>
         <p>*Se listan las notas pendientes de corregir</p>
       </div>
       <div class=" CONTAINERASESOR2">
-        <p class="HEADER-TEXT2">Búsqueda de recordatorios</p>
+        <h2>Búsqueda de recordatorios</h2>
         <div class="row">
-          <div class="col-4 DATOS">
-            <div class=" fs-5 fw-normal  mb-1 ">
+          <div class="col-4 ">
               <p>Estado</p>
-            </div>
             <select
               select
-              class="form-select Cursor"
+              class="form-select "
               aria-label="Default select example"
               onChange={cambioSelect}
             >
@@ -103,7 +101,7 @@ const ListaRecordatorio = () => {
           </div>
         </div>
 
-        <p class="HEADER-TEXT2">Lista de recordatorios</p>
+        <h2>Lista de recordatorios</h2>
         <button onClick={previousPage} className="PAGINACION-BTN">
           <BsIcons.BsCaretLeftFill />
         </button>

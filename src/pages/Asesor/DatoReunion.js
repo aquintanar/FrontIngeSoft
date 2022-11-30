@@ -25,22 +25,24 @@ import { AsesorContext } from './AsesorContext';
 
 
 const url= "https://localhost:7012/api/ReunionAlumnoAsesor/";
+const urlAlum = "https://localhost:7012/api/Alumno/";
 
 var x =4;
 function DatoReunion()  {
     const asesor = useContext(AsesorContext);
     let navigate = useNavigate();
+    let {id} = useParams();
     const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
     const [isOpenPostModal, openPostModal ,closePostModal ] = useModal();
     const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
     const [isOpenGuardadoModal, openGuardadoModal ,closeGuardadoModal ] = useModal();
-    const [reunion, setReunion] = useState(asesor.reunion);
-    var [fecha, setFecha] = useState(reunion.fechaHoraInicio);
+    const [reunion1, setReunion1] = useState(asesor.reunion);
+    
     var [startTime,setStartTime] = useState();
     var [startDate,setStartDate] = useState();
     var [endTime,setEndTime] = useState();
-    const [alumnos, setAlumnos] = useState(asesor.alumnos);
-    const [reunion1, setReunion1] = useState({
+    const [alumnos, setAlumnos] = useState([]);
+    const [reunion, setReunion] = useState({
         idReunionAlumnoAsesor: 0,
         idAlumno: 0,
         idAsesor: localStorage.getItem('IDUSUARIO') ,
@@ -53,7 +55,7 @@ function DatoReunion()  {
         cantParticipantes: 2,
         enlace: ''
     })
-
+    var [fecha, setFecha] = useState(reunion.fechaHoraInicio);
     //Controla cambio en combo box del alumno--
     const cambioSelectAlumno =e=>{
         setReunion(prevState => ({
@@ -82,18 +84,23 @@ function DatoReunion()  {
         console.log(reunion);
     }
 
-    const cargarReunion = () =>{
-        setReunion(prevState => ({
-            ...prevState,
-            idAsesor: localStorage.getItem('IDUSUARIO'),
-        }))
-        if(asesor.tipo == 0){
-            console.log("modificar registrar", asesor.tipo, asesor.reunion)
-            setStartDate(new Date(reunion.fechaHoraInicio));
-            console.log(startDate)
-            console.log(reunion)
-            console.log("fin modificar")
-            //const response = await axios.get(url+"GetFacultadesById?id_facultad="+parseInt(id));
+    const cargarReunion = async() =>{
+        if(id!=='0'){
+            const response = await axios.get(url+"BuscarReunionXId?idReunionAlumnoAsesor="+parseInt(id));
+            setReunion({
+                idReunionAlumnoAsesor: response.data[0].idReunionAlumnoAsesor,
+                idAlumno: response.data[0].idAlumno,
+                idAsesor: localStorage.getItem('IDUSUARIO') ,
+                idCurso: parseInt(localStorage.getItem('idCurso')),
+                nombre: response.data[0].nombre,
+                descripcion: response.data[0].descripcion,
+                fechaHoraInicio: new Date(response.data[0].fechaHoraInicio),
+                fechaHoraFin: new Date(response.data[0].fechaHoraFin),
+                estadoReunion: response.data[0].estadoReunion,
+                cantParticipantes: response.data[0].cantParticipantes,
+                enlace: response.data[0].enlace
+            })
+            setStartDate(new Date(response.data[0].fechaHoraInicio));
         }
         else{
             console.log("registrar", asesor.reunion)
@@ -101,6 +108,16 @@ function DatoReunion()  {
             console.log("fin registrar", asesor.reunion)
         }
 
+    };
+
+    const cargarAlumnos = async() =>{
+        await axios.get(urlAlum+"ListAlumnosXIdAsesor?idAsesor="+localStorage.getItem('IDUSUARIO'))
+            .then(response=>{
+                setAlumnos(response.data);
+                console.log(alumnos)
+            }).catch(error =>{
+                console.log(error.message);
+            })
     }
 
     //Selección entre modificar o insertar
@@ -109,7 +126,7 @@ function DatoReunion()  {
         reunion.fechaHoraInicio = startDate;
         reunion.fechaHoraFin = startDate;
         console.log(startDate)
-        if(asesor.tipo == 1){     //1: registrar
+        if(parseInt(id)===0){     //1: registrar
             console.log("registrar")
             openPostModal();
         }
@@ -157,6 +174,7 @@ function DatoReunion()  {
     useEffect(()=>{
         //peticionGet();
         cargarReunion();
+        cargarAlumnos();
         console.log("inicio");
         console.log(fecha);
         console.log(startTime);
@@ -168,7 +186,7 @@ function DatoReunion()  {
         <div class=" CONTAINERALUMNO"> 
 
 
-            <h1>{asesor.tipo ? "Registrar reunión" : "Modificar reunión"}</h1>
+            <h1>{parseInt(id)===0 ? "Registrar reunión" : "Modificar reunión"}</h1>
 
             <div class="row">
                 <div class="col-6 " >
@@ -191,7 +209,7 @@ function DatoReunion()  {
                     
                 </div>
 
-                {asesor.tipo ? null : 
+                {parseInt(id)===0 ? null : 
                 <div class="col-3 " >
                     <p>Estado</p>
                     

@@ -238,6 +238,7 @@ function ListaReunion(alumno, setAlumno)  {
           setData(data.filter(reunion=>reunion.idReunion!==reunionSeleccionada.idReunion));
           closeDeleteModal();
           openConfirmModal();
+          peticionGet();
         })
       }
 
@@ -265,7 +266,7 @@ function ListaReunion(alumno, setAlumno)  {
         setFechas(0);
         asesor.idAsesor = value;
         console.log("inicio");
-        console.log(asesor);
+        console.log(data);
         console.log(value);
         peticionListAlumAs();
         console.log("fin");
@@ -358,7 +359,7 @@ function ListaReunion(alumno, setAlumno)  {
 
                         <td class = "text-center">{reunion.cantParticipantes}</td>
                         <td>
-                          <button class="btn BTN-ACCIONES" title='Modificar reunión' onClick={()=>{ abrirDato(0, reunion); navigate("datoReunion/")}}> <FaIcons.FaEdit /></button>
+                          <button class="btn BTN-ACCIONES" title='Modificar reunión' onClick={()=>{ navigate("datoReunion/"+reunion.idReunionAlumnoAsesor)}}> <FaIcons.FaEdit /></button>
                           { reunion.estadoReunion == 4 ? 
                                 <button  class=" btn BTN-ACCIONES" title='Eliminar reunión' onClick={()=>seleccionarReunion(reunion)}> <BootIcons.BsTrash /></button> 
                                 : null
@@ -373,7 +374,7 @@ function ListaReunion(alumno, setAlumno)  {
         </div>
 
         <div className='INSERTAR-BOTONES '>
-            <button className='btn REGISTRAR' onClick={()=>{ abrirDato(1, []); navigate("datoReunion/")}} ><span>Registrar</span></button>
+            <button className='btn REGISTRAR' onClick={()=>{ abrirDato(1, []); navigate("datoReunion/0")}} ><span>Registrar</span></button>
         </div> 
 
         <ModalPregunta

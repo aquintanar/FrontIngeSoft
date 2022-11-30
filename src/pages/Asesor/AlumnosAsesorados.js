@@ -2,6 +2,7 @@ import React, { useMemo,useState, useEffect } from 'react';
 import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom';
 import "./buttonGroup.css";
 import  '../../stylesheets/Asesor.css';
+import  '../../stylesheets/General.css';
 import { useTable ,useFilters,setFilter} from 'react-table';
 import axios from 'axios';
 import {  useNavigate } from 'react-router-dom';     
@@ -131,19 +132,20 @@ function AlumnosAsesorados() {
     return(
   
         <div className='CONTAINERASESOR'>
-        <h1 className='HEADER-TEXT1'>Alumnos Asesorados</h1>
-        <h2 className='HEADER-TEXT2'> {nom} - {esp}</h2>
+        <h1 >Alumnos Asesorados</h1>
       
-        <div className="col col-7 FILTRO-LISTAR-BUSCAR" >
-              <p>Ingresar apellido para realizar búsqueda</p>
-              <div className="input-group mb-2 ">
-                  <input size="10" type="text" value={search1} class="form-control" name="search1" placeholder="Apellido" aria-label="serach" onChange={buscador1}/>
+        <div className="col col-12" >
+          <div class="row">
+              <div class="col-6">
+                <p>Ingresar apellido para realizar búsqueda</p>
+                <input size="10" type="search" value={search1} class="form-control icon-search" name="search1" placeholder="Apellido" aria-label="serach" onChange={buscador1}/>
               </div>
-              <p>Ingresar código para realizar búsqueda</p>
-              <div className="input-group mb-2 ">
-                  <input size="10" type="text" value={search2} class="form-control" name="search2" placeholder="Código" aria-label="serach" onChange={buscador2}/>
+              <div class="col-6">
+                <p>Ingresar código para realizar búsqueda</p>
+                <input size="10" type="search" value={search2} class="form-control icon-search" name="search2" placeholder="Código" aria-label="serach" onChange={buscador2}/>
               </div>
           </div>
+        </div>
           <div className="ContenidoPrincipal">
           <h2>Seleccione un alumno para ver su portafolio de entregables:</h2>
         <button onClick={previousPage} className="PAGINACION-BTN"><BsIcons.BsCaretLeftFill/></button>
