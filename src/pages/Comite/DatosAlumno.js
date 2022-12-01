@@ -110,6 +110,9 @@ function DatosAlumno() {
 
   return(
       <div class="CONTAINERCOMITE">
+            <span>
+                <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
+          </span>
           <h1>{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat+ " " + asesorSeleccionado.apeMat}</h1>
           <div className='row'>
             <div className='col-6 PERFIL'>
@@ -148,7 +151,7 @@ function DatosAlumno() {
               </div>
           </div>
           
-          <div class="row INSERTAR-BOTONES">                            
+          <div class="row INSERTAR-BOTONES"  style={{display:"none" }}>                            
               <div class=" d-grid gap-2 d-md-flex justify-content-md-end">
               <button class="btn btn-primary fs-4 fw-bold CANCELAR" type="button" onClick={()=>{navigate("../alumno")}}><span>Cancelar</span></button>
               </div>

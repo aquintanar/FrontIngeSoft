@@ -24,6 +24,7 @@ const urlAsXCurso = "http://34.195.33.246/api/DocenteXCurso/";
 
 function ListarDocentes() {
   let idCursoGlobal = localStorage.getItem("idCurso");
+  const esCoord = window.localStorage.getItem("ESCOORDINADOR");
   let idAsesorRef = 0;
   let navigate = useNavigate();
   const [currentPage, SetCurrentPage] = useState(0);
@@ -169,7 +170,7 @@ function ListarDocentes() {
                   <td>{asesor.correo}</td>
                   <td>
                     <button
-                      class="btn BTN-ACCIONES" title="Ver perfil"
+                      class="btn BTN-ACCIONES" title="Ver perfil del docente"
                       onClick={() => {
                         navigate("DatosDocente/" + asesor.idDocente);
                       }}
@@ -177,13 +178,16 @@ function ListarDocentes() {
                       {" "}
                       <BsIcons.BsEye />
                     </button>
-                    <button
+                    {esCoord === "NO" ? null : 
+                        <button
                       class=" btn BTN-ACCIONES" title="Retirar docente del curso"
                       onClick={() => seleccionarAsesor(asesor)}
                     >
                       {" "}
                       <BootIcons.BsTrash />
                     </button>
+                    }
+                    
                   </td>
                 </tr>
               ))}
@@ -230,18 +234,24 @@ function ListarDocentes() {
         </div>
       </ModalConfirmación>
 
-      <div className="INSERTAR-BOTONES">
-        <button
-          className="btn AGREGAR-CURSO" title="Agregar docente al curso"
-          onClick={() => {
-            revisarCoordinador();
-          }}
-        >
-          {" "}
-          <span>Agregar docente</span>
-        </button>
-        <ToastContainer/>
-      </div>
+      
+
+      
+      {esCoord === "NO" ? null : 
+        <div className="INSERTAR-BOTONES">
+          <button
+            className="btn AGREGAR-CURSO" title="Agregar docente al curso"
+            onClick={() => {
+              revisarCoordinador();
+            }}
+          >
+            {" "}
+            <span>Agregar docente</span>
+          </button>
+          <ToastContainer/>
+        </div>
+      }
+
     </div>
   );
 }

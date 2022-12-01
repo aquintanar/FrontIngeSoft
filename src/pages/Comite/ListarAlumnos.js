@@ -16,7 +16,8 @@ const urlEsp= "http://34.195.33.246/api/Especialidad/";
 const urlAsXCurso="http://34.195.33.246/api/AlumnoXCurso/";
 
 function ListarAlumnos()  {
-  let idCursoGlobal = localStorage.getItem("idCurso");    
+  let idCursoGlobal = localStorage.getItem("idCurso");   
+  const esCoord = window.localStorage.getItem("ESCOORDINADOR"); 
   let idAsesorRef = 0;
   let navigate = useNavigate();
   const [currentPage,SetCurrentPage] = useState(0);
@@ -159,8 +160,10 @@ function ListarAlumnos()  {
                       <td >{asesor.nombres + " " + asesor.apePat + " " + asesor.apeMat}</td>
                       <td >{asesor.correo}</td>
                       <td>
-                      <button class="btn BTN-ACCIONES" title='Ver perfil' onClick={()=>{navigate("DatosAlumno/"+asesor.idAlumno)}}> <BsIcons.BsEye  /></button>
-                      <button class=" btn BTN-ACCIONES" title='Retirar alumno del curso' onClick={()=>seleccionarAsesor(asesor)}> <BootIcons.BsTrash /></button>
+                        <button class="btn BTN-ACCIONES" title='Ver perfil del alumno' onClick={()=>{navigate("DatosAlumno/"+asesor.idAlumno)}}> <BsIcons.BsEye  /></button>
+                        {esCoord === "NO" ? null : 
+                              <button class=" btn BTN-ACCIONES" title='Retirar alumno del curso' onClick={()=>seleccionarAsesor(asesor)}> <BootIcons.BsTrash /></button>
+                          }
                       </td>
                   </tr>
                 ))}
@@ -191,11 +194,16 @@ function ListarAlumnos()  {
       </div>
     </ModalConfirmación>
 
+    
+    {esCoord === "NO" ? null : 
           <div className='INSERTAR-BOTONES'>
               <button className='btn AGREGAR-CURSO' title='Agregar alumno al curso' onClick={()=>{navigate("AgregarAlumno")}}> 
                   <span>Agregar alumno</span>
               </button>
           </div>
+    }
+
+          
           
       </div>
   )

@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 function ListaTemaTesis() {
   let navigate = useNavigate();
   const styles = useStyles();
+  const esCoord = window.localStorage.getItem("ESCOORDINADOR");
   const [data, setData] = useState([]);
   const [modalGuardar, setModalGuardar] = useState(false);
   const [isOpenModal, openModal, closeModal] = useModal();
@@ -363,6 +364,7 @@ function ListaTemaTesis() {
                   <div class ="col-3 mt-3">
                   <h5>Periodo de recepción:</h5>
                   </div>
+
                   <div class ="col-1 mt-4">
                       {toggleButton ? (
                       <div onClick={handeToogleClick} className="toggle2 ">
@@ -375,6 +377,7 @@ function ListaTemaTesis() {
                       )}
                   <p>{toggleButton ? <b>Abierto</b> : <b>Cerrado</b>}</p>
                 </div>
+
                 </div>
                 
                 <h2> Lista de Propuestas </h2>
@@ -406,12 +409,17 @@ function ListaTemaTesis() {
             >
               <span>Excel</span>
             </button>
-            <button
-              onClick={() => abrirCerrarModalGuardar()}
-              className="btn btn-primary GUARDAR fs-4 fw-bold mb-3"
-            >
-              Publicar
-            </button>
+            
+            
+            {esCoord === "NO" ? null : 
+                        <button
+                        onClick={() => abrirCerrarModalGuardar()}
+                        className="btn btn-primary GUARDAR fs-4 fw-bold mb-3"
+                      >
+                        Publicar
+                      </button>
+                    }
+
           </div>
         </div>
       </div>
