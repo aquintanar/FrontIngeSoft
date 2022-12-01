@@ -70,7 +70,7 @@ const SideBarCurso = () => {
         <Nav>
         <div >
             <h1 style={{display:"inline-block" }} className='nombreUsuario'>{localStorage.getItem("NOMBREPERFIL")}</h1>
-            {localStorage.getItem("ALUMNO") === "ALUMNO" ?
+            {localStorage.getItem("TIPOUSUARIO") === "ALUMNO" ?
             <button title="Cambiar rol" style={{ backgroundColor:"#042354", border:"none", marginLeft:"13px", marginBottom:"15px" }}  class="BTN-LOGOUT" onClick={()=>cambiarRol()}>
                  <TbGridDots.TbGridDots />
             </button>
