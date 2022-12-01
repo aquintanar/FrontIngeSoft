@@ -343,13 +343,7 @@ const Tesis = () => {
             >
               <span>Excel</span>
             </button>
-            <ReactHtmlTableToExcel
-              className="btn btn-primary fs-4 fw-bold mb-3"
-              table="excel-table"
-              filename="ReporteTesis"
-              sheet="Sheet"
-              buttonText="Excel"
-            />
+            
           </div>
         </div>
       </div>
