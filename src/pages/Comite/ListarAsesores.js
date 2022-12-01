@@ -25,6 +25,7 @@ function ListarAsesores() {
   let idAsesorRef = 0;
   let navigate = useNavigate();
   const [currentPage, SetCurrentPage] = useState(0);
+  const esCoord = window.localStorage.getItem("ESCOORDINADOR");
   const [data, setData] = useState([]);
   const [selEsp, setSelEsp] = useState(0);
   const [tieneAlumn, setTieneAlum] = useState(0);
@@ -391,13 +392,11 @@ function ListarAsesores() {
                       {" "}
                       <BsIcons.BsEye />
                     </button>
-                    <button
-                      class=" btn BTN-ACCIONES" title="Retirar asesor del curso"
-                      onClick={() => seleccionarAsesor(asesor)}
-                    >
-                      {" "}
-                      <BootIcons.BsTrash />
-                    </button>
+                    {esCoord === "NO" ? null : 
+                        <button class=" btn BTN-ACCIONES" title="Retirar asesor del curso" onClick={() => seleccionarAsesor(asesor)}>
+                        {" "}<BootIcons.BsTrash />
+                        </button>
+                    }
                   </td>
                 </tr>
               ))}
@@ -444,17 +443,20 @@ function ListarAsesores() {
         </div>
       </ModalConfirmación>
 
-      <div className="INSERTAR-BOTONES">
-        <button
-          className="btn AGREGAR-CURSO" title='Agregar asesor al curso'
-          onClick={() => {
-            revisarCoordinador();
-          }}
-        >
-          {" "}
-          <span>Agregar asesor</span>
-        </button>
-      </div>
+      {esCoord === "NO" ? null : 
+                        <div className="INSERTAR-BOTONES">
+                        <button
+                          className="btn AGREGAR-CURSO" title='Agregar asesor al curso'
+                          onClick={() => {
+                            revisarCoordinador();
+                          }}
+                        >
+                          {" "}
+                          <span>Agregar asesor</span>
+                        </button>
+                      </div>
+                    }
+
       <ToastContainer />
     </div>
   );
