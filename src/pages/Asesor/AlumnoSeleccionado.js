@@ -22,6 +22,7 @@ function AlumnoSeleccionado(){
 
             <a class="BTN-CUADRADO" onClick={() =>navigate("entregablesParciales",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat, idCurso: localStorage.getItem('idCurso')}})}>Entregables Parciales</a>
 
+            <a class="BTN-CUADRADO" onClick={() =>navigate("documentosParciales",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat, idCurso: localStorage.getItem('idCurso')}})}>Documentos Parciales</a>
         </div>
     );
 }

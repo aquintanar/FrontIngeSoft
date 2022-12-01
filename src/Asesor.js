@@ -22,6 +22,8 @@ import ListaRecordatorio from './pages/Asesor/ListaRecordatorio';
 import SolicitudesTema from './pages/Asesor/SolicitudesTema';
 import ListarTemasTesis from './pages/Asesor/SearchComponent';
 import ProponerTemaAsesor from './pages/Asesor/proponerTemaAsesor';
+import DocumentoSeleccionado from "./pages/Asesor/DocumentoSeleccionado"
+import DocumentosParciales from "./pages/Asesor/DocumentosParciales";
 
 function Asesor() {
     return (
@@ -37,6 +39,9 @@ function Asesor() {
                   <Route path='alumnos/alumnoSeleccionado/entregables' exact element= {<Entregables/>}/>
                   <Route path='alumnos/alumnoSeleccionado/avancesSemanales' exact element= {<AvancesSemanales/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales' exact element= {<EntregablesParciales/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregables' exact element= {<Entregables/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/documentosParciales' exact element= {<DocumentosParciales/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/documentosParciales/documentoSeleccionado' exact element= {<DocumentoSeleccionado/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregables/historialVersiones' exact element= {<HistorialVersiones/>}/>
                   <Route path='alumnos/alumnoSeleccionado/avancesSemanales/historialVersiones' exact element= {<HistorialVersiones/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales/historialVersiones' exact element= {<HistorialVersiones/>}/>

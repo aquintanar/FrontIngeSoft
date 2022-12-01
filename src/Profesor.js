@@ -27,6 +27,9 @@ import AddEncuesta from "./pages/Comite/AddEncuesta";
 import EncuestaPreguntas from "./pages/Comite/EncuestaPreguntas";
 import DatosEncuesta from "./pages/Comite/DatosEncuesta";
 import NotaAlumno from "./pages/Profesor/NotaAlumno";
+import DocumentoSeleccionado from "./pages/Profesor/DocumentoSeleccionado"
+import DocumentosParciales from "./pages/Profesor/DocumentosParciales";
+import DocumentosFinales from "./pages/Profesor/DocumentosFinales";
 function Profesor() {
     return (
     <div>    
@@ -40,6 +43,11 @@ function Profesor() {
                   <Route path='alumnos/alumnoSeleccionado/perfil/:id' exact element= {<DatosAlumno/>}/>
                   <Route path='alumnos/alumnoSeleccionado/asignarJurado/:id' exact element= {<AsignarJurado/>}/>
                   <Route path='calendario' exact element= {<Calendario/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/entregables' exact element= {<Entregables/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/documentosParciales' exact element= {<DocumentosParciales/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/documentosFinales' exact element= {<DocumentosFinales/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/documentosParciales/documentoSeleccionado' exact element= {<DocumentoSeleccionado/>}/>
+                  <Route path='alumnos/alumnoSeleccionado/documentosFinales/documentoSeleccionado' exact element= {<DocumentoSeleccionado/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregables' exact element= {<Entregables/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesParciales' exact element= {<EntregablesParciales/>}/>
                   <Route path='alumnos/alumnoSeleccionado/entregablesFinales' exact element= {<EntregablesFinales/>}/>

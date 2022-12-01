@@ -40,6 +40,22 @@ function AlumnoSeleccionado(){
                 </div>
             </nav>
        </div>
+
+       <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container-fluid">
+                <a  class="BTN-CUADRADO" type='button' onClick={() =>navigate("documentosParciales",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat,idCurso: localStorage.getItem('idCurso')}})}>Documentos Parciales</a>
+                </div>
+            </nav>
+       </div>
+
+       <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container-fluid">
+                <a  class="BTN-CUADRADO" type='button' onClick={() =>navigate("documentosFinales",{state:{idAlumno:location.state.idAlumno,nombres:location.state.nombres,apellidoPat:location.state.apellidoPat,apellidoMaterno:location.state.apellidoMat,idCurso: localStorage.getItem('idCurso')}})}>Documentos Finales</a>
+                </div>
+            </nav>
+       </div>
     
         </div>
     );
