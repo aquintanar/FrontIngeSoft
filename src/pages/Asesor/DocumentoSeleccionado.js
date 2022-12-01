@@ -542,8 +542,7 @@ const {
             );
                 }): " ")} </PreviewList>
     
-        <br></br>
-        <h4  className='HEADER-TEXT3'> Ingrese la nota y comentario por cada rubro , luego seleccione Guardar:</h4>
+        
         <br></br>
         <h3 className='HEADER-TEXT5'>Rúbrica de Evaluación</h3>
         <div className = "row LISTAR-TABLA">
@@ -584,7 +583,6 @@ const {
         </div>
         <br></br> 
         <br></br> 
-        <h4 style={{marginTop:"8px"}}>Nota asignada: {suma}</h4>
       <p class="HEADER-TEXT6"  type='button' onClick={() =>crearDocumento()}  >
            Agregar Documentos de Retroalimentación</p>
 
