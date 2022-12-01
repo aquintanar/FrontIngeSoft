@@ -32,13 +32,6 @@ export const SidebarData = [
         icon: <BsIcons.BsJournalBookmark />,
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
-    },
-    {
-        title:'Recordatorio',
-        path:'recordatorio',
-        icon: <AiIcons.AiOutlineInfoCircle/>,
-        iconClosed:<IonIcons4.IoIosArrowDown />,
-        iconOpened: <IonIcons4.IoIosArrowUp />,
     }
 ];
 

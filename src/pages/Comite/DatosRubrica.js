@@ -253,7 +253,13 @@ function DatosRubrica({entregable, setEntregable, rubricas, SetRubricas,id,rubs,
 
     const terminar=()=>{
         closeGuardadoModal();
-        navigate("../preparacion/entregables");
+        if(localStorage.getItem("TIPOUSUARIO") === "DOCENTE"){
+            navigate("../entregables");
+        }
+        else{
+            navigate("../preparacion/entregables");
+        }
+        
     }
 
     const cargaRub =(elemento)=>{
