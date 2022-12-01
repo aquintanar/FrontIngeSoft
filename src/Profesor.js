@@ -26,6 +26,8 @@ import Informacion from './pages/Profesor/Informacion';
 import AddEncuesta from "./pages/Comite/AddEncuesta";
 import EncuestaPreguntas from "./pages/Comite/EncuestaPreguntas";
 import DatosEncuesta from "./pages/Comite/DatosEncuesta";
+import ListSistEvaluacion from './pages/Profesor/FormCalificacion/ListSistEvaluacion';
+import DatoSistEvaluacionV2 from './pages/Profesor/FormCalificacion/DatoSisEvaluacionV2';
 function Profesor() {
     return (
     <div>    
@@ -62,6 +64,8 @@ function Profesor() {
                   <Route path='encuesta/anadirEncuesta' exact element = {<AddEncuesta/>}/>
                   <Route path='encuesta/anadirEncuesta/lista/:id' exact element= {<EncuestaPreguntas/>}/>
                   <Route path='encuesta/anadirEncuesta/lista/:id/datosEncuesta' exact element= {<DatosEncuesta/>}/>
+                  <Route path='sistEvaluacion' exact element={<ListSistEvaluacion/>} />
+                  <Route path='sistEvaluacion/datoSistEvalucion/:id' exact element= {<DatoSistEvaluacionV2/>}/>
               </Routes>   
     </div>
     )

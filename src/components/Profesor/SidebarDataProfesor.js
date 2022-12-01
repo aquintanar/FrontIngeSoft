@@ -2,6 +2,7 @@ import React from 'react';
 import * as BsIcons from 'react-icons/bs';
 import * as IonIcons4 from "react-icons/io";
 import * as ImIcons from 'react-icons/im';
+import * as BoxIcons from 'react-icons/bi';
 
 export const SidebarData = [
     {
@@ -27,6 +28,11 @@ export const SidebarData = [
         iconClosed: <IonIcons4.IoIosArrowDown />,
         iconOpened: <IonIcons4.IoIosArrowUp />,
 
+    },
+    {
+        title: 'Sistema de evaluación',
+        icon:  <BoxIcons.BiBadgeCheck />,
+        path: 'sistEvaluacion', 
     },
 
     {

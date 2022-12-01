@@ -54,6 +54,7 @@ const SidebarWrap = styled.div`
 const SideBarCurso = () => {
   const [sidebar, setSidebar] = useState(true);
   const {logout, isAuthenticated}=useAuth0();
+  const ustipo = localStorage.getItem("TIPOUSUARIO")
   const navigate = useNavigate();
   const showSidebar = () => setSidebar(sidebar);
   const cerrarSesion =async (e) =>{
@@ -70,11 +71,11 @@ const SideBarCurso = () => {
         <Nav>
         <div >
             <h1 style={{display:"inline-block" }} className='nombreUsuario'>{localStorage.getItem("NOMBREPERFIL")}</h1>
-            {localStorage.getItem("TIPOUSUARIO") === "ALUMNO" ?
-            <button title="Cambiar rol" style={{ backgroundColor:"#042354", border:"none", marginLeft:"13px", marginBottom:"15px" }}  class="BTN-LOGOUT" onClick={()=>cambiarRol()}>
+            { ustipo === "ALUMNO" ?
+              null
+            : <button title="Cambiar rol" style={{ backgroundColor:"#042354", border:"none", marginLeft:"13px", marginBottom:"15px" }}  class="BTN-LOGOUT" onClick={()=>cambiarRol()}>
                  <TbGridDots.TbGridDots />
             </button>
-            : <></>
             }
           </div>
           
