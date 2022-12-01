@@ -28,6 +28,7 @@ function DatosAsesor() {
   let {id} = useParams();
   const [max, setMax] = useState(0);
   const [isOpenEditModal, openEditModal ,closeEditModal ] = useModal();
+  const esCoord = window.localStorage.getItem("ESCOORDINADOR");
   const [isOpenEditadoModal, openEditadoModal ,closeEditadoModal ] = useModal();
   const [isOpenRegistro, openRegistroModal ,closeRegistroModal ] = useModal();
   const [isOpenRegistroConf, openRegistroConfModal ,closeRegistroConfModal ] = useModal();
@@ -190,6 +191,9 @@ function DatosAsesor() {
 
   return(
       <div class="CONTAINERCOMITE">
+          <span>
+                <img onClick={() =>navigate(-1)} type = 'button' src = {require('../../imagenes/backicon.png')}></img>
+          </span>
           <h1>{asesorSeleccionado.nombres + " " + asesorSeleccionado.apePat + " " + asesorSeleccionado.apeMat}</h1>
           <div className='row'>
               <div className='col-8 PERFIL'>
@@ -201,16 +205,28 @@ function DatosAsesor() {
                     </div>
               </div>
           </div>
-          <div className='row '>
+
+          {esCoord === "NO" ? 
+            <div className='row '>
             <p> Cantidad máxima de asesorados:</p> 
               <div className='col-1'>
-                  <input  onChange={cambioMax} type="number" id="maxAsesorados" name="maxAsesorados"
+                  <input  onChange={cambioMax} type="number" id="maxAsesorados" name="maxAsesorados" disabled
                   min="0" max="10" value={max}/>
               </div>
-              <div class="col-2 INSERTAR-BOTONES">
-                  <button class="btn  GUARDAR" style={{margin:"0px"}} type="button" onClick={()=>openEditModal()}><span>Guardar</span></button>
-              </div>
           </div>
+          : 
+              <div className='row '>
+              <p> Cantidad máxima de asesorados:</p> 
+                <div className='col-1'>
+                    <input  onChange={cambioMax} type="number" id="maxAsesorados" name="maxAsesorados"
+                    min="0" max="10" value={max}/>
+                </div>
+                <div class="col-2 INSERTAR-BOTONES">
+                    <button class="btn  GUARDAR" style={{margin:"0px"}} type="button" onClick={()=>openEditModal()}><span>Guardar</span></button>
+                </div>
+            </div>          
+          }
+
           <div className='row' style={{marginBottom:"10px" }}>
               <div className='col-8'>
                   <p> Evaluaciones: </p>
@@ -230,13 +246,7 @@ function DatosAsesor() {
                     }
             </div>
           </div>
-          <div class="row ">                            
-              <div class="INSERTAR-BOTONES">
-              <button class="btn GUARDAR" type="button"><span>Observar</span></button>
-              <button class="btn CANCELAR" type="button" onClick={()=>{navigate("../asesor")}}><span>Cancelar</span></button>
-              </div>
-          </div>
-
+        
           <ModalPregunta
             isOpen={isOpenEditModal} 
             closeModal={closeEditModal}
