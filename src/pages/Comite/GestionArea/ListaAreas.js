@@ -23,6 +23,7 @@ function ListaAreas()  {
     let navigate = useNavigate();
     const [isOpenDeleteModal, openDeleteModal ,closeDeleteModal ] = useModal();
     const [isOpenConfirmModal, openConfirmModal ,closeConfirmModal ] = useModal();
+    const esCoord = window.localStorage.getItem("ESCOORDINADOR");
     const infoEspecialidad = JSON.parse(localStorage.getItem('infoEspecialidad'))
     const [areas, setAreas] = useState ([]);
     const [search, setSearch] = useState("");
@@ -124,20 +125,27 @@ function ListaAreas()  {
                 {filtrado.map(not => (
                 <tr key={not.idArea}>
                     <td><p class="BTN-CUADRADO-SISTEV">
-                        <td title= {not.idArea} style ={{width: 50, paddingLeft: '0.5%', paddingRight: '2%'}}>{not.idArea}</td>
-                        <td title= {not.codigo} style ={{width: 50, paddingLeft: '0.5%', paddingRight: '2%'}}>{not.codigo}</td>
+                        <td title= {not.codigo} style ={{width: 50, paddingLeft: '0.2%', paddingRight: '2%'}}>{not.codigo}</td>
                         <td title= {not.nombre} style ={{width: 500, paddingLeft: '0.5%', paddingRight: '5%'}}>{not.nombre}</td>
-                        <td class = "text-center" style ={{width: 80}}>
-                            <button title="Editar área"  class="btn BTN-ACCIONES" onClick={()=>{navigate("datoArea/" + not.idArea)}}> <FaIcons.FaEdit/></button>
-                            <button title="Eliminar área" class=" btn BTN-ACCIONES" onClick={()=>seleccionarArea(not, 'Eliminar')}> <BootIcons.BsTrash/></button>   
-                        </td>
+                        
+                            {esCoord === "NO" ? null : 
+                                <td class = "text-center" style ={{width: 80}}>
+                                    <button title="Editar área"  class="btn BTN-ACCIONES" onClick={()=>{navigate("datoArea/" + not.idArea)}}> <FaIcons.FaEdit/></button>
+                                    <button title="Eliminar área" class=" btn BTN-ACCIONES" onClick={()=>seleccionarArea(not, 'Eliminar')}> <BootIcons.BsTrash/></button>   
+                                </td>
+                            }
+                            
                     </p></td>                    
                 </tr>
                 ))}
 
-            <div className='INSERTAR-BOTONES '>
-                <button title="Registrar área" className='btn REGISTRAR' onClick={()=>{ revisarCoordinador()}} ><span>Registrar</span></button>
-            </div> 
+            {esCoord === "NO" ? null : 
+                <div className='INSERTAR-BOTONES '>
+                    <button title="Registrar área" className='btn REGISTRAR' onClick={()=>{ revisarCoordinador()}} ><span>Registrar</span></button>
+                </div>
+            }
+
+             
             <ToastContainer/>
             <ModalPregunta      isOpen={isOpenDeleteModal}      closeModal={closeDeleteModal}   procedimiento = "eliminar"  
                                 objeto = "el área"              elemento = {areaSeleccionada && areaSeleccionada.nombre}        >
