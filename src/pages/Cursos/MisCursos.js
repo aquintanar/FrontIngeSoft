@@ -6,6 +6,7 @@ import axios from "axios";
 import * as FaIcons from "react-icons/fa";
 import * as BootIcons from "react-icons/bs";
 import * as BsIcons from "react-icons/bs";
+import * as TbIcons from 'react-icons/tb'
 import useModal from "../../hooks/useModals";
 import { Button } from "@material-ui/core";
 import { ModalPregunta, ModalConfirmación } from "../../components/Modals";
@@ -191,8 +192,11 @@ function MisCursos() {
       };
     }
   }
-  seleccionarFila();
-
+  //window.onload=seleccionarFila();
+  function cursoSelect(cursito){
+      localStorage.setItem("idCurso",cursito.idCurso);
+      navigate('/comite');
+  }
   return (
     <div className="CONTAINERCOMITE">
       <h1>Mis Cursos</h1>
@@ -245,6 +249,8 @@ function MisCursos() {
                 <th style={{ width: 60 }}>ID</th>
                 <th style={{ width: 100 }}>Nombre</th>
                 <th style={{width:200}}>Semestre</th>
+                <th style={{width:100}}>Acciones</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -253,6 +259,18 @@ function MisCursos() {
                   <td>{curso.idCurso}</td>
                   <td>{curso.nombre}</td>
                   <td>{curso.nombreSemestre}</td>
+                  <td>
+                    <button title="Entrar Curso"
+                      className="btn BTN-ACCIONES"
+                      onClick={() => {
+                        cursoSelect(curso);
+                      }}
+                    >
+                      {" "}
+                      <TbIcons.TbDoorEnter/>
+                    </button>
+                   
+                  </td>
                 </tr>
               ))}
             </tbody>
