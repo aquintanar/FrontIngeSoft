@@ -95,7 +95,7 @@ const AsignarCoordinador = () => {
         .post(URLPOST, ides)
         .then(() => {
           console.log("SE DEBE REINICIAR");
-          window.location.reload();
+          navigate(-1);
           console.log(doc1);
           console.log(resp.data);
         })

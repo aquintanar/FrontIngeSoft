@@ -8,14 +8,7 @@ import * as IonIcons4 from "react-icons/io";
 import * as BoxIcons from 'react-icons/bi';
 
 export const SidebarData = [
-    {
-        title: 'Información',
-        path: '',
-        icon: <BsIcons.BsPeople />,
-        iconClosed: <IonIcons4.IoIosArrowDown />,
-        iconOpened: <IonIcons4.IoIosArrowUp />,
 
-    },
     {
         title: 'Preparación',
         icon: <BsIcons.BsPencil />,

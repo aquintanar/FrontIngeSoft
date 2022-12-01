@@ -113,7 +113,7 @@ function ListaTemaTesis() {
   };
   function publicacion() {
     publicarTemas();
-    window.location.reload();
+    navigate(-1);
   }
   const bodyGuardar = (
     <div className={styles.modal}>

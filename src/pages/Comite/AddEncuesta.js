@@ -123,7 +123,7 @@ const AddEncuesta = () => {
         .then(response=>{
           closePostModal();
           openGuardadoModal();
-          window.location.reload(false);
+          navigate(-1);
         }).catch(error =>{
           console.log(error.message);
         })

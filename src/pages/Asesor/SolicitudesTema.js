@@ -5,10 +5,13 @@ import axios from "axios";
 import * as BsIcons from 'react-icons/bs';
 import * as FaIcons from 'react-icons/fa';
 import * as BootIcons  from "react-icons/bs";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const urlSolicitud = "http://34.195.33.246/api/SolicitudTemaXAlumno/"
 const SolicitudesTema = () =>{
-    let filtrado = []
+    let filtrado = [];
+    let navigate = useNavigate();
     const [currentPage,SetCurrentPage] = useState(0);
     const [solicitudes , SetSolicitudes] = useState([]);
     const nextPage = () =>{
@@ -50,7 +53,7 @@ const SolicitudesTema = () =>{
             //closePostModal();
             //openGuardadoModal();
             window.confirm("Se ha Aceptado su solicitud");
-            window.location.reload(false);
+            navigate(-1);
           }).catch(error =>{
             console.log(error.message);
           })
