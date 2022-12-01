@@ -129,7 +129,7 @@ const SidebarComite = () => {
               </button>
           </div>
             <div>
-              <button title="Cerrar sesión" style={{ backgroundColor:"#042354", border:"none" }} class="BTN-LOGOUT" onClick={()=>logout()}>
+              <button title="Cerrar sesión" style={{ backgroundColor:"#042354", border:"none" }} class="BTN-LOGOUT" onClick={()=>navigate("/")}>
                  <FaIcons.FaDoorOpen />
               </button>
               <img src={logo}  class="mx-4 logo"></img>
@@ -140,7 +140,7 @@ const SidebarComite = () => {
             {SidebarData.map((item, index) => {
               return <SubMenu item={item} key={index} />;
             })}
-            <button className='BOTON-EXIT' onClick={()=>logout()}><FaIcons.FaDoorOpen /> Cerrar sesión</button>
+            <button className='BOTON-EXIT' onClick={()=>navigate("/")}><FaIcons.FaDoorOpen /> Cerrar sesión</button>
           </SidebarWrap>
         </SidebarNav>
       </IconContext.Provider>

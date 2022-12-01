@@ -74,7 +74,7 @@ const SidebarComiteCoordinador = () => {
                 </button>
             </div>
             <div>
-              <button title="Cerrar sesión" style={{ backgroundColor:"#042354", border:"none" }} class="BTN-LOGOUT" onClick={()=>logout()}>
+              <button title="Cerrar sesión" style={{ backgroundColor:"#042354", border:"none" }} class="BTN-LOGOUT" onClick={()=>navigate("/")}>
                  <FaIcons.FaDoorOpen />
               </button>
               <img src={logo}  class="mx-4 logo"></img>

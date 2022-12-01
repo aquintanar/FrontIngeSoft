@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import { SidebarData } from './SidebarDataAlumno';
+import { useNavigate } from 'react-router-dom';
 import { SidebarDataTesis2 } from './SidebarDataAlumnoTesis2';
 import SubMenu from './SubMenuAlumno';
 import { IconContext } from 'react-icons/lib';
@@ -53,6 +54,7 @@ const SidebarWrap = styled.div`
 var numTesis = 0;
 const Sidebar = () => {
   const url = "http://34.195.33.246/";
+  let navigate = useNavigate();
   const {logout, isAuthenticated}=useAuth0();
   const [sidebar, setSidebar] = useState(true);
   const {value,setValue} = useContext(UserContext);
@@ -141,7 +143,7 @@ const Sidebar = () => {
    
    </p>  
  ))}
-             <button className='BOTON-EXIT' onClick={()=>logout()}><FaIcons.FaDoorOpen /> Cerrar sesión</button>
+             <button className='BOTON-EXIT' onClick={()=>navigate("/")}><FaIcons.FaDoorOpen /> Cerrar sesión</button>
           </SidebarWrap>
         </SidebarNav>
       </IconContext.Provider>
