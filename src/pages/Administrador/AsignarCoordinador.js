@@ -152,7 +152,7 @@ const AsignarCoordinador = () => {
           fidEspecialidad: idEspecia,
         },
       });
-      window.location.reload();
+      navigate(-1);
     } catch (error) {
       console.log(error);
     }

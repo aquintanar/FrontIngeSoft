@@ -279,8 +279,7 @@ abrirPostFechas();
       }
     }
     const seleccionarTipoCalificado =async()=>{
-      const result = await axios(url+`api/DetalleNotaRubrica/GetDetalleNotaRubricaXIdVersion?idVersion=${location.state.idVersion}`);
-      if(result.data.length>0){
+      if(location.state.notaVersion>0){
         getDetallesNotaRubrica();
         aux=1;
       }

@@ -10,7 +10,7 @@ import { IconContext } from 'react-icons/lib';
 import '../../Pagina.css';
 import '../../stylesheets/SideBar.css'
 import logo from '../../imagenes/logo.png';
-import {useAuth0 }from '@auth0/auth0-react'
+//import {useAuth0 }from '@auth0/auth0-react'
 import { useContext } from 'react';
 import { UserContext } from '../../UserContext';
 import axios from 'axios';
@@ -55,7 +55,7 @@ var numTesis = 0;
 const Sidebar = () => {
   const url = "http://34.195.33.246/";
   let navigate = useNavigate();
-  const {logout, isAuthenticated}=useAuth0();
+  //const {logout, isAuthenticated}=useAuth0();
   const [sidebar, setSidebar] = useState(true);
   const {value,setValue} = useContext(UserContext);
   const [nombre , setNombre] = useState([]);
@@ -123,7 +123,7 @@ const Sidebar = () => {
               {showSidebar}
             </NavIcon> 
             <div>
-              <button title="Cerrar sesión" style={{ backgroundColor:"#042354", border:"none" }} class="BTN-LOGOUT" onClick={()=>logout()}>
+              <button title="Cerrar sesión" style={{ backgroundColor:"#042354", border:"none" }} class="BTN-LOGOUT" onClick={()=>navigate("/")}>
                  <FaIcons.FaDoorOpen />
               </button>
               <img src={logo}  class="mx-4 logo"></img>

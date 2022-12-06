@@ -70,7 +70,8 @@ const SolicitudesTema = () =>{
           //closePostModal();
           //openGuardadoModal();
           window.confirm("Se ha rechazado la solicitud");
-          window.location.reload(false);
+          navigate(-1)
+          //window.location.reload(false);
         }).catch(error =>{
           console.log(error.message);
         })

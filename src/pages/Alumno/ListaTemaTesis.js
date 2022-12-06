@@ -207,7 +207,8 @@ function ListaTemaTesis() {
       //closePostModal();
       //openGuardadoModal();
       window.confirm("Se ha presentado su solicitud");
-      window.location.reload(false);
+      //window.location.reload(false);
+      navigate(-1)
       console.log("se cargo correctamente")
       console.log(url)
       console.log(row.idTemaTesis)
