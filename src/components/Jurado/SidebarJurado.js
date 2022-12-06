@@ -10,7 +10,7 @@ import { IconContext } from 'react-icons/lib';
 import '../../Pagina.css';
 import '../../stylesheets/SideBar.css'
 import logo from '../../imagenes/logo.png';
-import {useAuth0 }from '@auth0/auth0-react'
+//import {useAuth0 }from '@auth0/auth0-react'
 import { useContext } from 'react';
 import { UserContext } from '../../UserContext';
 import axios from 'axios';
@@ -54,7 +54,7 @@ const SidebarWrap = styled.div`
 
 const Sidebar = () => {
   let navigate = useNavigate();
-  const {logout, isAuthenticated}=useAuth0();
+  //const {logout, isAuthenticated}=useAuth0();
   const [sidebar, setSidebar] = useState(true);
   const {value,setValue} = useContext(UserContext);
   const [nombre , setNombre] = useState([]);

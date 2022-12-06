@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "../../stylesheets/Iniciar_Sesion.css";
-import { useAuth0 } from "@auth0/auth0-react";
+//import { useAuth0 } from "@auth0/auth0-react";
 import { useContext } from "react";
 import { UserContext } from "../../UserContext";
 const LOGIN_URL = "http://34.195.33.246/api/login/GetLogin";
@@ -14,7 +14,7 @@ const LOGIN_URL_GOOGLE =
 const COORDINADOR =
   "http://34.195.33.246/api/ComiteXEspecialidad/ListarComitexEspecialidad_x_idComite";
 function Login() {
-  const { user, loginWithRedirect, isAuthenticated } = useAuth0();
+  //const { user, loginWithRedirect, isAuthenticated } = useAuth0();
   const [cuentaSeleccionada, setCuentaSeleccionada] = useState({
     correo: "",
     contrasena: "",
@@ -318,7 +318,7 @@ function Login() {
     } catch (err) {}
   };
 
-  const Autenticacion = async () => {
+  /*const Autenticacion = async () => {
     if (isAuthenticated) {
       try {
         const response = await axios
@@ -346,7 +346,7 @@ function Login() {
     }
   };
   window.onload = Autenticacion();
-
+*/
   return (
     <div className="CONTAINER-GENERAL-LOGIN">
       <section className="CONTAINER-LOGIN">
@@ -381,7 +381,7 @@ function Login() {
 
           <p className="text-center">o</p>
 
-          <div onClick={() => loginWithRedirect()} className="google-btn">
+          <div onClick={console.log("No funciono :(")} className="google-btn">
             <div className="google-icon-wrapper">
               <img
                 className="google-icon"

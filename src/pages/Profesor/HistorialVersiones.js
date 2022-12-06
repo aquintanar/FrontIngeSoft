@@ -45,7 +45,7 @@ function HistorialVersiones(){
   }
     filtrado = filtrado.slice(currentPage,currentPage+4);
     const nextPage = () =>{
-      if(filtrado.length>=currentPage) //VER CODIGO
+      if(filtrado.length>=4) //VER CODIGO
         SetCurrentPage(currentPage+4);
     }
     const previousPage =() =>{

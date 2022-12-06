@@ -30,7 +30,7 @@ function DatosEspecialidad() {
       nombre: '',
       descripcion: '',
       facultad: {
-        idFacultad:34 
+        idFacultad: 0 
       }
   })
 
@@ -57,6 +57,7 @@ function DatosEspecialidad() {
       await axios.get(urlFacu+"GetFacultades/")
       .then(response=>{
         setFacus(response.data);
+        especialidadSeleccionada.facultad.idFacultad = response.data[0].idFacultad;
       }).catch(error =>{
         console.log(error.message);
       })

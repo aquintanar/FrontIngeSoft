@@ -9,7 +9,7 @@ import SubMenu from './SubMenuComite';
 import { IconContext } from 'react-icons/lib';
 import logo from '../../imagenes/logo.png';
 import '../../stylesheets/SideBar.css'
-import {useAuth0 }from '@auth0/auth0-react'
+//import {useAuth0 }from '@auth0/auth0-react'
 import { useContext } from 'react';
 import { UserContext } from '../../UserContext';
 import axios from 'axios';
@@ -60,7 +60,7 @@ const SidebarWrap = styled.div`
 
 const SidebarComite = () => {
   let navigate = useNavigate();
-  const {logout, isAuthenticated}=useAuth0();
+  //const {logout, isAuthenticated}=useAuth0();
   const [sidebar, setSidebar] = useState(true);
   const {value,setValue} = useContext(UserContext);
   const [nombre , setNombre] = useState([]);

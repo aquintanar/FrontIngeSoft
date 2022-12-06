@@ -8,7 +8,7 @@ import SubMenu from './SubMenuComiteCoordinador';
 import { IconContext } from 'react-icons/lib';
 import logo from '../../imagenes/logo.png';
 import '../../stylesheets/SideBar.css'
-import {useAuth0 }from '@auth0/auth0-react'
+//import {useAuth0 }from '@auth0/auth0-react'
 import { useContext } from 'react';
 import { UserContext } from '../../UserContext';
 const Nav = styled.div`
@@ -52,7 +52,7 @@ const SidebarWrap = styled.div`
 
 const SidebarComiteCoordinador = () => {
   const [sidebar, setSidebar] = useState(true);
-  const {logout, isAuthenticated}=useAuth0();
+  //const {logout, isAuthenticated}=useAuth0();
   const navigate = useNavigate();
   const showSidebar = () => setSidebar(sidebar);
   const cerrarSesion =async (e) =>{

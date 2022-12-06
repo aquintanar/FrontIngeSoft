@@ -58,6 +58,7 @@ function DatosCurso() {
       .get(urlSem + "GetSemestres/")
       .then((response) => {
         setSem(response.data);
+        cursoNuevo.idSemestre = response.data[0].idSemestre;
       })
       .catch((error) => {
         console.log(error.message);
@@ -181,7 +182,7 @@ function DatosCurso() {
     cant_alumnos: 0,
     cant_temas_prop: 0,
     activo: 0,
-    idSemestre: 49,
+    idSemestre: 0,
     idDocente: 0,
     idFacultad: infoEspecialidad.idFac,
     idEspecialidad: infoEspecialidad.idEspec,

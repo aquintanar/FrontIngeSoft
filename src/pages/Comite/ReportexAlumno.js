@@ -100,7 +100,7 @@ const ReportexAlumno = () => {
   //----------------
   filtrado=filtrado.slice(currentPage,currentPage+6);
   const nextPage = () =>{
-    if(filtrado.length>=currentPage) //VER CODIGO
+    if(filtrado.length>=6) //VER CODIGO
       SetCurrentPage(currentPage+6);
   }
   const previousPage =() =>{

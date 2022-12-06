@@ -172,7 +172,8 @@ const AddEncuesta = () => {
         }).catch(()=>{
             
         })
-        window.location.reload(false);
+        navigate(-1)
+        //window.location.reload(false);
     }
     return(
              

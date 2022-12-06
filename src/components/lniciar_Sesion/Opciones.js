@@ -48,9 +48,9 @@ const Opciones = () => {
     );
     let idusuarios = JSON.parse(window.localStorage.getItem("IDUSUARIOS"));
     for (let j in tiposusuarios) {
-      if (tiposusuarios[j] == "JURADO") {
+      if (tiposusuarios[j] == "DOCENTE") {
         window.localStorage.setItem("IDUSUARIO", idusuarios[j]);
-        window.localStorage.setItem("TIPOUSUARIO", "JURADO");
+        window.localStorage.setItem("TIPOUSUARIO", "DOCENTE");
         setValue(idusuarios[j]);
         break;
       }
