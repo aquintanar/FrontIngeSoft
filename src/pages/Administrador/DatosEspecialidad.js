@@ -147,7 +147,7 @@ function DatosEspecialidad() {
 
                 <div class="col-6" >
                     <p>Facultad</p>
-                    <select select class="form-select"  onChange= {cambioSelect}  selected value = {especialidadSeleccionada.facultad.idFacultad}  >
+                    <select select class="form-select"  onChange= {cambioSelect}  selected value = {especialidadSeleccionada && especialidadSeleccionada.facultad.idFacultad}  >
                       {facus.map(elemento=>
                           <option key={elemento.idFacultad} value={elemento.idFacultad}>{elemento.nombre}</option>  
                       )}
